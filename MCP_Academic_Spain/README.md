@@ -89,3 +89,42 @@ Un cop configurat, la IA tindrà accés automàtic a les següents funcions:
 2. **`search_academic_spain`**: Cerca detallada en fonts estatals espanyoles com **Dialnet**, **Redined**, **BOE**, **Procomún**, **Roderic (UV)** i bases de dades globals.
 3. **`vpn_control`**: Controla programàticament la connexió WireGuard de la UV (`eduVPN`) per comprovar l'estat, connectar-se o desconnectar-se de la xarxa universitària.
 4. **`download_paper`**: Descàrrega directa del document complet de l'article amb auto-connexió intel·ligent a la VPN si el recurs és de pagament i requereix accés institucional de la UV.
+
+---
+
+## 📚 Bases de Dades i Fonts Indexades
+
+El servidor `tfm-search` realitza consultes en paral·lel en un catàleg de **24 fonts d'informació** de primer nivell, estructurades segons el seu àmbit:
+
+### 🌐 Bases de Dades Acadèmiques Internacionals (Globals)
+* **Scopus** *(requereix UV eduVPN)*: L'estàndard d'or en indexació i resums de revistes científiques.
+* **Web of Science (WOS)** *(requereix UV eduVPN)*: Plataforma d'informació científica d'alt impacte mundial.
+* **PubMed**: Base de dades del govern dels EUA líder en ciències de la vida, medicina i assajos clínics.
+* **EuropePMC**: Accés a milions d'articles de recerca biomèdica de repositoris europeus.
+* **arXiv**: Dipòsit d'accés obert per a preprints de Física, Matemàtiques i Computació.
+* **CORE**: El major agregador de publicacions de recerca en accés obert de milers de repositoris institucionals del món.
+* **Zenodo**: Dipòsit multidisciplinar de codi i dades científiques obert, operat pel CERN.
+* **CrossRef**: Registre oficial de metadades i resolució de DOIs acadèmics.
+* **Semantic Scholar**: Cercador acadèmic amb anàlisi d'impacte i rellevància basat en IA.
+* **OpenAlex**: Catàleg massiu, global i obert de publicacions, autors i institucions científiques.
+* **Google Scholar**: Motor de cerca general de literatura acadèmica en qualsevol àmbit.
+
+### 🏫 Àmbit Educatiu i Didàctica de les Ciències
+* **ERIC (Education Resources Information Center)**: La base de dades sobre educació i pedagogia més gran del món (EUA).
+* **Revista Eureka**: Revista científica espanyola de referència en Didàctica de les Ciències Experimentals (Física i Química).
+
+### 🇪🇸 Repositoris de Tesis i Literatura Espanyola / Iberoamericana
+* **Dialnet**: El portal de referència i major repositori de literatura científica en espanyol i català.
+* **TESEO**: Base de dades oficial del Ministeri d'Educació d'Espanya de tesis doctorals llegides.
+* **TDR (Tesis Doctorals en Xarxa)**: Repositori cooperatiu de tesis de les universitats catalanes i altres comunitats.
+* **RODERIC**: Repositori institucional de la **Universitat de València (UV)**.
+* **SciELO**: Biblioteca digital cooperativa de revistes científiques de la península ibèrica i Llatinoamèrica.
+* **Redalyc**: Xarxa de revistes de ciències socials i humanitats d'accés obert.
+* **HAL**: Repositori nacional francès de publicacions científiques en obert.
+* **IACR**: Repositori especialitzat de recerca en criptografia i seguretat de la informació.
+
+### ⚖️ Legislació Educativa i Recursos Docents (REA / OER)
+* **Redined**: Xarxa de bases de dades d'informació educativa, recursos d'aula i recerca espanyola.
+* **Procomún**: Xarxa intel·ligent de Recursos Educatius Oberts (REA/OER) del Ministeri d'Educació d'Espanya.
+* **BOE (Boletín Oficial del Estado)**: Diari oficial nacional per a lleis de referència educativa (LOMLOE, Reials Decrets, etc.).
+* **GVA DOGV (Diari Oficial de la Generalitat Valenciana)**: Publicacions legislatives educatives de la Comunitat Valenciana.
