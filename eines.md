@@ -64,6 +64,11 @@ Finalment, vull fer notar que empraré la **intel·ligència artificial** per a 
 
 De fet, he creat, amb l'ajuda de la pròpia IA, el servidor [MCP_Academic_Spain](file:///home/casimir/Documents/Segon_Cervell/TFM/MCP_Academic_Spain/README.md) per a realitzar cerques en 29 bases de dades de manera unificada i paral·lela, basant-me en projectes com [https://biomcp.org/](https://biomcp.org/). També crearé i empraré un MCP per a treballar des del mateix IDE amb SageMath, enviant el codi a una instància de JupyterLab corrent com a servei de *systemctl* al meu ordinador. Tot això sense eixir de l'entorn de treball.
 
+#### Reflexió sobre la co-creació de programari
+Cal reconèixer de manera transparent que, sense l'assistència activa de la IA en la co-programació, el desenvolupament d'un servidor MCP d'aquestes característiques (que implica programació asíncrona, control de navegadors en segon pla amb Playwright, desduplicació de dades i connexions VPN automatitzades) hauria requerit una dedicació de temps superior a la redacció de la mateixa memòria del TFM, fent-lo del tot inviable.
+
+Això il·lustra un canvi de paradigma fonamental: la democratització de la creació de programari. El rol de l'investigador o docent evoluciona cap al d'un *arquitecte del sistema* (qui té la visió, defineix la lògica del problema i valida els resultats), mentre que la IA actua com a *ajudant tècnic/programador*. Aquesta sinergia no només empodera els usuaris no tècnics a crear les seves pròpies eines de recerca, sinó que esdevé un model pràctic de pensament computacional aplicat a l'aula que es vol promoure.
+
 #### Experiència personal
 
 L'ús d'eines com BioMCP en particular és el que m'ha acabat de convèncer que la IA ens pot ajudar moltíssim a aprendre. Ens permet aprendre de manera autònoma si ens ensenyen com **aprendre a aprendre**, d'una manera immensament més fàcil, filtrant la informació, democratitzant l'accés al coneixement i empoderant-nos en el procés d'aprenentatge.
