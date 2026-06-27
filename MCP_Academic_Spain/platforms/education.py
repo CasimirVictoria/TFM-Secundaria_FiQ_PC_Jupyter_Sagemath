@@ -2,8 +2,10 @@ from typing import List
 import httpx
 import re
 from bs4 import BeautifulSoup
+from playwright.async_api import async_playwright
 from .base import PaperSource
 from .models import Paper
+from .core import StealthBrowser
 
 class EricSearcher(PaperSource):
     """ERIC - Education Resources Information Center."""
