@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "jupyter-tfm": {
+      "command": "/home/casi/Programes/IA/jupyter_mcp_wrapper.sh",
+      "args": []
+    }
+  }
+}

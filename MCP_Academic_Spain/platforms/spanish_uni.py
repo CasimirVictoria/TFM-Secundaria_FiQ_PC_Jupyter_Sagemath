@@ -1,0 +1,216 @@
+from typing import List
+import urllib.parse
+from playwright.async_api import async_playwright
+from .base import PaperSource
+from .models import Paper
+from .core import StealthBrowser, FirecrawlClient
+
+class TeseoSearcher(PaperSource):
+    """TESEO - Spanish Doctoral Theses."""
+    async def search(self, query: str, limit: int = 5, **kwargs) -> List[Paper]:
+        results = []
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(headless=True)
+            context = await StealthBrowser.get_context(browser)
+            page = await context.new_page()
+            try:
+                await page.goto("https://aplicaciones.ciencia.gob.es/teseo/")
+                await StealthBrowser.human_scroll(page)
+                
+                if await StealthBrowser.is_blocked(page):
+                    firecrawl = FirecrawlClient()
+                    await firecrawl.scrape_url("https://aplicaciones.ciencia.gob.es/teseo/")
+                
+                await page.wait_for_selector("#contenido", timeout=15000)
+                await page.fill("#contenido", query)
+                await page.click(".buttonForm")
+                
+                await page.wait_for_selector("mat-row", timeout=20000)
+                
+                items = await page.evaluate(f'''() => {{
+                    const rows = Array.from(document.querySelectorAll('mat-row'));
+                    return rows.map(row => {{
+                        const titleEl = row.querySelector('.cdk-column-titulo span');
+                        const authorEl = row.querySelector('.cdk-column-autor span');
+                        return {{
+                            title: titleEl ? titleEl.innerText.trim() : 'Sense títol',
+                            author: authorEl ? authorEl.innerText.trim() : 'Autor desconegut',
+                        }};
+                    }});
+                }}''')
+                
+                for item in items[:limit]:
+                    results.append(Paper(
+                        paper_id=item["title"],
+                        title=item["title"],
+                        authors=[item["author"]],
+                        url="https://aplicaciones.ciencia.gob.es/teseo/",
+                        source="TESEO"
+                    ))
+            except Exception:
+                pass
+            finally:
+                await browser.close()
+        return results
+
+class GVASearcher(PaperSource):
+    """Generalitat Valenciana (DOGV/Portal Legislativo) - Education Laws."""
+    async def search(self, query: str, limit: int = 5, **kwargs) -> List[Paper]:
+        results = []
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(headless=True)
+            context = await StealthBrowser.get_context(browser)
+            page = await context.new_page()
+            url = "https://dogv.gva.es/es/cerca-de-legislacio"
+            try:
+                await page.goto(url, wait_until="domcontentloaded")
+                await StealthBrowser.human_scroll(page)
+                
+                if await StealthBrowser.is_blocked(page):
+                    firecrawl = FirecrawlClient()
+                    await firecrawl.scrape_url(url)
+                
+                await page.wait_for_selector(".search-input", timeout=15000)
+                checkbox = await page.query_selector("input[type='checkbox']")
+                if checkbox and await checkbox.is_checked():
+                    await checkbox.uncheck()
+                
+                await page.fill(".search-input", query)
+                await page.keyboard.press("Enter")
+                
+                try:
+                    await page.wait_for_selector("a.cursor-unset, .card", timeout=15000)
+                except:
+                    await page.wait_for_load_state("networkidle")
+                
+                items = await page.evaluate(f'''() => {{
+                    const items = Array.from(document.querySelectorAll('a.cursor-unset, .card'));
+                    return items.map(item => {{
+                        const titleEl = item.querySelector('p');
+                        const deptEl = item.querySelector('h5');
+                        const sigMatch = item.innerText.match(/\\d{{4}}\\/\\d+/);
+                        const signature = sigMatch ? sigMatch[0] : null;
+                        
+                        return {{
+                            title: titleEl ? titleEl.innerText.trim() : 'Normativa GVA',
+                            url: signature ? `https://dogv.gva.es/es/disposicio?sig=${{signature}}` : 'https://dogv.gva.es/es/cerca-de-legislacio',
+                            author: deptEl ? deptEl.innerText.trim() : 'Generalitat Valenciana',
+                        }};
+                    }}).filter(res => res.title.length > 10);
+                }}''')
+                
+                for item in items[:limit]:
+                    results.append(Paper(
+                        paper_id=item["url"].split('=')[-1] if '=' in item["url"] else item["title"],
+                        title=item["title"],
+                        authors=[item["author"]],
+                        url=item["url"],
+                        source="GVA (DOGV)"
+                    ))
+            except Exception:
+                pass
+            finally:
+                await browser.close()
+        return results
+
+class RodericSearcher(PaperSource):
+    """RODERIC - Universitat de València Institutional Repository."""
+    async def search(self, query: str, limit: int = 5, **kwargs) -> List[Paper]:
+        results = []
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(headless=True)
+            context = await StealthBrowser.get_context(browser)
+            page = await context.new_page()
+            url = f"https://roderic.uv.es/search?query={query.replace(' ', '+')}"
+            try:
+                await page.goto(url, wait_until="networkidle")
+                await StealthBrowser.human_scroll(page)
+                
+                if await StealthBrowser.is_blocked(page):
+                    firecrawl = FirecrawlClient()
+                    await firecrawl.scrape_url(url)
+                
+                await page.wait_for_selector("ds-item-search-result-list-element", timeout=20000)
+                
+                items = await page.evaluate(f'''() => {{
+                    const items = Array.from(document.querySelectorAll('ds-item-search-result-list-element'));
+                    return items.map(item => {{
+                        const titleEl = item.querySelector('a.item-list-title');
+                        const authorEl = item.querySelector('.item-list-authors');
+                        const dateEl = item.querySelector('.item-list-date');
+                        const abstractEl = item.querySelector('.item-list-abstract');
+                        
+                        return {{
+                            title: titleEl ? titleEl.innerText.trim() : 'N/A',
+                            url: titleEl ? titleEl.href : 'https://roderic.uv.es/',
+                            author: authorEl ? authorEl.innerText.trim() : 'Universitat de València',
+                            year: dateEl ? dateEl.innerText.trim().replace(/[()]/g, '') : 'N/A',
+                            abstract: abstractEl ? abstractEl.innerText.trim() : ''
+                        }};
+                    }});
+                }}''')
+                
+                for item in items[:limit]:
+                    results.append(Paper(
+                        paper_id=item["url"].split('/')[-1],
+                        title=item["title"],
+                        authors=[item["author"]],
+                        published_date=item["year"],
+                        abstract=item["abstract"],
+                        url=item["url"],
+                        source="RODERIC (UV)"
+                    ))
+            except Exception:
+                pass
+            finally:
+                await browser.close()
+        return results
+
+class TDRSearcher(PaperSource):
+    """TDR - Tesis Doctorals en Xarxa (Catalan/Spanish doctoral theses)."""
+    async def search(self, query: str, limit: int = 5) -> List[Paper]:
+        results = []
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(headless=True)
+            context = await StealthBrowser.get_context(browser)
+            page = await context.new_page()
+            url = f"https://www.tdx.cat/discover?query={urllib.parse.quote(query)}"
+            try:
+                await page.goto(url, wait_until="networkidle", timeout=30000)
+                await StealthBrowser.human_scroll(page)
+                
+                if await StealthBrowser.is_blocked(page):
+                    firecrawl = FirecrawlClient()
+                    if firecrawl.api_key:
+                        # Fallback to Firecrawl if blocked
+                        pass
+                
+                await page.wait_for_selector(".ds-artifact-item", timeout=12000)
+                items = await page.query_selector_all(".ds-artifact-item")
+                for item in items[:limit]:
+                    title_el = await item.query_selector(".artifact-title a")
+                    title = await title_el.inner_text() if title_el else "N/A"
+                    link = await title_el.get_attribute("href") if title_el else "N/A"
+                    author_el = await item.query_selector(".author")
+                    author = await author_el.inner_text() if author_el else "Autor desconegut"
+                    date_el = await item.query_selector(".publisher-date")
+                    date_text = await date_el.inner_text() if date_el else ""
+                    year = None
+                    if date_text:
+                        import re
+                        match = re.search(r"\b(19|20)\d{2}\b", date_text)
+                        if match: year = int(match.group(0))
+
+                    results.append(Paper(
+                        title=title.strip(),
+                        url=f"https://www.tdx.cat{link}" if link.startswith("/") else link,
+                        authors=[author.strip()],
+                        year=year,
+                        source="TDR (TDX)"
+                    ))
+            except Exception as e:
+                import logging
+                logging.error(f"TDR search error: {e}")
+            finally:
+                await browser.close()
+        return results

@@ -1,0 +1,102 @@
+import os
+import json
+from pyzotero import zotero
+
+api_key = os.environ.get("ZOTERO_API_KEY", "CMZsC38aQdGXVPdPwSBUG5oY")
+library_id = os.environ.get("ZOTERO_LIBRARY_ID", "5016391")
+
+zot = zotero.Zotero(library_id, 'user', api_key)
+
+bibtex_data = """@article{Garcia-Robles2021,
+  title = {STEAM for all: New Computational Thinking Curricula in Spanish Formal Secondary Education},
+  author = {Rocio Garcia-Robles and Santiago Fernández-Cabaleiro},
+  journal = {10th International Conference on Digital and Interactive Arts},
+  year = {2021},
+  pages = {1-4},
+  doi = {10.1145/3483529.3483662},
+  publisher = {ACM},
+}
+
+@article{Ortega-Rodríguez2025,
+  title = {PISA 2022. Predictores del rendimiento en pensamiento computacional en Educación Secundaria en España},
+  author = {Pablo Javier Ortega-Rodríguez},
+  journal = {Revista de Educación a Distancia (RED)},
+  year = {2025},
+  volume = {25},
+  number = {81},
+  doi = {10.6018/red.600641},
+  publisher = {Servicio de Publicaciones de la Universidad de Murcia},
+}
+
+@article{González-Gallego2025,
+  title = {A critical examination of the underlying causes of the gender gap in STEM and the influence of computational thinking projects applied in secondary school on STEM Higher Education},
+  author = {Sofía González-Gallego and Mariana Hernández-Pérez and José A. Alonso-Sánchez and Pedro M. Hernández-Castellano and Eduardo G. Quevedo-Gutiérrez},
+  journal = {Frontiers in Education},
+  year = {2025},
+  volume = {10},
+  doi = {10.3389/feduc.2025.1537040},
+  publisher = {Frontiers Media SA},
+}
+
+@article{Marín-Marín2024,
+  title = {Computational thinking and programming with Arduino in education: A systematic review for secondary education},
+  author = {José-Antonio Marín-Marín and Pedro Antonio García-Tudela and Pablo Duo-Terrón},
+  journal = {Heliyon},
+  year = {2024},
+  volume = {10},
+  number = {8},
+  pages = {e29177},
+  doi = {10.1016/j.heliyon.2024.e29177},
+  publisher = {Elsevier BV},
+}
+
+@article{Wang2022,
+  title = {Integrating Computational Thinking in STEM Education: A Literature Review},
+  author = {Changzhao Wang and Ji Shen and Jie Chao},
+  journal = {International Journal of Science and Mathematics Education},
+  year = {2022},
+  volume = {20},
+  number = {8},
+  pages = {1949-1972},
+  doi = {10.1007/s10763-021-10227-5},
+  publisher = {Springer Science and Business Media LLC},
+}
+
+@article{Casal-Otero2023,
+  title = {AI literacy in K-12: a systematic literature review},
+  author = {Lorena Casal-Otero and Alejandro Catala and Carmen Fernández-Morante and Maria Taboada and Beatriz Cebreiro and Senén Barro},
+  journal = {International Journal of STEM Education},
+  year = {2023},
+  volume = {10},
+  number = {1},
+  doi = {10.1186/s40594-023-00418-7},
+  publisher = {Springer Science and Business Media LLC},
+}
+
+@article{Morales-Teheran2026,
+  title = {Evaluating the Impact of the DIPEC–STEM Teaching Model on Secondary Students’ Computational Thinking: A Quasi-Experimental Study in Colombia},
+  author = {Marvis William Morales-Teheran and Sebastian Gomez-Jaramillo and Abad Ernesto Parada-Trujillo},
+  journal = {International Journal of Learning, Teaching and Educational Research},
+  year = {2026},
+  volume = {25},
+  number = {2},
+  pages = {450-471},
+  doi = {10.26803/ijlter.25.2.21},
+  publisher = {Society for Research and Knowledge Management},
+}
+
+@article{Pou2022,
+  title = {Computational Thinking and Educational Robotics Integrated into Project-Based Learning},
+  author = {Albert Valls Pou and Xavi Canaleta and David Fonseca},
+  journal = {Sensors},
+  year = {2022},
+  volume = {22},
+  number = {10},
+  pages = {3746},
+  doi = {10.3390/s22103746},
+  publisher = {MDPI AG},
+}"""
+
+# Bibtex cannot be pushed directly via pyzotero except via something like Translation Server.
+# But wait, does pyzotero support creating items from bibtex? 
+# Pyzotero does not support uploading bibtex text directly to Zotero web API.
