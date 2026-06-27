@@ -148,7 +148,7 @@ SEARCHER_CLASSES = {
     "gva": GVASearcher,
     "roderic": RodericSearcher,
     "eric": EricSearcher,
-    "eureka": EricSearcher,
+    "eureka": EurekaSearcher,
     "arxiv": ArxivSearcher,
     "core": CoreSearcher,
     "pubmed": PubMedSearcher,
