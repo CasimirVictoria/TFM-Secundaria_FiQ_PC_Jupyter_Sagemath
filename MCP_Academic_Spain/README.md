@@ -94,7 +94,7 @@ Un cop configurat, la IA tindrà accés automàtic a les següents funcions:
 
 ## 📚 Bases de Dades i Fonts Indexades
 
-El servidor `tfm-search` realitza consultes en paral·lel en un catàleg de **24 fonts d'informació** de primer nivell, estructurades segons el seu àmbit:
+El servidor `tfm-search` realitza consultes en paral·lel en un catàleg de **29 fonts d'informació** de primer nivell, estructurades segons el seu àmbit:
 
 ### 🌐 Bases de Dades Acadèmiques Internacionals (Globals)
 * **Scopus** *(requereix UV eduVPN)*: L'estàndard d'or en indexació i resums de revistes científiques.
@@ -108,16 +108,21 @@ El servidor `tfm-search` realitza consultes en paral·lel en un catàleg de **24
 * **Semantic Scholar**: Cercador acadèmic amb anàlisi d'impacte i rellevància basat en IA.
 * **OpenAlex**: Catàleg massiu, global i obert de publicacions, autors i institucions científiques.
 * **Google Scholar**: Motor de cerca general de literatura acadèmica en qualsevol àmbit.
+* **REBIUN**: Catàleg Col·lectiu de la Xarxa de Biblioteques Universitàries Espanyoles (més de 95 institucions, incloent el CSIC).
 
 ### 🏫 Àmbit Educatiu i Didàctica de les Ciències
 * **ERIC (Education Resources Information Center)**: La base de dades sobre educació i pedagogia més gran del món (EUA).
 * **Revista Eureka**: Revista científica espanyola de referència en Didàctica de les Ciències Experimentals (Física i Química).
+* **INTEF**: El portal general de recursos didàctics, formació i investigació de l'Instituto Nacional de Tecnologías Educativas y de Formación del Profesorado.
 
 ### 🇪🇸 Repositoris de Tesis i Literatura Espanyola / Iberoamericana
 * **Dialnet**: El portal de referència i major repositori de literatura científica en espanyol i català.
 * **TESEO**: Base de dades oficial del Ministeri d'Educació d'Espanya de tesis doctorals llegides.
 * **TDR (Tesis Doctorals en Xarxa)**: Repositori cooperatiu de tesis de les universitats catalanes i altres comunitats.
 * **RODERIC**: Repositori institucional de la **Universitat de València (UV)**.
+* **RIUNET (UPV)**: Repositori institucional de la Universitat Politècnica de València (molt rellevant per a TFMs tecnològics i didàctics).
+* **RUA (UA)**: Repositori institucional de la Universitat d'Alacant.
+* **UJI Repositori**: Repositori institucional de la Universitat Jaume I de Castelló.
 * **SciELO**: Biblioteca digital cooperativa de revistes científiques de la península ibèrica i Llatinoamèrica.
 * **Redalyc**: Xarxa de revistes de ciències socials i humanitats d'accés obert.
 * **HAL**: Repositori nacional francès de publicacions científiques en obert.
