@@ -10,8 +10,8 @@ from .zenodo import ZenodoSearcher
 from .semantic_scholar import SemanticScholarSearcher
 from .google_scholar import GoogleScholarSearcher
 from .scielo import ScieloSearcher
-from .spanish_uni import TeseoSearcher, GVASearcher, RodericSearcher, TDRSearcher
-from .education import EricSearcher, EurekaSearcher
+from .spanish_uni import TeseoSearcher, GVASearcher, RodericSearcher, TDRSearcher, RiunetSearcher, RuaSearcher, UjiSearcher, RebiunSearcher
+from .education import EricSearcher, EurekaSearcher, IntefSearcher
 from .global_api import ArxivSearcher, CoreSearcher, PubMedSearcher, ScopusSearcher, WOSSearcher, CrossRefSearcher, EuropePMCSearcher, HALSearcher, IACRSearcher
 from .latin_america import RedalycSearcher
 
@@ -37,8 +37,13 @@ __all__ = [
     'GVASearcher',
     'RodericSearcher',
     'TDRSearcher',
+    'RiunetSearcher',
+    'RuaSearcher',
+    'UjiSearcher',
+    'RebiunSearcher',
     'EricSearcher',
     'EurekaSearcher',
+    'IntefSearcher',
     'ArxivSearcher',
     'CoreSearcher',
     'PubMedSearcher',

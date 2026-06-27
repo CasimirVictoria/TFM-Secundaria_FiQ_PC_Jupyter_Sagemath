@@ -125,7 +125,12 @@ class StealthBrowser:
     async def is_blocked(page):
         try:
             content = (await page.content()).lower()
-            blocked_indicators = ["cloudflare", "checking your browser", "challenge-running", "captcha", "security check", "access denied", "robot check", "unusual traffic", "turnstile"]
+            blocked_indicators = [
+                "cloudflare", "checking your browser", "challenge-running", 
+                "captcha", "security check", "access denied", "robot check", 
+                "unusual traffic", "turnstile", "web page blocked", "attack id", 
+                "message id", "fortigate"
+            ]
             return any(indicator in content for indicator in blocked_indicators)
         except: return False
 

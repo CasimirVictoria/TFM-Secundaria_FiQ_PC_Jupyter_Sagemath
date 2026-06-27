@@ -76,3 +76,37 @@ class EurekaSearcher(PaperSource):
                 return output
             except Exception:
                 return []
+
+class IntefSearcher(PaperSource):
+    """INTEF - Instituto Nacional de Tecnologías Educativas y de Formación del Profesorado."""
+    async def search(self, query: str, limit: int = 5, **kwargs) -> List[Paper]:
+        results = []
+        import urllib.parse
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(headless=True)
+            context = await StealthBrowser.get_context(browser)
+            page = await context.new_page()
+            url = f"https://intef.es/?s={urllib.parse.quote(query)}"
+            try:
+                await page.goto(url, wait_until="domcontentloaded", timeout=30000)
+                await StealthBrowser.human_scroll(page)
+                
+                await page.wait_for_selector(".post-title a", timeout=12000)
+                items = await page.query_selector_all(".post-title a")
+                for item in items[:limit]:
+                    title = await item.inner_text()
+                    link = await item.get_attribute("href")
+                    
+                    results.append(Paper(
+                        paper_id=link.split('/')[-2] if link else "intef-" + str(len(results)),
+                        title=title.strip(),
+                        authors=["INTEF"],
+                        url=link or "",
+                        source="INTEF"
+                    ))
+            except Exception as e:
+                import logging
+                logging.getLogger("academic-spain-mcp").error(f"INTEF search error: {e}")
+            finally:
+                await browser.close()
+        return results

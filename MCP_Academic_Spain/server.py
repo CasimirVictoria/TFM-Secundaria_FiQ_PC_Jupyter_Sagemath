@@ -55,9 +55,10 @@ from platforms import (
     ProcomunSearcher, OpenAlexSearcher, ZenodoSearcher,
     SemanticScholarSearcher, GoogleScholarSearcher, ScieloSearcher,
     TeseoSearcher, GVASearcher, RodericSearcher,
-    EricSearcher, EurekaSearcher,
+    EricSearcher, EurekaSearcher, IntefSearcher,
     ArxivSearcher, CoreSearcher, PubMedSearcher, ScopusSearcher, WOSSearcher,
     TDRSearcher, RedalycSearcher, CrossRefSearcher, EuropePMCSearcher, HALSearcher, IACRSearcher,
+    RiunetSearcher, RuaSearcher, UjiSearcher, RebiunSearcher,
     QueryExpander, FulltextRetriever
 )
 
@@ -91,6 +92,7 @@ SOURCE_QUALITY = {
     "Semantic Scholar":     8,
     "OpenAlex":             8,
     "CrossRef":             8,
+    "REBIUN":               8,   # national collective catalog
     "TDR (TDX)":            8,   # official Spanish thesis repository
     "TESEO":                8,   # official national thesis registry
 
@@ -98,10 +100,14 @@ SOURCE_QUALITY = {
     "Redalyc":              7,
     "SciELO":               7,
     "RODERIC (UV)":         7,   # UV institutional repository
+    "RIUNET (UPV)":         7,   # UPV institutional repository
+    "RUA (UA)":             7,   # UA institutional repository
+    "UJI Repositori":       7,   # UJI institutional repository
     "HAL (FR)":             7,
     "arXiv":                7,
     "CORE":                 6,
     "Zenodo":               6,
+    "INTEF":                6,   # Spanish teacher resource portal
 
     # Tier 5 — General / aggregators (no quality filter)
     "GoogleScholar":        3,
@@ -147,6 +153,11 @@ SEARCHER_CLASSES = {
     "teseo": TeseoSearcher,
     "gva": GVASearcher,
     "roderic": RodericSearcher,
+    "riunet": RiunetSearcher,
+    "rua": RuaSearcher,
+    "uji": UjiSearcher,
+    "rebiun": RebiunSearcher,
+    "intef": IntefSearcher,
     "eric": EricSearcher,
     "eureka": EurekaSearcher,
     "arxiv": ArxivSearcher,
@@ -539,13 +550,13 @@ async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[types.T
         if category == "biomedical":
             source_list = ["pubmed", "europepmc", "semanticscholar", "openalex"]
         elif category == "spanish_education":
-            source_list = ["dialnet", "redined", "eric", "eureka", "openalex"]
+            source_list = ["dialnet", "redined", "eric", "eureka", "openalex", "intef", "riunet", "rua", "uji"]
         elif category == "spanish":
-            source_list = ["dialnet", "redined", "scielo", "tdr"]
+            source_list = ["dialnet", "redined", "scielo", "tdr", "roderic", "riunet", "rua", "uji"]
         elif category == "education":
-            source_list = ["eric", "redined", "eureka", "openalex"]
+            source_list = ["eric", "redined", "eureka", "openalex", "intef"]
         else: # general
-            source_list = ["openalex", "semanticscholar", "crossref", "dialnet", "arxiv"]
+            source_list = ["openalex", "semanticscholar", "crossref", "dialnet", "arxiv", "rebiun"]
 
         # Run search
         tasks = []
@@ -655,7 +666,7 @@ async def handle_call_tool(name: str, arguments: Dict[str, Any]) -> List[types.T
         all_results: Dict[str, Paper] = {}
         
         # Nucli de fonts Core super ràpides i robustes per al context del TFM Educatiu
-        core_sources = ["openalex", "dialnet", "semanticscholar", "eric", "europepmc", "arxiv"]
+        core_sources = ["openalex", "dialnet", "semanticscholar", "eric", "europepmc", "arxiv", "rebiun", "intef"]
         
         if requested_sources == "all":
             # Comprovació asíncrona de l'estat de la VPN (necessària per a Scopus / WOS)
