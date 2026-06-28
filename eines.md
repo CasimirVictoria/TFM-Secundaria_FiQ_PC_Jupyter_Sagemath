@@ -9,9 +9,9 @@ Per a realitzar tot el material emprat en el TFM, així com la mateixa memòria 
 * Donat que la memòria del màster ha de seguir les normes APA 7, emprar Quarto facilita molt la tasca de formatar les cites bibliogràfiques i la bibliografia final. Simplement cal afegir una línia en la capçalera del document indicant l'estil desitjat, i Quarto s'encarrega de processar-ho de forma automàtica.
 
 ## Editor
-El fet que es treballe simplement amb text permet editar el contingut amb qualsevol editor o IDE (RStudio, VSCode, Vim, Emacs...). Jo en particular he emprat **Neovim**, així com **[VSCodium](https://vscodium.com/)**. 
+El fet que es treballe simplement amb text permet editar el contingut amb qualsevol editor o IDE (RStudio, VSCode, Vim, Emacs...). Jo en particular he decidit desenvolupar i redactar tot el projecte de manera exclusivament local des de la consola de Linux, utilitzant **Neovim** com a editor principal, sense necessitat d'IDE tipus VS Code o similars. 
 
-VSCodium permet emprar totes les extensions pròpies d'aquest ecosistema, incloent-hi l'extensió per a treballar amb documents de Quarto, eines com LTeX per a la comprovació de la gramàtica i ortografia emprant LanguageTool, i extensions de Zotero per treballar amb la bibliografia recopilada d'una manera senzilla i productiva, la idea és emprar-lo, però per ara estic emprant sols neovim.
+Encara que he considerat emprar **[VSCodium](https://vscodium.com/)** en el futur (el qual permet emprar extensions de Quarto, LTeX per a correcció gramatical o complements de Zotero), per ara tot el meu flux de treball es gestiona de manera eficient directament des de la línia de comandes.
 
 
 
@@ -48,6 +48,9 @@ real 42m23.862s user 460m41.630s sys 20m15.811s
 Per a facilitar que els estudiants (o qualsevol usuari, ja que el repositori és públic) puguen executar els quaderns sense haver d'instal·lar res als seus ordinadors, el projecte està preparat per a llançar-se a **MyBinder**. 
 
 M'he basat en el repositori oficial de `sage-binder-env` (un fitxer Dockerfile que configura un entorn aïllat amb l'última versió estable del nucli Sage i carrega els quaderns directament al navegador).
+
+### Accés remot segur (Tailscale)
+Per a poder treballar amb aquest entorn de recerca i computació des de qualsevol lloc, he configurat una xarxa privada virtual (VPN) utilitzant **Tailscale**. Això em permet connectar-me de manera segura a la instància de JupyterLab i als serveis de càlcul de SageMath de l'ordinador principal des de qualsevol dispositiu mòbil o portàtil, sense haver d'exposar ports directament a internet.
 
 ## Gestor Bibliogràfic
 
