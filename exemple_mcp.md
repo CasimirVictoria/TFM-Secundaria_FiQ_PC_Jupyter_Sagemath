@@ -83,7 +83,26 @@ El servidor MCP unifica les respostes de les bases de dades locals i internacion
 
 ---
 
-## 💡 4. Integració amb altres Eines del TFM
+## 🏛️ 4. Cerca Especialitzada: Obres Fundacionals i Històriques (Papert vs. Wing)
+
+La potència del servidor MCP també es reflecteix en la capacitat de recuperar debats teòrics profunds i genealogies conceptuals. Quan es consulta sobre els orígens epistemològics (com la transició del construccionisme de Papert al pensament computacional de Wing), l'MCP realitza una cerca creuada i extreu els articles clau de referència mundial:
+
+### 🔬 Resultats de Cerca Acadèmica (`tfm-search`)
+**Consulta:** *"computational thinking Jeannette Wing Seymour Papert"* | **Categoria:** `education`
+
+| # | Puntuació | Títol de l'Article | Autors | Font (Pes) | Any | Cit. | Accés / DOI |
+|---|---|---|---|---|---|---|---|
+| 1 | **82.00** | [Computational Thinking, Between Papert and Wing](https://doi.org/10.1007/s11191-021-00202-5) | Michael Lodi & Simone Martini | OpenAlex (8) / Springer | 2021 | 190 | 🔓 [PDF](https://link.springer.com/content/pdf/10.1007/s11191-021-00202-5.pdf) / 🔗 [DOI](https://doi.org/10.1007/s11191-021-00202-5) |
+| 2 | **65.10** | [The Impact of Coding Apps to Support Young Children in Computational Thinking and Computational Fluency. A Literature Review](https://doi.org/10.3389/feduc.2021.657895) | Stamatis Papadakis | OpenAlex (8) / Frontiers | 2021 | 139 | 🔓 [PDF](https://www.frontiersin.org/articles/10.3389/feduc.2021.657895/pdf) / 🔗 [DOI](https://doi.org/10.3389/feduc.2021.657895) |
+| 3 | **60.50** | [Computational Thinking: The Developing Definition](https://eprints.soton.ac.uk/346937/) | Cynthia Selby | OpenAlex (8) / Southampton | 2013 | 368 | 🔓 [PDF](https://eprints.soton.ac.uk/346937/1/Selby_an_for_eprints.pdf) |
+| 4 | **60.33** | [Computational thinking - a guide for teachers](https://eprints.soton.ac.uk/424545/) | Andrew Csizmadia et al. | OpenAlex (8) / CAS | 2015 | 229 | 🔓 [PDF](https://eprints.soton.ac.uk/424545/1/150818_Computational_Thinking_1_.pdf) |
+| 5 | **58.79** | [Remixing as a Pathway to Computational Thinking](https://doi.org/10.1145/2818048.2819984) | S. Dasgupta, M. Resnick et al. | OpenAlex (8) / ACM | 2016 | 100 | 🔓 [PDF](http://dl.acm.org/ft_gateway.cfm?id=2819984&type=pdf) / 🔗 [DOI](https://doi.org/10.1145/2818048.2819984) |
+
+Això permet a l'investigador reconstruir l'evolució teòrica del PC de manera precisa, enllaçant des de la construcció primerenca de programes (Papert) fins a la integració d'abstraccions complexes (Wing).
+
+---
+
+## 💡 5. Integració amb altres Eines del TFM
 
 Una vegada filtrada la taula i escollits els articles més rellevants, el procés documental s'enllaça amb la resta de l'ecosistema local:
 * **Ingesta automàtica a Zotero:** Executant la instrucció `mcp_zotero_zotero_add_by_doi(doi="10.5944/ried.22.1.22303")` des del terminal, l'article es registra instantàniament en la col·lecció del gestor bibliogràfic amb totes les seves metadades (any, autors, abstract, pàgines).
