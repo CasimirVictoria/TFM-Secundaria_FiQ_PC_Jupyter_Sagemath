@@ -108,8 +108,27 @@ Aquestes cerques permeten a l'investigador disposar a l'instant tant del fonamen
 
 ---
 
-## 💡 4. Integració amb la Resta de l'Entorn de Treball
+## 🌐 4. Cerca Internacional: SageMath i CoCalc en l'Educació STEM/STEAM
+
+*   **Consulta (Llenguatge natural):**
+    > *"Busca treballs a nivell internacional sobre l'ús de SageMath en educació secundària, educació STEM/STEAM, física i química."*
+*   **Fonts implicades:** `OpenAlex, Semantic Scholar, CrossRef, arXiv, ERIC`.
+*   **Resultats obtinguts (Exemple Real):**
+
+| # | Puntuació | Títol de l'Article | Autors | Font (Pes) | Any | Cit. | Accés / DOI |
+|---|---|---|---|---|---|---|---|
+| 1 | **61.55** | [Scientific Computing with Open SageMath not only for Physics Education](https://doi.org/10.48550/arxiv.2308.07199) | Dominik Borovský, Jozef Hanč & Martina Hančová | OpenAlex (8) / arXiv | 2023 | 3 | 🔓 [PDF](https://arxiv.org/pdf/2308.07199) / 🔗 [DOI](https://doi.org/10.48550/arxiv.2308.07199) |
+| 2 | **50.56** | [The Effect of Automated Error Message Feedback on Undergraduate Physics Students Learning Python: Reducing Anxiety and Building Confidence](https://doi.org/10.1007/s41979-022-00084-4) | Tessa Charles & C. B. Gwilliam | OpenAlex (8) / Springer | 2023 | 13 | 🔓 [PDF](https://link.springer.com/content/pdf/10.1007/s41979-022-00084-4.pdf) / 🔗 [DOI](https://doi.org/10.1007/s41979-022-00084-4) |
+| 3 | **49.96** | [Revolutionizing education: using computer simulation and cloud-based smart technology to facilitate successful open learning](https://doi.org/10.31812/123456789/7375) | Stamatios Papadakis et al. | OpenAlex (8) | 2023 | 53 | 🔓 [PDF](http://elibrary.kdpu.edu.ua/xmlui/bitstream/123456789/7375/1/paper00.pdf) / 🔗 [DOI](https://doi.org/10.31812/123456789/7375) |
+| 4 | **46.39** | [The use of digital technologies in education in the context of sustainable development of society](https://doi.org/10.1088/1755-1315/1415/1/012013) | Тетяна Григорівна Крамаренко & Viktoria Kramarenko | OpenAlex (8) | 2024 | 2 | 🔓 [PDF](https://iopscience.iop.org/article/10.1088/1755-1315/1415/1/012013/pdf) / 🔗 [DOI](https://doi.org/10.1088/1755-1315/1415/1/012013) |
+| 5 | **41.00** | [CoCalc Tools as a Means of Open Science and Its Didactic Potential in the Educational Process](https://doi.org/10.5220/0010921000003364) | Pavlo Merzlykin, Maiia Marienko & Svitlana Shokaliuk | CrossRef (8) | 2020 | 0 | 🔗 [DOI](https://doi.org/10.5220/0010921000003364) |
+| 6 | **38.00** | [On some foundational aspects of teaching differential geometry and general relativity with sagemath](https://doi.org/10.1063/5.0151242) | Gabriel Pascu | CrossRef (8) | 2023 | 0 | 🔗 [DOI](https://doi.org/10.1063/5.0151242) |
+
+---
+
+## 💡 5. Integració amb la Resta de l'Entorn de Treball
 
 Una vegada filtrades les taules i escollits els articles, el procés documental s'enllaça amb la resta d'eines del projecte:
-*   **Ingesta a Zotero:** Executant la instrucció `mcp_zotero_zotero_add_by_doi(doi="10.1007/s11191-021-00202-5")` des del terminal, l'article es registra automàticament en la col·lecció del gestor bibliogràfic amb totes les seves metadades (any, autors, abstract, pàgines).
+*   **Ingesta a Zotero:** Executant la instrucció `mcp_zotero_zotero_add_by_doi(doi="10.48550/arxiv.2308.07199")` des del terminal, l'article es registra automàticament en la col·lecció del gestor bibliogràfic amb totes les seves metadades (any, autors, abstract, pàgines).
 *   **Descàrrega intel·ligent amb bypass VPN:** Si es vol descarregar el PDF de subscripció, l'MCP connecta de manera autònoma la VPN institucional (`eduVPN` de la UV), realitza el túnel segur, descarrega el fitxer de la revista de manera autoritzada i el desa a la carpeta de descàrregues del projecte.
+
