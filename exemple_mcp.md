@@ -59,23 +59,32 @@ graph TD
 
 ---
 
-## 📊 3. Resultats Retornats a l'IDE (Exemple Real)
+## 📊 3. Resultats Retornats a l'IDE (Exemple Real d'Alta Potència)
 
-El servidor MCP retorna la següent informació estructurada de manera immediata al xat:
+El servidor MCP unifica les respostes de les bases de dades locals i internacionals, descartant duplicats i aplicant un rànquing de rellevància basat en la qualitat de la font i el nombre de citacions. La IA rep i mostra a l'IDE una taula com la següent:
 
 ### 🔬 Resultats de Cerca Acadèmica (`tfm-search`)
-**Consulta:** *"pensamiento computacional fisica quimica"* | **Categoria:** `spanish_education`
+**Consulta:** *"computational thinking secondary education"* | **Categoria:** `education` / `spanish_education`
 
-| # | Puntuació | Títol de l'Article | Autors | Font (Score) | Any | Citacions | Accés / DOI |
+| # | Puntuació | Títol de l'Article | Autors | Font (Pes) | Any | Cit. | Accés / DOI |
 |---|---|---|---|---|---|---|---|
-| 1 | **73.09** | [El debate sobre el pensamiento computacional en educación](https://doi.org/10.5944/ried.22.1.22303) | J. Adell Segura, M. Á. Llopis Nebot, F. M. Esteve-Mon & M. G. Valdeolivas Novella | OpenAlex (8) | 2019 | 77 | 🔓 [PDF](http://revistas.uned.es/index.php/ried/article/download/22303/18673) / 🔗 [DOI](https://doi.org/10.5944/ried.22.1.22303) |
-| 2 | **40.00** | [El pensamiento crítico desde un aula STEAM. Una controversia patrimonial a través del pensamiento computacional, indagación y modelización](https://dialnet.unirioja.es/servlet/tesis?codigo=397879) | Alejandro Campina López | Dialnet (8) | 2023 | 0 | 🔗 [Enllaç](https://dialnet.unirioja.es/servlet/tesis?codigo=397879) |
-| 3 | **37.56** | [El uso de imágenes en textos de física para la enseñanza secundaria y universitaria](http://hdl.handle.net/10183/141206) | M. R. Otero, M. A. Moreira & I. M. Greca | OpenAlex (8) | 2016 | 13 | 🔓 [PDF](http://hdl.handle.net/10183/141206) |
+| 1 | **77.00** | [Research Trends in K-5 Computational Thinking Education: A Bibliometric Analysis and Ideas to Move Forward](https://eric.ed.gov/?id=EJ1414321) | G. Afacan Adanir, I. Delen & Y. Gulbahar | ERIC (9) | 2024 | 0 | 🔗 [ERIC](https://eric.ed.gov/?id=EJ1414321) |
+| 2 | **75.00** | [Developing and Assessing Computational Thinking in Secondary Education Using a TPACK Guided Scratch Visual Execution Environment](https://eric.ed.gov/?id=EJ1298018) | R. Hijón Neira, M. García-Iruela & C. Connolly | ERIC (9) | 2021 | 0 | 🔗 [ERIC](https://eric.ed.gov/?id=EJ1298018) |
+| 3 | **73.09** | [El debate sobre el pensamiento computacional en educación](https://doi.org/10.5944/ried.22.1.22303) | J. Adell Segura, M. Á. Llopis Nebot, F. M. Esteve-Mon & M. G. Valdeolivas Novella | OpenAlex (8) / RIED | 2019 | 77 | 🔓 [PDF](http://revistas.uned.es/index.php/ried/article/download/22303/18673) / 🔗 [DOI](https://doi.org/10.5944/ried.22.1.22303) |
+| 4 | **72.00** | [Computational Thinking in Secondary Education: Where Does It Fit? A Systematic Literary Review](https://eric.ed.gov/?id=ED581487) | J. Lockwood & A. Mooney | ERIC (9) | 2018 | 0 | 🔗 [ERIC](https://eric.ed.gov/?id=ED581487) |
+| 5 | **67.46** | [Análisis observacional del desarrollo del pensamiento computacional en Educación Infantil-3 años...](https://doi.org/10.6018/red.480411) | M. Terroba, J. M. Ribera Puchades, D. Lapresa & M. T. Anguera | OpenAlex (8) / RED | 2021 | 8 | 🔓 [PDF](https://revistas.um.es/red/article/download/480411/313691) / 🔗 [DOI](https://doi.org/10.6018/red.480411) |
+| 6 | **65.10** | [Estrategias Educativas para la Enseñanza del Pensamiento Computacional: Una Revisión Sistemática](https://doi.org/10.37811/cl_rcm.v7i4.7590) | Erwin León Castillo | OpenAlex (8) | 2023 | 4 | 🔓 [PDF](https://ciencialatina.org/index.php/cienciala/article/download/7590/11509) / 🔗 [DOI](https://doi.org/10.37811/cl_rcm.v7i4.7590) |
+| 7 | **61.67** | [A Systematic Review of Computational Thinking in Science Classrooms](https://eric.ed.gov/?id=EJ1365633) | A. A. Ogegbo & U. Ramnarain | ERIC (9) | 2022 | 0 | 🔗 [ERIC](https://eric.ed.gov/?id=EJ1365633) |
+| 8 | **54.12** | [El pensamiento algorítmico como estrategia didáctica para el desarrollo de habilidades de resolución de problemas en el contexto de la educación básica secundaria](https://doi.org/10.6018/red.542111) | D. F. Pinzón Pérez, M. Román-González & E. V. González Palacio | OpenAlex (8) / RED | 2023 | 8 | 🔓 [PDF](https://revistas.um.es/red/article/download/542111/336771) / 🔗 [DOI](https://doi.org/10.6018/red.542111) |
+| 9 | **45.00** | [Aplicación del pensamiento computacional en el aula. Una unidad didáctica con alumnado de ESO](https://dialnet.unirioja.es/servlet/articulo?codigo=9259647) | Pablo Antonio Gargallo Jaquotot | Dialnet (8) | 2023 | 0 | 🔗 [Dialnet](https://dialnet.unirioja.es/servlet/articulo?codigo=9259647) |
+| 10 | **45.00** | [Creatividad y pensamiento computacional. Una secuencia didáctica para explorar su intersección dentro del marco STEM](https://dialnet.unirioja.es/servlet/articulo?codigo=10281230) | I. Pont Niclòs, E. Izquierdo Sanchis & Y. Echegoyen Sanz | Dialnet (8) | 2023 | 0 | 🔗 [Dialnet](https://dialnet.unirioja.es/servlet/articulo?codigo=10281230) |
+
+*Nota: La puntuació final reflecteix la concurrència lexicogràfica combinada amb el pes específic de la indexació de la revista (com Dialnet, ERIC o segells de qualitat FECYT).*
 
 ---
 
 ## 💡 4. Integració amb altres Eines del TFM
 
-Una vegada triat l'article, es poden utilitzar les altres eines del mateix entorn:
-* **Ingesta automàtica a Zotero:** Executant la instrucció `mcp_zotero_zotero_add_by_doi(doi="10.5944/ried.22.1.22303")`, l'article s'afegeix directament al gestor de referències de l'estudiant.
-* **Descàrrega intel·ligent:** Si l'estudiant sol·licita descarregar el document, l'MCP verifica si requereix accés de pagament; si és el cas, connecta de manera autònoma la VPN institucional (`eduVPN` de la UV) per obtenir el fitxer amb els permisos universitaris de la Universitat de València.
+Una vegada filtrada la taula i escollits els articles més rellevants, el procés documental s'enllaça amb la resta de l'ecosistema local:
+* **Ingesta automàtica a Zotero:** Executant la instrucció `mcp_zotero_zotero_add_by_doi(doi="10.5944/ried.22.1.22303")` des del terminal, l'article es registra instantàniament en la col·lecció del gestor bibliogràfic amb totes les seves metadades (any, autors, abstract, pàgines).
+* **Descàrrega intel·ligent amb bypass VPN:** Si es vol descarregar el PDF d'accés tancat (o de subscripció institucional), l'MCP connecta autònomament la VPN de la Universitat de València (`eduVPN` UV), realitza el túnel segur, descarrega el fitxer de la revista i el guarda a la carpeta de descàrregues de la recerca.
