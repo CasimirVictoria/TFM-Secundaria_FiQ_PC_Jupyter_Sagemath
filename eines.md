@@ -72,6 +72,9 @@ Cal reconèixer de manera transparent que, sense l'assistència activa de la IA 
 
 Això il·lustra un canvi de paradigma fonamental: la democratització de la creació de programari. Els usuaris no tècnics poden crear les seues pròpies eines, en este cas una eina de recerca, adaptada completament a les seues necessitats. En aquest apartat el rol de l'investigador o docent ha sigut el d'un *arquitecte del sistema* (qui té la visió, defineix la lògica del problema i valida els resultats), mentre que la IA actua com a *ajudant tècnic/programador*. Aquest procés és un model pràctic de pensament computacional aplicat a l'aula que es vol promoure.
 
+#### Nota de transparència sobre les eines de IA
+Com a part del compromís amb la transparència metodològica, cal remarcar que, a diferència de la resta de l'entorn de treball (que és completament lliure i de codi obert), els assistents de IA emprats per a la co-programació i l'assistència en la cerca no són programari lliure. S'ha fet ús del model comercial de llenguatge Gemini de Google, inicialment a través de l'eina `gemini-cli` en la línia de comandes i, posteriorment, mitjançant el client de terminal `antigravity-cli`. Tot i que l'ús d'estes eines propietàries i tancades ha facilitat enormement el procés de desenvolupament, s'estableix com a línia futura del projecte l'exploració de models de llenguatge de codi obert i lliures (com ara Llama o similars) per a aconseguir un ecosistema totalment lliure.
+
 #### Antecedents personals
 
 L'ús d'eines com BioMCP en particular és el que m'ha acabat de convèncer que la IA ens pot ajudar moltíssim a aprendre. Ens permet aprendre de manera autònoma si ens ensenyen com **aprendre a aprendre**, d'una manera immensament més fàcil, filtrant la informació, democratitzant l'accés al coneixement i empoderant-nos en el procés d'aprenentatge.
