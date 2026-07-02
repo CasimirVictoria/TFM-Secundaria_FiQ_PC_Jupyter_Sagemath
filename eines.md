@@ -13,7 +13,12 @@ El fet que es treballe simplement amb text permet editar el contingut amb qualse
 
 Encara que he considerat emprar **[VSCodium](https://vscodium.com/)** en el futur (el qual permet emprar extensions de Quarto, LTeX per a correcció gramatical o complements de Zotero), per ara tot el meu flux de treball es gestiona de manera eficient directament des de la línia de comandes.
 
+## Control de Versions i Gestió del Coneixement (Git i Segon Cervell)
 
+Per a la coordinació, seguretat i organització de tota la recerca, s'han integrat metodologies de desenvolupament de programari aplicades a la gestió del coneixement personal (PKM):
+
+*   **Git (Control de Versions):** Tot el codi, fitxers Quarto (`.qmd`) i configuracions estan sota el control de versions de Git. Això assegura un històric de canvis transparent, traçabilitat absoluta de cada paràgraf o línia de codi i una fàcil sincronització amb el repositori públic de GitHub.
+*   **Submòdul dins de "Segon Cervell":** Aquest TFM no s'ha dissenyat com un directori aïllat, sinó que està integrat com a **submòdul de Git** dins d'un repositori pare anomenat **`Segon_Cervell`**. Aquest projecte pare serveix com a sistema personal de gestió del coneixement (*Second Brain*). D'aquesta manera, les anotacions de la recerca, la bibliografia i els scripts del TFM estan interconnectats de manera estructural amb la base de dades general de coneixement de l'investigador, millorant-ne la retroalimentació, la coherència i la seua utilitat a llarg termini.
 
 ## Jupyter i SageMath
 He emprat JupyterLab per a treballar de manera interactiva amb els quaderns elaborats, així com **SageMath** com a nucli (*kernel*) de càlcul. Per a treballar còmodament amb Quarto en JupyterLab, s'ha instal·lat l'extensió *JupyterLab Quarto* i *Jupytext*, que manté sincronitzat el quadern (en format `.ipynb`) amb el fitxer de text en format `.qmd`.
