@@ -49,8 +49,15 @@ Per a facilitar que els estudiants (o qualsevol usuari, ja que el repositori és
 
 M'he basat en el repositori oficial de `sage-binder-env` (un fitxer Dockerfile que configura un entorn aïllat amb l'última versió estable del nucli Sage i carrega els quaderns directament al navegador).
 
-### Accés remot segur (Tailscale)
-Per a poder treballar amb aquest entorn de recerca i computació des de qualsevol lloc, he configurat una xarxa privada virtual (VPN) utilitzant **Tailscale**. Això em permet connectar-me de manera segura a la instància de JupyterLab i als serveis de càlcul de SageMath de l'ordinador principal des de qualsevol dispositiu mòbil o portàtil, sense haver d'exposar ports directament a internet.
+### Accés remot segur (Tailscale, SSH i tmux)
+Per a poder treballar amb aquest entorn de recerca i computació des de qualsevol lloc de manera ubiqua, he dissenyat una solució que combina una xarxa privada virtual (VPN) amb multiplexació de terminals:
+
+*   **Tailscale (VPN segura):** Permet connectar de manera segura l'ordinador principal amb dispositius externs sense obrir ports a internet.
+*   **Termux (a Android) i SSH:** Utilitzant el client d'SSH en dispositius mòbils connectats a la xarxa Tailscale, puc accedir de manera immediata al terminal de l'ordinador principal des de qualsevol lloc.
+*   **tmux (Sessió persistent):** L'entorn de treball complet es gestiona dins d'un multiplexor de terminals. Això significa que, encara que es perdi la connexió mòbil o s'apagui el dispositiu d'accés, la sessió de redacció amb `neovim` i el xat interactiu amb l'agent de IA continuen executant-se de manera persistent al servidor. N'hi ha prou amb tornar a executar `tmux attach` per a recuperar instantàniament l'estat del treball.
+*   **Drecera de represa (`agy-tfm`):** He definit un àlies personalitzat al meu shell (`alias agy-tfm="agy --conversation 52a230fd-4cc6-4e23-9da2-545421935271"`) que permet reprendre automàticament aquesta mateixa conversa interactiva de IA des de qualsevol pantalla en qüestió de mil·lisegons.
+
+Aquesta combinació fa que tot el meu laboratori digital (computació, IA i redacció) sigui absolutament portable a la meva butxaca, funcionant sobre un entorn minimalista i lliure d'un consum excessiu de recursos.
 
 ## Gestor Bibliogràfic
 
