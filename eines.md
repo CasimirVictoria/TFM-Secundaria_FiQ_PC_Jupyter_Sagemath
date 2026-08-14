@@ -9,12 +9,12 @@ Per a realitzar tot el material emprat en el TFM, així com la mateixa memòria 
 * Donat que la memòria del màster ha de seguir les normes APA 7, emprar Quarto facilita molt la tasca de formatar les cites bibliogràfiques i la bibliografia final. Simplement cal afegir una línia en la capçalera del document indicant l'estil desitjat, i Quarto s'encarrega de processar-ho de forma automàtica.
 
 ## Editor
-El fet que es treballe simplement amb text permet editar el contingut amb qualsevol editor o IDE (RStudio, VSCode, Vim, Emacs...). Jo en particular he decidit desenvolupar i redactar tot el projecte emprant [Emacs](https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html),  un entorn increïblement personalitzable mitjançant el llenguatge de programació Lisp, i més avuí en dia emprant IA.
+El fet que es treballe simplement amb text permet editar el contingut amb qualsevol editor o IDE (RStudio, VSCode, Vim, Emacs...). Jo en particular he decidit desenvolupar i redactar tot el projecte emprant [Emacs](https://www.gnu.org/savannah-checkouts/gnu/emacs/emacs.html), un entorn increïblement personalitzable mitjançant el llenguatge de programació Lisp, i més avui en dia emprant IA.
 
 ![captura_20260813_181300.png](./img/captura_20260813_181300.png)
 
 
-Havia cosiderat emprar **[VSCodium](https://vscodium.com/)** (el qual permet emprar extensions de Quarto, LTeX per a correcció gramatical o complements de Zotero), però Emacs és molt més facilment personalitzable (encara que no siga tan vistós).
+Havia considerat emprar **[VSCodium](https://vscodium.com/)** (el qual permet emprar extensions de Quarto, LTeX per a correcció gramatical o complements de Zotero), però Emacs és molt més fàcilment personalitzable (encara que no siga tan vistós).
 
 ## Control de Versions i Gestió del Coneixement (Git i Segon Cervell)
 
@@ -22,11 +22,11 @@ Per a la coordinació, seguretat i organització de tota la recerca, s'han integ
 
 *   **Git (Control de Versions):** Tot el codi, fitxers Quarto (`.qmd`) i configuracions estan sota el control de versions de Git. Això assegura un històric de canvis transparent, traçabilitat absoluta de tot el que escric i una fàcil sincronització amb el repositori de GitHub.
 
-*   **Submòdul dins de "Segon Cervell":** Aquest TFM no s'ha dissenyat com un directori aïllat, sinó que està integrat com a **submòdul de Git** dins d'un repositori pare anomenat **`Segon_Cervell`**. Aquest projecte pare serveix com a sistema personal de gestió del coneixement (*Second Brain*). D'aquesta manera, les anotacions de la recerca, la bibliografia i els scripts del TFM estan interconnectats de manera estructural amb la meu base de dades general de coneixement, millorant-ne la retroalimentació, la coherència i la seua utilitat a llarg termini.
+*   **Submòdul dins de "Segon Cervell":** Aquest TFM no s'ha dissenyat com un directori aïllat, sinó que està integrat com a **submòdul de Git** dins d'un repositori pare anomenat **`Segon_Cervell`**. Aquest projecte pare serveix com a sistema personal de gestió del coneixement (*Second Brain*). D'aquesta manera, les anotacions de la recerca, la bibliografia i els scripts del TFM estan interconnectats de manera estructural amb la meua base de dades general de coneixement, millorant-ne la retroalimentació, la coherència i la seua utilitat a llarg termini.
 
 
-Altres altenatives que m'havia plantejat es emprar Obsidian, Foam en VS Code, denote en Emacs, ....
-Realment avuí en dia hi ha moltissims sistemes de gestió de coneixement, tots perfectament capaços, però al final, emprant sols text (siga en el format que siga, markdown, quarto, org-mode, ....) garanteix que es puga emprar qualsevol eina.
+Altres alternatives que m'havia plantejat és emprar Obsidian, Foam en VS Code, Denote en Emacs, ....
+Realment avui en dia hi ha moltíssims sistemes de gestió de coneixement, tots perfectament capaços, però al final, emprant sols text (siga en el format que siga, markdown, quarto, org-mode, ....) garanteix que es puga emprar qualsevol eina.
 
 ## Jupyter i SageMath
 He emprat JupyterLab per a treballar de manera interactiva amb els quaderns elaborats, així com **SageMath** com a nucli (*kernel*) de càlcul. 
@@ -80,15 +80,15 @@ Aquesta combinació fa que tot aquest laboratori digital (que integra una IA, co
 
 ![captura_20260813_185829.png](./img/captura_20260813_185829.png)
 
-Aquesta eïna s'ha publicat en github com a codi obert [agy-bridge](https://github.com/CasimirVictoria/agy-bridge).
+Aquesta eina s'ha publicat a GitHub com a codi obert [agy-bridge](https://github.com/CasimirVictoria/agy-bridge). És una manera molt senzilla d'interactuar amb l'estació de treball a través d'una IA, i tal com tinc configurat `agy`, li puc demanar absolutament qualsevol tasca que es puga fer a l'ordinador emprant eines de la línia de comandes: des de demanar-li un resum dels meus correus fins a dir-li que reprograme el meu sistema de domòtica (controlat per Node-RED instal·lat en un Cerbo GX), l'aparença de la meua estació de treball o afegir funcions personalitzades en Lisp a Emacs, no sols les tasques amb les quals vaig començar a emprar-ho (cerca unificada de bibliografia rellevant per al TFM).
 
-Evidentment, s'ha creat emprant IA, ja que si bé tinc coneixement de programació, m'haguera costat molt programar-la jo sol. 
+Evidentment, s'ha creat emprant IA, ja que si bé tinc coneixements de programació, m'hauria costat molt programar-la jo sol. 
 
 ## Gestió i recerca bibliogràfica
 
-Com a gestor bibliogràfic empre (**Zotero**)[https://www.zotero.org/], conjuntament amb el complement *Better BibTeX*. Aquesta integració automatitza tota la feina relacionada amb la citació. Zotero exporta de forma contínua la base de dades a un fitxer en format `.bib`, i l'editor de text té la capacitat de llegir-lo en temps real.
+Com a gestor bibliogràfic empre [**Zotero**](https://www.zotero.org/), conjuntament amb el complement *Better BibTeX*. Aquesta integració automatitza tota la feina relacionada amb la citació. Zotero exporta de forma contínua la base de dades a un fitxer en format `.bib`, i l'editor de text té la capacitat de llegir-lo en temps real.
 
-Després, seleccionar alguna entrada d'aquest fitxer bibtex des d'Emacs es increiblement fluït emprant el paquet [citar](https://github.com/emacs-citar/citar), i el formateix de les cites segueix les normes que possem en la capçalera del nostre fitxer quarto (APA 7 en el nostre cas).
+Després, seleccionar alguna entrada d'aquest fitxer BibTeX des d'Emacs és increïblement fluït emprant el paquet [citar](https://github.com/emacs-citar/citar), i el formatat de les cites segueix les normes que posem en la capçalera del nostre fitxer Quarto (APA 7 en el nostre cas).
 
 ## Raonament Pedagògic i Transparència
 Una de les principals motivacions per a emprar aquesta arquitectura (Quarto, Jupyter i SageMath) és la convicció que s'ha de promocionar l'elaboració de **Recursos Educatius Oberts (REA)** i l'ús de programari lliure a l'aula.
@@ -100,7 +100,7 @@ Considere que hui dia és fonamental que els futurs docents tinguen una bona for
 
 Jo en particular he emprat la **intel·ligència artificial** per a l'assistència en la cerca bibliogràfica, creant, amb l'ajuda de la propia IA, un MCP que permet facilitar aquestes busquedes. Aquest fet no implica que el treball no siga genuí i elaborat completament per mi. La IA l'estic integrant com una eina actual, un exemple pràctic del que descric en el paràgraf anterior, que facilita enormement tasques com, per exemple, *elaborar un programa per a realitzar cerques en diferents bases de dades de manera unificada*. Així, he pogut realitzar busquedes en diverses bases de dades d'articles emprant llenguatge natural en comptes d'operadors lògics. Estic convençut que assistents similars seran eines habituals en la tasca docent dels professors de física i química a curt termini, així com per a tots els estudiants i investigadors en general.
 
-El servidor que he creat, [mcp-server-academic_Spain](https://github.com/CasimirVictoria/mcp-server-academic-spain), permet realitzar cerques en 29 bases de dades de manera unificada i paral·lela, i per a la seua creació em vaig inspirar en el fantàstic projecte [https://biomcp.org/](https://biomcp.org/). 
+El servidor que he creat, [mcp-server-academic-spain](https://github.com/CasimirVictoria/mcp-server-academic-spain), permet realitzar cerques en 29 bases de dades de manera unificada i paral·lela, i per a la seua creació em vaig inspirar en el fantàstic projecte [https://biomcp.org/](https://biomcp.org/). 
 
 
 ### Reflexió sobre la co-creació de programari
