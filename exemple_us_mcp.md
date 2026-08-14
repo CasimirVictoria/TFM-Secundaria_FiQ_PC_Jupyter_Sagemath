@@ -132,7 +132,5 @@ Una vegada filtrades les taules i escollits els articles, el procés documental 
 
 1. **Ingesta a BibTeX Oficial (`get_bibtex`):** Executant l'eina `get_bibtex(doi="10.1088/1742-6596/3037/1/012006")`, el servidor MCP fa una crida a *CrossRef Content Negotiation*, recupera la citació oficial en format BibTeX generada per la mateixa editorial de la revista, neteja la clau i l'afegeix directament al fitxer `references.bib` del TFM, generant automàticament la sintaxi de citació per a Quarto (`[@Borovsk__2025]`).
 
-2. **Descàrrega intel·ligent amb bypass VPN (`download_paper`):** Si l'article és de pagament, l'MCP connecta de manera autònoma la VPN institucional (`eduVPN` de la Universitat de València), realitza el túnel segur, descarrega el document PDF de manera autoritzada i el desa a la carpeta local `./PDFs/` (la qual està protegida per `.gitignore` per a no sincronitzar PDFs a GitHub).
-
-3. **Pujada Automàtica a Google NotebookLM (`notebooklm`):** Mitjançant l'eina `source_add` del servidor MCP de NotebookLM, el document PDF descarregat es puja immediatament al quadern del TFM (*Pensament Computacional en Didàctica de la Física i Química*), permetent realitzar consultes RAG d'alta precisió, síntesis i preguntes temàtiques sobre el text complet de la recerca.
+2. **Descàrrega intel·ligent amb bypass VPN (`download_paper`):** Si l'article és de pagament, l'MCP connecta de manera autònoma la VPN institucional (`eduVPN` de la Universitat de València), realitza el túnel segur, descarrega el document PDF de manera autoritzada i el desa a la carpeta local `./PDFs/` (la qual està protegida per `.gitignore` per a no sincronitzar mai PDFs a GitHub).
 
