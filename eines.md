@@ -86,9 +86,11 @@ Evidentment, s'ha creat emprant IA, ja que si bé tinc coneixements de programac
 
 ## Gestió i recerca bibliogràfica
 
-Com a gestor bibliogràfic empre [**Zotero**](https://www.zotero.org/), conjuntament amb el complement *Better BibTeX*. Aquesta integració automatitza tota la feina relacionada amb la citació. Zotero exporta de forma contínua la base de dades a un fitxer en format `.bib`, i l'editor de text té la capacitat de llegir-lo en temps real.
+Com a gestor bibliogràfic empre [**Zotero**](https://www.zotero.org/) conjuntament amb el complement *Better BibTeX*, així com el servidor MCP per a l'obtenció directa de referències verificades de les editorials. Aquesta integració automatitza tota la feina relacionada amb la citació: la base de dades s'exporta i s'actualitza de forma contínua en format `.bib` (incloent-hi l'abstract oficial de cada article), i Emacs té la capacitat de llegir-lo en temps real.
 
 Després, seleccionar alguna entrada d'aquest fitxer BibTeX des d'Emacs és increïblement fluït emprant el paquet [citar](https://github.com/emacs-citar/citar), i el formatat de les cites segueix les normes que posem en la capçalera del nostre fitxer Quarto (APA 7 en el nostre cas).
+
+A més, mitjançant la integració de [citar-denote](https://github.com/pprevos/citar-denote) i [Denote](https://protesilaos.com/emacs/denote), per a cada article seleccionat es genera automàticament una fitxa de lectura individual en Markdown a la carpeta de notes del *Segon Cervell*. Aquestes fitxes inclouen l'abstract oficial, els enllaços al DOI i al PDF local, les etiquetes `#+filetags: :TFM:recerca:` (o `tags: ["TFM", "recerca"]`), i un espai de reflexió per a anotar la utilitat pedagògica de l'article per a la unitat didàctica del TFM. Des d'Emacs, col·locant el cursor sobre qualsevol citació (`[@autor2025]`), es pot obrir directament la fitxa de lectura associada amb una sola combinació de tecles (`citar-open-notes`).
 
 ## Raonament Pedagògic i Transparència
 Una de les principals motivacions per a emprar aquesta arquitectura (Quarto, Jupyter i SageMath) és la convicció que s'ha de promocionar l'elaboració de **Recursos Educatius Oberts (REA)** i l'ús de programari lliure a l'aula.

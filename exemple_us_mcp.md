@@ -130,7 +130,7 @@ Aquestes cerques permeten a l'investigador disposar a l'instant tant del fonamen
 
 Una vegada filtrades les taules i escollits els articles, el procés documental s'enllaça de forma automàtica amb la resta d'eines del projecte mitjançant un flux de treball integrat:
 
-1. **Ingesta a BibTeX Oficial (`get_bibtex`):** Executant l'eina `get_bibtex(doi="10.1088/1742-6596/3037/1/012006")`, el servidor MCP fa una crida a *CrossRef Content Negotiation*, recupera la citació oficial en format BibTeX generada per la mateixa editorial de la revista, neteja la clau i l'afegeix directament al fitxer `references.bib` del TFM, generant automàticament la sintaxi de citació per a Quarto (`[@Borovsk__2025]`).
+1. **Ingesta a BibTeX Oficial i Fitxa Denote (`get_bibtex`):** Executant l'eina `get_bibtex(doi="10.1088/1742-6596/3037/1/012006")`, el servidor MCP fa una crida a *CrossRef Content Negotiation*, recupera la citació oficial de l'editorial amb l'abstract inclòs i l'afegeix directament al fitxer `references.bib` del TFM. Simultàniament, genera una fitxa de lectura a `~/Documents/Notes/` vinculada a `citar-denote` amb les etiquetes `[TFM, recerca]` i l'abstract oficial, permetent obrir-la directament des d'Emacs mentre es redacta la memòria en Quarto (`[@Borovsk__2025]`).
 
 2. **Descàrrega intel·ligent amb bypass VPN (`download_paper`):** Si l'article és de pagament, l'MCP connecta de manera autònoma la VPN institucional (`eduVPN` de la Universitat de València), realitza el túnel segur, descarrega el document PDF de manera autoritzada i el desa a la carpeta local `./PDFs/` (la qual està protegida per `.gitignore` per a no sincronitzar mai PDFs a GitHub).
 
