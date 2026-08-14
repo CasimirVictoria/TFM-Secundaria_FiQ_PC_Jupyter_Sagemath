@@ -17,33 +17,34 @@ Aquest exercici de disseny de programari és, a la vegada, un **exemple pràctic
 
 ## ⚙️ Funcionament General del Servidor MCP
 
-Quan l'assistent de IA rep una consulta en llenguatge natural, en tradueix la intenció i crida l'eina `unified_search` del servidor local, executant el següent flux de treball en paral·lel:
+Quan l'assistent de IA rep una consulta en llenguatge natural, el servidor **`mcp-server-academic-spain`** executa un flux de treball integral dividit en tres fases coordinades:
 
 ```mermaid
-graph TD
-    UserQuery["Consulta de l'Usuari (Llenguatge Natural)"] --> |Envia petició| Client["Client IA (IDE / Claude)"]
-    Client --> |Eina unified_search| MCP["mcp-server-academic-spain"]
-    
-    MCP --> |Classificació Semàntica| Router{"Rutejador Intel·ligent"}
-    
-    Router -->|Detecta educació/espanyol| CatEdu["Categoria: spanish_education"]
-    Router -->|Detecta recerca global| CatGlob["Categoria: education / general"]
-    
-    CatEdu --> |Consultes en Paral·lel| Dialnet["Dialnet"]
-    CatEdu --> |Consultes en Paral·lel| Redined["Redined"]
-    CatEdu --> |Consultes en Paral·lel| Eureka["Revista Eureka"]
-    CatEdu --> |Consultes en Paral·lel| Roderic["RODERIC (UV)"]
-    CatEdu --> |Consultes en Paral·lel| Riunet["RIUNET (UPV)"]
-    CatEdu --> |Consultes en Paral·lel| Rua["RUA (UA)"]
-    CatEdu --> |Consultes en Paral·lel| Uji["UJI Repositori"]
-    CatEdu --> |Consultes en Paral·lel| OpenAlex["OpenAlex"]
-    CatEdu --> |Consultes en Paral·lel| ERIC["ERIC"]
-    
-    Dialnet & Redined & Eureka & Roderic & Riunet & Rua & Uji & OpenAlex & ERIC --> |Resultats Acadèmics| Dedup{"Filtre & Desduplicació"}
-    
-    Dedup --> |Jaccard & Lexical| Format["Formatat en Markdown/JSON"]
-    Format --> |Taula de referències| User["Visualització per a l'Usuari"]
+flowchart TD
+    subgraph Fase1 ["1. Cerca i Filtratge Intel·ligent"]
+        Query["Consulta en Llenguatge Natural"] --> MCP["mcp-server-academic-spain\n(unified_search)"]
+        MCP --> Router{"Rutejador Semàntic"}
+        
+        Router --> Global["🌐 Indexadors Globals Q1/Q2\n- Scopus (Elsevier) & WOS (Clarivate)\n- OpenAlex & Semantic Scholar\n- ERIC & CrossRef"]
+        Router --> Espanyol["🇪🇸 Àmbit Espanyol i Didàctica\n- Dialnet & Redined\n- Revista Eureka (Didàctica FQ)\n- Repositoris Valencians (RODERIC, RIUNET, RUA, UJI)"]
+        
+        Global & Espanyol --> Dedup["Algorisme de Desduplicació i Rànquing"]
+        Dedup --> Results["Taula de Resultats en Markdown"]
+    end
+
+    subgraph Fase2 ["2. Ingesta Bibliogràfica i Gestió del Coneixement"]
+        Results --> Select["Selecció d'Articles d'Interès (DOI)"]
+        Select --> Bib["📚 Ingesta Oficial (get_bibtex)\n- Extracció de l'Abstract oficial de l'editorial via CrossRef\n- Auto-desat a references.bib\n- Clau Quarto generada: [@autor2025]"]
+        Select --> Note["📝 Fitxa de Lectura Denote (citar-denote)\n- Creada a Notes/ amb etiquetes [TFM, recerca]\n- Abstract oficial integrat per a cerca ràpida\n- Espai de reflexió per a la Unitat Didàctica"]
+        Select --> VPN["📥 Descàrrega Autoritzada (download_paper)\n- Túnel VPN institucional UV (eduVPN)\n- Desat local a ./PDFs/ (protegit per .gitignore)"]
+    end
+
+    subgraph Fase3 ["3. Redacció Integrada a Emacs"]
+        Bib & Note & VPN --> Emacs["✍️ Redacció del TFM en Quarto (.qmd)\n- Autocompletat de cites amb vista prèvia d'abstracts\n- Salt instantani a la fitxa de lectura (citar-open-notes)"]
+    end
 ```
+
+Aquest disseny garanteix que la fase de recerca bibliogràfica desemboque de manera immediata i sense fricció en el nostre sistema de presa de notes ([**Denote**](https://protesilaos.com/emacs/denote)) i de redacció acadèmica ([**Quarto**](https://quarto.org/) + [**Citar**](https://github.com/emacs-citar/citar)), mantenint tota la informació emmagatzemada en fitxers de text pla fàcilment indexables.
 
 ---
 
