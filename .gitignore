@@ -3,3 +3,5 @@ Exemples_i_Materials/
 Per_mirar/
 .venv/
 __pycache__/
+.agents/
+AGENTS.md
