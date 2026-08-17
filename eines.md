@@ -94,6 +94,19 @@ Aquest fitxer s'integra de forma nativa a Emacs a través del paquet [citar](htt
 
 A més, la integració amb [citar-denote](https://github.com/pprevos/citar-denote) i [Denote](https://protesilaos.com/emacs/denote) automatitza la creació d'una fitxa de lectura individual en Markdown a la carpeta de notes del *Segon Cervell* per a cada article seleccionat. Aquestes fitxes inclouen l'abstract oficial, els enllaços al DOI i al PDF local, les etiquetes `#+filetags: :TFM:recerca:` (o `tags: ["TFM", "recerca"]`), i un espai de reflexió per a anotar la utilitat pedagògica de l'article per a la unitat didàctica del TFM. Des d'Emacs, col·locant el cursor sobre qualsevol citació (`[@autor2025]`), es pot obrir directament la fitxa de lectura associada amb una sola combinació de tecles (`citar-open-notes`).
 
+### Indexació i Recuperació Semàntica a la Memòria RAM (`segon-cervell-semantic`)
+
+Per a tancar el cicle de la gestió del coneixement i resoldre el problema de recuperar idees disperses en desenes de fitxes de lectura, he desenvolupat un servidor MCP d'indexació vectorial local anomenat [**segon-cervell-semantic-mcp**](https://github.com/CasimirVictoria/segon-cervell-semantic-mcp).
+
+Aquesta eina transforma el conjunt de notes de text pla en una **memòria semàntica associativa** d'alt rendiment:
+
+1. **Vectors d'incrustació multilingües en local:** Utilitza el motor lleuger de codi obert `FastEmbed` (amb el model `paraphrase-multilingual-MiniLM-L12-v2` de 384 dimensions) executant-se de manera 100% privada a la CPU, sense enviar cap dada a servidors externs.
+2. **Sincronització incremental instantània:** Mitjançant una base de dades SQLite en mode WAL (`~/.local/share/segon_cervell/semantic_index.db`) i un sistema de hashes SHA-256 de temps de modificació (*mtime*), l'índex només reprocessa els fitxers que han canviat, completant la sincronització en menys de `0,05 s`.
+3. **Recuperació conceptual en menys de 3 mil·lisegons:** Permet fer cerques per afinitat de significat (en valencià, castellà o anglès). Per exemple, cercant *"com superar concepcions errònies sobre la conservació de l'energia"* o *"dificultats algebraiques en gasos ideals"*, el sistema recupera a l'instant els fragments exactes de les fitxes de lectura de Denote pertinents directament a la memòria RAM.
+4. **El Principi de la Densitat d'Informació (Maximització Senyal/Soroll):** En lloc d'indexar documents massius o PDFs de 50 pàgines plens de soroll textual, el sistema indexa les **fitxes de lectura prèviament sintetitzades i destil·lades a Denote**. Aquesta alta densitat conceptual redueix dràsticament la potència de processament necessària i permet que fins i tot models compactes o cerques locals funcionen amb una precisió extraordinària.
+
+D'aquesta manera, el cercador semàntic no genera text ni redacta la memòria, sinó que actua com un **catàleg de memòria RAM ultra ràpid per a les pròpies notes personals de lectura**, garantint que cap idea rellevant quede oblidada durant la redacció del TFM.
+
 ## Raonament Pedagògic i Transparència
 Una de les principals motivacions per a emprar aquesta arquitectura (Quarto, Jupyter i SageMath) és la convicció que s'ha de promocionar l'elaboració de **Recursos Educatius Oberts (REA)** i l'ús de programari lliure a l'aula.
 
