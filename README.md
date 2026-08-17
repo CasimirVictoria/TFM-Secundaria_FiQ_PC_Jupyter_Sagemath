@@ -23,12 +23,12 @@ Per aquest motiu, la metodologia de recerca d'aquest treball estableix una divis
 
 ```mermaid
 flowchart LR
-    A["⚙️ Treball Mecànic (Automatitzat)"] --> B["- Cerca sistemàtica en 30 bases de dades (Scopus, WOS, Dialnet, ERIC).\n- Descàrrega autoritzada via VPN institucional.\n- Generació de cites BibTeX oficials i fitxes de lectura Denote."]
+    A["⚙️ Treball Mecànic i Indexació (Automatitzat)"] --> B["- Cerca sistemàtica en 30 bases de dades (Scopus, WOS, Dialnet, ERIC).\n- Descàrrega autoritzada via VPN institucional.\n- Generació de cites BibTeX oficials i fitxes de lectura Denote.\n- Indexació i recuperació semàntica de la memòria documental a la RAM."]
     
     C["💡 Treball Intel·lectual (100% Humà)"] --> D["- Anàlisi crític de la literatura didàctica i corrents pedagògics.\n- Detecció d'idees alternatives de l'alumnat en física i química.\n- Disseny curricular de la Unitat Didàctica i simulacions a l'aula.\n- Redacció i reflexió pedagògica de la memòria."]
 ```
 
-1. **Automatització de les tasques mecàniques:** Les tasques repetitives (cerca documental simultània, extracció de metadades editorials i formatat de citacions en APA 7) s'han automatitzat mitjançant el desenvolupament d'eines pròpies de codi obert ([`mcp-server-academic-spain`](https://github.com/CasimirVictoria/mcp-server-academic-spain)). Això assegura una revisió sistemàtica exhaustiva sense biaixos d'omissió.
+1. **Automatització de les tasques mecàniques i gestió de la memòria:** Les tasques repetitives (cerca documental simultània, extracció de metadades editorials, formatat de citacions en APA 7 i indexació semàntica per a la recuperació instantània de fitxes de lectura a la memòria RAM) s'han automatitzat mitjançant el desenvolupament d'eines pròpies de codi obert ([`mcp-server-academic-spain`](https://github.com/CasimirVictoria/mcp-server-academic-spain) i [`mcp-server-segon-cervell-semantic`](https://github.com/CasimirVictoria/segon-cervell-semantic-mcp)). Això assegura una revisió sistemàtica exhaustiva sense biaixos d'omissió ni pèrdua de referències.
 2. **Centralitat del treball intel·lectual docent:** Alliberar el temps de les tasques burocràtiques i mecàniques permet dedicar el 100% de l'esforç a la reflexió pedagògica, a la transposició didàctica dels conceptes científics i al disseny d'activitats d'indagació autèntiques per a l'alumnat.
 
 ---
