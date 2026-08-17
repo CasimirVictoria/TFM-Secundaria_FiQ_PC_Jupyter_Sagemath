@@ -39,8 +39,9 @@ flowchart TD
         Select --> VPN["📥 Descàrrega Autoritzada (download_paper)\n- Túnel VPN institucional UV (eduVPN)\n- Desat local a ./PDFs/ (protegit per .gitignore)"]
     end
 
-    subgraph Fase3 ["3. Redacció Integrada a Emacs"]
-        Bib & Note & VPN --> Emacs["✍️ Redacció del TFM en Quarto (.qmd)\n- Autocompletat de cites amb vista prèvia d'abstracts\n- Salt instantani a la fitxa de lectura (citar-open-notes)"]
+    subgraph Fase3 ["3. Recuperació Semàntica i Redacció a Emacs"]
+        Note --> Semantic["🧠 Indexació i Cerca Semàntica\n(mcp-server-segon-cervell-semantic)\n- Recuperació per concepte en 3 ms\n- Localització exacta de la línia de la fitxa"]
+        Bib & VPN & Semantic --> Emacs["✍️ Redacció del TFM en Quarto (.qmd)\n- Autocompletat de cites amb vista prèvia d'abstracts\n- Salt instantani a la fitxa de lectura (citar-open-notes)"]
     end
 ```
 
