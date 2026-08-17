@@ -5,3 +5,10 @@ Per_mirar/
 __pycache__/
 .agents/
 AGENTS.md
+PDFs/
+*.pdf
+*.html
+proposta_i_esborrany_tfm*
+references.bib
+quaderns/
+tfm_prova_concepte*
