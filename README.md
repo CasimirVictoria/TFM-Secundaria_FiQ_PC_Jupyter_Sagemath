@@ -75,11 +75,15 @@ flowchart TD
 * 🧠 **[`mcp-server-segon-cervell-semantic`](https://github.com/CasimirVictoria/segon-cervell-semantic-mcp):** Servidor d'indexació vectorial ultraràpid (`FastEmbed` + `SQLite WAL`) que cerca per afinitat semàntica a través de les fitxes de lectura de Denote a la memòria RAM (< 3 ms), facilitant la recuperació d'idees sense interferir en la redacció.
 * 🧮 **[`mcp-server-jupyter`](https://github.com/CasimirVictoria/mcp-server-jupyter):** Servidor d'execució remota de codi que es comunica amb els nuclis de càlcul de Jupyter (`sagemath`, `python3`, `ir`) per a validar expressions matemàtiques i derivacions físiques en temps real.
 
-### 2. `agy-bridge`: El Pont Interactiu per a Simulacions i Càlculs Simbòlics
-* 🌉 **[`agy-bridge`](https://github.com/CasimirVictoria/agy-bridge):** És una passarel·la lleugera i bidireccional desenvolupada per a interconnectar l'editor de text ([GNU Emacs](https://www.gnu.org/software/emacs/)), la línia d'ordres i els servidors de càlcul.
-* **Com s'empra per a la modelització interactiva:** `agy-bridge` permet enviar directament blocs de càlcul simbòlic de **SageMath** des dels fitxers font cap a l'entorn d'execució de Jupyter, capturar a l'instant els resultats analítics (arrels d'equacions, derivades, integrals) i generar visualitzacions interactives (`parametric_plot`, `plot3d`, `@interact`) que es renderitzen de manera immediata a la pantalla del docent o investigador.
+### 2. `agy-bridge`: La Passarel·la Mòbil i el Pont de Simulació Interactiva
+* 🌉 **[`agy-bridge`](https://github.com/CasimirVictoria/agy-bridge):** És una passarel·la web d'alt rendiment (FastAPI + WebSockets) i dimoni de sistema (`systemd` + `tmux`) que converteix l'estació de treball Linux en un entorn d'investigació accessible des de qualsevol dispositiu mòbil (PWA a Android) o navegador web mitjançant xarxes privades xifrades d'extrem a extrem ([Tailscale / WireGuard](https://tailscale.com/)).
+* **Com s'empra per a la modelització, càlcul i simulacions interactives:**
+  1. 🧮 **Execució Simbòlica i Renderitzat KaTeX en Temps Real:** Permet orquestrar derivacions físiques i càlculs analítics complexos en **SageMath** (com la dinàmica lagrangiana o la mecànica quàntica), renderitzant fórmules matemàtiques vectorials $\LaTeX$ d'alta definició a l'instant.
+  2. 🌊 **Superfícies i Trajectòries 3D Interactives WebGL (Three.js):** Genera i projecta gràfics simbòlics tridimensionals (`plot3d`, `parametric_plot3d`) en contenidors interactius WebGL amb rotació orbital de 360° i zoom tàctil, facilitant la visualització de camps vectorials i trajectòries cinemàtiques.
+  3. 💻 **Terminal Web Interactiva i Supervisió en Directe:** Disposa d'una consola PTY web integrada per a auditar la sortida en viu de la computació, enviar ordres i interactuar amb els processos de modelització (`↵ Enter`, `y/n`, `^C`) sense dependències d'escriptori físic.
+  4. 📝 **Filosofia del Retorn al Text Pla i Sobirania Digital:** Tot el flux opera sobre formats oberts i humanament llegibles (`.qmd`, `.ipynb`, `.org`, `.bib`), garantint que les dades, la memòria i els models siguen 100% reproduïbles, auditables i independents de plataformes privatives.
 
-Aquest ecosistema modular demostra com la combinació d'estàndards oberts permet crear un entorn de treball científic i pedagògic d'alt nivell, completament sobirà, privat i exempt de dependències comercials privatives.
+Aquest ecosistema modular demostra com la combinació d'estàndards lliures permet crear un entorn de treball científic i pedagògic d'alt nivell, completament sobirà, privat i exempt de dependències comercials privatives.
 
 ---
 
