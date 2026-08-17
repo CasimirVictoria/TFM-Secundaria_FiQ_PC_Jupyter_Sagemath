@@ -33,16 +33,16 @@ flowchart LR
 
 ---
 
-## 🌐 Un Viatge de Descobriment: La Integració de Quatre Mons
+## 🌐 Un Aprenentatge Integrat: La Confluència de Quatre Àmbits
 
-El desenvolupament d'aquest Treball de Final de Màster ha representat un autèntic descobriment i un plaer intel·lectual: la possibilitat d'unir de manera harmònica i indissoluble **quatre dimensions que massa sovint es presenten aïllades**, fent-les créixer conjuntament al llarg de la recerca:
+L'elaboració d'aquest Treball de Final de Màster ha suposat un procés d'aprenentatge especialment enriquidor: l'oportunitat d'explorar la confluència de **quatre àmbits que sovint es treballen per separat**, però que s'han anat entrellaçant de manera natural al llarg del projecte:
 
-1. 🧪 **La Didàctica de les Ciències Experimentals:** Com ensenyar millor la Física i la Química, atenent les concepcions alternatives de l'alumnat i fomentant l'aprenentatge basat en la indagació i el descobriment científic.
-2. 💻 **El Pensament Computacional i la Modelització:** L'ús de la programació científica (`SageMath`, `Jupyter`, `Python`) no com una finalitat en si mateixa, sinó com un laboratori conceptual interactiu per a visualitzar, calcular i comprendre les lleis de la naturalesa.
-3. 🧠 **L'Enginyeria del Coneixement i la Memòria Semàntica:** La gestió de la recerca mitjançant notes atòmiques en text pla (`Denote`, `Emacs`, `Zettelkasten`) i la recuperació semàntica sobirana mitjançant servidors MCP locals a la memòria RAM.
-4. 🛡️ **La Sobirania Tecnològica i el Programari Lliure:** El compromís ètic d'utilitzar exclusivament eines obertes, reproduïbles i independents (Linux, Git, Quarto, xarxa acadèmica institucional), garantint la transferibilitat directa a les aules de l'educació pública.
+1. 🧪 **La Didàctica de les Ciències Experimentals:** Com a eix central, cercant maneres d'acostar la Física i la Química a l'alumnat a partir de la indagació i la comprensió dels fenòmens naturals.
+2. 💻 **El Pensament Computacional:** Entès com una eina d'aprenentatge pràctica mitjançant entorns interactius lliures (`Jupyter`, `SageMath`, `Python`) per a visualitzar i experimentar amb models científics a l'aula.
+3. 🧠 **L'Organització del Treball i la Memòria:** L'ús de mètodes d'indexació i gestió de notes en text pla (`Denote`, `Emacs`) per a estructurar les pròpies lectures i la recerca bibliogràfica amb rigor.
+4. 🛡️ **El Compromís amb el Programari Lliure:** La decisió de fonamentar tota la proposta en tecnologies obertes i accessibles (Linux, Git, Quarto), assegurant que qualsevol docent i centre públic puga utilitzar i adaptar aquests recursos lliurement.
 
-Integrar aquests quatre mons ha permès que el TFM cresquera no sols com un exercici acadèmic, sinó com una **proposta professional viva, coherent i d'artesania intel·lectual, tecnològica i docent**.
+Aquest camí ha permès enfocar el TFM no sols com un tràmit acadèmic, sinó com una **experiència formativa molt valuosa per a consolidar una visió docent coherent, pràctica i compromesa amb l'escola pública**.
 
 
 ---
