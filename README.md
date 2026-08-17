@@ -33,6 +33,20 @@ flowchart LR
 
 ---
 
+## 🌐 Un Viatge de Descobriment: La Integració de Quatre Mons
+
+El desenvolupament d'aquest Treball de Final de Màster ha representat un autèntic descobriment i un plaer intel·lectual: la possibilitat d'unir de manera harmònica i indissoluble **quatre dimensions que massa sovint es presenten aïllades**, fent-les créixer conjuntament al llarg de la recerca:
+
+1. 🧪 **La Didàctica de les Ciències Experimentals:** Com ensenyar millor la Física i la Química, atenent les concepcions alternatives de l'alumnat i fomentant l'aprenentatge basat en la indagació i el descobriment científic.
+2. 💻 **El Pensament Computacional i la Modelització:** L'ús de la programació científica (`SageMath`, `Jupyter`, `Python`) no com una finalitat en si mateixa, sinó com un laboratori conceptual interactiu per a visualitzar, calcular i comprendre les lleis de la naturalesa.
+3. 🧠 **L'Enginyeria del Coneixement i la Memòria Semàntica:** La gestió de la recerca mitjançant notes atòmiques en text pla (`Denote`, `Emacs`, `Zettelkasten`) i la recuperació semàntica sobirana mitjançant servidors MCP locals a la memòria RAM.
+4. 🛡️ **La Sobirania Tecnològica i el Programari Lliure:** El compromís ètic d'utilitzar exclusivament eines obertes, reproduïbles i independents (Linux, Git, Quarto, xarxa acadèmica institucional), garantint la transferibilitat directa a les aules de l'educació pública.
+
+Integrar aquests quatre mons ha permès que el TFM cresquera no sols com un exercici acadèmic, sinó com una **proposta professional viva, coherent i d'artesania intel·lectual, tecnològica i docent**.
+
+
+---
+
 ## 🛠️ Ecosistema Tecnològic i Ciència Oberta (REA)
 
 Tot el projecte està construït sobre tecnologies lliures, gratuïtes i de text pla, garantint que qualsevol docent o centre educatiu puga auditar, replicar i adaptar el material lliurement:
