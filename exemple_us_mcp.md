@@ -135,3 +135,6 @@ Una vegada filtrades les taules i escollits els articles, el procés documental 
 
 2. **Descàrrega intel·ligent amb bypass VPN (`download_paper`):** Si l'article és de pagament, l'MCP connecta de manera autònoma la VPN institucional (`eduVPN` de la Universitat de València), realitza el túnel segur, descarrega el document PDF de manera autoritzada i el desa a la carpeta local `./PDFs/` (la qual està protegida per `.gitignore` per a no sincronitzar mai PDFs a GitHub).
 
+3. **Indexació Semàntica de la Memòria Documental (`mcp-server-segon-cervell-semantic`):** A mesura que el corpus de fitxes de lectura Denote i esborranys del TFM creix, s'utilitza el servidor sobirà de cerca semàntica (`mcp-server-segon-cervell-semantic`). Aquesta eina **no genera contingut**, sinó que actua exclusivament com a catàleg intel·ligent a la memòria RAM (mitjançant `FastEmbed` sobre CPU) per a recuperar a l'instant el número de línia exacte de les pròpies notes personals de l'investigador (`file:///.../fitxa.org#L24`) durant la redacció de la memòria en Quarto, garantint que cap referència rellevant quede omesa i facilitant la citació directa (ex: `[@Borovsk__2025]`).
+
+
