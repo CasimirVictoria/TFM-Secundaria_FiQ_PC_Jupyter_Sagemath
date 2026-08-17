@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>🚀 Simulador Interactiu de Tir Parabòlic (Cinemàtica 2D)</title>
+<title>🚀 Simulador Simbòlic Natiu de Tir Parabòlic 2D i 3D en SageMath</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -113,7 +113,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">🚀 Simulador Interactiu de Tir Parabòlic (Cinemàtica 2D)</h1>
+<h1 class="title">🚀 Simulador Simbòlic Natiu de Tir Parabòlic 2D i 3D en SageMath</h1>
 </div>
 
 
@@ -130,164 +130,146 @@ window.Quarto = {
 </header>
 
 
-<section id="unitat-didàctica-moviment-i-forces-a-la-física-de-secundària-i-batxillerat" class="level3">
-<h3 class="anchored" data-anchor-id="unitat-didàctica-moviment-i-forces-a-la-física-de-secundària-i-batxillerat">Unitat Didàctica: <em>Moviment i Forces a la Física de Secundària i Batxillerat</em></h3>
+<section id="modelització-cinemàtica-i-càlcul-simbòlic-pur-cas-sense-discretització-numèrica" class="level3">
+<h3 class="anchored" data-anchor-id="modelització-cinemàtica-i-càlcul-simbòlic-pur-cas-sense-discretització-numèrica"><em>Modelització Cinemàtica i Càlcul Simbòlic Pur (CAS) sense Discretització Numèrica</em></h3>
 <p><strong>Autor:</strong> Casimir Victòria — <em>Treball de Final de Màster (Física i Química)</em><br>
+<strong>Motor:</strong> SageMath (Kernel Simbòlic Natiu <code>sagemath</code>)<br>
 <strong>Llicència:</strong> Creative Commons Zero 1.0 (CC0 - Domini Públic)</p>
 <hr>
 </section>
-<section id="objectius-didàctics-i-competencials-lomloe" class="level2">
-<h2 class="anchored" data-anchor-id="objectius-didàctics-i-competencials-lomloe">🎯 1. Objectius Didàctics i Competencials (LOMLOE)</h2>
-<ol type="1">
-<li><strong>Modelitzar el moviment bidimensional</strong> descomponent-lo en dos moviments independents (Principi de superposició de Galileu): un MRU en l’eix horitzontal (<span class="math inline">\() i un MRUA en l'eix vertical (\)</span>).</li>
-<li><strong>Deduir de manera simbòlica</strong> l’equació de la trajectòria, el temps de vol, l’altura màxima i l’abast màxim.</li>
-<li><strong>Superar concepcions alternatives:</strong> Comprovar com l’angle de llançament afecta l’abast i l’altura, experimentant amb angles complementaris (ex: 0^$ i 0^$) i diferents camps gravitatoris planetaris.</li>
-</ol>
+<section id="fonamentació-didàctica-i-modelització-simbòlica-lomloe" class="level2">
+<h2 class="anchored" data-anchor-id="fonamentació-didàctica-i-modelització-simbòlica-lomloe">🎯 1. Fonamentació Didàctica i Modelització Simbòlica (LOMLOE)</h2>
+<p>En la didàctica tradicional de la física, l’alumnat sovint queda atrapat en l’aritmètica de taules de valors o en la discretització de vectors numèrics. L’objectiu d’aquest quadern és treballar exclusivament amb <strong>funcions matemàtiques formals contínues</strong> a través del sistema de càlcul simbòlic <strong>SageMath</strong>.</p>
+<p>Les lleis físiques es defineixen com a equacions algebraiques exactes, es dedueixen analíticament les solucions i es tracen les trajectòries en 2D i 3D directament des de les funcions simbòliques emprant <code>parametric_plot</code>, <code>parametric_plot3d</code> i <code>@interact</code>.</p>
 <hr>
 </section>
-<section id="deducció-simbòlica-de-les-equacions-del-moviment" class="level2">
-<h2 class="anchored" data-anchor-id="deducció-simbòlica-de-les-equacions-del-moviment">🧮 2. Deducció Simbòlica de les Equacions del Moviment</h2>
-<p>Emprem el motor de <strong>càlcul simbòlic (SymPy / SageMath)</strong> per a deduir formalment les expressions analítiques sense realitzar càlculs manuals feixucs.</p>
+<section id="deducció-simbòlica-exacta-de-les-lleis-del-moviment" class="level2">
+<h2 class="anchored" data-anchor-id="deducció-simbòlica-exacta-de-les-lleis-del-moviment">🧮 2. Deducció Simbòlica Exacta de les Lleis del Moviment</h2>
+<p>Definim les variables simbòliques formals de l’espai-temps (<span class="math inline">\(t, x, y, z\)</span>) i els paràmetres físics (<span class="math inline">\(v_0, \theta, g, y_0, w\)</span>).</p>
 <div id="cell-3" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> sp</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, Math</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sage code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Variables simbòliques formals de SageMath</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>var(<span class="st">'t, g, v0, theta, y0, x, y, z, w'</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Definim les variables i paràmetres físics simbòlics</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>t, g, v0, theta, y0 <span class="op">=</span> sp.symbols(<span class="st">"t g v_0 theta y_0"</span>, positive<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Components de la velocitat inicial</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>v0x <span class="op">=</span> v0 <span class="op">*</span> sp.cos(theta)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>v0y <span class="op">=</span> v0 <span class="op">*</span> sp.sin(theta)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Equacions de posició en funció del temps t</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>x_t <span class="op">=</span> v0x <span class="op">*</span> t</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>y_t <span class="op">=</span> y0 <span class="op">+</span> v0y <span class="op">*</span> t <span class="op">-</span> sp.Rational(<span class="dv">1</span>, <span class="dv">2</span>) <span class="op">*</span> g <span class="op">*</span> t<span class="op">**</span><span class="dv">2</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"📌 Equacions paramètriques del moviment:"</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>display(Math(<span class="ss">f"x(t) = </span><span class="sc">{</span>sp<span class="sc">.</span>latex(x_t)<span class="sc">}</span><span class="ss">"</span>))</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>display(Math(<span class="ss">f"y(t) = </span><span class="sc">{</span>sp<span class="sc">.</span>latex(y_t)<span class="sc">}</span><span class="ss">"</span>))</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Temps de vol (quan y(t) = 0 amb y0 = 0)</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>eq_impacte <span class="op">=</span> y_t.subs(y0, <span class="dv">0</span>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>solucions_t <span class="op">=</span> sp.solve(eq_impacte, t)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>t_vol <span class="op">=</span> solucions_t[<span class="dv">1</span>]  <span class="co"># La solució t &gt; 0</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Abast màxim horitzontal x_max</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>x_max <span class="op">=</span> sp.simplify(x_t.subs(t, t_vol))</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Altura màxima y_max (quan v_y = 0 -&gt; t_pujada = t_vol / 2)</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>t_pujada <span class="op">=</span> t_vol <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>y_max <span class="op">=</span> sp.simplify(y_t.subs([(y0, <span class="dv">0</span>), (t, t_pujada)]))</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="er">🎯 Resultats simbòlics deduïts analíticament:")</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>display(Math(<span class="ss">f"t_</span><span class="ch">{{\t</span><span class="ss">ext</span><span class="ch">{{</span><span class="ss">vol</span><span class="ch">}}}}</span><span class="ss"> = </span><span class="sc">{</span>sp<span class="sc">.</span>latex(t_vol)<span class="sc">}</span><span class="ss">"</span>))</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>display(Math(<span class="ss">f"x_</span><span class="ch">{{\t</span><span class="ss">ext</span><span class="ch">{{</span><span class="ss">màx</span><span class="ch">}}}}</span><span class="ss"> = </span><span class="sc">{</span>sp<span class="sc">.</span>latex(x_max)<span class="sc">}</span><span class="ss">"</span>))</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>display(Math(<span class="ss">f"y_</span><span class="ch">{{\t</span><span class="ss">ext</span><span class="ch">{{</span><span class="ss">màx</span><span class="ch">}}}}</span><span class="ss"> = </span><span class="sc">{</span>sp<span class="sc">.</span>latex(y_max)<span class="sc">}</span><span class="ss">"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Equacions paramètriques contínues del moviment</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>x(t) <span class="op">=</span> v0 <span class="op">*</span> cos(theta) <span class="op">*</span> t</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>y(t) <span class="op">=</span> y0 <span class="op">+</span> v0 <span class="op">*</span> sin(theta) <span class="op">*</span> t <span class="op">-</span> (<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">*</span> g <span class="op">*</span> t<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>z(t) <span class="op">=</span> (<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">*</span> w <span class="op">*</span> t<span class="op">^</span><span class="dv">2</span>  <span class="co"># Modelització 3D d'una acceleració lateral (vent)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"📌 Equacions paramètriques formals:"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>show(x(t))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>show(y(t))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>show(z(t))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Temps de vol simbòlic analític quan y(t) == 0 (amb y0 = 0)</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>sol_t <span class="op">=</span> solve(y(t).subs(y0<span class="op">=</span><span class="dv">0</span>) <span class="op">==</span> <span class="dv">0</span>, t)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>t_vol <span class="op">=</span> sol_t[<span class="dv">0</span>].rhs()</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Abast màxim analític reduït trigonomètricament</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>x_max <span class="op">=</span> x(t_vol).trig_reduce()</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Altura màxima analítica (quan la velocitat vertical vy == 0)</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>vy(t) <span class="op">=</span> diff(y(t), t)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>t_pujada <span class="op">=</span> solve(vy(t).subs(y0<span class="op">=</span><span class="dv">0</span>) <span class="op">==</span> <span class="dv">0</span>, t)[<span class="dv">0</span>].rhs()</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>y_max <span class="op">=</span> y(t_pujada).subs(y0<span class="op">=</span><span class="dv">0</span>).trig_reduce()</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">🎯 Resultats simbòlics deduïts analíticament per SageMath:"</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>pretty_print(html(<span class="ss">f"&lt;b&gt;Temps de vol:&lt;/b&gt; $</span><span class="sc">{</span>latex(t_vol)<span class="sc">}</span><span class="ss">$"</span>))</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>pretty_print(html(<span class="ss">f"&lt;b&gt;Abast màxim:&lt;/b&gt; $</span><span class="sc">{</span>latex(x_max)<span class="sc">}</span><span class="ss">$"</span>))</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>pretty_print(html(<span class="ss">f"&lt;b&gt;Altura màxima:&lt;/b&gt; $</span><span class="sc">{</span>latex(y_max)<span class="sc">}</span><span class="ss">$"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="simulador-interactiu-amb-lliscadors-dinàmics" class="level2">
-<h2 class="anchored" data-anchor-id="simulador-interactiu-amb-lliscadors-dinàmics">🎮 3. Simulador Interactiu amb Lliscadors Dinàmics ()</h2>
-<p>Ajusta els valors de la <strong>velocitat inicial (<span class="math inline">\()**, l'**angle de llançament (\)</span> heta<span class="math inline">\()**, l'**alçada inicial (\)</span>)</strong> i selecciona el <strong>camp gravitatori planetari</strong> per a observar la trajectòria en temps real.</p>
+<section id="traçat-simbòlic-natiu-2d-i-3d-parametric_plot-plot3d" class="level2">
+<h2 class="anchored" data-anchor-id="traçat-simbòlic-natiu-2d-i-3d-parametric_plot-plot3d">📈 3. Traçat Simbòlic Natiu 2D i 3D (<code>parametric_plot</code> &amp; <code>plot3d</code>)</h2>
+<p>SageMath traça les corbes contínues directament des de les expressions simbòliques sense cap discretització numèrica manual.</p>
 <div id="cell-5" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> interact, FloatSlider, Dropdown</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Diccionari de gravetats en diferents cossos celestes (m/s^2)</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>GRAVETATS <span class="op">=</span> {</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"🌍 Terra (9.81 m/s²)"</span>: <span class="fl">9.81</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"🌕 Lluna (1.62 m/s²)"</span>: <span class="fl">1.62</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"🔴 Mart (3.71 m/s²)"</span>: <span class="fl">3.71</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"🪐 Júpiter (24.79 m/s²)"</span>: <span class="fl">24.79</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simular_tir(v0<span class="op">=</span><span class="fl">25.0</span>, angle_graus<span class="op">=</span><span class="fl">45.0</span>, y0<span class="op">=</span><span class="fl">0.0</span>, planeta<span class="op">=</span><span class="st">"🌍 Terra (9.81 m/s²)"</span>):</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    g <span class="op">=</span> GRAVETATS[planeta]</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    theta_rad <span class="op">=</span> np.radians(angle_graus)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    v0x <span class="op">=</span> v0 <span class="op">*</span> np.cos(theta_rad)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    v0y <span class="op">=</span> v0 <span class="op">*</span> np.sin(theta_rad)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Càlcul del temps de vol exacte mitjançant la fórmula quadràtica</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -0.5 * g * t^2 + v0y * t + y0 = 0</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    discriminant <span class="op">=</span> v0y<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> g <span class="op">*</span> y0</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    t_vol <span class="op">=</span> (v0y <span class="op">+</span> np.sqrt(discriminant)) <span class="op">/</span> g</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Temps d'altura màxima</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    t_hmax <span class="op">=</span> v0y <span class="op">/</span> g</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    h_max <span class="op">=</span> y0 <span class="op">+</span> (v0y<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> g) <span class="cf">if</span> t_hmax <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> y0</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    x_hmax <span class="op">=</span> v0x <span class="op">*</span> t_hmax <span class="cf">if</span> t_hmax <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Abast màxim</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    x_impacte <span class="op">=</span> v0x <span class="op">*</span> t_vol</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Vector de temps per a la gràfica</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    t_vals <span class="op">=</span> np.linspace(<span class="dv">0</span>, t_vol, <span class="dv">300</span>)</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    x_vals <span class="op">=</span> v0x <span class="op">*</span> t_vals</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    y_vals <span class="op">=</span> y0 <span class="op">+</span> v0y <span class="op">*</span> t_vals <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> g <span class="op">*</span> t_vals<span class="op">**</span><span class="dv">2</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Creació de la figura</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>), dpi<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    plt.plot(x_vals, y_vals, <span class="st">"b-"</span>, lw<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">"Trajectòria Parabòlica"</span>)</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Punts clau</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    plt.plot(<span class="dv">0</span>, y0, <span class="st">"go"</span>, markersize<span class="op">=</span><span class="dv">8</span>, label<span class="op">=</span><span class="ss">f"Punt Inicial (0, </span><span class="sc">{</span>y0<span class="sc">:.1f}</span><span class="ss"> m)"</span>)</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    plt.plot(x_hmax, h_max, <span class="st">"r^"</span>, markersize<span class="op">=</span><span class="dv">10</span>, label<span class="op">=</span><span class="ss">f"Altura Màx. (</span><span class="sc">{</span>x_hmax<span class="sc">:.1f}</span><span class="ss">, </span><span class="sc">{</span>h_max<span class="sc">:.1f}</span><span class="ss"> m)"</span>)</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    plt.plot(x_impacte, <span class="dv">0</span>, <span class="st">"kx"</span>, markersize<span class="op">=</span><span class="dv">10</span>, mew<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="ss">f"Impacte (</span><span class="sc">{</span>x_impacte<span class="sc">:.1f}</span><span class="ss">, 0.0 m)"</span>)</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Dibuix del vector de velocitat inicial</span></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    escala_vector <span class="op">=</span> <span class="bu">min</span>(x_impacte, h_max) <span class="op">*</span> <span class="fl">0.2</span> <span class="cf">if</span> x_impacte <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">5</span></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    plt.quiver(<span class="dv">0</span>, y0, v0x, v0y, angles<span class="op">=</span><span class="st">"xy"</span>, scale_units<span class="op">=</span><span class="st">"xy"</span>, scale<span class="op">=</span>v0<span class="op">/</span>escala_vector, color<span class="op">=</span><span class="st">"purple"</span>, width<span class="op">=</span><span class="fl">0.005</span>, label<span class="op">=</span><span class="ss">f"Vector v0 (</span><span class="sc">{</span>v0<span class="sc">:.1f}</span><span class="ss"> m/s a </span><span class="sc">{</span>angle_graus<span class="sc">:.0f}</span><span class="ss">°)"</span>)</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Format i límits</span></span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"black"</span>, lw<span class="op">=</span><span class="fl">1.5</span>)</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"black"</span>, lw<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f"Simulació de Tir Parabòlic — </span><span class="sc">{</span>planeta<span class="sc">}</span></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="er">v₀ = {v0:.1f} m/s | θ = {angle_graus:.1f}° | y₀ = {y0:.1f} m", fontsize=13, fontweight="bold", pad=12)</span></span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Distància Horitzontal x (m)"</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Alçada Vertical y (m)"</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    plt.xlim(<span class="op">-</span><span class="bu">max</span>(<span class="dv">5</span>, x_impacte<span class="op">*</span><span class="fl">0.05</span>), <span class="bu">max</span>(<span class="dv">10</span>, x_impacte<span class="op">*</span><span class="fl">1.1</span>))</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    plt.ylim(<span class="op">-</span><span class="bu">max</span>(<span class="dv">2</span>, h_max<span class="op">*</span><span class="fl">0.05</span>), <span class="bu">max</span>(<span class="dv">10</span>, h_max<span class="op">*</span><span class="fl">1.2</span>))</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    plt.legend(loc<span class="op">=</span><span class="st">"upper right"</span>, frameon<span class="op">=</span><span class="va">True</span>, shadow<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Taula de resultats numèrics</span></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"📊 RESULTATS NUMÈRICS DE LA SIMULACIÓ:"</span>)</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  • Temps total de vol:        </span><span class="sc">{</span>t_vol<span class="sc">:.2f}</span><span class="ss"> s"</span>)</span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  • Alçada màxima assolida:    </span><span class="sc">{</span>h_max<span class="sc">:.2f}</span><span class="ss"> m (als </span><span class="sc">{</span>t_hmax<span class="sc">:.2f}</span><span class="ss"> s)"</span>)</span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  • Abast horitzontal total:   </span><span class="sc">{</span>x_impacte<span class="sc">:.2f}</span><span class="ss"> m"</span>)</span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  • Component horitzontal v_x: </span><span class="sc">{</span>v0x<span class="sc">:.2f}</span><span class="ss"> m/s (constant)"</span>)</span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  • Component vertical v_y0:   </span><span class="sc">{</span>v0y<span class="sc">:.2f}</span><span class="ss"> m/s"</span>)</span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Lliscadors interactius</span></span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>interact(</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    simular_tir,</span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    v0<span class="op">=</span>FloatSlider(<span class="bu">min</span><span class="op">=</span><span class="fl">5.0</span>, <span class="bu">max</span><span class="op">=</span><span class="fl">80.0</span>, step<span class="op">=</span><span class="fl">1.0</span>, value<span class="op">=</span><span class="fl">25.0</span>, description<span class="op">=</span><span class="st">"v₀ (m/s):"</span>),</span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>    angle_graus<span class="op">=</span>FloatSlider(<span class="bu">min</span><span class="op">=</span><span class="fl">0.0</span>, <span class="bu">max</span><span class="op">=</span><span class="fl">90.0</span>, step<span class="op">=</span><span class="fl">1.0</span>, value<span class="op">=</span><span class="fl">45.0</span>, description<span class="op">=</span><span class="st">"Angle θ (°):"</span>),</span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    y0<span class="op">=</span>FloatSlider(<span class="bu">min</span><span class="op">=</span><span class="fl">0.0</span>, <span class="bu">max</span><span class="op">=</span><span class="fl">50.0</span>, step<span class="op">=</span><span class="fl">1.0</span>, value<span class="op">=</span><span class="fl">0.0</span>, description<span class="op">=</span><span class="st">"Alçada y₀ (m):"</span>),</span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>    planeta<span class="op">=</span>Dropdown(options<span class="op">=</span><span class="bu">list</span>(GRAVETATS.keys()), value<span class="op">=</span><span class="st">"🌍 Terra (9.81 m/s²)"</span>, description<span class="op">=</span><span class="st">"Gravetat:"</span>)</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sage code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paràmetres per a la visualització simbòlica</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>v0_val <span class="op">=</span> <span class="dv">25</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>theta_val <span class="op">=</span> pi <span class="op">/</span> <span class="dv">4</span>  <span class="co"># 45 graus</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>g_val <span class="op">=</span> <span class="fl">9.81</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>w_val <span class="op">=</span> <span class="fl">1.5</span>         <span class="co"># component de vent per a la trajectòria 3D</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>t_vol_num <span class="op">=</span> t_vol.subs(v0<span class="op">=</span>v0_val, theta<span class="op">=</span>theta_val, g<span class="op">=</span>g_val)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Gràfica paramètrica simbòlica 2D en SageMath</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>p2d <span class="op">=</span> parametric_plot(</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    (x(t).subs(v0<span class="op">=</span>v0_val, theta<span class="op">=</span>theta_val),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>     y(t).subs(v0<span class="op">=</span>v0_val, theta<span class="op">=</span>theta_val, g<span class="op">=</span>g_val, y0<span class="op">=</span><span class="dv">0</span>)),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    (t, <span class="dv">0</span>, t_vol_num),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'blue'</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    thickness<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    axes_labels<span class="op">=</span>[<span class="st">'Distància $x$ (m)'</span>, <span class="st">'Alçada $y$ (m)'</span>],</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">'Trajectòria Parabòlica Simbòlica 2D en SageMath'</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>show(p2d, gridlines<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Gràfica paramètrica simbòlica 3D (amb desviació tridimensional)</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>p3d <span class="op">=</span> parametric_plot3d(</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    (x(t).subs(v0<span class="op">=</span>v0_val, theta<span class="op">=</span>theta_val),</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>     z(t).subs(w<span class="op">=</span>w_val),</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>     y(t).subs(v0<span class="op">=</span>v0_val, theta<span class="op">=</span>theta_val, g<span class="op">=</span>g_val, y0<span class="op">=</span><span class="dv">0</span>)),</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    (t, <span class="dv">0</span>, t_vol_num),</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'red'</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    thickness<span class="op">=</span><span class="dv">4</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>show(p3d)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<hr>
 </section>
-<section id="guia-dindagació-per-a-lalumnat-ibse-concepcions-alternatives" class="level2">
-<h2 class="anchored" data-anchor-id="guia-dindagació-per-a-lalumnat-ibse-concepcions-alternatives">🔍 4. Guia d’Indagació per a l’Alumnat (IBSE &amp; Concepcions Alternatives)</h2>
-<section id="activitat-1-els-angles-complementaris" class="level3">
-<h3 class="anchored" data-anchor-id="activitat-1-els-angles-complementaris">🧪 Activitat 1: Els Angles Complementaris</h3>
-<ul>
-<li><strong>Repte:</strong> Fixa = 30 ext{ m/s}$ i = 0 ext{ m}$. Compara l’abast obtingut amb $ heta = 30^$ i amb $ heta = 60^$.</li>
-<li><strong>Pregunta de reflexió:</strong> Què observes en l’abast màxim? Per què coincideixen? Compara ara els seus temps de vol i alçades màximes. Per què no són iguals?</li>
-</ul>
-</section>
-<section id="activitat-2-la-ciència-en-altres-mons" class="level3">
-<h3 class="anchored" data-anchor-id="activitat-2-la-ciència-en-altres-mons">🪐 Activitat 2: La Ciència en Altres Mons</h3>
-<ul>
-<li><strong>Repte:</strong> Llança el projectil a la Lluna ( = 1.62 ext{ m/s}^2<span class="math inline">\() i a Júpiter ( = 24.79 ext{ m/s}^2\)</span>) amb els mateixos valors de $ i $ heta$.</li>
-<li><strong>Pregunta de reflexió:</strong> Com afecta la gravetat al temps de vol i a l’abast? És una relació lineal o inversa?</li>
-</ul>
-</section>
+<section id="simulador-interactiu-simbòlic-natiu-interact" class="level2">
+<h2 class="anchored" data-anchor-id="simulador-interactiu-simbòlic-natiu-interact">🎮 4. Simulador Interactiu Simbòlic Natiu (<code>@interact</code>)</h2>
+<p>L’alumnat pot manipular directament la velocitat, l’angle, l’alçada i la gravetat de diferents cossos celestes de manera completament interactiva.</p>
+<div id="cell-7" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sage code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at">@interact</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulador_tir_simbolic(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    v0<span class="op">=</span>slider(<span class="fl">5.0</span>, <span class="fl">80.0</span>, <span class="fl">1.0</span>, default<span class="op">=</span><span class="fl">25.0</span>, label<span class="op">=</span><span class="st">'Velocitat v₀ (m/s):'</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    angle_deg<span class="op">=</span>slider(<span class="fl">5.0</span>, <span class="fl">85.0</span>, <span class="fl">1.0</span>, default<span class="op">=</span><span class="fl">45.0</span>, label<span class="op">=</span><span class="st">'Angle θ (°):'</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    y0_in<span class="op">=</span>slider(<span class="fl">0.0</span>, <span class="fl">50.0</span>, <span class="fl">1.0</span>, default<span class="op">=</span><span class="fl">0.0</span>, label<span class="op">=</span><span class="st">'Alçada y₀ (m):'</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    planeta<span class="op">=</span>selector([<span class="st">'🌍 Terra (9.81 m/s²)'</span>, <span class="st">'🌕 Lluna (1.62 m/s²)'</span>, <span class="st">'🔴 Mart (3.71 m/s²)'</span>, <span class="st">'🪐 Júpiter (24.79 m/s²)'</span>], label<span class="op">=</span><span class="st">'Gravetat:'</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    g_dict <span class="op">=</span> {</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'🌍 Terra (9.81 m/s²)'</span>: <span class="fl">9.81</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'🌕 Lluna (1.62 m/s²)'</span>: <span class="fl">1.62</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">'🔴 Mart (3.71 m/s²)'</span>: <span class="fl">3.71</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'🪐 Júpiter (24.79 m/s²)'</span>: <span class="fl">24.79</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    g_num <span class="op">=</span> g_dict[planeta]</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    theta_rad <span class="op">=</span> angle_deg <span class="op">*</span> pi <span class="op">/</span> <span class="dv">180</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Resolució simbòlica del temps d'impacte exacte</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    eq_imp <span class="op">=</span> y(t).subs(v0<span class="op">=</span>v0, theta<span class="op">=</span>theta_rad, g<span class="op">=</span>g_num, y0<span class="op">=</span>y0_in) <span class="op">==</span> <span class="dv">0</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    sols <span class="op">=</span> solve(eq_imp, t)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    t_imp <span class="op">=</span> [s.rhs() <span class="cf">for</span> s <span class="kw">in</span> sols <span class="cf">if</span> s.rhs().n() <span class="op">&gt;</span> <span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Avaluació simbòlica de l'abast i altura màxima</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    x_final <span class="op">=</span> x(t_imp).subs(v0<span class="op">=</span>v0, theta<span class="op">=</span>theta_rad)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    t_pujada_num <span class="op">=</span> (v0 <span class="op">*</span> sin(theta_rad) <span class="op">/</span> g_num)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    h_max_num <span class="op">=</span> y(t_pujada_num).subs(v0<span class="op">=</span>v0, theta<span class="op">=</span>theta_rad, g<span class="op">=</span>g_num, y0<span class="op">=</span>y0_in)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Traçat simbòlic directe</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    grafic <span class="op">=</span> parametric_plot(</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        (x(t).subs(v0<span class="op">=</span>v0, theta<span class="op">=</span>theta_rad),</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>         y(t).subs(v0<span class="op">=</span>v0, theta<span class="op">=</span>theta_rad, g<span class="op">=</span>g_num, y0<span class="op">=</span>y0_in)),</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        (t, <span class="dv">0</span>, t_imp),</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">'blue'</span>,</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        thickness<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        axes_labels<span class="op">=</span>[<span class="st">'Distància $x$ (m)'</span>, <span class="st">'Alçada $y$ (m)'</span>],</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span><span class="ss">f'Simulació Simbòlica: </span><span class="sc">{</span>planeta<span class="sc">}</span><span class="ss"> | v₀=</span><span class="sc">{</span>v0<span class="sc">}</span><span class="ss"> m/s, θ=</span><span class="sc">{</span>angle_deg<span class="sc">}</span><span class="ss">°'</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    punt_ini <span class="op">=</span> point((<span class="dv">0</span>, y0_in), color<span class="op">=</span><span class="st">'green'</span>, size<span class="op">=</span><span class="dv">40</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    punt_hmax <span class="op">=</span> point((x(t_pujada_num).subs(v0<span class="op">=</span>v0, theta<span class="op">=</span>theta_rad), h_max_num), color<span class="op">=</span><span class="st">'red'</span>, size<span class="op">=</span><span class="dv">40</span>)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    punt_imp <span class="op">=</span> point((x_final, <span class="dv">0</span>), color<span class="op">=</span><span class="st">'black'</span>, size<span class="op">=</span><span class="dv">40</span>)</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    show(grafic <span class="op">+</span> punt_ini <span class="op">+</span> punt_hmax <span class="op">+</span> punt_imp, gridlines<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    pretty_print(html(<span class="ss">f'''</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="ss">    &lt;div style="background-color:#f8f9fa; padding:10px; border-left:4px solid #0d6efd; margin-top:10px;"&gt;</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="ss">      &lt;b&gt;📊 Resultats Simbòlics Exactes de la Modelització:&lt;/b&gt;&lt;br&gt;</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="ss">      • &lt;b&gt;Temps total de vol:&lt;/b&gt; </span><span class="sc">{</span>t_imp<span class="sc">.</span>n(digits<span class="op">=</span><span class="dv">4</span>)<span class="sc">}</span><span class="ss"> s&lt;br&gt;</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="ss">      • &lt;b&gt;Alçada màxima:&lt;/b&gt; </span><span class="sc">{</span>h_max_num<span class="sc">.</span>n(digits<span class="op">=</span><span class="dv">4</span>)<span class="sc">}</span><span class="ss"> m (als </span><span class="sc">{</span>t_pujada_num<span class="sc">.</span>n(digits<span class="op">=</span><span class="dv">4</span>)<span class="sc">}</span><span class="ss"> s)&lt;br&gt;</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="ss">      • &lt;b&gt;Abast horitzontal:&lt;/b&gt; </span><span class="sc">{</span>x_final<span class="sc">.</span>n(digits<span class="op">=</span><span class="dv">4</span>)<span class="sc">}</span><span class="ss"> m&lt;br&gt;</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="ss">    &lt;/div&gt;</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="ss">    '''</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 
 </main>

@@ -1,4 +1,6 @@
-{
+import json
+
+notebook = {
   "cells": [
     {
       "cell_type": "markdown",
@@ -30,7 +32,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": null,
+      "execution_count": None,
       "metadata": {},
       "outputs": [],
       "source": [
@@ -75,7 +77,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": null,
+      "execution_count": None,
       "metadata": {},
       "outputs": [],
       "source": [
@@ -121,7 +123,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": null,
+      "execution_count": None,
       "metadata": {},
       "outputs": [],
       "source": [
@@ -200,3 +202,6 @@
   "nbformat": 4,
   "nbformat_minor": 4
 }
+
+with open('/home/casimir/Documents/Segon_Cervell/TFM/quaderns/01_simulador_tir_parabolic.ipynb', 'w', encoding='utf-8') as f:
+  json.dump(notebook, f, indent=2, ensure_ascii=False)
