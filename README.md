@@ -45,6 +45,42 @@ L'elaboració d'aquest Treball de Final de Màster ha suposat un procés d'apren
 Aquest camí ha permès enfocar el TFM no sols com un tràmit acadèmic, sinó com una **experiència formativa molt valuosa per a consolidar una visió docent coherent, pràctica i compromesa amb l'escola pública**.
 
 
+## 🧩 L'Ecosistema d'Eines Pròpies: MCPs i `agy-bridge`
+
+Per tal de donar suport pràctic a la proposta metodològica i garantir un flux de treball autònom, reproduïble i basat en estàndards oberts, s'han desenvolupat i integrat diverses eines modulars sota el protocol obert **Model Context Protocol (MCP)** i un pont d'execució interactiva:
+
+```mermaid
+flowchart TD
+    subgraph ECOSISTEMA ["🌐 Ecosistema de Recerca i Simulació Científica"]
+        direction TB
+        subgraph REC ["📚 Gestió Documental i Memòria"]
+            M1["🔎 academic-spain\n(Cerca en 30+ BDs)"]
+            M2["🛡️ mcp-server-eduvpn\n(Accés institucional UV)"]
+            M3["🧠 segon-cervell-semantic\n(Indexació vectorial a la RAM)"]
+        end
+
+        subgraph SIM ["🧪 Càlcul Simbòlic i Simulació"]
+            M4["🧮 mcp-server-jupyter\n(Execució SageMath / Python)"]
+            BR["🌉 agy-bridge\n(Pont interactiu Emacs / CLI)"]
+        end
+    end
+
+    REC --> SIM
+    SIM --> OUT["📄 Memòria Quarto (.qmd / APA 7) & Quaderns Interactius"]
+```
+
+### 1. La Suite de Servidors MCP Sobiranitzats:
+* 🔎 **[`mcp-server-academic-spain`](https://github.com/CasimirVictoria/mcp-server-academic-spain):** Motor unificat de cerca acadèmica que connecta amb més de 30 repositoris espanyols i internacionals (Dialnet, ERIC, Scopus, WOS, OpenAlex, Eureka, etc.), extraient metadades i citacions BibTeX automàticament.
+* 🛡️ **[`mcp-server-eduvpn`](https://github.com/CasimirVictoria/mcp-server-eduvpn):** Mòdul de connexió autònoma a la xarxa privada de la Universitat de València (`eduVPN`), que permet l'accés legítim als articles i llibres científics subscrits per la biblioteca universitària.
+* 🧠 **[`mcp-server-segon-cervell-semantic`](https://github.com/CasimirVictoria/segon-cervell-semantic-mcp):** Servidor d'indexació vectorial ultraràpid (`FastEmbed` + `SQLite WAL`) que cerca per afinitat semàntica a través de les fitxes de lectura de Denote a la memòria RAM (< 3 ms), facilitant la recuperació d'idees sense interferir en la redacció.
+* 🧮 **[`mcp-server-jupyter`](https://github.com/CasimirVictoria/mcp-server-jupyter):** Servidor d'execució remota de codi que es comunica amb els nuclis de càlcul de Jupyter (`sagemath`, `python3`, `ir`) per a validar expressions matemàtiques i derivacions físiques en temps real.
+
+### 2. `agy-bridge`: El Pont Interactiu per a Simulacions i Càlculs Simbòlics
+* 🌉 **[`agy-bridge`](https://github.com/CasimirVictoria/agy-bridge):** És una passarel·la lleugera i bidireccional desenvolupada per a interconnectar l'editor de text ([GNU Emacs](https://www.gnu.org/software/emacs/)), la línia d'ordres i els servidors de càlcul.
+* **Com s'empra per a la modelització interactiva:** `agy-bridge` permet enviar directament blocs de càlcul simbòlic de **SageMath** des dels fitxers font cap a l'entorn d'execució de Jupyter, capturar a l'instant els resultats analítics (arrels d'equacions, derivades, integrals) i generar visualitzacions interactives (`parametric_plot`, `plot3d`, `@interact`) que es renderitzen de manera immediata a la pantalla del docent o investigador.
+
+Aquest ecosistema modular demostra com la combinació d'estàndards oberts permet crear un entorn de treball científic i pedagògic d'alt nivell, completament sobirà, privat i exempt de dependències comercials privatives.
+
 ---
 
 ## 🛠️ Ecosistema Tecnològic i Ciència Oberta (REA)
