@@ -97,10 +97,20 @@ CLOSED: [2026-08-28 Fri 20:15]
 - [X] *3.5 Avaluació Formativa i Rúbriques Competencials:*
   - Avaluació triangulada (50% quadern, 25% cooperatiu, 25% defensa oral) i rúbrica analítica LOMLOE de 4 nivells.
 
-*** TODO 2.4. Capítol 4: Metodologia d'Implementació, DUA i Gestió d'Aula (Hores 8–9)
-- [ ] *4.1 Disseny Universal per a l'Aprenentatge (DUA):* Pautes d'accessibilitat, flexibilitat de representació i canals d'expressió computacional.
-- [ ] *4.2 Organització dels Equips Cooperatius:* Rols estructurats (*Programa CA/AC* de Pujolàs) i tècnica dels «llapis al centre» per evitar l'aïllament davant la pantalla.
-- [ ] *4.3 Protocol d'Acompanyament Emocional i Gestió de la Frustració davant la Sintaxi.*
+*** DONE 2.4. Capítol 4: Metodologia d'Implementació, DUA i Gestió d'Aula (Hores 8–9)
+CLOSED: [2026-08-28 Fri 20:25]
+- [X] *4.1 Disseny Universal per a l'Aprenentatge (DUA):*
+  - Els 3 principis de [cite:@CAST_2018] i [cite:@decret107_2022] art. 4 desplegats en Jupyter/SageMath.
+  - Representació multimodal amb [cite:@Mayer_2014], acció/expressió (*Use-Modify-Create* i *learner-controlled* de [cite:@Lou_2001]) i implicació amb reptes reals.
+- [X] *4.2 Organització dels Equips Cooperatius:*
+  - Evidència meta-analítica de grups heterogenis de 4 de [cite:@Lou_2001].
+  - Programa CA/AC de Pere Pujolàs ([cite:@Pujolas_2008; @Pujolas_2009]) amb 4 rols rotatius i la tècnica «Llapissos al centre / Mans fora del teclat».
+- [X] *4.3 Protocol de Suport Emocional i Gestió de l'Error:*
+  - Transformació de 'Stoppers' a 'Movers' ([cite:@Perkins_1989; @Charles_2023]).
+  - Reducció del 73% de frustració i 55% d'ansietat en Python mitjançant Targetes de Suport (*Cheat Sheet*) en valencià i desmitificació docent ([cite:@Terroba_2021; @Mellado_2014]).
+- [X] *4.4 Infraestructura Tecnològica i Pla de Contingències:*
+  - Desplegament al núvol lliure d'instal·lació amb CoCalc/JupyterLab.
+  - Pla de contingència blindat de 4 nivells (Servidor/Binder, Xarxa/Offline local, Hardware/Mòbils 5"+, Global/Treball analògic en paper).
 
 *** TODO 2.5. Capítol 5: Conclusions, Limitacions i Línies de Futur (Hora 9)
 - [ ] *5.1 Assoliment dels Objectius del Treball.*

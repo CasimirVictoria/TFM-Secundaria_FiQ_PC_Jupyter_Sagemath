@@ -1,7 +1,184 @@
 # Metodologia d'Implementació, DUA i Gestió d'Aula {#sec-metodologia-dua}
 
-## Pautes del Disseny Universal per a l'Aprenentatge (DUA) {#sec-pautes-dua}
+## Pautes del Disseny Universal per a l'Aprenentatge (DUA) a l'Entorn Computacional {#sec-pautes-dua}
 
-## Organització dels Equips Cooperatius (Programa CA/AC) {#sec-equips-cooperatius}
+L'atenció a la diversitat i la inclusió educativa constitueixen principis rectors fonamentals del marc curricular valencià [@decret107_2022; @decret108_2022]. L'article 4 del Decret 107/2022 estableix preceptivament que el disseny de les Situacions d'Aprenentatge ha de garantir l'accessibilitat universal mitjançant l'aplicació de les pautes del **Disseny Universal per a l'Aprenentatge (DUA)** [@CAST_2018].
+
+La integració de quaderns interactius **Jupyter Notebook** amb el nucli de càlcul simbòlic **SageMath** proporciona un entorn multimèdia ric i flexible que dóna resposta directa als tres principis estructurants del DUA:
+
+```
+ ┌─────────────────────────────────────────────────────────────────────────┐
+ │               DESPLEGAMENT DEL DUA EN JUPYTER / SAGEMATH                │
+ ├────────────────────────────────────┬────────────────────────────────────┤
+ │ PRINCIPI I: REPRESENTACIÓ          │ • Text narratiu explicatiu Markdown│
+ │ (El «Què» de l'aprenentatge)       │ • Renderització LaTeX amb show()   │
+ │                                    │ • Gràfics dinàmics i interactius   │
+ │                                    │ • Codi comentat pas a pas          │
+ ├────────────────────────────────────┼────────────────────────────────────┤
+ │ PRINCIPI II: ACCIÓ I EXPRESSIÓ     │ • Progressió Use-Modify-Create     │
+ │ (El «Com» de l'aprenentatge)       │ • Redacció d'assaigs computacionals│
+ │                                    │ • Controls lliscants (@interact)   │
+ │                                    │ • Càlcul analític i ajust de dades │
+ ├────────────────────────────────────┼────────────────────────────────────┤
+ │ PRINCIPI III: IMPLICACIÓ           │ • Reptes autèntics del món real    │
+ │ (El «Per què» de l'aprenentatge)   │ • Treball cooperatiu formal CA/AC  │
+ │                                    │ • Reducció d'ansietat davant l'error│
+ │                                    │ • Autoavaluació i coavaluació      │
+ └────────────────────────────────────┴────────────────────────────────────┘
+```
+
+### Principi I: Proporcionar Múltiples Formes de Representació {.unnumbered}
+
+En l'ensenyament tradicional de la física i la química, les barreres d'aprenentatge sorgeixen sovint de la incapacitat de l'alumnat per connectar el fenomen observable amb el formalisme matemàtic abstracte [@Belu_2009; @Hestenes_1987]. Els quaderns Jupyter superen aquesta fragmentació actuant com a documents d'integració multimodal (*computational storytelling*) [@Hanc_2020]:
+
+1. **Dualitat text-codi-gràfic:** El contingut científic no es presenta com una fórmula aïllada, sinó acompanyat d'explicacions narratives en text enriquit (Markdown), esquemes conceptuals, codi executable comentat línia a línia i visualitzacions gràfiques generades en temps real amb `matplotlib` i `pandas` [@Borovsky_2023].
+2. **Tipografia formal d'alta llegibilitat:** Mitjançant la instrucció `show()`, SageMath converteix les expressions algebraiques internes en notació matemàtica formal estàndard (LaTeX), reproduint l'aspecte visual dels manuals escolars i eliminant la sobrecàrrega cognitiva derivada de desxifrar sintaxis lineals críptiques.
+3. **Respecte a la Teoria Cognitiva de l'Aprenentatge Multimèdia:** D'acord amb els principis de Richard Mayer [@Mayer_2014], la presentació simultània i coordinada de paraules i imatges dinàmiques afavoreix la construcció de models mentals interns (intuïció física) sense saturar el canal visual o auditiu de la memòria de treball [@Hanc_2020].
+
+### Principi II: Proporcionar Múltiples Formes d'Acció i Expressió {.unnumbered}
+
+L'alfabetització computacional (*computational literacy*) defensa que programar és un mitjà d'expressió i creació [@Lodi_2021; @diSessa_2018]. La proposta ofereix diversos canals perquè l'estudiantat puga demostrar el seu aprenentatge:
+
+1. **Flexibilitat d'execució (*Learner-controlled*):** L'alumnat que presenta dificultats amb l'escriptura de codi pot interactuar directament amb els simuladors mitjançant controls visuals lliscants (*sliders* amb `@interact`), manipulant paràmetres com la velocitat inicial, l'angle o la massa sense necessitat de teclejar codi [@Hanc_2020]. Com va demostrar Lou et al. [@Lou_2001], els entorns tecnològics controlats per l'aprenent (*learner-controlled*) incrementen significativament el rendiment de la tasca enfront dels sistemes rígids i tancats.
+2. **Bastida graduada *Use-Modify-Create*:** L'estudiant pot triar o transitar gradualment entre executar codis existents (*Use*), modificar i ampliar models (*Modify*) o escriure noves funcions d'anàlisi de dades (*Create*), respectant el ritme d'aprenentatge individual [@Grover_2013; @Brennan_2012].
+
+### Principi III: Proporcionar Múltiples Formes d'Implicació i Compromís {.unnumbered}
+
+1. **Contextualització autèntica i dades reals:** Treballar amb vídeos enregistrats per l'alumnat al pati (analitzats amb *Tracker*) o amb reaccions químiques de laboratori connectades amb la indústria i el medi ambient dota d'un sentit d'utilitat real a la tasca, neutralitzant el desinterès crònic diagnosticat a les aules valencianes [@Solbes_2007; @Caamano_2004].
+2. **Clima de seguretat afectiva:** La desmitificació de l'error de programació i el suport de l'equip cooperatiu transformen la pantalla d'un espai d'ansietat a un entorn d'exploració segura [@Charles_2023; @Mellado_2014].
+
+---
+
+## Organització dels Equips Cooperatius (Programa CA/AC de Pere Pujolàs) {#sec-equips-cooperatius}
+
+La investigació meta-analítica de referència duta a terme per Lou et al. [@Lou_2001], basada en 122 estudis i 11.317 aprenents, demostra que l'aprenentatge amb tecnologia en **xicotets grups heterogenis (de 3 a 5 membres)** produeix guanys cognitius i afectius significativament superiors a l'aprenentatge individual ($d_+ = +0.87$ en la resolució de tasques col·laboratives). En els grups heterogenis, l'alumnat amb més dificultats es beneficia de les explicacions immediates dels iguals, mentre que l'alumnat més avançat consolida el seu aprenentatge a través de l'exercici d'ensenyar i argumentar [@Lou_2001; @Johnson_2014].
+
+Tanmateix, Lou et al. adverteixen que aquest benefici només es produeix si s'apliquen **estructures formals de cooperació basades en la interdependència positiva i la responsabilitat individual**; si es deixa el grup sense estructura, el treball deriva en la passivitat de la majoria i el monopoli del teclat per part d'un sol estudiant [@Lou_2001].
+
+Per garantir una cooperació autèntica, la nostra proposta adopta el programa **Cooperar per a Aprendre / Aprendre a Cooperar (CA/AC)** desenvolupat pel grup de Pere Pujolàs [@Pujolas_2008; @Pujolas_2009]:
+
+```
+ ┌─────────────────────────────────────────────────────────────────────────┐
+ │            ESTRUCTURA DELS EQUIPS COOPERATIUS CA/AC EN COCALC           │
+ ├─────────────────────────────────────────────────────────────────────────┤
+ │ Composició: Equips heterogenis de 4 estudiants (1 Alt, 2 Mitjans, 1 Baix)│
+ ├────────────────────────────┬────────────────────────────────────────────┤
+ │ ROL COOPERATIU (Rotatiu)   │ FUNCIONS PRINCIPALS A L'AULA DE COMPUTACIÓ │
+ ├────────────────────────────┼────────────────────────────────────────────┤
+ │ 1. Portaveu / Coordinador  │ • Dinamitza el debat oral de l'equip       │
+ │                            │ • Modera els torns de paraula              │
+ │                            │ • Comunica dubtes i conclusions al docent  │
+ ├────────────────────────────┼────────────────────────────────────────────┤
+ │ 2. Secretari / Redactor    │ • Redacta les explicacions en Markdown     │
+ │    de Conclusions          │ • Registra les hipòtesis i interpretacions │
+ │                            │ • Custodia el quadern de síntesi           │
+ ├────────────────────────────┼────────────────────────────────────────────┤
+ │ 3. Coordinador Tècnic /    │ • Executa les cel·les de codi a CoCalc     │
+ │    Programador             │ • Supervisa la sintaxi de SageMath         │
+ │                            │ • Aplica les guies de depuració d'errors   │
+ ├────────────────────────────┼────────────────────────────────────────────┤
+ │ 4. Supervisor de Dades /   │ • Verifica la coherència física del model  │
+ │    Analista Crític         │ • Supervisa les unitats i els casos límit  │
+ │                            │ • Contrasta les corbes amb dades empíriques│
+ └────────────────────────────┴────────────────────────────────────────────┘
+```
+
+### L'Estructura «Llapissos al Centre / Mans Fora del Teclat» a l'Aula Digital {.unnumbered}
+
+Per traslladar la clàssica tècnica de Pujolàs [@Pujolas_2009] a l'entorn de treball amb ordinadors a CoCalc, s'estableix el següent protocol de tres fases per a cada repte de modelització:
+
+1. **Fase de Debat i Pensament Compartit («Mans fora del teclat»):**  
+   Davant d'un nou problema (per exemple, incorporar la força de fregament aerodinàmic a l'equació diferencial o balancejar una matriu de reacció), **tots els membres de l'equip aparten les mans del teclat i del ratolí**. Durant 5-7 minuts, el grup debat exclusivament de forma oral el significat físic del problema, proposa hipòtesis i decideix quines variables i instruccions de SageMath cal utilitzar.
+2. **Fase de Consens i Verificació:**  
+   El *Portaveu* pregunta a cadascun dels membres si han entès la proposta. Només quan hi ha consens unànime i tothom sap justificar el codi que s'escriurà, finalitza el temps de debat.
+3. **Fase d'Escriptura i Execució Individual:**  
+   Cada estudiant torna a agafar el seu teclat i, de manera individual en el seu compte de CoCalc, escriu la línia de codi i executa la cel·la, comprovant que el resultat coincideix amb la predicció consensuada pel grup [@Pujolas_2009; @Lou_2001].
+
+---
 
 ## Protocol de Suport Emocional i Gestió de la Frustració {#sec-suport-emocional}
+
+L'aprenentatge de la ciència està estretament lligat a la vivència d'emocions [@Mellado_2014]. En introduir la programació textual a secundària, l'aparició inevitable d'errors sintàctics de Python pot desencadenar episodis greus de frustració i ansietat si no es gestiona pedagògicament [@Charles_2023].
+
+### De «Stoppers» a «Movers»: La Resiliència Algorítmica {.unnumbered}
+
+Segons l'estudi de Perkins et al. [@Perkins_1989] i la recerca recent en educació de la física de Tessa Charles i Carl Gwilliam [@Charles_2023], l'alumnat novell davant d'un error de codi es divideix en dues categories:
+* **Els «Stoppers»:** Estudiants que, davant d'un missatge d'error de l'intèrpret, experimenten una forta reacció d'ansietat, «abandonen tota esperança de resoldre el problema de manera independent» i es bloquegen, demanant passivament que el docent els resolga la incidència [@Charles_2023; @Perkins_1989].
+* **Els «Movers»:** Estudiants que interpreten l'error com una retroalimentació natural de la màquina, llegeixen les pistes i experimenten activament mitjançant cicles de prova i depuració (*debugging*) fins a trobar la solució [@Charles_2023].
+
+L'objectiu metodològic del nostre TFM és transformar tot l'alumnat en *movers*, desenvolupant la seua **resiliència algorítmica** i la seua autoeficàcia cientificotècnica.
+
+### Guia de Suport i Diagnòstic d'Errors en Valencià (*Cheat Sheet*) {.unnumbered}
+
+Seguint les recomanacions de Charles i Gwilliam [@Charles_2023] —que van demostrar que traduir els missatges d'error de Python a un llenguatge planer redueix la frustració en un **73%** i l'ansietat en un **55%**—, la nostra proposta incorpora a cada quadern Jupyter una **Targeta de Suport de Depuració en Valencià**:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                 GUIA DE DIAGNÒSTIC D'ERRORS EN SAGEMATH / PYTHON            │
+├──────────────────┬─────────────────────────────┬────────────────────────────┤
+│ MISSATGE D'ERROR │ QUÈ ENS VOL DIR LA MÀQUINA? │ ON HEM DE MIRAR I FIXAR-NOS│
+├──────────────────┼─────────────────────────────┼────────────────────────────┤
+│ SyntaxError      │ «Hi ha una errada en com    │ Revisa el final de la línia│
+│                  │ s'ha escrit la frase de codi│ assenyalada amb ^. Has     │
+│                  │ o falten símbols de tancat» │ oblidat tancar un parèntesi│
+│                  │                             │ ')' o dos punts ':'?       │
+├──────────────────┼─────────────────────────────┼────────────────────────────┤
+│ NameError        │ «He trobat una paraula o    │ Has declarat la variable   │
+│                  │ lletra que no sé què és»    │ simbòlica amb var('x')?    │
+│                  │                             │ Has escrit malament el nom │
+│                  │                             │ d'una funció (majúscules)? │
+├──────────────────┼─────────────────────────────┼────────────────────────────┤
+│ TypeError        │ «M'estàs demanant operar    │ Estàs intentant sumar text │
+│                  │ tipus de dades incompatibles│ amb nombres o has oblidat  │
+│                  │ entre si»                   │ posar el símbol de         │
+│                  │                             │ multiplicar '*'? (ex: 2*x) │
+├──────────────────┼─────────────────────────────┼────────────────────────────┤
+│ ZeroDivisionError│ «S'ha intentat fer una      │ Revisa el denominador de la│
+│                  │ divisió matemàtica per zero»│ fórmula física. Té sentit  │
+│                  │                             │ físic aquest cas límit?    │
+└──────────────────┴─────────────────────────────┴────────────────────────────┘
+```
+
+Aquest instrument, combinat amb la normalització de l'error per part del professorat (*«un missatge d'error és només una pista de la màquina per a millorar el nostre model»*), garanteix una transposició didàctica lliure d'angoixa tecnològica [@Terroba_2021; @Mellado_2014].
+
+---
+
+## Infraestructura Tecnològica i Pla de Gestió de Contingències {#sec-contingencies}
+
+La viabilitat pràctica d'una proposta d'innovació computacional requereix un disseny tècnic que s'adapte a la realitat dels recursos materials dels centres d'Educació Secundària de la Comunitat Valenciana.
+
+### L'Entorn al Núvol: CoCalc (Collaborative Calculation in the Cloud) {.unnumbered}
+
+Per evitar les tradicionals barreres d'instal·lació local de programari (incompatibilitats de sistemes operatius, permisos d'administrador restringits a les aules d'informàtica o diferències de versions), la proposta s'executa a través de la plataforma al núvol **CoCalc (cocalc.com)** [@Hanc_2020]:
+
+1. **Zero instal·lació i accés universal:** S'executa directament des de qualsevol navegador web modern (Firefox, Chrome, Chromium) en ordinadors de centre, portàtils personals (model BYOD - *Bring Your Own Device*) o tauletes.
+2. **Kernel SageMath natiu:** Disposa de totes les llibreries científiques necessàries preinstal·lades (*SageMath, NumPy, SciPy, Matplotlib, SymPy, Pandas*).
+3. **Gestió d'aula centralitzada:** El professorat crea un «Projecte de Curs» que distribueix automàticament els quaderns Jupyter als comptes de l'alumnat, permetent la supervisió en temps real i la recollida automatitzada de les tasques per a la seua avaluació formativa.
+
+### Pla de Contingència davant d'Incidències Tècniques a l'Institut {.unnumbered}
+
+Per garantir que cap incidència tècnica interrompa la seqüència d'aprenentatge, es defineix un **pla de contingència de 4 nivells**:
+
+```
+┌───────────┬─────────────────────────────┬───────────────────────────────────┐
+│ NIVELL    │ ESCENARI D'INCIDÈNCIA       │ PROTOCOL D'ACTUACIÓ PREVENTIU     │
+├───────────┼─────────────────────────────┼───────────────────────────────────┤
+│ Nivell 1  │ Saturació o lentitud dels   │ Diversificació immediata cap a    │
+│ (Servidor)│ servidors de CoCalc         │ servidors cloud alternatius com   │
+│           │                             │ Binder (mybinder.org) o Colab.    │
+├───────────┼─────────────────────────────┼───────────────────────────────────┤
+│ Nivell 2  │ Caiguda total de la connexió│ Activació del mode OFFLINE local: │
+│ (Xarxa)   │ a Internet de l'institut    │ execució de JupyterLab portable   │
+│           │                             │ des de memòries USB o xarxa local.│
+├───────────┼─────────────────────────────┼───────────────────────────────────┤
+│ Nivell 3  │ Avaria o escassetat d'equips│ Reorganització cooperativa: ús de │
+│ (Hardware)│ físics a l'aula             │ dispositius mòbils propis de 5"+  │
+│           │                             │ o treball amb 1 portàtil per grup.│
+├───────────┼─────────────────────────────┼───────────────────────────────────┤
+│ Nivell 4  │ Tall elèctric general o     │ Treball analògic CA/AC: disseny en│
+│ (Global)  │ bloqueig informàtic total   │ paper dels diagrames d'Hestenes,  │
+│           │                             │ arbres de decisió i matrius.      │
+└───────────┴─────────────────────────────┴───────────────────────────────────┘
+```
+
+Aquest blindatge organitzatiu i tecnològic garanteix que la proposta puga ser implementada amb total garantia d'èxit en qualsevol institut de secundària del nostre sistema educatiu.
