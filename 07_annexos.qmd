@@ -1,7 +1,223 @@
 # Annexos {#sec-annexos .unnumbered}
 
-## Annex I: Quadern Jupyter de Física (Cinemàtica i Dinàmica amb SageMath) {#sec-annex-fisica}
+## Annex I: Quadern Jupyter de Física — Cinemàtica i Dinàmica amb SageMath {#sec-annex-fisica}
 
-## Annex II: Quadern Jupyter de Química (Reaccions i Estequiometria) {#sec-annex-quimica}
+Aquest annex reprodueix el codi font complet i comentat del quadern de treball desenvolupat per a la **Situació d'Aprenentatge 1 (1r de Batxillerat)**.
 
-## Annex III: Guia Docent d'Instal·lació i Ús a l'Aula (CoCalc / JupyterLab) {#sec-annex-guia-docent}
+```python
+# ==============================================================================
+# TREBALL DE FINAL DE MÀSTER (UNIVERSITAT DE VALÈNCIA)
+# SITUACIÓ D'APRENENTATGE 1: FÍSICA (1r DE BATXILLERAT)
+# Modelització del Tir Parabòlic amb Resistència Aerodinàmica
+# Entorn: SageMath 10.x / Python 3 en Jupyter Notebook (CoCalc)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. IMPORTACIÓ DE LLIBRERIES I CONFIGURACIÓ INICIAL
+# ------------------------------------------------------------------------------
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
+
+print("Entorn de Càlcul Simbòlic SageMath inicialitzat correctament.")
+
+# ------------------------------------------------------------------------------
+# 2. PART A: MODELITZACIÓ ANALÍTICA EXACTA (FREGAMENT LINEAL DE STOKES)
+# ------------------------------------------------------------------------------
+# Declaració de variables simbòliques i funcions del temps
+t = var('t')
+x = function('x')(t)
+y = function('y')(t)
+g, b, m, v0, alpha = var('g b m v0 alpha')
+
+# Formulació de les equacions diferencials ordinàries (ODEs)
+eq_x = diff(x, t, 2) == -(b/m)*diff(x, t)
+eq_y = diff(y, t, 2) == -g - (b/m)*diff(y, t)
+
+# Resolució analítica exacta amb condicions inicials (ICs)
+sol_x = dsolve(eq_x, x, ics=[0, 0, v0*cos(alpha)])
+sol_y = dsolve(eq_y, y, ics=[0, 0, v0*sin(alpha)])
+
+print("Solució analítica exacta per a la posició horitzontal x(t):")
+show(sol_x)
+print("Solució analítica exacta per a la posició vertical y(t):")
+show(sol_y)
+
+# ------------------------------------------------------------------------------
+# 3. PART B: MODELITZACIÓ NUMÈRICA REALISTA (FREGAMENT QUADRÀTIC)
+# ------------------------------------------------------------------------------
+# Funció del sistema d'equacions diferencials de segon ordre
+# Estat: [x, vx, y, vy]
+def f_drag(t, state, params):
+    x, vx, y, vy = state
+    g_val, c_val, m_val = params
+    v = sqrt(vx^2 + vy^2)
+    ax = -(c_val / m_val) * v * vx
+    ay = -g_val - (c_val / m_val) * v * vy
+    return [vx, ax, vy, ay]
+
+# Paràmetres físics del projectil (pilota de futbol: m = 0.45 kg, c = 0.005 kg/m)
+params_reals = [9.81, 0.005, 0.45]
+t_vector = srange(0, 4.0, 0.02)
+
+# Resolució numèrica ultraràpida mitjançant desolve_odeint
+# Condicions inicials: x0=0, vx0=20*cos(45º), y0=0, vy0=20*sin(45º)
+v_init = 25.0
+angle_rad = float(pi/4)
+estat_inicial = [0.0, v_init*np.cos(angle_rad), 0.0, v_init*np.sin(angle_rad)]
+
+sol_numerica = desolve_odeint(f_drag, estat_inicial, t_vector, params_reals)
+
+# ------------------------------------------------------------------------------
+# 4. PART C: WIDGET INTERACTIU AMB @interact PER A L'AULA
+# ------------------------------------------------------------------------------
+@interact
+def simulador_tir_parabolic(
+    v0=slider(5, 45, 1, default=25, label='Velocitat inicial $v_0$ (m/s)'),
+    alpha_deg=slider(15, 80, 1, default=45, label="Angle d'elevació $\\alpha$ (º)"),
+    c_drag=slider(0.0, 0.02, 0.001, default=0.005, label='Coeficient $c$ (kg/m)')
+):
+    ang = float(alpha_deg * pi / 180)
+    p_params = [9.81, c_drag, 0.45]
+    t_v = srange(0, 5.0, 0.02)
+    init_st = [0.0, v0*np.cos(ang), 0.0, v0*np.sin(ang)]
+    res = desolve_odeint(f_drag, init_st, t_v, p_params)
+    
+    # Filtrar només punts per damunt de terra (y >= 0)
+    xs = [pt[0] for pt in res if pt[2] >= 0]
+    ys = [pt[2] for pt in res if pt[2] >= 0]
+    
+    plt.figure(figsize=(9, 5))
+    plt.plot(xs, ys, 'b-', lw=2.5, label=f'Model amb fregament ($c={c_drag}$)')
+    
+    # Paràbola ideal en el buit (c=0) per a comparar
+    t_ideal = np.linspace(0, 2*v0*np.sin(ang)/9.81, 100)
+    x_id = v0 * np.cos(ang) * t_ideal
+    y_id = v0 * np.sin(ang) * t_ideal - 0.5 * 9.81 * t_ideal**2
+    plt.plot(x_id, y_id, 'r--', lw=1.5, label='Model clàssic ideal (buit, $c=0$)')
+    
+    plt.title(f'Trajectòria del Projectil ($v_0 = {v0}$ m/s, $\\alpha = {alpha_deg}^\\circ$)', fontsize=12)
+    plt.xlabel('Distància horitzontal $x$ (m)')
+    plt.ylabel('Altura vertical $y$ (m)')
+    plt.grid(True, linestyle=':', alpha=0.7)
+    plt.legend()
+    plt.ylim(bottom=0)
+    plt.show()
+```
+
+---
+
+## Annex II: Quadern Jupyter de Química — Balanç Matricial Simbòlic {#sec-annex-quimica}
+
+Aquest annex recull el codi complet per a la **Situació d'Aprenentatge 2 (4t d'ESO)** sobre conservació atòmica de Dalton i àlgebra lineal a SageMath.
+
+```python
+# ==============================================================================
+# TREBALL DE FINAL DE MÀSTER (UNIVERSITAT DE VALÈNCIA)
+# SITUACIÓ D'APRENENTATGE 2: QUÍMICA (4t D'ESO)
+# Balanç Estequiomètric Matricial i Conservació Atòmica de Dalton
+# Entorn: SageMath 10.x / Python 3 en Jupyter Notebook (CoCalc)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. BALANÇ DE REACCIONS QUÍMIQUES PER CÀLCUL D'ESPAI NUL (KERNEL)
+# ------------------------------------------------------------------------------
+def balanc_reaccio_simbolica(matriu_atomica, llista_especies):
+    """
+    Calcula els coeficients estequiomètrics enters mínims d'una reacció química
+    mitjançant el càlcul de l'espai nul dret (right kernel) de la matriu atòmica.
+    """
+    M = matrix(QQ, matriu_atomica)
+    nucli = M.right_kernel()
+    
+    if nucli.dimension() == 0:
+        print("Error: La matriu atòmica no admet solució de conservació.")
+        return None
+    
+    base_vector = nucli.basis()[0]
+    
+    # Normalització a nombres enters positius mínims
+    denoms = [val.denominator() for val in base_vector]
+    mcm_denoms = lcm(denoms)
+    coeficients_enters = [int(abs(val * mcm_denoms)) for val in base_vector]
+    
+    print("====================================================================")
+    print("Balanç estequiomètric completat amb èxit!")
+    print(f"Coeficients obtinguts: {coeficients_enters}")
+    print("====================================================================")
+    return coeficients_enters
+
+# ------------------------------------------------------------------------------
+# 2. EXEMPLE 1: COMBUSTIÓ COMPLETA DEL PROPÀ
+# Reacció: x1 C3H8 + x2 O2 -> x3 CO2 + x4 H2O
+# Elements: Carboni (C), Hidrogen (H), Oxigen (O)
+# ------------------------------------------------------------------------------
+matriu_propà = [
+    [3,  0, -1,  0],  # Equació de conservació del Carboni (C)
+    [8,  0,  0, -2],  # Equació de conservació de l'Hidrogen (H)
+    [0,  2, -2, -1]   # Equació de conservació de l'Oxigen (O)
+]
+especies_propà = ["C3H8", "O2", "CO2", "H2O"]
+
+coefs_propà = balanc_reaccio_simbolica(matriu_propà, especies_propà)
+
+# ------------------------------------------------------------------------------
+# 3. EXEMPLE 2: REACCIÓ REDOX COMPLEXA (PERMANGANAT I OXALAT)
+# Reacció: x1 KMnO4 + x2 H2C2O4 + x3 H2SO4 -> x4 K2SO4 + x5 MnSO4 + x6 CO2 + x7 H2O
+# Elements: K, Mn, O, H, C, S
+# ------------------------------------------------------------------------------
+matriu_redox = [
+    [1,  0,  0, -2,  0,  0,  0],  # K
+    [1,  0,  0,  0, -1,  0,  0],  # Mn
+    [4,  4,  4, -4, -4, -2, -1],  # O
+    [0,  2,  2,  0,  0,  0, -2],  # H
+    [0,  2,  0,  0,  0, -1,  0],  # C
+    [0,  0,  1, -1, -1,  0,  0]   # S
+]
+especies_redox = ["KMnO4", "H2C2O4", "H2SO4", "K2SO4", "MnSO4", "CO2", "H2O"]
+
+coefs_redox = balanc_reaccio_simbolica(matriu_redox, especies_redox)
+
+# ------------------------------------------------------------------------------
+# 4. MÒDUL DE CÀLCUL DE REACTIU LIMITANT I RENDIMENT
+# ------------------------------------------------------------------------------
+def calcul_reactiu_limitant(mols_A, mols_B, coef_A, coef_B):
+    r_A = mols_A / coef_A
+    r_B = mols_B / coef_B
+    
+    if r_A < r_B:
+        print(f"El reactiu limitant és A (Ràtio: {float(r_A):.4f} < {float(r_B):.4f})")
+    elif r_B < r_A:
+        print(f"El reactiu limitant és B (Ràtio: {float(r_B):.4f} < {float(r_A):.4f})")
+    else:
+        print("Mescla estequiomètrica exacta (no hi ha reactiu limitant).")
+
+calcul_reactiu_limitant(0.5, 2.0, coefs_propà[0], coefs_propà[1])
+```
+
+---
+
+## Annex III: Guia Tècnica Docent d'Instal·lació i Desplegament {#sec-annex-guia-docent}
+
+Aquesta guia ofereix les pautes pràctiques per al professorat de Física i Química interessat a desplegar la proposta a les seues aules.
+
+### Opció 1: Desplegament al Núvol amb CoCalc (Recomanada) {.unnumbered}
+
+1. **Creació del Projecte Docent:**
+   * Accedir a [cocalc.com](https://cocalc.com) i crear un compte gratuït de professor.
+   * Crear un nou projecte anomenat `Fisica_Quimica_TFM_SageMath`.
+2. **Creació del Curs i Gestió d'Alumnes:**
+   * Dins del projecte, crear un fitxer amb extensió `.course` (Gestor de Curs).
+   * Afegir les adreces de correu electrònic de l'alumnat de la classe. CoCalc crearà automàticament un projecte individual per a cada estudiant o equip cooperatiu.
+3. **Distribució i Recollida Automatitzada de Quaderns:**
+   * Pujar els fitxers `.ipynb` de les SdAs a la carpeta de tasques del professor.
+   * Prémer el botó *«Distribute to Students»*. En segons, tots els equips rebran la seua còpia editable.
+   * En finalitzar la sessió, prémer *«Collect from Students»* per tancar la recepció i procedir a l'avaluació formativa.
+
+### Opció 2: Desplegament Local Portable (Sense Connexió a Internet) {.unnumbered}
+
+Per a centres amb restriccions d'ample de banda o aules sense accés estable a la xarxa:
+1. Descarregar la distribució lliure portable **WinPython** o la imatge Docker de **SageMath / JupyterLab**.
+2. Copiar la carpeta de l'aplicació en memòries USB (un llapis per cada equip de 4 alumnes).
+3. Executar directament l'arxiu `JupyterLab.exe` des del dispositiu USB sense requerir drets d'administrador ni instal·lació al disc dur de l'institut.

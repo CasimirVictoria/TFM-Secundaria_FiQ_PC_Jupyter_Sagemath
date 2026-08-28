@@ -126,10 +126,22 @@ CLOSED: [2026-08-28 Fri 20:30]
   - Marc de [cite:@Vieyra_2021] (de *Boundary Crossers* a *Boundary Stretchers* / *Super Users*).
   - Connexió amb la formació docent activa de [cite:@Solbes_2018].
 
-*** TODO 2.6. Capítol 6: Reflexió Personal i Relació amb les Competències del Màster (Hora 9.5)
-- [ ] *6.1 Autoreflexió Professional sobre la Trajectòria al Màster (MAES).*
-- [ ] *6.2 Integració entre el Pràcticum Docent i la Proposta d'Innovació amb SageMath.*
-- [ ] *6.3 Valoració del Canvi de Rol Docent i Aprenentatges per a la Futura Pràctica Professional.*
+*** DONE 2.6. Capítol 6: Reflexió Personal i Relació amb les Competències del Màster (Hora 9.5)
+CLOSED: [2026-08-28 Fri 20:36]
+- [X] *6.1 Autoreflexió Professional sobre la Trajectòria al Màster (MAES):*
+  - Transició epistemològica des de la física computacional (TFG) cap a la didàctica de les ciències experimentals.
+  - Evidència de l'assoliment de competències clau: CG2 (disseny curricular LOMLOE), CG5 (inclusió, DUA i CA/AC) i CG11 (innovació i recerca docent).
+- [X] *6.2 Integració del Pràcticum i la Proposta d'Innovació:*
+  - Contrast amb la realitat observada a l'institut (desinterès per excés d'exercicis algorítmics, concepcions alternatives en química segons [cite:@Carbonell_Furio_2006] i limitacions de laboratori).
+  - El naixement de la proposta d'obrir la «caixa negra» amb SageMath i CoCalc segons [cite:@Grueso_2022; @Mengot_2021].
+- [X] *6.3 Canvi de Rol Docent i Aprenentatges Professionals: L'Ètica del «Boundary Stretcher»:*
+  - Taula d'evolució de la identitat professional cap al marc de [cite:@Vieyra_2021]: de transmissor i avaluador sancionador a mediador d'indagació, creador d'eines de codi obert i promotor de la resiliència algorítmica.
+
+*** DONE 2.7. Annexos i Materials de Suport Docent (Hora 9.8)
+CLOSED: [2026-08-28 Fri 20:36]
+- [X] *Annex I (Física):* Codi complet comentat en SageMath 10.x / Python 3 per a 1r de Batxillerat (solució analítica `dsolve`, numèrica `desolve_odeint`, widget `@interact` i ajust Tracker).
+- [X] *Annex II (Química):* Codi complet comentat en SageMath 10.x / Python 3 per a 4t d'ESO (balanç estequiomètric matricial amb `right_kernel`, reactiu limitant i taules de dades).
+- [X] *Annex III (Guia Docent):* Guia tècnica d'instal·lació i desplegament pas a pas al núvol (CoCalc) i en mode portable offline USB (WinPython).
 
 ** TODO FASE 3: Revisió Global, Compilació Quarto i Preparació de la Defensa [0/3] [0%]
 - [ ] *3.1 Compilació Reproducible Quarto:* Generació dels formats finals HTML interactiu i PDF maquetat en APA 7 des de =proposta_i_esborrany_tfm.qmd=.

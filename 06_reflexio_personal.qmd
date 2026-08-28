@@ -2,6 +2,52 @@
 
 ## Autoreflexió sobre la Trajectòria al Màster (MAES) {#sec-autoreflexio-maes}
 
+El desenvolupament d'aquest Treball de Final de Màster ha constituït el punt de trobada entre la meua trajectòria acadèmica prèvia en l'àmbit de la Física —on vaig experimentar la potència del Càlcul Simbòlic amb SageMath per a la investigació de sistemes físics complexos en el meu Treball de Final de Grau— i el descobriment profund de la Didàctica de les Ciències Experimentals al llarg del Màster Universitari en Professorat d'Educació Secundària de la Universitat de València.
+
+En iniciar el màster, la meua concepció de l'ensenyament estava encara fortament condicionada pel model tradicional que havia viscut com a estudiant: una visió de la física i la química centrada en la transmissió magistral de continguts acabats i en la resolució mecànica de problemes de «llapis i paper». El pas per les matèries del departament de Didàctica de la UV m'ha permès comprendre que **ensenyar ciències no és transmetre fórmules, sinó crear les condicions pedagògiques perquè l'alumnat aprenga a pensar científicament**, qüestione la realitat i construïsca models mentals rics i coherents [@Gil_Perez_1999; @Solbes_2018].
+
+Aquest procés de transformació professional m'ha permès consolidar les grans **competències docents del Màster (MAES)**:
+
+1. **Competència en Disseny Curricular i Metodologia (CG2):** He après a traduir el marc curricular de la LOMLOE [@lomloe2020] i els Decrets 107/2022 i 108/2022 de la Comunitat Valenciana [@decret107_2022; @decret108_2022] en Situacions d'Aprenentatge significatives, dissenyant bastides d'instrucció (*Use-Modify-Create*) i cicles de modelització d'Hestenes que vertebren la progressió dels sabers de manera coherent.
+2. **Competència en Atenció a la Diversitat i Inclusió (CG5):** Tal com reflecteixen les investigacions de referència de la nostra universitat [@Mengot_2021], l'atenció a la diversitat no consisteix a rebaixar l'exigència, sinó a oferir múltiples vies d'accés mitjançant el Disseny Universal per a l'Aprenentatge (DUA) i a transformar l'aula en una comunitat cooperativa formal (Programa CA/AC de Pere Pujolàs) on tothom puga créixer i aportar [@Pujolas_2009; @Lou_2001].
+3. **Competència en Recerca i Innovació Didàctica (CG11):** He après a actuar com un docent-investigador capaç d'identificar els problemes reals de la pràctica d'aula (desinterès, concepcions alternatives, ansietat davant de la tecnologia) i de dissenyar intervencions rigoroses fonamentades en l'estat de la qüestió internacional i local [@Solbes_2007; @Charles_2023].
+
+---
+
 ## Integració del Pràcticum i la Proposta d'Innovació {#sec-integracio-practicum}
 
-## Canvi de Rol Docent i Aprenentatges Professionals {#sec-canvi-rol}
+L'estada de **Pràcticum en el centre d'Educació Secundària** va representar el bany de realitat imprescindible que va donar sentit a aquesta proposta de TFM. Durant la meua immersió a les aules de 3r i 4t d'ESO i 1r de Batxillerat, vaig poder constatar en primera persona els símptomes descrits per la recerca de la Universitat de València [@Solbes_2007; @Grueso_2022]:
+
+* La presència massiva d'exercicis algorítmics repetitius que generaven un profund avorriment i la sensació generalitzada entre l'estudiantat que *«la física són només matemàtiques disfressades que no serveixen per a res»*.
+* La pervivència d'obstacles conceptuals resistents en química, on l'alumnat continuava explicant les reaccions com a simples barreges físiques malgrat haver memoritzat la definició de canvi químic [@Carbonell_Furio_2006].
+* La dificultat logística i de temps per a realitzar pràctiques de laboratori tradicionals, agreujada per la manca de recursos materials en molts centres.
+
+Va ser precisament en observar aquestes mancances quan va sorgir la convicció de dissenyar aquesta intervenció: **per què no aprofitar el programari lliure de càlcul simbòlic (SageMath) i els quaderns al núvol (CoCalc) per obrir la «caixa negra» de la ciència escolar?** El Pràcticum em va ensenyar que l'alumnat s'entusiasma quan utilitza els seus propis mòbils per gravar un llançament al pati i analitzar-lo amb *Tracker*, i que la tecnologia esdevé una aliada formidable si s'acompanya de bastides afectives que eliminen la por a l'error de programació [@Charles_2023; @Vieyra_2021].
+
+---
+
+## Canvi de Rol Docent i Aprenentatges Professionals: L'Ètica del «Boundary Stretcher» {#sec-canvi-rol}
+
+Un dels aprenentatges més valuosos d'aquesta memòria ha estat la reflexió sobre la meua pròpia identitat docent a la llum del marc de Vieyra et al. [@Vieyra_2021].
+
+Com a futur professor de Física i Química de secundària i batxillerat, assumeixo el compromís professional de no ser un simple «Boundary Crosser» (un docent que percep la tecnologia o la computació com una obligació aliena que li roba temps per a la seua matèria), sinó d'esdevenir un autèntic **«Boundary Stretcher» (un estirador de fronteres)**:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│             LA MEUA IDENTITAT PROFESSIONAL: «BOUNDARY STRETCHER»            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 1. De transmissor passiu de lleis ──► A MEDIADOR D'INDAGACIÓ I DISSENY      │
+│    acabades a la pissarra             d'ambients d'aprenentatge actiu.      │
+│                                                                             │
+│ 2. De consumidor de caixes        ──► A CREADOR D'EINES DE CAIXA BLANCA     │
+│    negres comercials i opaques        amb codi obert, transparent i lliure. │
+│                                                                             │
+│ 3. D'avaluador sancionador de     ──► A PROMOTOR DE LA RESILIÈNCIA i        │
+│    l'error de càlcul mecànic          de la depuració com a valor científic.│
+│                                                                             │
+│ 4. De docent individualista       ──► A LÍDER D'ESPAIS COOPERATIUS i        │
+│    aïllat a la seua aula              inclusius per a tot l'alumnat (DUA).  │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+Aquest Treball de Final de Màster no clou una etapa d'estudis; obre el meu camí com a docent compromès amb la renovació de l'ensenyament de les ciències a la Comunitat Valenciana. Reivindico una aula de Física i Química on l'alumnat no s'assega a copiar fórmules d'una pissarra, sinó on es pose la bata de científic i la ment de programador per explorar, discutir, equivocar-se sense por i descobrir la bellesa profunda de les lleis que governen el nostre univers.
