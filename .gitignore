@@ -1,3 +1,4 @@
+# Directòris grans / entorns
 Articles/
 Exemples_i_Materials/
 Per_mirar/
@@ -6,9 +7,32 @@ __pycache__/
 .agents/
 AGENTS.md
 PDFs/
+MCP_Academic_Spain/
+
+# Fitxers binaris i temporals
 *.pdf
 *.html
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+Pensament-Computacional*.tex
+index.tex
+
+# Quarto i Jupyter
+/.quarto/
+_book/
+**/*.quarto_ipynb
+
+# Emacs / Editors temporals
+*~
+\#*\#
+.\#*
+
+# Fitxers de treball previs
 proposta_i_esborrany_tfm*
-references.bib
 quaderns/
 tfm_prova_concepte*
+GUIA_MESTRE_TFM_SPRINT.md
+references_antic.bib

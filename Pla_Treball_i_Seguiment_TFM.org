@@ -1,0 +1,132 @@
+#+TITLE: Pla de Treball, Cronograma i Seguiment del TFM
+#+SUBTITLE: Pensament Computacional i Modelització a l'ESO i Batxillerat mitjançant SageMath
+#+AUTHOR: Casimir Victòria Castillo
+#+DATE: [2026-08-28 Fri]
+#+FILETAGS: :tfm:planificacio:cronograma:seguiment:orgmode:sagemath:didactica:uv:
+#+SEQ_TODO: TODO(t) IN_PROGRESS(p) WAITING(w) | DONE(d) CANCELLED(c)
+
+* 🎯 Objectius Generals del TFM
+1. Desenvolupar una proposta didàctica d'innovació (Modalitat A) per a l'ensenyament de la Física i Química a l'ESO i Batxillerat integrant el *Pensament Computacional (PC)*.
+2. Utilitzar el programari lliure de càlcul simbòlic i modelització *SageMath* en entorns interactius *Jupyter / CoCalc* per a superar la visió de «caixa negra».
+3. Dissenyar *Situacions d'Aprenentatge (SdA)* competencials alineades amb la *LOMLOE*, el *Decret 107/2022 (ESO)* i el *Decret 108/2022 (Batxillerat)* de la Generalitat Valenciana.
+4. Fonamentar la intervenció en la recerca didàctica internacional (*Weintrop, Brennan, Hestenes, Caamaño, Hodson, Lou, Mellado, Pujolàs*) i en la tradició investigadora de la *Universitat de València* (*Solbes, Furió, Gil-Pérez, Cantó*).
+5. Integrar la *Reflexió Personal* docent i la vinculació amb les competències professionals del Màster MAES (UV).
+
+---
+
+* 📊 Tauler de Seguiment Global [1/3] [33%]
+
+** DONE FASE 1: Disseny de la Base de Dades, Documentació i Auditoria [8/8] [100%]
+CLOSED: [2026-08-28 Fri 16:25]
+- [X] *1.1. Configuració de l'Entorn de Treball:* Activació i connexió del servidor MCP de NotebookLM, rutes estàtiques de xarxa per a Gemini/Google i túnel WireGuard/EduVPN per a accés a revistes de la Universitat de València.
+- [X] *1.2. Descàrrega i Verificació dels 43 PDFs de Recerca:* Biblioteca física auditada a =~/Documents/Segon_Cervell/TFM/PDFs/Emprar/2. TFM - Recerca Didàctica i Pensament Computacional/=.
+- [X] *1.3. Estructuració dels Quaderns a Google NotebookLM:*
+  - *Quadern 1:* =1. TFM - Context, Normativa i Models UV= (Decrets 107/2022 i 108/2022, LOMLOE, Guia Docent MAES, TFMs Mengot i Grueso, TFG Casimir).
+  - *Quadern 2:* =2. TFM - Recerca Didàctica i Pensament Computacional= (43 fonts completes de recerca internacional i de la UV).
+- [X] *1.4. Registre Màster Bibliogràfic (=references.bib=):*
+  - 52 entrades amb claus =@citekey= unificades.
+  - Abstract original verbatim inalterat a cada entrada.
+  - Camp =file = {/ruta/al/pdf}= injectat per a l'obertura directa des d'Emacs.
+- [X] *1.5. Xarxa de Coneixement a Denote / Org-mode:* Creació de fitxes per a tots els articles amb sintaxi estàndard Org 9.5 =cite:@citekey=, traducció i connexió TFM/SageMath.
+- [X] *1.6. Integració a Emacs (=~/.emacs=):* Configuració de =citar=, =citar-denote=, =citar-library-paths= i =org-cite-global-bibliography=.
+- [X] *1.7. Ingesta del TFG com a Model d'Estil i Codi:* Repositori =TFG-Semiconductores_2D= clonat a =~/Projects/=, PDF arxivat i pujat a NotebookLM.
+- [X] *1.8. Auditoria Acadèmica i Normativa amb NotebookLM:* Dictamen emès com a comissió de TFM de la UV amb qualificació «Apte per a l'Excel·lència».
+
+** IN_PROGRESS FASE 2: Redacció de la Memòria del TFM a Quarto (=.qmd=) [0/6] [0%]
+:PROPERTIES:
+:COOKIE_DATA: todo recursive
+:END:
+
+*** DONE 2.0. Pàgines Preliminars i Resum Trilingüe UV
+CLOSED: [2026-08-28 Fri 19:15]
+- [X] Portada Oficial de la Universitat de València (Departament de Didàctica de les Ciències Experimentals i Socials).
+- [X] Resum en Valencià + Paraules Clau.
+- [X] Resumen en Castellà + Palabras Clave.
+- [X] Abstract en Anglès + Key Words.
+- [X] Índex General oficial i estructurat.
+
+*** DONE 2.1. Capítol 1: Introducció, Plantejament del Problema, Justificació i Objectius (Hores 1–2)
+CLOSED: [2026-08-28 Fri 19:35]
+- [X] *1.1 Context i Diagnòstic del Problema:* Desinterès per la ciència a l'ESO i Batxillerat [cite:@Solbes_2007; @Solbes_2018], rebuig de la física per l'abús d'exercicis algorítmics sense laboratori.
+- [X] *1.2 Plantejament del Problema i Preguntes de Recerca / Hipòtesis de Treball:*
+  - Com pot el càlcul simbòlic i la modelització amb SageMath reduir la càrrega cognitiva i superar concepcions alternatives?
+- [X] *1.3 El Pensament Computacional com a Eina Epistèmica:* El manifest de [cite:@Wing_2006], la integració disciplinària [cite:@Li_2020] i la /computational literacy/ [cite:@Lodi_2021].
+- [X] *1.4 Marc Normatiu i Curricular LOMLOE:*
+  - Alineació amb el [cite:@decret107_2022] (ESO) i [cite:@decret108_2022] (Batxillerat) de la Comunitat Valenciana.
+  - Vinculació amb les Competències Específiques STEM2 (indagació i modelització), Competència Digital (CD) i CPSAA.
+- [X] *1.5 Objectius Generals i Específics del TFM.*
+- [X] *1.6 Estructura de la Memòria.*
+
+*** DONE 2.2. Capítol 2: Marc Teòric i Estat de la Qüestió (Hores 3–4)
+CLOSED: [2026-08-28 Fri 19:55]
+- [X] *2.1 Epistemologia del Pensament Computacional:*
+  - Taxonomia de [cite:@Weintrop_2016] (Pràctiques de dades, modelització, resolució de problemes i pensament de sistemes).
+  - Marc tridimensional de [cite:@Brennan_2012] (Conceptes, pràctiques i perspectives).
+  - El concepte de /computational literacy/ de [cite:@Lodi_2021] i [cite:@Li_2020].
+- [X] *2.2 Teoria de la Modelització en Física i Química:*
+  - Modeling Instruction de [cite:@Hestenes_1987] i cicle de modelització en 4 fases (Descripció, Formulació, Ramificació, Validació).
+  - Models mentals vs. models conceptuals amb suport computacional [cite:@Hanc_2020; @Vieyra_2021].
+- [X] *2.3 Càlcul Simbòlic (CAS) i l'Eina SageMath:*
+  - Crítica a la «caixa negra» del càlcul numèric pur [cite:@Belu_2009; @Carrillo_2013].
+  - SageMath com a «caixa blanca» cognitiva: variables simbòliques, notació LaTeX natiu i llibertat de manipulació analítica [cite:@Borovsky_2023; @Fedorenko_2019].
+- [X] *2.4 Metodologia de Laboratori i Nivells d'Indagació:*
+  - El laboratori computacional com a treball pràctic autèntic [cite:@Hodson_1994; @Caamano_2004; @Gil_Perez_1999].
+  - Escala de nivells d'indagació de [cite:@Herron_1971] creuada amb la bastida /Use-Modify-Create/ [cite:@Grover_2013; @Brennan_2012].
+- [X] *2.5 Dimensió Socioafectiva i Treball Cooperatiu:*
+  - Emocions en l'aprenentatge científic [cite:@Mellado_2014].
+  - Reducció de l'ansietat davant els errors de codi Python en un 55-73% [cite:@Charles_2023].
+  - Programa CA/AC de Pere Pujolàs i tècnica «Llapissos al centre / Mans fora del teclat» [cite:@Pujolas_2009; @Lou_2001].
+- [X] *2.6 Tradició Didàctica de la Universitat de València:*
+  - Diagnòstic del desinterès escolar a la Comunitat Valenciana [cite:@Solbes_2007; @Solbes_2011; @Solbes_2018; @Canto_2016].
+  - Concepcions alternatives sobre el canvi químic i el concepte de substància pura vs mescla [cite:@Carbonell_Furio_2006; @Furio_2007].
+  - Recerca orientada i qüestions sociocientífiques (QSC) [cite:@Gil_Perez_1999; @Solbes_2012].
+
+*** DONE 2.3. Capítol 3: Proposta Didàctica — Situacions d'Aprenentatge (Hores 5–7)
+CLOSED: [2026-08-28 Fri 20:15]
+- [X] *3.1 Disseny Global de la Intervenció:*
+  - Arquitectura didàctica en dues SdAs (Física 1r Batxillerat i Química 4t ESO).
+  - Integració de la bastida /Use-Modify-Create/, cicle d'Hestenes en 4 fases i entorn CoCalc/SageMath.
+- [X] *3.2 Situació d'Aprenentatge 1 (Física):*
+  - Cinemàtica i Dinàmica: Tir parabòlic amb resistència de l'aire lineal (analític amb =dsolve=) i quadràtic (numèric amb =desolve_odeint=).
+  - Interactivitat amb =@interact= i contrast empíric amb vídeo-anàlisi Physics Tracker i =scipy.optimize.curve_fit=.
+- [X] *3.3 Situació d'Aprenentatge 2 (Química):*
+  - Canvi químic i conservació atòmica de Dalton: superació de la mescla mecànica de [cite:@Carbonell_Furio_2006; @Furio_2007].
+  - Balanç estequiomètric simbòlic matricial amb =right_kernel=, reactiu limitant i contrast gravimètric real.
+- [X] *3.4 Seqüenciació de Sessions i Quaderns de Treball:*
+  - Taules completes de 6 sessions (55 min) per SdA amb fases d'Hestenes, nivells d'Herron 0-3 i bastida UMC.
+- [X] *3.5 Avaluació Formativa i Rúbriques Competencials:*
+  - Avaluació triangulada (50% quadern, 25% cooperatiu, 25% defensa oral) i rúbrica analítica LOMLOE de 4 nivells.
+
+*** TODO 2.4. Capítol 4: Metodologia d'Implementació, DUA i Gestió d'Aula (Hores 8–9)
+- [ ] *4.1 Disseny Universal per a l'Aprenentatge (DUA):* Pautes d'accessibilitat, flexibilitat de representació i canals d'expressió computacional.
+- [ ] *4.2 Organització dels Equips Cooperatius:* Rols estructurats (*Programa CA/AC* de Pujolàs) i tècnica dels «llapis al centre» per evitar l'aïllament davant la pantalla.
+- [ ] *4.3 Protocol d'Acompanyament Emocional i Gestió de la Frustració davant la Sintaxi.*
+
+*** TODO 2.5. Capítol 5: Conclusions, Limitacions i Línies de Futur (Hora 9)
+- [ ] *5.1 Assoliment dels Objectius del Treball.*
+- [ ] *5.2 Contribució a la Didàctica de les Ciències i Transferibilitat.*
+- [ ] *5.3 Limitacions de la Proposta i Prospectiva de Recerca Docent.*
+
+*** TODO 2.6. Capítol 6: Reflexió Personal i Relació amb les Competències del Màster (Hora 9.5)
+- [ ] *6.1 Autoreflexió Professional sobre la Trajectòria al Màster (MAES).*
+- [ ] *6.2 Integració entre el Pràcticum Docent i la Proposta d'Innovació amb SageMath.*
+- [ ] *6.3 Valoració del Canvi de Rol Docent i Aprenentatges per a la Futura Pràctica Professional.*
+
+** TODO FASE 3: Revisió Global, Compilació Quarto i Preparació de la Defensa [0/3] [0%]
+- [ ] *3.1 Compilació Reproducible Quarto:* Generació dels formats finals HTML interactiu i PDF maquetat en APA 7 des de =proposta_i_esborrany_tfm.qmd=.
+- [ ] *3.2 Revisió Lingüística i d'Estil:* Harmonització en valencià acadèmic formal amb la veu de l'autor.
+- [ ] *3.3 Preparació del Guió de Defensa davant el Tribunal.*
+
+---
+
+* ⏱️ Cronograma Estimatiu del Sprint (Total: 10 hores)
+
+| Sessió | Secció / Tasques a Desenvolupar | Estat | Temps Estimat |
+|:---|:---|:---:|:---:|
+| **Bloc 1** | *Capítol 1: Introducció, Preguntes de Recerca, LOMLOE i Objectius* | TODO | 2 h |
+| **Bloc 2** | *Capítol 2: Marc Teòric i Estat de la Qüestió* | TODO | 2 h |
+| **Bloc 3** | *Capítol 3: Proposta Didàctica (SdA Física + SdA Química a SageMath)* | TODO | 3 h |
+| **Bloc 4** | *Capítol 4: Metodologia DUA, Cooperatiu i Capítol 5: Conclusions* | TODO | 1.5 h |
+| **Bloc 5** | *Capítol 6: Reflexió Personal del Màster i Resum Trilingüe* | TODO | 0.5 h |
+| **Bloc 6** | *Revisió Final, Compilació Quarto i Índexs* | TODO | 1 h |
+| **TOTAL** | **TFM COMPLET I BLINDAT SEGONS NORMATIVA UV** | | **10 h** |

@@ -1,0 +1,132 @@
+# Introducció, Plantejament del Problema i Justificació {#sec-introduccio}
+
+## Context i Diagnòstic del Problema {#sec-context-problema}
+
+El declivi continuat en l'interès de l'alumnat cap a les disciplines de l'àmbit científic, tecnològic, enginyeria i matemàtiques (STEM) constitueix una de les preocupacions més greus i recurrents en la investigació didàctica internacional contemporània. Des de la publicació de l'informe fundacional coordinat per Michel Rocard l'any 2007, diversos estudis han alertat sobre la pèrdua progressiva de vocacions científiques entre el jovent europeu, assenyalant que la desafecció cap a l'estudi de la ciència no respon a una manca de capacitat intel·lectual de l'estudiantat, sinó als mètodes pedagògics predominants a les aules de secundària.
+
+A l'Estat espanyol, i de manera molt particular a la Comunitat Valenciana, aquest diagnòstic ha estat àmpliament contrastat per la línia de recerca del Departament de Didàctica de les Ciències Experimentals i Socials de la Universitat de València [@Solbes_2007; @Solbes_2011; @Solbes_2018]. Els treballs de Solbes i el seu equip revelen que la matèria de Física i Química és percebuda majoritàriament per l'alumnat d'Educació Secundària Obligatòria (ESO) i Batxillerat com una assignatura especialment difícil, abstracta, avorrida i desconnectada de la seua realitat quotidiana. Aquest distanciament s'accentua a mesura que s'avança en l'escolarització, generant una taxa d'abandonament alarmant en les opcions de ciències del Batxillerat i aprofundint una bretxa de gènere en la qual les alumnes descarten majoritàriament els itineraris cientificotècnics [@Solaz_2013].
+
+Les causes d'aquest desinterès no són casuals; s'arrelen en el predomini d'un model d'ensenyament transmissiu que transmet una visió deformada, empobrida i descontextualitzada de l'activitat científica [@Gil_Perez_1999; @Furio_2000]. Aquest model es caracteritza per:
+
+1. **La reducció algorítmica a exercicis de «llapis i paper»:** La docència habitual sol centrar-se en la memorització passiva de lleis i en la resolució repetitiva de problemes numèrics tancats. L'alumnat percep la Física i la Química com una extensió àrida de les matemàtiques de càlcul mecànic, on l'únic objectiu consisteix a aïllar una variable en una fórmula per obtenir una xifra sense comprendre el significat físic o químic subjacent [@Furio_2007; @Solbes_2012].
+2. **L'absència d'indagació i d'experimentació autèntica:** Les sessions pràctiques de laboratori, quan es duen a terme, es redueixen sovint a «receptes de cuina» altament pautades que impedeixen el desenvolupament del raonament hipoteticodeductiu, el contrast d'hipòtesis i la presa de decisions autònoma [@Herron_1971; @Hodson_1994].
+3. **La desconnexió amb el context social i tecnològic real:** Els continguts s'introdueixen habitualment desproveïts de referències a problemes rellevants de l'entorn proper (com la transició energètica, els nous materials, la mobilitat sostenible o la salut), la qual cosa porta l'estudiantat a formular la pregunta recurrent: *«Això per a què serveix?»* [@Caamano_2004; @Canto_2016].
+4. **La persistència de l'individualisme enfront de la cooperació:** Malgrat les evidències sobre els beneficis del treball cooperatiu en el desenvolupament competencial, els manuals escolars continuen proposant esquemes d'estudi essencialment individualistes que no fomenten la construcció social del coneixement ni la coeducació [@Pujolas_2009].
+
+Davant d'aquest panorama, esdevé urgent plantejar alternatives metodològiques que transformen les aules de ciències en espais d'investigació activa, on l'ús de les tecnologies digitals no es limite a la visualització passiva, sinó que actue com una eina d'indagació i modelització profunda.
+
+---
+
+## Plantejament del Problema i Preguntes de Recerca {#sec-preguntes-recerca}
+
+El problema central que aborda aquest treball és la necessitat de superar la bretxa existent entre la pràctica científica real —que utilitza eines computacionals per a modelitzar fenòmens complexos i analitzar dades— i l'ensenyament escolar de la Física i Química, sovint ancorat en el càlcul manual rutinari. 
+
+La simple incorporació d'ordinadors o aplicacions interactives a l'aula no garanteix una millora pedagògica si aquests s'utilitzen com a meres «caixes negres» on l'alumnat es limita a prémer botons sense entendre les relacions causals dels fenòmens. El repte docent consisteix a dissenyar entorns d'aprenentatge on la tecnologia digital permeta externalitzar i visualitzar els models mentals de l'alumnat, afavorint el canvi conceptual i la motivació intrínseca.
+
+Per guiar aquesta proposta d'innovació, es plantegen les següents **preguntes de recerca didàctica**:
+
+* **PR1:** De quina manera pot la integració del càlcul simbòlic per ordinador (CAS) mitjançant *SageMath* i quaderns *Jupyter* reduir la càrrega cognitiva associada a les manipulacions algebraiques rutinàries i reorientar l'atenció de l'alumnat cap a la interpretació conceptual i l'anàlisi de casos límit en Física i Química?
+* **PR2:** En quina mesura l'articulació de Situacions d'Aprenentatge basades en la progressió *Use-Modify-Create*, el treball cooperatiu estructurat i la gestió socioemocional de l'error de programació millora la motivació, l'autoeficàcia i l'accessibilitat universal (DUA) de l'alumnat de secundària cap a l'aprenentatge científic?
+
+A partir d'aquestes preguntes, es formulen dues **hipòtesis de treball pedagògiques** que sustenten el disseny de la intervenció:
+
+> **Hipòtesi 1 (H1 — Dimensió Cognitiva i de Modelització):**  
+> *L'ús d'un entorn de computació simbòlica oberta (SageMath) permet alliberar recursos de la memòria de treball de l'alumnat en automatitzar l'àlgebra mecànica, promovent una comprensió més profunda dels models científics (trajectòries reals amb fregament i conservació de la matèria en reaccions químiques) i facilitant la superació de concepcions alternatives resistents.*
+
+> **Hipòtesi 2 (H2 — Dimensió Afectiva, Inclusiva i Motivacional):**  
+> *La implementació de quaderns de treball interactius Jupyter orquestrats mitjançant estructures d'aprenentatge cooperatiu formal (Programa CA/AC) i protocols de suport emocional davant la frustració sintàctica incrementa significativament la motivació intrínseca de l'estudiantat, redueix l'ansietat tecnològica i garanteix una atenció equitativa a la diversitat (DUA).*
+
+---
+
+## El Pensament Computacional com a Eina Epistèmica en Ciències {#sec-pc-epistemic}
+
+Des que Jeannette Wing [@Wing_2006] va popularitzar el concepte de **Pensament Computacional (PC)** com una competència fonamental per a tota la ciutadania —comparable a la lectura, l'escriptura i el càlcul—, la comunitat educativa ha debatut intensament la seua integració curricular. Lluny de reduir-se a la mera instrucció en sintaxi de programació (*coding*) o al desenvolupament de destreses tecnocèntriques orientades exclusivament al mercat laboral, la investigació didàctica moderna concep el PC com una autèntica **eina epistèmica** per a la indagació i la construcció de coneixement científic [@Lodi_2021; @Li_2020].
+
+Tal com argumenten Weintrop et al. [@Weintrop_2016], les pràctiques computacionals a les ciències i les matemàtiques s'articulen en quatre dimensions clau: pràctiques de dades, de modelització i simulació, de resolució computacional de problemes i de pensament sistèmic. Quan l'alumnat utilitza la programació per descriure un fenomen físic o químic, l'ordinador es transforma en el que Seymour Papert va anomenar un *«object to think with»* (un objecte amb el qual pensar). Escriure un model en codi obliga a explicitar de manera inequívoca les variables rellevants, les relacions causals i les condicions de contorn, fent visibles les inconsistències dels models mentals previs de l'estudiant.
+
+En aquest context, l'elecció del programari educatiu és determinant. Molts entorns digitals utilitzats a secundària funcionen com a caixes negres opaques o com a sistemes de càlcul purament numèric que, segons ha demostrat la recerca, sovint enfosqueixen el sentit de les relacions físiques en reduir els resultats a taules de dígits aïllats [@Belu_2009; @Carrillo_2013]. Per contra, el programari lliure de càlcul simbòlic **SageMath** [@Borovsky_2023; @Hanc_2020] ofereix un entorn de **«caixa blanca»** de gran potència pedagògica:
+
+* **Manipulació simbòlica exacta:** Permet definir magnituds com a variables algebraiques ($t$, $v_0$, $\alpha$, $k$) i operar analíticament amb equacions abans de substituir valors numèrics, preservant el significat físic global de les fórmules.
+* **Integració tipogràfica amb LaTeX:** Mitjançant la instrucció `show()`, les expressions matemàtiques es renderitzen amb la notació formal estàndard dels llibres de text, eliminant barreres de comprensió visual.
+* **Interactivitat mitjançant *widgets* (*Interacts*):** Permet que l'alumnat explore paràmetres mitjançant controls lliscants (*sliders*), observant en temps real com varia una trajectòria o un rendiment químic.
+* **Bastida pedagògica *Use-Modify-Create*:** L'alumnat no comença mai davant d'una pantalla buida; primer *utilitza* un quadern interactiu dissenyat pel docent, després *modifica* paràmetres i línies de codi guiades, i finalment *crea* o amplia el model per resoldre noves preguntes d'indagació [@Brennan_2012].
+
+---
+
+## Marc Normatiu i Curricular LOMLOE a la Comunitat Valenciana {#sec-marc-curricular}
+
+La present proposta d'innovació no es planteja com una activitat aïllada o extracurricular, sinó que s'alinea de manera rigorosa amb el marc curricular vigent a la Comunitat Valenciana, conformat pel **Decret 107/2022**, de 5 d'agost, del Consell, pel qual s'estableix l'ordenació i el currículum de l'Educació Secundària Obligatòria [@decret107_2022], i el **Decret 108/2022**, de 5 d'agost, del Consell, pel qual s'estableix el currículum del Batxillerat [@decret108_2022], en desenvolupament de la Llei Orgànica 3/2020 (LOMLOE) [@lomloe2020] i els Reials Decrets estatals 217/2022 i 243/2022 [@rd217_2022; @rd243_2022].
+
+El marc LOMLOE estableix un canvi de paradigma fonamental: l'ensenyament ja no es defineix per la simple acumulació i reproducció de continguts conceptuals, sinó pel desenvolupament de **competències clau** i **competències específiques** a través del disseny de **Situacions d'Aprenentatge (SdA)** contextualitzades, significatives i orientades a la resolució de reptes del món real.
+
+```
+       ┌─────────────────────────────────────────────────────────┐
+       │             PERFIL DE SORTIDA DE L'ALUMNAT              │
+       │    Competència STEM · Competència Digital (CD) · CPSAA   │
+       └────────────────────────────┬────────────────────────────┘
+                                    │ (Concreció competencial)
+                                    ▼
+       ┌─────────────────────────────────────────────────────────┐
+       │        COMPETÈNCIES ESPECÍFIQUES DE FÍSICA I QUÍMICA    │
+       │       CE1 (Explicació) · CE2 (Indagació) · CE3 (Llenguatge)       │
+       │                 CE4 (Modelització) · CE5 (Cooperació)             │
+       └────────────────────────────┬────────────────────────────┘
+                                    │ (Vehiculació pedagògica)
+                                    ▼
+       ┌─────────────────────────────────────────────────────────┐
+       │              SITUACIONS D'APRENENTATGE (SdA)            │
+       │   SdA 1: Cinemàtica i Dinàmica amb Fregament (SageMath) │
+       │   SdA 2: Reaccions Químiques i Estequiometria Simbòlica │
+       │   Scaffolding: Use-Modify-Create · DUA · Equips CA/AC   │
+       └─────────────────────────────────────────────────────────┘
+```
+
+A la matèria de Física i Química (4t d'ESO i 1r de Batxillerat), la nostra proposta dona resposta directa a les següents **Competències Específiques (CE)**:
+
+* **CE1 (Comprendre i explicar fenòmens fisicoquímics):** Aplicar lleis i teories científiques per interpretar situacions reals, utilitzant el càlcul simbòlic per verificar solucions i contrastar models teòrics amb dades empíriques.
+* **CE2 (Resolució de problemes i indagació científica):** Formular preguntes investigables, dissenyar estratègies de resolució mitjançant simulacions computacionals i avaluar la validesa dels resultats obtinguts mitjançant l'anàlisi de casos límit.
+* **CE3 (Maneig del llenguatge científic i de la informació digital):** Emprar amb rigor el llenguatge formal de la química i de la física, combinant la notació IUPAC, el formalisme matemàtic i les representacions gràfiques digitals generades en Python/SageMath.
+* **CE4 (Ús crític i ètic de la tecnologia digital):** Utilitzar recursos computacionals oberts com a eines d'experimentació virtual, fomentant la cultura del programari lliure i la cooperació científica.
+* **CE5 (Treball cooperatiu i comunicació):** Desenvolupar habilitats de comunicació, coeducació i empatia mitjançant la resolució conjunta de reptes en equips reduïts heterogenis.
+
+Així mateix, la proposta es connecta de manera directa amb els descriptors operatius del **Perfil de Sortida** de l'etapa:
+* **STEM1 i STEM2:** Aplicació del mètode científic i del pensament matemàtic a la resolució de problemes complexos.
+* **STEM4:** Interpretació i transmissió de processos i resultats científics en diversos formats digitals i formals.
+* **CD1 i CD2:** Creació de continguts digitals i resolució de problemes mitjançant entorns computacionals.
+* **CPSAA4:** Gestió de l'error, autoregulació de l'aprenentatge i perseverança davant de tasques intel·lectuals exigents.
+
+Finalment, d'acord amb el principi d'inclusió establert en l'article 4 del Decret 107/2022, el disseny de les activitats incorpora de manera transversal les pautes del **Disseny Universal per a l'Aprenentatge (DUA)**, oferint múltiples formes de representació (text, codi comentat, gràfiques dinàmiques i controls visuals), múltiples formes d'acció i expressió (activitats graduades *Use-Modify-Create*) i múltiples formes d'implicació mitjançant el treball cooperatiu formal (Programa CA/AC de Pere Pujolàs) i la minimització de l'ansietat tecnològica [@Mellado_2014; @Charles_2023].
+
+---
+
+## Objectius del Treball {#sec-objectius}
+
+Per tal de donar resposta al problema plantejat i articular la proposta d'innovació, s'estableixen els següents objectius:
+
+### Objectiu General (OG) {.unnumbered}
+
+**Dissenyar, fonamentar i avaluar una proposta d'innovació didàctica (Modalitat A) basada en la integració del Pensament Computacional i el càlcul simbòlic amb SageMath en quaderns Jupyter per a l'ensenyament de la Física i Química a 4t d'ESO i 1r de Batxillerat, alineada amb el marc competencial de la LOMLOE i els principis d'inclusió educativa (DUA).**
+
+### Objectius Específics (OE) {.unnumbered}
+
+Per assolir l'objectiu general, es formulen cinc objectius específics:
+
+* **OE1 (Fonamentació teòrica):** Construir un marc teòric sòlid que articule la recerca en Didàctica de les Ciències de la Universitat de València (desinterès, models mentals i concepcions alternatives) amb les taxonomies del Pensament Computacional i els avantatges cognitius del Càlcul Simbòlic (CAS).
+* **OE2 (Disseny de Situacions d'Aprenentatge):** Desenvolupar dues Situacions d'Aprenentatge completes, curricularment contextualitzades i estructurades sobre la progressió *Use-Modify-Create*: la SdA 1 de Física (Tir parabòlic amb resistència aerodinàmica) i la SdA 2 de Química (Balanç estequiomètric simbòlic i conservació de la matèria).
+* **OE3 (Seqüenciació i creació de materials didàctics):** Elaborar els quaderns interactius de treball Jupyter/SageMath per a l'alumnat, acompanyats de les corresponents guies docents d'implementació en plataformes al núvol lliures d'instal·lació local (CoCalc / JupyterLab).
+* **OE4 (Inclusió, DUA i gestió de l'aula cooperativa):** Planificar l'orquestració metodològica de les sessions mitjançant estructures cooperatives heterogènies (Programa CA/AC) i protocols d'acompanyament afectiu per a la regulació de la frustració i la desmitificació de l'error de codi.
+* **OE5 (Disseny de l'avaluació competencial):** Elaborar un sistema d'avaluació formativa i formadora integrat per rúbriques competencials analítiques alineades amb els criteris d'avaluació dels Decrets 107/2022 i 108/2022 de la Comunitat Valenciana.
+
+---
+
+## Estructura de la Memòria {#sec-estructura}
+
+Aquesta memòria s'organitza en sis capítols principals que reflecteixen el fil conductor de la investigació i la proposta de disseny didàctic:
+
+* El **Capítol 1 (Introducció, Plantejament del Problema i Justificació)** ha presentat el diagnòstic empíric del desinterès per les ciències, les preguntes i hipòtesis de treball, la justificació epistèmica del PC amb SageMath, el marc curricular valencià LOMLOE i els objectius de la memòria.
+* El **Capítol 2 (Marc Teòric i Estat de la Qüestió)** aprofundeix en els fonaments teòrics del treball: l'epistemologia del Pensament Computacional, la teoria de la modelització física d'Hestenes, els fonaments cognitius del Càlcul Simbòlic (CAS), els nivells d'indagació al laboratori, la dimensió socioafectiva en l'aprenentatge científic i la connexió amb la tradició investigadora de la Universitat de València.
+* El **Capítol 3 (Proposta Didàctica: Situacions d'Aprenentatge)** constitueix el nucli de la innovació: descriu detalladament el disseny complet de la SdA 1 (Física) i la SdA 2 (Química), la seua seqüenciació temporal en sessions d'aula, les activitats graduades *Use-Modify-Create* i les rúbriques d'avaluació competencial.
+* El **Capítol 4 (Metodologia d'Implementació, DUA i Gestió d'Aula)** aborda la transposició pràctica a l'aula ordinària: l'aplicació de les pautes del DUA, la formació d'equips cooperatius mitjançant el Programa CA/AC de Pere Pujolàs i el protocol d'acompanyament emocional davant dels errors de programació.
+* El **Capítol 5 (Conclusions, Limitacions i Línies de Futur)** sintetitza el grau d'assoliment dels objectius, analitza les aportacions de la proposta a la didàctica de les ciències, identifica les limitacions potencials d'implementació i planteja línies de recerca docent futures.
+* El **Capítol 6 (Reflexió Personal i Competències del Màster)** ofereix un exercici d'autoreflexió crítica sobre l'evolució docent de l'autor al llarg del Màster Universitari en Professorat d'Educació Secundària de la Universitat de València, la integració dels aprenentatges del Pràcticum i la transformació del rol docent.
+* Finalment, els **Annexos** recullen els quaderns Jupyter complets de codi SageMath per a Física i Química i la guia tècnica d'instal·lació i desplegament a l'aula.

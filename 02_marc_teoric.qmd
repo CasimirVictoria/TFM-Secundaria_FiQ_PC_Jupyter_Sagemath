@@ -1,0 +1,208 @@
+# Marc Teòric i Estat de la Qüestió {#sec-marc-teoric}
+
+## Epistemologia i Taxonomies del Pensament Computacional {#sec-epistemologia-pc}
+
+El concepte de **Pensament Computacional (PC)** ha experimentat una evolució profunda des que Jeannette Wing [@Wing_2006] el va situar en el centre del debat educatiu com una competència universal per a la resolució de problemes. Wing va defensar que el PC implica resoldre problemes, dissenyar sistemes i comprendre el comportament humà recolzant-se en els conceptes fonamentals de la informàtica, destacant que pensar computacionalment és una capacitat humana transversal i no una simple habilitat de programació mecànica.
+
+No obstant això, en l'àmbit de la didàctica de les ciències experimentals, la integració del PC requereix superar les visions reduccionistes o tecnocèntriques que limiten la computació a l'aprenentatge rutinari de la sintaxi d'un llenguatge de programació (*coding*). Autors com Lodi i Martini [@Lodi_2021], recolzant-se en la teoria de l'alfabetització computacional (*computational literacy*) d'Andrea diSessa, argumenten que l'ordinador a l'escola ha de funcionar com un nou mitjà d'expressió i raonament: de la mateixa manera que l'alfabetització textual no consisteix només a aprendre regles gramaticals sinó a «tenir alguna cosa a dir», la computació en ciències només assoleix valor educatiu quan s'utilitza per a explorar idees significatives, modelitzar fenòmens naturals i resoldre preguntes d'investigació autèntiques [@Li_2020].
+
+Per operativitzar aquesta integració a les aules de secundària i batxillerat, la investigació didàctica ofereix dos marcs taxonòmics de referència:
+
+### La Taxonomia de Pràctiques Computacionals de Weintrop et al. (2016) {.unnumbered}
+
+Weintrop et al. [@Weintrop_2016] van desenvolupar una taxonomia dissenyada específicament per a l'educació cientificomatemàtica a secundària, estructurada en **4 grans categories i 22 pràctiques computacionals**:
+
+```
+ ┌─────────────────────────────────────────────────────────────────────────┐
+ │       TAXONOMIA DE PRÀCTIQUES COMPUTACIONALS (Weintrop et al., 2016)    │
+ ├────────────────────────────┬────────────────────────────────────────────┤
+ │ 1. Pràctiques de Dades     │ • Recollida, creació i manipulació de dades│
+ │    (Data Practices)        │ • Anàlisi de dades i visualització gràfica │
+ ├────────────────────────────┼────────────────────────────────────────────┤
+ │ 2. Modelització i Simulació│ • Ús de models per entendre conceptes      │
+ │    (Modeling & Simulation) │ • Prova de solucions, avaluació i disseny  │
+ │                            │ • Construcció i modificació de models      │
+ ├────────────────────────────┼────────────────────────────────────────────┤
+ │ 3. Resolució Computacional │ • Descomposició de problemes complexos     │
+ │    de Problemes            │ • Programació, modularitat i abstracció    │
+ │    (Computational Problem) │ • Resolució d'errors i depuració (debugging)│
+ ├────────────────────────────┼────────────────────────────────────────────┤
+ │ 4. Pensament Sistèmic      │ • Investigació de sistemes com un tot      │
+ │    (Systems Thinking)      │ • Pensament en nivells (macro vs. micro)   │
+ │                            │ • Gestió de la complexitat i límits        │
+ └────────────────────────────┴────────────────────────────────────────────┘
+```
+
+Aquest marc és especialment rellevant per a la Física i Química perquè demostra que el PC no s'afegeix com una càrrega aliena a la matèria, sinó que s'entrellaça amb el treball científic: l'alumnat recull dades virtuals, ajusta corbes analítiques, construeix models de simulació i transita contínuament entre el nivell macroscòpic dels fenòmens observats i el nivell microscòpic de les partícules subjacents.
+
+### El Marc d'Avaluació Tridimensional de Brennan i Resnick (2012) {.unnumbered}
+
+Per a avaluar el desenvolupament del PC més enllà de la simple correcció del codi, Brennan i Resnick [@Brennan_2012] proposen una estructura en tres dimensions interconnectades:
+
+1. **Conceptes computacionals (*Computational Concepts*):** Elements estructurals que l'alumnat mobilitza en escriure instruccions (seqüències, bucles iteratius, condicionals lògics *if-else*, operadors matemàtics, variables i estructures de dades).
+2. **Pràctiques computacionals (*Computational Practices*):** Processos cognitius i estratègies desplegades durant la resolució (*com s'aprèn*): desenvolupament incremental i iteratiu, depuració autònoma d'errors (*testing and debugging*), reutilització i remescla de codi obert (*reusing and remixing*), i abstracció modular en funcions reutilitzables.
+3. **Perspectives computacionals (*Computational Perspectives*):** Transformació de la identitat de l'aprenent respecte a la tecnologia: passar de consumidor passiu a creador (*expressar-se*), valorar la construcció col·lectiva (*connectar-se*) i qüestionar críticament els sistemes digitals que l'envolten (*qüestionar-se*).
+
+---
+
+## Teoria de la Modelització en Física i Química {#sec-teoria-modelitzacio}
+
+La ciència no descriu la realitat de manera directa i ingènua, sinó mitjançant la construcció, contrast i refinament de **models científics**. En la didàctica de la física, David Hestenes [@Hestenes_1987] va formular la *Modeling Theory of Physics Instruction*, argumentant que la modelització matemàtica ha de constituir l'eix vertebrador de l'ensenyament científic. Segons Hestenes, la resolució tradicional de problemes fracassa perquè el professorat i els manuals salten directament a aplicar fórmules sense ensenyar a l'alumnat el procés de construcció del model.
+
+### El Cicle de Modelització d'Hestenes (1987) {.unnumbered}
+
+Hestenes estructura el desenvolupament d'un model en **quatre etapes seqüencials**:
+
+```
+      ┌──────────────────────────────────────────────────────────┐
+      │         1. ETAPA DE DESCRIPCIÓ (Description Stage)       │
+      │ • Descripció d'objectes (massa m, càrrega q, límits)     │
+      │ • Variables d'estat (posició r, velocitat v, temps t)    │
+      │ • Mapa d'interaccions (diagrama de forces F i energies)  │
+      └────────────────────────────┬─────────────────────────────┘
+                                   │
+                                   ▼
+      ┌──────────────────────────────────────────────────────────┐
+      │         2. ETAPA DE FORMULACIÓ (Formulation Stage)       │
+      │ • Lleis físiques de canvi: Segona Llei de Newton (F = ma)│
+      │ • Lleis específiques de força: fregament f_d = -b·v²     │
+      │ • Equacions de lligadura i condicions inicials           │
+      └────────────────────────────┬─────────────────────────────┘
+                                   │
+                                   ▼
+      ┌──────────────────────────────────────────────────────────┐
+      │         3. ETAPA DE RAMIFICACIÓ (Ramification Stage)     │
+      │ • Deducció matemàtica de solucions i trajectòries r(t)   │
+      │ • Obtenció de descripcions analítiques i corbes gràfiques│
+      │ • Exploració de casos particulars i paràmetres crítics   │
+      └────────────────────────────┬─────────────────────────────┘
+                                   │
+                                   ▼
+      ┌──────────────────────────────────────────────────────────┐
+      │          4. ETAPA DE VALIDACIÓ (Validation Stage)        │
+      │ • Avaluació de la coherència física i casos límit        │
+      │ • Contrast empíric amb dades experimentals reals         │
+      │ • Refinament del model o identificació de limitacions    │
+      └──────────────────────────────────────────────────────────┘
+```
+
+Aquest cicle resol una de les majors dificultats en l'aprenentatge de la mecànica: l'etapa de *Descripció* és la més complexa per a l'alumnat novell, ja que requereix conceptualitzar el fenomen abans d'escriure cap número.
+
+### Models Mentals i la Intermediació Computacional {.unnumbered}
+
+Des de la perspectiva de la ciència cognitiva, cal distingir entre el **model conceptual extern** (les equacions matemàtiques, diagrames i codi) i el **model mental intern** que l'aprenent construeix en la seua ment [@Hestenes_1987; @Hanc_2020]. La construcció d'un model mental sòlid és el que els físics anomenen «intuïció física».
+
+Els quaderns interactius de computació actuen com a representacions externes dinàmiques d'alta fidelitat. En permetre modificar immediatament les variables i visualitzar gràficament la resposta del sistema, redueixen la distància cognitiva entre la teoria abstracta i la visualització del fenomen, ajudant l'alumnat a revisar i ajustar els seus models mentals en temps real [@Hanc_2020; @Vieyra_2021].
+
+---
+
+## Càlcul Simbòlic (CAS) i l'Eina SageMath {#sec-sagemath-cas}
+
+Un dels debats centrals en la tecnologia educativa aplicada a les ciències és la distinció entre el càlcul purament numèric i el **Càlcul Simbòlic per Ordinador (Computer Algebra System, CAS)**.
+
+### El Perill de la «Caixa Negra» en el Càlcul Numèric Pur {.unnumbered}
+
+Moltes eines digitals utilitzades a les aules (com fulls de càlcul o simuladors comercials preconfigurats) operen com a **«caixes negres»** opaques: l'alumnat introdueix valors numèrics d'entrada i la màquina genera una taula de xifres o un gràfic sense que l'estudiant puga inspeccionar les relacions matemàtiques que governen el procés. 
+
+Com assenyala Radian Belu [@Belu_2009], el càlcul numèric aïllat comporta sovint la **pèrdua del significat físic** del problema, ja que impedeix analitzar el paper de les constants, deduir dependències funcionals o estudiar el comportament asimptòtic del sistema quan una variable tendeix a zero o a infinit.
+
+### El Càlcul Simbòlic com a «Caixa Blanca» Cognitiva: SageMath {.unnumbered}
+
+El programari lliure **SageMath** [@Borovsky_2023; @Carrillo_2013; @Fedorenko_2019] es fonamenta en el llenguatge Python i integra en una plataforma unificada els millors motors oberts de càlcul simbòlic (com *SymPy* i *Maxima*), càlcul numèric (*NumPy*, *SciPy*) i visualització (*Matplotlib*). 
+
+A diferència dels enfocaments numèrics, SageMath aporta tres avantatges didàctics fonamentals:
+
+1. **Manipulació analítica exacta i alliberament de l'àlgebra mecànica:**  
+   Belu [@Belu_2009] destaca que la resolució manual de llapis i paper obliga l'alumnat a invertir el 80% del seu temps i energia en tasques rutinàries de càlcul (aïllar variables complexes, integrar per parts o resoldre sistemes lineals feixucs), la qual cosa genera fatiga i desvia l'atenció del contingut físic. Amb un sistema CAS, l'estudiant formula les equacions de partida i delega la resolució algebraica pesada a la màquina mitjançant instruccions com `solve()`, podent dedicar tot el seu esforç intel·lectual a interpretar el resultat i avaluar solucions alternatives [@Bobyliev_2021].
+2. **Desenvolupament d'habilitats metacognitives mitjançant variables simbòliques:**  
+   A SageMath, qualsevol magnitud desconeguda s'ha de declarar explícitament com a variable simbòlica (per exemple, `var('t, v_0, alpha, g, k')`). Borovský, Hanč i Hančová [@Borovsky_2023] subratllen que aquesta exigència sintàctica obliga l'alumnat a prendre consciència explícita de quines magnituds actuen com a constants del sistema, quines com a paràmetres independents i quines com a incògnites, promovent una autoregulació metacognitiva de primer ordre.
+3. **Llegibilitat formal amb LaTeX natiu (`show()`):**  
+   SageMath renderitza les relacions algebraiques en notació tipogràfica formal estàndard mitjançant l'ordre `show()`, connectant directament el llenguatge del codi amb la representació dels llibres de text i eliminant la barrera d'interpretar sintaxis lineals críptiques [@Borovsky_2023].
+
+---
+
+## Metodologia de Laboratori i Nivells d'Indagació {#sec-nivells-indagacio}
+
+L'aprenentatge de les ciències no es pot reduir a la transmissió verbal de conceptes acabats. La recerca didàctica internacional ha reivindicat la necessitat d'articular la docència al voltant de l'**aprenentatge per indagació (Inquiry-Based Science Education, IBSE)** i el treball pràctic autèntic [@Caamano_2004; @Gil_Perez_1999].
+
+### Redefinició del Treball Pràctic: El Laboratori Computacional {.unnumbered}
+
+Tradicionalment s'ha identificat el «treball pràctic» de manera exclusiva amb la manipulació d'instruments en un banc de laboratori físic. Tanmateix, autors com Derek Hodson [@Hodson_1994] defensen que qualsevol activitat que exigisca a l'alumnat ser actiu i manipular idees constitueix treball pràctic autèntic.
+
+Hodson argumenta que les simulacions interactives per ordinador no són un substitut pobre del laboratori físic, sinó un entorn que sovint el supera en potència didàctica: en eliminar el «soroll experimental» i les tasques manuals rutinàries de presa de dades, permeten a l'estudiantat centrar-se en el contrast d'hipòtesis, l'exploració de condicions idealitzades i la formulació de preguntes científiques [@Hodson_1994]. Caamaño [@Caamano_2004] complementa aquesta visió classificant les activitats pràctiques en *experiències qualitatives*, *experiments il·lustratius*, *exercicis pràctics* i *investigacions completes*, totes elles traslladables amb èxit a l'entorn dels quaderns Jupyter.
+
+### Els Nivells d'Indagació d'Herron (1971) i la Bastida *Use-Modify-Create* {.unnumbered}
+
+Per graduar la dificultat i l'autonomia de les tasques computacionals, la nostra proposta s'estructura sobre els **Nivells d'Indagació de Marshall Herron** [@Herron_1971], creuant-los amb la bastida pedagògica **Use-Modify-Create** proposada per Grover i Pea [@Grover_2013] i Brennan i Resnick [@Brennan_2012]:
+
+```
+ ┌──────────┬──────────┬─────────┬─────────┬──────────────────────────────────┐
+ │  NIVELL  │ PROBLEMA │ MÈTODE  │ SOLUCIÓ │  BASTIDA DIDÀCTICA COMPUTACIONAL │
+ ├──────────┼──────────┼─────────┼─────────┼──────────────────────────────────┤
+ │ Nivell 0 │  Donat   │  Donat  │  Donat  │ Confirmació / Verificació        │
+ ├──────────┼──────────┼─────────┼─────────┼──────────────────────────────────┤
+ │ Nivell 1 │  Donat   │  Donat  │  OBERT  │ FASE USE: L'alumne executa un    │
+ │          │          │         │         │ quadern preconfigurat i explora  │
+ │          │          │         │         │ paràmetres amb controls visuals. │
+ ├──────────┼──────────┼─────────┼─────────┼──────────────────────────────────┤
+ │ Nivell 2 │  Donat   │  OBERT  │  OBERT  │ FASE MODIFY: L'alumne modifica   │
+ │          │          │         │         │ línies de codi, depura errors    │
+ │          │          │         │         │ i afegeix noves forces o termes. │
+ ├──────────┼──────────┼─────────┼─────────┼──────────────────────────────────┤
+ │ Nivell 3 │  OBERT   │  OBERT  │  OBERT  │ FASE CREATE: L'alumne formula    │
+ │          │          │         │         │ el seu propi model algorítmic i  │
+ │          │          │         │         │ resol un repte científic obert.  │
+ └──────────┴──────────┴─────────┴─────────┴──────────────────────────────────┘
+```
+
+Aquesta progressió evita el bloqueig inicial de la «pantalla en blanc», permetent que tot l'alumnat s'inicie amb èxit i vaja assumint progressivament el control del disseny científic.
+
+---
+
+## Dimensió Socioafectiva i Treball Cooperatiu {#sec-dimensio-afectiva}
+
+L'aprenentatge de la ciència no és un procés purament cognitiu o racional; està profundament condicionat per la **dimensió afectiva, les emocions i les actituds** de l'alumnat [@Mellado_2014].
+
+### La Gestió de les Emocions i de l'Ansietat Tecnològica {.unnumbered}
+
+Mellado et al. [@Mellado_2014] han demostrat que el canvi conceptual requereix una atmosfera de confiança i seguretat emocional. En les activitats de resolució de problemes d'indagació, l'alumnat transita per una corba d'emocions que va des de la incertesa inicial fins a l'orgull i la gratificació quan aconsegueix resoldre el repte de manera autònoma.
+
+Quan s'introdueix la programació a l'aula de física, apareix un factor crític: l'**ansietat davant els missatges d'error de codi**. Investigacions recents com la de Tessa Charles i Carl Gwilliam [@Charles_2023] revelen que els missatges d'error estàndard de Python són percebuts per l'alumnat principiant com a hostils i incomprensibles, generant alts nivells de frustració i abandonament. Mitjançant la implementació de guies de retroalimentació constructiva en llenguatge natural i la desmitificació de l'error com una oportunitat natural de depuració (*debugging*), Charles i Gwilliam van constatar una **reducció del 73% en la frustració i del 55% en l'ansietat** dels estudiants, acompanyada d'un augment molt notable de la seua autoeficàcia [@Charles_2023].
+
+### El Treball Cooperatiu com a Motor d'Inclusió: El Programa CA/AC de Pere Pujolàs {.unnumbered}
+
+Per garantir que el treball computacional no derive en un aïllament individual davant de la pantalla ni en el monopoli del dispositiu per part de l'estudiant amb més coneixements previs, la nostra proposta s'estructura sobre el programa **Cooperar per a Aprendre / Aprendre a Cooperar (CA/AC)** desenvolupat pel grup de Pere Pujolàs [@Pujolas_2009].
+
+El model CA/AC es fonamenta en la interdependència positiva de finalitats i en la distribució de rols actius en equips heterogenis de 4 persones (portaveu, secretari, moderador i coordinador tècnic). En el context del laboratori de quaderns Jupyter, s'aplica l'estructura formal **«Llapissos al centre» (o *Mans fora del teclat*)**:
+1. Enunciada una tasca de modelització o codi, tots els membres de l'equip aparten les mans del teclat i del ratolí per debatre oralment la solució física i el plantejament lògic del problema.
+2. Un cop assolit el consens, un membre assignat escriu la línia de codi o executa la cel·la de SageMath, mentre la resta supervisa i comprova la coherència del resultat.
+
+Aquesta dinàmica garanteix la participació igualitària i la interacció simultània, transformant l'aula en una comunitat d'indagació inclusiva conforme a les pautes del Disseny Universal per a l'Aprenentatge [@Pujolas_2009; @Lou_2001].
+
+---
+
+## Tradició Didàctica de la Universitat de València {#sec-tradicio-uv}
+
+Aquest Treball de Final de Màster s'inscriu de manera explícita en la tradició investigadora del **Departament de Didàctica de les Ciències Experimentals i Socials de la Universitat de València**, recollint les seues troballes empíriques sobre el diagnòstic del desinterès escolar i la superació de concepcions alternatives.
+
+### El Diagnòstic Empíric del Desinterès per la Física i Química {.unnumbered}
+
+L'estudi de referència de Solbes, Montserrat i Furió [@Solbes_2007; @Solbes_2011] va aportar dades contundents sobre la situació de l'ensenyament de les ciències a la província de València:
+* Un **70,8%** de l'alumnat de secundària qualifica la Física i Química com una assignatura «avorrida, complicada i difícil».
+* Un aclaparador **85,5%** denuncia directament que les classes pateixen un «excés de fórmules abstractes i repetitives i una manca total de pràctiques de laboratori».
+* Un **66,7%** afirma que els continguts treballats no tenen cap utilitat ni connexió amb la seua vida diària.
+
+La nostra proposta d'innovació respon exactament a aquesta demanda: substituir l'ensenyament transmissiu de fórmules desconnectades per laboratoris virtuals d'indagació activa amb SageMath que connecten la física amb la realitat [@Solbes_2018; @Canto_2016].
+
+### Superació d'Obstacles Epistemològics i Concepcions Alternatives {.unnumbered}
+
+La línia d'investigació sobre conceptes estructurants en química encapçalada per Carles Furió i el seu equip [@Carbonell_Furio_2006; @Furio_2007] ha demostrat que l'alumnat de secundària presenta greus dificultats per a comprendre el **canvi químic substancial**:
+
+* **La visió mecànica i continuista del canvi químic:** Un 40% de l'estudiantat d'ESO interpreta les reaccions químiques com a simples «mescles o separacions físiques» de components preexistents (per exemple, creure que en cremar sucre el carbó i l'aigua ja estaven barrejats a l'interior i només s'han separat per la calor) [@Carbonell_Furio_2006].
+* **Indefinició entre mescla, substància pura i compost:** L'alumnat utilitza idees intuïtives i no disposa d'un model corpuscular consolidat (model atòmic de Dalton) que li permeta entendre que en una reacció química les substàncies inicials deixen d'existir per formar-ne de noves amb propietats completament diferents [@Furio_2007].
+
+La integració del càlcul simbòlic amb SageMath en la nostra Situació d'Aprenentatge 2 permet abordar directament aquest obstacle: en representar el balanç de matèria mitjançant sistemes d'equacions lineals i matrius de conservació atòmica, l'alumnat visualitza com els àtoms es conserven i es reorganitzen estrictament en noves entitats moleculars, superant la visió intuïtiva de la simple barreja mecànica.
+
+---
+
+Amb aquest sòlid marc teòric de sis pilars epistemològics, computacionals, pedagògics, afectius i contextuals, la memòria queda plenament fonamentada per a donar pas al nucli del treball: el disseny complet de les Situacions d'Aprenentatge al **Capítol 3**.

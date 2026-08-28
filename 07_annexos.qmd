@@ -1,0 +1,7 @@
+# Annexos {#sec-annexos .unnumbered}
+
+## Annex I: Quadern Jupyter de Física (Cinemàtica i Dinàmica amb SageMath) {#sec-annex-fisica}
+
+## Annex II: Quadern Jupyter de Química (Reaccions i Estequiometria) {#sec-annex-quimica}
+
+## Annex III: Guia Docent d'Instal·lació i Ús a l'Aula (CoCalc / JupyterLab) {#sec-annex-guia-docent}

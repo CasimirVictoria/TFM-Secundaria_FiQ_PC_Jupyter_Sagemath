@@ -1,0 +1,285 @@
+# Proposta Didàctica: Situacions d'Aprenentatge {#sec-proposta-didactica}
+
+## Disseny Global de la Intervenció {#sec-disseny-global}
+
+La present proposta d'innovació docent (Modalitat A) té com a finalitat transformar l'ensenyament de la Física i Química a l'Educació Secundària Obligatòria (4t d'ESO) i al Batxillerat (1r de Batxillerat) mitjançant la integració curricular del **Pensament Computacional (PC)** i el **Càlcul Simbòlic per Ordinador (CAS)** utilitzant el programari lliure **SageMath** en entorns interactius al núvol (**CoCalc / JupyterLab**).
+
+Lluny de plantejar la programació com una matèria aïllada o com una càrrega addicional de continguts tècnics, la proposta s'estructura sobre una arquitectura pedagògica integrada que conjuga tres pilars fonamentals fonamentats en el Marc Teòric:
+
+1. **La Bastida Cognitiva *Use-Modify-Create* [@Grover_2013; @Brennan_2012]:** L'alumnat comença utilitzant quaderns interactius preconfigurats (*Use*), progressa modificant paràmetres, depurant errors i afegint noves equacions físiques (*Modify*), i culmina dissenyant autònomament els seus propis algorismes de modelització i anàlisi de dades (*Create*).
+2. **El Cicle de Modelització d'Hestenes en 4 Fases [@Hestenes_1987]:** Totes les activitats es vertebren a través de les etapes de *Descripció* qualitativa, *Formulació* matemàtica, *Ramificació* simbòlico-analítica i *Validació* empírica amb dades reals.
+3. **L'Orquestració Cooperativa Inclusiva (Programa CA/AC) i Suport Afectiu [@Pujolas_2009; @Charles_2023]:** Treball en equips heterogenis de 4 estudiants amb rols rotatius i aplicació de l'estructura «Llapissos al centre / Mans fora del teclat», acompanyat de guies amigables de depuració d'errors per a minimitzar l'ansietat tecnològica.
+
+La proposta es concreta en **dues Situacions d'Aprenentatge (SdA)** representatives, dissenyades d'acord amb el marc curricular de la Comunitat Valenciana [@decret107_2022; @decret108_2022]:
+
+```
+ ┌─────────────────────────────────────────────────────────────────────────┐
+ │               ARQUITECTURA DIDÀCTICA DE LA PROPOSTA                     │
+ ├────────────────────────────────────┬────────────────────────────────────┤
+ │ SITUACIÓ D'APRENENTATGE 1 (FÍSICA) │ SITUACIÓ D'APRENENTATGE 2 (QUÍMICA)│
+ │ «Més enllà del buit: Modelització  │ «La matèria ni es crea ni es       │
+ │ del tir parabòlic amb resistència  │ destrueix: Balanç algebraic i      │
+ │ aerodinàmica mitjançant SageMath»  │ conservació atòmica de reaccions»  │
+ ├────────────────────────────────────┼────────────────────────────────────┤
+ │ • Nivell: 1r de Batxillerat        │ • Nivell: 4t d'ESO                 │
+ │ • Durada: 6 sessions (55 min)      │ • Durada: 6 sessions (55 min)      │
+ │ • Enfocament: Cinemàtica i Dinàmica│ • Enfocament: Canvi Químic i       │
+ │   amb models analítics i numèrics  │   Estequiometria Simbòlica Matricial│
+ │ • Connexió empírica: Tracker (vídeo)│ • Connexió empírica: Gravimetria   │
+ └────────────────────────────────────┴────────────────────────────────────┘
+```
+
+---
+
+## Situació d'Aprenentatge 1 (Física): Cinemàtica i Dinàmica amb SageMath {#sec-sda-fisica}
+
+### Identificació i Justificació Curricular {.unnumbered}
+
+* **Títol:** *«Més enllà del buit: Modelització del tir parabòlic amb resistència de l'aire mitjançant càlcul simbòlic i interactius»*.
+* **Curs i Matèria:** 1r de Batxillerat — Física i Química.
+* **Marc Curricular:** Decret 108/2022, de 5 d'agost [@decret108_2022].
+* **Competències Específiques vinculades:**
+  * **CE1:** Resoldre problemes fisicoquímics aplicant les lleis de la mecànica clàssica mitjançant models matemàtics i computacionals.
+  * **CE2:** Utilitzar el mètode científic a través de la formulació d'hipòtesis, la simulació digital i el contrast de models amb dades experimentals reals.
+  * **CE4:** Emprar entorns digitals oberts per a la representació gràfica, la comunicació i l'anàlisi de sistemes dinàmics complexos.
+  * **CE5:** Treballar col·laborativament en la resolució de reptes científics, gestionant les emocions i l'error de manera constructiva.
+
+### Repte Contextualitzat i Pregunta Guia {.unnumbered}
+
+En els llibres de text tradicionals, el tir parabòlic s'ensenya invariablement sota la hipòtesi d'absència total d'atmosfera (buit), deduint que l'angle de màxim abast és sempre exactament de $45^\circ$. Tanmateix, quan un esportista llança una pilota de futbol, un volant de bàdminton o una javelina, la resistència de l'aire altera radicalment la trajectòria, fent que la paràbola es deforme asimètricament i que l'angle òptim siga significativament menor a $45^\circ$.
+
+El repte plantejat a l'alumnat és:  
+*«Com influeix realment la fricció de l'aire en el llançament d'un projectil real? Podem construir un model computacional en SageMath que prediga amb exactitud la trajectòria mesurada al pati de l'institut i determinar l'angle òptim de llançament?»*
+
+### Desplegament segons el Cicle de Modelització d'Hestenes (1987) {.unnumbered}
+
+#### FASE I: Descripció (Description Stage) {.unnumbered}
+L'alumnat grava amb els seus telèfons mòbils el llançament d'una pilota al pati de l'institut. A l'aula, abans d'obrir cap ordinador, treballen en equips cooperatius per definir:
+* L'objecte com a partícula puntual de massa $m$.
+* El sistema de referència cartesià $(x, y)$ amb origen al punt de llançament.
+* El mapa d'interaccions: el pes $\vec{P} = -m g \vec{j}$ i la força d'arrossegament aerodinàmic $\vec{F}_d$, oposada al vector velocitat instantani $\vec{v}$.
+
+#### FASE II: Formulació (Formulation Stage) {.unnumbered}
+Aplicant la Segona Llei de Newton ($\sum \vec{F} = m \vec{a}$), l'alumnat formula les equacions diferencials del moviment per a dos models de fregament:
+1. **Model de fregament lineal (Stokes, baixes velocitats):** $\vec{F}_d = -b \vec{v}$.
+$$\frac{d^2 x}{dt^2} = -\frac{b}{m}\frac{dx}{dt}, \qquad \frac{d^2 y}{dt^2} = -g - \frac{b}{m}\frac{dy}{dt}$$
+2. **Model de fregament quadràtic (Newton/Rayleigh, velocitats reals):** $\vec{F}_d = -c v \vec{v} = -c \sqrt{v_x^2 + v_y^2} \vec{v}$.
+$$\frac{d^2 x}{dt^2} = -\frac{c}{m}\sqrt{v_x^2+v_y^2} v_x, \qquad \frac{d^2 y}{dt^2} = -g - \frac{c}{m}\sqrt{v_x^2+v_y^2} v_y$$
+
+#### FASE III: Ramificació (Ramification Stage) {.unnumbered}
+A través del quadern Jupyter en CoCalc, l'alumnat implementa la resolució a SageMath utilitzant la potència del Càlcul Simbòlic i Numèric:
+
+```python
+# ==============================================================================
+# SdA 1 - FÍSICA: MODELITZACIÓ DE TIR PARABÒLIC AMB RESISTÈNCIA DE L'AIRE
+# ==============================================================================
+# 1. Declaració de variables simbòliques (Abstracció Metacognitiva)
+t = var('t')
+x = function('x')(t)
+y = function('y')(t)
+g, b, m, v0, alpha = var('g b m v0 alpha')
+
+# 2. Formulació de les Equacions Diferencials (Model Lineal Exacte)
+eq_x = diff(x, t, 2) == -(b/m)*diff(x, t)
+eq_y = diff(y, t, 2) == -g - (b/m)*diff(y, t)
+
+# 3. Resolució Simbòlica Analítica amb dsolve
+sol_x = dsolve(eq_x, x, ics=[0, 0, v0*cos(alpha)])
+sol_y = dsolve(eq_y, y, ics=[0, 0, v0*sin(alpha)])
+
+# 4. Renderització tipogràfica formal en LaTeX
+show(sol_x)
+show(sol_y)
+```
+
+Per al cas quadràtic no lineal, s'aplica el solucionador numèric `desolve_odeint` integrat en SageMath [@Borovsky_2023] i es dissenya un *widget* interactiu `@interact`:
+
+```python
+# 5. Widget interactiu per a l'exploració dinàmica a l'aula
+@interact
+def simulador_projectil(
+    v0=slider(5, 50, 1, default=20, label='Velocitat inicial $v_0$ (m/s)'),
+    alpha=slider(10, 85, 1, default=45, label="Angle d'elevació $\\alpha$ (graus)"),
+    c_fregament=slider(0.0, 0.5, 0.02, default=0.1, label='Coeficient $c$ (kg/m)')
+):
+    # Càlcul numèric de la trajectòria real amb fregament quadràtic
+    # i comparació en temps real amb la paràbola ideal sense aire (c=0)
+    pass
+```
+
+#### FASE IV: Validació (Validation Stage) {.unnumbered}
+L'alumnat processa el vídeo enregistrat al pati mitjançant el programari lliure **Tracker Video Analysis** [@Brown_2013; @Subramaniam_2025], exportant les posicions experimentals $(t, x_{exp}, y_{exp})$ en format `.csv`. 
+
+Al mateix quadern Jupyter, utilitzant les llibreries `pandas` i `scipy.optimize.curve_fit`, l'alumnat superposa la corba teòrica ideal (buit), el model de SageMath amb fregament i les dades empíriques reals, comprovant que el model computacional amb fregament redueix l'error quadràtic mitjà en més d'un 85% respecte a la fórmula tradicional de llibre de text [@Vieyra_2021].
+
+---
+
+## Situació d'Aprenentatge 2 (Química): Canvi Químic i Estequiometria Simbòlica {#sec-sda-quimica}
+
+### Identificació i Justificació Curricular {.unnumbered}
+
+* **Títol:** *«La matèria ni es crea ni es destrueix: Modelització algebraica i conservació atòmica de les reaccions químiques»*.
+* **Curs i Matèria:** 4t d'ESO — Física i Química.
+* **Marc Curricular:** Decret 107/2022, de 5 d'agost [@decret107_2022].
+* **Competències Específiques vinculades:**
+  * **CE1:** Reconèixer i modelitzar el canvi químic a escala macroscòpica i microscòpica, diferenciant substàncies pures, mescles i compostos.
+  * **CE2:** Aplicar les lleis ponderals de la química i la conservació de la matèria (Lavoisier i Dalton) mitjançant el càlcul algebraic simbòlic.
+  * **CE3:** Expressar les reaccions químiques mitjançant el llenguatge formal de les equacions químiques ajustades i les proporcions estequiomètriques.
+  * **CE5:** Cooperar en el disseny d'estratègies computacionals per a la resolució de problemes de quantitat de substància, reactiu limitant i rendiment.
+
+### Superació de Concepcions Alternatives sobre el Canvi Químic {.unnumbered}
+
+Segons les investigacions del Departament de Didàctica de la Universitat de València [@Carbonell_Furio_2006; @Furio_2007], un 40% de l'alumnat de secundària concep el canvi químic com una simple «mescla o separació física» en què les substàncies inicials romanen ocultes al producte final.
+
+Aquesta SdA utilitza SageMath per fer visible el model atòmic de Dalton: una reacció química no és una mescla, sinó una **reorganització estructural estricta d'àtoms invariables**. El balanç de matèria es formula de manera transparent com la resolució d'un sistema d'equacions lineals homogeni que preserva la identitat i el nombre de cada àtom mitjançant una **matriu de conservació atòmica**.
+
+### Balanç Matricial i Estequiometria Simbòlica a SageMath {.unnumbered}
+
+Considerem la reacció de combustió completa del butà o de la glucosa:
+$$x_1\,\text{C}_6\text{H}_{12}\text{O}_6 + x_2\,\text{O}_2 \longrightarrow x_3\,\text{CO}_2 + x_4\,\text{H}_2\text{O}$$
+
+L'alumnat no fa un tempteig cec; construeix el balanç per a cada element químic ($\text{C}, \text{H}, \text{O}$):
+* **Carboni (C):** $6x_1 + 0x_2 - 1x_3 + 0x_4 = 0$
+* **Hidrogen (H):** $12x_1 + 0x_2 + 0x_3 - 2x_4 = 0$
+* **Oxigen (O):** $6x_1 + 2x_2 - 2x_3 - 1x_4 = 0$
+
+Aquest sistema homogeni $M \vec{x} = \vec{0}$ es resol a SageMath mitjançant el càlcul de l'espai nul (*right kernel*):
+
+```python
+# ==============================================================================
+# SdA 2 - QUÍMICA: BALANÇ MATRICIAL SIMBÒLIC DE REACCIONS QUÍMIQUES
+# ==============================================================================
+# 1. Matriu de conservació atòmica (Files: C, H, O; Columnes: espècies)
+M = matrix(QQ, [
+    [ 6,  0, -1,  0],  # Equació del Carboni (C)
+    [12,  0,  0, -2],  # Equació de l'Hidrogen (H)
+    [ 6,  2, -2, -1]   # Equació de l'Oxigen (O)
+])
+
+# 2. Càlcul de la base de l'espai nul (Kernel dret)
+nucli = M.right_kernel()
+base_vector = nucli.basis()[0]
+
+# 3. Normalització automàtica a nombres enters positius mínims
+denominadors = [val.denominator() for val in base_vector]
+lcm_val = lcm(denominadors)
+coeficients = [int(val * lcm_val) for val in base_vector]
+
+# 4. Presentació formal dels coeficients estequiomètrics
+print(f"Coeficients estequiomètrics de la reacció: {coeficients}")
+show(LatexExpr(f"{coeficients[0]}\\text{{C}}_6\\text{{H}}_{{12}}\\text{{O}}_6 + {coeficients[1]}\\text{{O}}_2 \\longrightarrow {coeficients[2]}\\text{{CO}}_2 + {coeficients[3]}\\text{{H}}_2\\text{{O}}"))
+```
+
+A continuació, l'alumnat estén el quadern per a calcular de manera simbòlica el **reactiu limitant**, les masses en grams necessàries i el **rendiment percentual**, comparant les prediccions del model computacional amb els resultats d'una pràctica real de precipitació al laboratori escolar (reacció entre iodur de potassi i nitrat de plom).
+
+---
+
+## Seqüenciació de Sessions i Quaderns de Treball {#sec-sequenciacio}
+
+Cadascuna de les dues Situacions d'Aprenentatge es desplega en una seqüència de **6 sessions de 55 minuts** a l'aula d'informàtica o amb ordinadors portàtils connectats a CoCalc:
+
+### Cronograma de Sessions de la SdA 1 (Física — 1r de Batxillerat) {.unnumbered}
+
+```
+┌──────┬──────────────────────┬─────────────┬──────────┬──────────────────────┐
+│ SESS.│ FASE D'HESTENES      │ BASTIDA UMC │ HERRON   │ ACTIVITAT PRINCIPAL  │
+├──────┼──────────────────────┼─────────────┼──────────┼──────────────────────┤
+│ S1   │ 1. Descripció        │ USE         │ Nivell 1 │ Gravació al pati i   │
+│      │    (Qualitativa)     │             │          │ presa de dades vídeo │
+├──────┼──────────────────────┼─────────────┼──────────┼──────────────────────┤
+│ S2   │ 2. Formulació        │ USE         │ Nivell 1 │ Introducció CoCalc i │
+│      │    (Equacions)       │             │          │ variables simbòliques│
+├──────┼──────────────────────┼─────────────┼──────────┼──────────────────────┤
+│ S3   │ 3. Ramificació       │ MODIFY      │ Nivell 2 │ Depuració d'ODE i    │
+│      │    (Simbòlica)       │             │          │ model de fregament   │
+├──────┼──────────────────────┼─────────────┼──────────┼──────────────────────┤
+│ S4   │ 3. Ramificació       │ CREATE      │ Nivell 2 │ Programació interact │
+│      │    (Interactius)     │             │          │ i recerca angle òptim│
+├──────┼──────────────────────┼─────────────┼──────────┼──────────────────────┤
+│ S5   │ 4. Validació         │ CREATE      │ Nivell 3 │ Ajust de corbes amb  │
+│      │    (Empírica)        │             │          │ dades de Tracker     │
+├──────┼──────────────────────┼─────────────┼──────────┼──────────────────────┤
+│ S6   │ Síntesi i Avaluació  │ PERSPECTIVES│ Nivell 3 │ Defensa d'equips i   │
+│      │                      │             │          │ coavaluació rúbrica  │
+└──────┴──────────────────────┴─────────────┴──────────┴──────────────────────┘
+```
+
+### Cronograma de Sessions de la SdA 2 (Química — 4t d'ESO) {.unnumbered}
+
+```
+┌──────┬──────────────────────┬─────────────┬──────────┬──────────────────────┐
+│ SESS.│ OBJECTIU PEDAGÒGIC   │ BASTIDA UMC │ HERRON   │ ACTIVITAT PRINCIPAL  │
+├──────┼──────────────────────┼─────────────┼──────────┼──────────────────────┤
+│ S1   │ Canvi Químic vs      │ USE         │ Nivell 1 │ Experiment visual de │
+│      │ Mescla (Concepcions) │             │          │ combustió i hipòtesi │
+├──────┼──────────────────────┼─────────────┼──────────┼──────────────────────┤
+│ S2   │ Conservació Atòmica  │ USE         │ Nivell 1 │ Matrius simbòliques  │
+│      │ de Dalton a CoCalc   │             │          │ en SageMath          │
+├──────┼──────────────────────┼─────────────┼──────────┼──────────────────────┤
+│ S3   │ Balanç d'Equacions   │ MODIFY      │ Nivell 2 │ Depuració de codi de │
+│      │ Complexes            │             │          │ reaccions redox      │
+├──────┼──────────────────────┼─────────────┼──────────┼──────────────────────┤
+│ S4   │ Reactiu Limitant i   │ CREATE      │ Nivell 2 │ Algorisme de càlcul  │
+│      │ Rendiment            │             │          │ estequiomètric pur   │
+├──────┼──────────────────────┼─────────────┼──────────┼──────────────────────┤
+│ S5   │ Contrast Experimental│ CREATE      │ Nivell 3 │ Gravimetria al lab i │
+│      │ de Rendiment         │             │          │ comparació amb model │
+├──────┼──────────────────────┼─────────────┼──────────┼──────────────────────┤
+│ S6   │ Comunicació Científica│ PERSPECTIVES│ Nivell 3 │ Exposició del quadern│
+│      │ i Reflexió DUA       │             │          │ i avaluació en grup  │
+└──────┴──────────────────────┴─────────────┴──────────┴──────────────────────┘
+```
+
+---
+
+## Avaluació Formativa i Rúbriques Competencials {#sec-avaluacio-rubriques}
+
+L'avaluació de la proposta s'allunya de la tradicional prova memorística individual de «fórmules tancades» per adoptar un enfocament **formatiu, continu i formador** [@Sanmarti_2007; @decret107_2022], combinant tres instruments complementaris:
+
+1. **Avaluació del Quadern Jupyter (50%):** Valoració de la correcció matemàtica, la implementació del codi SageMath, la qualitat de les representacions gràfiques i l'anàlisi crítica dels resultats.
+2. **Observació Sistemàtica del Treball Cooperatiu (25%):** Seguiment del compliment dels rols CA/AC, l'aplicació de l'estructura «Llapissos al centre» i la gestió emocional de la frustració davant dels errors de codi.
+3. **Defensa Oral i Coavaluació entre Iguals (25%):** Comunicació dels resultats obtinguts davant del grup-classe i reflexió metacognitiva sobre el procés d'aprenentatge.
+
+### Rúbrica Analítica Competencial de la Proposta {.unnumbered}
+
+La següent rúbrica analítica defineix de manera operativa els **quatre nivells d'assoliment** per a les competències clau treballades:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│              RÚBRICA ANALÍTICA D'AVALUACIÓ COMPETENCIAL LOMLOE              │
+├─────────────────┬─────────────┬─────────────┬─────────────┬─────────────────┤
+│ CRITERI / COMP. │ NIVELL 1    │ NIVELL 2    │ NIVELL 3    │ NIVELL 4        │
+│ ESPECÍFICA      │ INICIAL (1-4)│ EN PROCÉS(5-6)│ AVANÇAT(7-8)│ EXCEL·LENT(9-10)│
+├─────────────────┼─────────────┼─────────────┼─────────────┼─────────────────┤
+│ CE1 / STEM1:    │ Incapaç de  │ Identifica  │ Modela amb  │ Dissenya models │
+│ Modelització    │ formular el │ variables   │ solvència el│ matemàtics i    │
+│ Científica i    │ fenomen o   │ però comet  │ fenomen amb │ computacionals  │
+│ Càlcul Simbòlic │ aplicar lleis│ errors al   │ SageMath i  │ elegants, ana-  │
+│ (Hestenes/CAS)  │ físiques en │ traslladar  │ n'interpreta│ litzant casos   │
+│                 │ equacions.  │ equacions   │ les soluci- │ límit i varian- │
+│                 │             │ a codi CAS. │ ons exactes.│ ts complexes.   │
+├─────────────────┼─────────────┼─────────────┼─────────────┼─────────────────┤
+│ CE2 / STEM2:    │ Executa     │ Importa     │ Analitza    │ Valida el model │
+│ Indagació,      │ simulacions │ dades però  │ dades amb   │ contrastant     │
+│ Dades i Con-    │ de forma    │ té dificul- │ gràfics i   │ dades de vídeo/ │
+│ trast Empíric   │ passiva com │ tats per    │ calcula ajus│ lab amb ajust de│
+│ (Weintrop)      │ caixa negra.│ ajustar-les │ ts de corba │ corbes i anàli- │
+│                 │             │ al model.   │ rigorosos.  │ si d'incerteses.│
+├─────────────────┼─────────────┼─────────────┼─────────────┼─────────────────┤
+│ CE4 / CD1-CD2:  │ Mostra blo- │ Utilitza el │ Modifica    │ Crea codi nou,  │
+│ Pensament Com-  │ queig i de- │ codi base   │ codi, depura│ programa funci- │
+│ putacional i    │ pendència   │ sense apro- │ errors autò-│ ons modulars i  │
+│ Programació     │ absoluta del│ fundir en la│ nomament i  │ construeix in-  │
+│ (Use-Modify-Cr.)│ professor.  │ lògica (USE)│ crea (CREATE)│ teracts fluids. │
+├─────────────────┼─────────────┼─────────────┼─────────────┼─────────────────┤
+│ CE5 / CPSAA4:   │ Treballa de │ Tolera l'er-│ Assumeix el │ Lidera de forma │
+│ Cooperació i    │ forma aïlla-│ ror amb aju-│ seu rol coo-│ empàtica la coo-│
+│ Regulació Socio-│ da; ansietat│ da externa; │ peratiu i   │ peració, ajuda  │
+│ emocional       │ destructiva │ participa   │ gestiona la │ als companys i  │
+│ (CA/AC Pujolàs) │ davant l'er-│ de forma    │ frustració  │ converteix l'er-│
+│                 │ ror de codi.│ passiva.    │ constructi- │ ror en aprenen- │
+│                 │             │             │ vament.     │ tatge col·lectiu│
+└─────────────────┴─────────────┴─────────────┴─────────────┴─────────────────┘
+```
+
+Aquest instrument garanteix una avaluació objectiva, transparent i alineada amb els criteris d'excel·lència docent i inclusió de la Universitat de València.

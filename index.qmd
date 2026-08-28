@@ -1,0 +1,40 @@
+::: {.content-visible when-format="html"}
+> ### 🏛️ Dades Oficials del Treball de Final de Màster (UV)
+> - **Títol:** PENSAMENT COMPUTACIONAL I MODELITZACIÓ EN FÍSICA I QUÍMICA D'EDUCACIÓ SECUNDÀRIA
+> - **Autor:** Casimiro Victoria Castillo
+> - **Tutora del TFM:** Paula Tuzón Marco
+> - **Titulació:** Màster Universitari en Professor/a d'Educació Secundària (Especialitat Física i Química)
+> - **Departament:** Departament de Didàctica de les Ciències Experimentals i Socials
+> - **Institució:** Universitat de València
+> - **Curs Acadèmic:** 2025-2026
+:::
+
+# Resum {.unnumbered}
+
+Aquest Treball de Final de Màster presenta una proposta d'innovació didàctica fonamentada en la integració del Pensament Computacional (PC) i la modelització científica en l'ensenyament de la Física i Química a l'Educació Secundària Obligatòria (4t d'ESO) i al Batxillerat (1r curs). Davant del desinterès generalitzat cap a les ciències provocat per metodologies transmissives i l'abús d'exercicis algorítmics mecànics de «llapis i paper», es proposa l'ús de quaderns interactius Jupyter amb el programari lliure de càlcul simbòlic (CAS) i modelització **SageMath**. A diferència d'enfocaments numèrics tancats o simuladors de «caixa negra», la computació simbòlica permet alliberar l'alumnat d'operacions algebraiques rutinàries i enfocar l'esforç cognitiu en la formulació de principis, l'anàlisi de casos límit i la comprensió del significat físic i químic dels models.
+
+La proposta s'estructura mitjançant dues Situacions d'Aprenentatge (SdA) basades en la indagació orientada i la progressió *Use-Modify-Create*: una SdA de Física centrada en la cinemàtica i dinàmica del tir parabòlic amb resistència de l'aire mitjançant *widgets* interactius, i una SdA de Química orientada al balanç estequiomètric simbòlic i la superació de concepcions alternatives sobre el canvi químic i el concepte de substància. La intervenció s'alinea amb el marc competencial de la LOMLOE a la Comunitat Valenciana, incorporant pautes del Disseny Universal per a l'Aprenentatge (DUA), aprenentatge cooperatiu formal (Programa CA/AC de Pere Pujolàs) i un acompanyament afectiu orientat a reduir la frustració i l'ansietat davant els errors de programació.
+
+**Paraules clau:** Pensament Computacional, Càlcul Simbòlic, SageMath, Didàctica de la Física i Química, Modelització Científica, Concepcions Alternatives, LOMLOE, Aprenentatge Cooperatiu, DUA.
+
+\newpage
+
+## Resumen {.unnumbered .unlisted}
+
+El presente Trabajo de Fin de Máster plantea una propuesta de innovación didáctica fundamentada en la integración del Pensamiento Computacional (PC) y la modelización científica en la enseñanza de la Física y Química en Educación Secundaria Obligatoria (4º ESO) y Bachillerato (1º curso). Frente al desinterés generalizado hacia las ciencias derivado de metodologías transmisivas y la resolución mecánica de problemas de «lápiz y papel», se propone el uso de cuadernos interactivos Jupyter con el software libre de álgebra computacional (CAS) y modelización **SageMath**. A diferencia de enfoques numéricos cerrados o simuladores de «caja negra», el cálculo simbólico permite liberar al alumnado de operaciones algebraicas rutinarias y desviar el esfuerzo cognitivo hacia la formulación de principios, el análisis de casos límite y la comprensión del significado físico y químico de los modelos.
+
+La propuesta se articula mediante dos Situaciones de Aprendizaje (SdA) bajo un enfoque de indagación guiada y la progresión *Use-Modify-Create*: una SdA de Física centrada en la cinemática y dinámica del tiro parabólico con resistencia aerodinámica mediante *widgets* interactivos, y una SdA de Química orientada al balance estequiométrico simbólico y la superación de concepciones alternativas sobre el cambio químico y el concepto de sustancia. La intervención se enmarca en el currículo competencial de la LOMLOE en la Comunidad Valenciana, integrando pautas del Diseño Universal para el Aprendizaje (DUA), aprendizaje cooperativo formal (Programa CA/AC de Pere Pujolàs) y un acompañamiento afectivo orientado a reducir la frustración y la ansiedad ante el error de programación.
+
+**Palabras clave:** Pensamiento Computacional, Cálculo Simbólico, SageMath, Didáctica de la Física y Química, Modelización Científica, Concepciones Alternativas, LOMLOE, Aprendizaje Cooperativo, DUA.
+
+\newpage
+
+## Abstract {.unnumbered .unlisted}
+
+This Master's Thesis presents a didactic innovation proposal grounded in the integration of Computational Thinking (CT) and scientific modeling in secondary Physics and Chemistry education (Grades 10 and 11). Addressing the widespread student disinterest in science caused by transmissive teaching methods and rote pencil-and-paper algorithmic problem solving, this work proposes interactive Jupyter Notebooks powered by the open-source Computer Algebra System (CAS) and modeling environment **SageMath**. Unlike purely numerical black-box software, symbolic computation frees students from tedious routine algebra, redirecting cognitive resources toward physical principles, limiting-case analysis, and conceptual meaning.
+
+The instructional framework is organized into two Inquiry-Based Learning Situations structured around the *Use-Modify-Create* scaffolding model: a Physics unit exploring projectile kinematics and aerodynamic drag via interactive GUI widgets, and a Chemistry unit targeting symbolic stoichiometric balancing and the remediation of persistent misconceptions regarding chemical change and the substance concept. The intervention is aligned with the Spanish LOMLOE competential curriculum, incorporating Universal Design for Learning (UDL) principles, structured cooperative learning (Pujolàs' CA/AC Program), and affective scaffolding to mitigate programming error anxiety.
+
+**Keywords:** Computational Thinking, Symbolic Computation, SageMath, Physics and Chemistry Education, Scientific Modeling, Misconceptions, LOMLOE, Cooperative Learning, UDL.
+
+\newpage

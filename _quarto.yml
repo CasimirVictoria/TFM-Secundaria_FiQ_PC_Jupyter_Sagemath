@@ -1,0 +1,60 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Pensament Computacional i Modelització en Física i Química d'Educació Secundària"
+  subtitle: "Treball de Final de Màster en Professorat d'Educació Secundària — Especialitat Física i Química"
+  author: "Casimiro Victoria Castillo"
+  date: "2026"
+  language: ca
+  chapters:
+    - index.qmd
+    - 01_introduccio.qmd
+    - 02_marc_teoric.qmd
+    - 03_proposta_didactica.qmd
+    - 04_metodologia_dua.qmd
+    - 05_conclusions.qmd
+    - 06_reflexio_personal.qmd
+    - 07_annexos.qmd
+
+bibliography: references.bib
+csl: apa.csl
+
+toc-title: "Índex General"
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    toc-title: "Índex"
+    number-sections: true
+    code-fold: show
+    code-tools: true
+    smooth-scroll: true
+    fig-align: center
+  pdf:
+    documentclass: scrreprt
+    classoption: [a4paper, 12pt, oneside]
+    callout-icon: false
+    callout-appearance: simple
+    geometry:
+      - top=2.5cm
+      - bottom=2.5cm
+      - left=3.0cm
+      - right=2.5cm
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    colorlinks: true
+    linkcolor: NavyBlue
+    citecolor: ForestGreen
+    urlcolor: BrickRed
+    linestretch: 1.25
+    keep-tex: true
+    pdf-engine: xelatex
+    header-includes:
+      - \renewcommand{\maketitle}{}
+      - \renewcommand{\contentsname}{Índex General}
+    include-before-body: _titlepage.tex
