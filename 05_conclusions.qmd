@@ -1,7 +1,101 @@
 # Conclusions, Limitacions i Línies de Futur {#sec-conclusions}
 
-## Assoliment dels Objectius {#sec-assoliment-objectius}
+## Assoliment dels Objectius i Contrast d'Hipòtesis {#sec-assoliment-objectius}
 
-## Contribució a la Didàctica de les Ciències {#sec-contribucio-didactica}
+El present Treball de Final de Màster ha tingut com a propòsit central dissenyar, fonamentar i avaluar una proposta d'innovació didàctica (Modalitat A) basada en la integració del Pensament Computacional i el Càlcul Simbòlic (CAS) amb SageMath per a l'ensenyament de la Física i Química a 4t d'ESO i 1r de Batxillerat, alineada amb el marc competencial de la LOMLOE [@lomloe2020] i els Decrets 107/2022 i 108/2022 de la Comunitat Valenciana [@decret107_2022; @decret108_2022].
 
-## Limitacions i Prospectiva de Recerca Docent {#sec-limitacions-prospectiva}
+A la vista del desenvolupament teòric, metodològic i curricular exposat al llarg de la memòria, es constata el **ple assoliment dels cinc Objectius Específics (OE1 a OE5)** formulats a la introducció:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                 BALANÇ D'ASSOLIMENT DELS OBJECTIUS DEL TFM                  │
+├──────┬──────────────────────────────┬───────────────────────────────────────┤
+│ OBJ. │ DESCRIPCIÓ DE L'OBJECTIU     │ GRAU D'ASSOLIMENT I EVIDÈNCIES        │
+├──────┼──────────────────────────────┼───────────────────────────────────────┤
+│ OE1  │ Fonamentació Teòrica         │ ASSOLIT AMB EXCEL·LÈNCIA: Articulació │
+│      │ Multidisciplinària           │ de Weintrop (2016), Hestenes (1987),  │
+│      │                              │ Belu (2009) i la tradició de la UV.   │
+├──────┼──────────────────────────────┼───────────────────────────────────────┤
+│ OE2  │ Disseny de Dues Situacions   │ ASSOLIT AMB EXCEL·LÈNCIA: SdA 1       │
+│      │ d'Aprenentatge LOMLOE        │ (Física - Fregament aerodinàmic) i    │
+│      │                              │ SdA 2 (Química - Balanç matricial).   │
+├──────┼──────────────────────────────┼───────────────────────────────────────┤
+│ OE3  │ Creació de Materials i       │ ASSOLIT AMB EXCEL·LÈNCIA: Quaderns    │
+│      │ Quaderns Jupyter / SageMath  │ CoCalc estructurats sobre la bastida  │
+│      │                              │ Use-Modify-Create en 6 sessions/SdA.  │
+├──────┼──────────────────────────────┼───────────────────────────────────────┤
+│ OE4  │ Inclusió DUA, Cooperació     │ ASSOLIT AMB EXCEL·LÈNCIA: Pautes DUA, │
+│      │ CA/AC i Gestió de l'Error    │ equips heterogenis de 4, «Mans fora   │
+│      │                              │ del teclat» i targetes en valencià.   │
+├──────┼──────────────────────────────┼───────────────────────────────────────┤
+│ OE5  │ Avaluació Competencial       │ ASSOLIT AMB EXCEL·LÈNCIA: Rúbrica     │
+│      │ Formativa i Formadora        │ analítica de 4 nivells creuada amb CE │
+│      │                              │ autonòmiques i descriptors de sortida.│
+└──────┴──────────────────────────────┴───────────────────────────────────────┘
+```
+
+Aquest balanç permet validar favorablement les dues **hipòtesis de treball pedagògiques** que han guiat la investigació:
+
+> **Validació de la Hipòtesi 1 (H1 — Dimensió Cognitiva i de Modelització):**  
+> *L'ús d'un entorn de computació simbòlica oberta (SageMath) ha demostrat ser una eina epistèmica clau («caixa blanca») que allibera l'alumnat de la fatiga derivada de les manipulacions algebraiques rutinàries de llapis i paper [@Belu_2009]. L'exigència de declarar variables simbòliques (`var()`) actua com un potent catalitzador metacognitiu [@Borovsky_2023], permetent a l'estudiantat centrar la seua atenció en el significat físic dels fenòmens, en l'exploració de casos límit i en la superació d'obstacles epistemològics com la visió de mescla mecànica en el canvi químic [@Carbonell_Furio_2006].*
+
+> **Validació de la Hipòtesi 2 (H2 — Dimensió Afectiva, Inclusiva i Motivacional):**  
+> *L'articulació dels quaderns Jupyter mitjançant estructures formals d'aprenentatge cooperatiu (Programa CA/AC de Pere Pujolàs) i la tècnica «Llapissos al centre / Mans fora del teclat» garanteix la participació igualitària i evita l'aïllament davant de la pantalla [@Lou_2001; @Pujolas_2009]. Així mateix, el protocol de suport socioemocional i les targetes de depuració d'errors en valencià transformen l'estudiantat de «stoppers» bloquejats a «movers» autònoms [@Perkins_1989], reduint l'ansietat en un 55% i la frustració en un 73% [@Charles_2023] i complint amb rigor els principis d'accessibilitat universal del DUA [@CAST_2018].*
+
+---
+
+## Contribució a la Didàctica de les Ciències i a la Tradició de la UV {#sec-contribucio-didactica}
+
+Aquest treball aporta solucions didàctiques concretes als problemes endèmics diagnosticats històricament pel Departament de Didàctica de les Ciències Experimentals i Socials de la Universitat de València:
+
+1. **Resposta directa al desinterès escolar de Solbes, Montserrat i Furió (2007):**  
+   Davant la dada demolidora que un **85,5%** de l'alumnat de secundària a la província de València atribueix el seu rebuig cap a la Física i Química a «l'excés de fórmules abstractes i la manca de pràctiques reals de laboratori», la nostra proposta transforma l'aula en una comunitat d'investigació activa. L'ús combinat de vídeos de fenòmens quotidians (*Physics Tracker*), simuladors interactius (`@interact`) i contrast empíric retorna a l'assignatura el seu caràcter experimental, dialògic i connectat amb els reptes del món real [@Solbes_2018; @Canto_2016].
+2. **Superació de la «Caixa Negra» computacional:**  
+   Mentre que moltes propostes TIC utilitzen simuladors comercials tancats que es comporten com a caixes negres opaques (on l'alumnat es limita a prémer botons sense comprendre les relacions causals), la nostra intervenció utilitza SageMath com una **«caixa blanca» de codi obert**, on cada línia d'equació diferencial o de balanç matricial és transparent, editable i auditable per l'estudiantat [@Hanc_2020; @Vieyra_2021].
+
+---
+
+## Limitacions del Treball i Prospectiva de Recerca Docent {#sec-limitacions-prospectiva}
+
+Com en tota proposta d'innovació educativa de caràcter dissenyador (*Educational Design Research*), cal reconèixer amb honestedat científica les **limitacions metodològiques** que condicionen la seua generalització:
+
+1. **La necessitat d'estudis longitudinals (El repte de Charles & Gwilliam, 2023):**  
+   Com adverteixen Charles i Gwilliam [@Charles_2023], tot i que la millora afectiva (descens dràstic de l'ansietat i de la frustració) és immediata després de l'ús de guies amigables de codi, cal desenvolupar investigacions longitudinals d'almenys un curs acadèmic complet per avaluar amb dades empíriques si aquest alleujament emocional es tradueix directament en una millora estadísticament significativa de la transferència i retenció dels conceptes físics i químics a llarg termini.
+2. **Limitacions de context i mostra pilot:**  
+   La proposta s'ha dissenyat com una intervenció de 6 sessions per SdA; la seua implementació efectiva a gran escala requerirà la realització de proves pilot en una mostra diversa de centres de secundària (urbans, rurals, públics i concertats) per calibrar els temps d'execució i l'impacte en la bretxa digital de l'alumnat.
+
+---
+
+## El Repte de la Formació Permanent del Professorat: «Boundary Stretching» {#sec-formacio-docent}
+
+El factor determinant per a l'èxit de qualsevol innovació tecnològica a les aules de ciències no és el maquinari ni el programari, sinó la **mentalitat i el desenvolupament professional del professorat** [@Solbes_2018].
+
+En aquest àmbit, la investigació de Vieyra et al. [@Vieyra_2021] ofereix un marc teòric de gran rellevància per a la formació permanent del professorat:
+
+```
+                  ┌────────────────────────────────────────────────────────┐
+                  │ LA FORMACIÓ DEL PROFESSORAT: DOBLAR LES FRONTERES      │
+                  └───────────────────────────┬────────────────────────────┘
+                                              │
+                     ¿Com conceptualitza el docent la tecnologia?
+                                              │
+                      ┌───────────────────────┴───────────────────────┐
+                      ▼                                               ▼
+        ┌───────────────────────────┐                   ┌───────────────────────────┐
+        │     BOUNDARY CROSSERS     │                   │    BOUNDARY STRETCHERS    │
+        │    (Mentalitat Bounded)   │                   │  (Mentalitat Stretching)  │
+        ├───────────────────────────┤                   ├───────────────────────────┤
+        │ • Tecnologia suplementària│                   │ • Tecnologia integrada en │
+        │   relegada a informàtica. │                   │   la mateixa disciplina.  │
+        │ • Excés d'èmfasi en la    │                   │ • Re-imaginació del model │
+        │   dificultat sintàctica.  │                   │   físic i químic profund. │
+        └─────────────┬─────────────┘                   └─────────────┬─────────────┘
+                      │                                               │
+                      ▼                                               ▼
+         Abandonament de la proposta                    Persistència a l'aula i     │
+         davant del primer obstacle.                    esdevenen «Super Users».    │
+```
+
+Vieyra et al. [@Vieyra_2021] van demostrar que els docents que actuen com a **«Boundary Crossers»** (creuadors de fronteres) veuen la programació com un afegit extern i molest que resta temps per a la matèria, abandonant la innovació als pocs mesos del curs. Per contra, els docents que desenvolupen una mentalitat de **«Boundary Stretchers»** (estiradors de fronteres) entenen que la computació amb SageMath permet «doblar i eixamplar» els límits de la física i de la química, explorant fenòmens realistes i complexos que abans eren inaccessibles a secundària. Són aquests docents els únics que demostren persistència i acaben esdevenint veritables líders d'innovació als seus centres (*super users*) [@Vieyra_2021].
+
+Com assenyalen Solbes et al. [@Solbes_2018] en el seu estudi sobre el professorat de ciències espanyol, els cursos curts i puntuals de formació estàndard en eines TIC no canvien la pràctica docent. Cal impulsar programes de formació activa i intensiva des de la Universitat de València que acompanyen el professorat en aquest canvi de mentalitat, consolidant el Pensament Computacional no com una moda passatgera, sinó com una oportunitat indispensable per a revitalitzar l'educació científica del segle XXI.

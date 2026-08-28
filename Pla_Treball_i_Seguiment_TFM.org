@@ -112,10 +112,19 @@ CLOSED: [2026-08-28 Fri 20:25]
   - Desplegament al núvol lliure d'instal·lació amb CoCalc/JupyterLab.
   - Pla de contingència blindat de 4 nivells (Servidor/Binder, Xarxa/Offline local, Hardware/Mòbils 5"+, Global/Treball analògic en paper).
 
-*** TODO 2.5. Capítol 5: Conclusions, Limitacions i Línies de Futur (Hora 9)
-- [ ] *5.1 Assoliment dels Objectius del Treball.*
-- [ ] *5.2 Contribució a la Didàctica de les Ciències i Transferibilitat.*
-- [ ] *5.3 Limitacions de la Proposta i Prospectiva de Recerca Docent.*
+*** DONE 2.5. Capítol 5: Conclusions, Limitacions i Línies de Futur (Hora 9)
+CLOSED: [2026-08-28 Fri 20:30]
+- [X] *5.1 Assoliment dels Objectius del Treball:*
+  - Taula de síntesi dels 5 Objectius Específics (OE1 a OE5) plenament assolits.
+  - Validació de la Hipòtesi 1 (càrrega cognitiva, CAS SageMath i metacognició de [cite:@Belu_2009; @Borovsky_2023]).
+  - Validació de la Hipòtesi 2 (motivació, cooperatiu CA/AC de [cite:@Pujolas_2009], *learner-controlled* de [cite:@Lou_2001] i reducció 73%/55% de [cite:@Charles_2023]).
+- [X] *5.2 Contribució a la Didàctica de les Ciències i a la Tradició de la UV:*
+  - Resposta al 85,5% de desinterès de [cite:@Solbes_2007; @Solbes_2011] i superació de la «caixa negra» computacional.
+- [X] *5.3 Limitacions del Treball i Prospectiva de Recerca:*
+  - El repte dels estudis longitudinals a llarg termini de [cite:@Charles_2023] i calibratge en mostres diverses.
+- [X] *5.4 El Repte de la Formació Permanent: «Boundary Stretching»:*
+  - Marc de [cite:@Vieyra_2021] (de *Boundary Crossers* a *Boundary Stretchers* / *Super Users*).
+  - Connexió amb la formació docent activa de [cite:@Solbes_2018].
 
 *** TODO 2.6. Capítol 6: Reflexió Personal i Relació amb les Competències del Màster (Hora 9.5)
 - [ ] *6.1 Autoreflexió Professional sobre la Trajectòria al Màster (MAES).*
