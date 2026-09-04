@@ -911,8 +911,9 @@ print(f"Equació y(x) = {y_trajectoria}")</textarea>
                 </div>
 
                 <div>
-                    <div style="font-weight:600; font-size:0.9rem; margin-bottom:6px; color:#1e293b; text-align:center;">
-                        Gràfica 1: Model calculat (interactiu)
+                    <div style="font-weight:600; font-size:0.9rem; margin-bottom:6px; color:#1e293b; text-align:center; display:flex; justify-content:center; align-items:center; gap:8px;">
+                        <span>Gràfica 1: Model calculat (interactiu)</span>
+                        <span id="badge-engine-phase1" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; background:#e2e8f0; color:#475569; font-weight:500;">⚡ Model base (JS)</span>
                     </div>
                     <div id="plot-phase-1" class="plot-box" style="height: 400px;"></div>
                 </div>
@@ -1731,18 +1732,19 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
 
                 // Capa de compatibilitat d'àlies de sintaxi SageMath directa (var, diff, solve, integrate, etc.)
                 pyodideInstance.runPython(`
-import sys
+import sys, builtins
 import sympy as sp
 import numpy as np
 
 def var(names, **kwargs):
-    """Funció var() nativa a l'estil SageMath per a injectar símbols automàticament a l'espai de noms global."""
+    """Funció var() nativa a l'estil SageMath per a injectar símbols automàticament a l'espai de noms global i builtins."""
     syms = sp.symbols(names, **kwargs)
     if not isinstance(syms, (list, tuple)):
         syms = [syms]
     mod = sys.modules['__main__']
     for s in syms:
         setattr(mod, str(s), s)
+        setattr(builtins, str(s), s)
         globals()[str(s)] = s
     return syms[0] if len(syms) == 1 else syms
 
@@ -1770,6 +1772,7 @@ _sagemath_builtins = {
 }
 for _k, _v in _sagemath_builtins.items():
     setattr(mod, _k, _v)
+    setattr(builtins, _k, _v)
     globals()[_k] = _v
 `);
 
@@ -1886,13 +1889,15 @@ sys.stdout = io.StringIO()
                     const pyRes = pyodideInstance.runPython(`
                         import numpy as _np
                         try:
-                            _arr_x = _np.array(_eval_xs, dtype=float)
+                            _arr_x = _np.array(list(_eval_xs), dtype=float)
                             _calc_y = f_num(_arr_x, float(_eval_v0), float(_eval_alpha), float(_eval_g))
                             if _np.isscalar(_calc_y):
                                 _out_ys = [float(_calc_y)] * len(_eval_xs)
                             else:
                                 _out_ys = [float(val) if not _np.isnan(val) and not _np.isinf(val) else 0.0 for val in _calc_y]
-                        except Exception:
+                        except Exception as _e:
+                            import traceback
+                            traceback.print_exc()
                             _out_ys = None
                         _out_ys
                     `);
@@ -1915,31 +1920,53 @@ sys.stdout = io.StringIO()
             }
 
             let displayYMax = yMax;
+            let displayXMax = xMax;
             if (hasEvaluatedWithPyodide && ys.length > 0) {
                 const computedMax = Math.max(...ys);
                 if (Number.isFinite(computedMax) && computedMax > 0) {
                     displayYMax = computedMax;
                 }
+                for (let i = 1; i < ys.length; i++) {
+                    if (ys[i] <= 0 && ys[i - 1] > 0) {
+                        displayXMax = xs[i];
+                        break;
+                    }
+                }
             }
 
-            document.getElementById('res-xmax-1').innerText = xMax.toFixed(2) + " m";
+            document.getElementById('res-xmax-1').innerText = displayXMax.toFixed(2) + " m";
             document.getElementById('res-ymax-1').innerText = displayYMax.toFixed(2) + " m";
+
+            const badgeEl = document.getElementById('badge-engine-phase1');
+            if (badgeEl) {
+                if (hasEvaluatedWithPyodide) {
+                    badgeEl.innerHTML = "🟢 Càlcul en viu: f_num (SageMath WASM)";
+                    badgeEl.style.background = "#dcfce7";
+                    badgeEl.style.color = "#166534";
+                    badgeEl.style.border = "1px solid #86efac";
+                } else {
+                    badgeEl.innerHTML = "⚡ Model base (JS)";
+                    badgeEl.style.background = "#e2e8f0";
+                    badgeEl.style.color = "#475569";
+                    badgeEl.style.border = "1px solid #cbd5e1";
+                }
+            }
 
             const traces = [
                 {
                     x: xs,
                     y: ys,
                     mode: 'lines',
-                    name: 'Model calculat',
-                    line: { color: '#2563eb', width: 3.5 },
+                    name: hasEvaluatedWithPyodide ? '🟢 Model deduït: f_num (SageMath)' : 'Model base (Galileu)',
+                    line: { color: hasEvaluatedWithPyodide ? '#16a34a' : '#2563eb', width: 3.5 },
                     hovertemplate: 'x: %{x:.2f} m<br>y: %{y:.2f} m<extra></extra>'
                 },
                 {
-                    x: [0, xMax / 2, xMax],
+                    x: [0, displayXMax / 2, displayXMax],
                     y: [0, displayYMax, 0],
                     mode: 'markers+text',
                     name: 'Punts Claus',
-                    text: ['(0, 0)', `h_màx = ${displayYMax.toFixed(1)} m`, `Abast = ${xMax.toFixed(1)} m`],
+                    text: ['(0, 0)', `h_màx = ${displayYMax.toFixed(1)} m`, `Abast = ${displayXMax.toFixed(1)} m`],
                     textposition: ['bottom right', 'top center', 'bottom left'],
                     textfont: { size: 11, color: '#1e293b' },
                     marker: { size: [7, 11, 9], color: ['#1e293b', '#dc2626', '#16a34a'] },
@@ -1950,10 +1977,12 @@ sys.stdout = io.StringIO()
 
             const layout = {
                 margin: { l: 50, r: 20, t: 20, b: 40 },
-                xaxis: { title: '<b>x (m)</b>', range: [-2, Math.max(xMax * 1.08, 10)], gridcolor: '#f1f5f9' },
+                xaxis: { title: '<b>x (m)</b>', range: [-2, Math.max(displayXMax * 1.08, 10)], gridcolor: '#f1f5f9' },
                 yaxis: { title: '<b>y (m)</b>', range: [-1, Math.max(displayYMax * 1.25, 5)], gridcolor: '#f1f5f9' },
                 plot_bgcolor: '#ffffff',
-                paper_bgcolor: '#ffffff'
+                paper_bgcolor: '#ffffff',
+                showlegend: true,
+                legend: { x: 0.02, y: 0.98, bgcolor: 'rgba(255,255,255,0.85)', bordercolor: '#e2e8f0', borderwidth: 1 }
             };
 
             Plotly.react('plot-phase-1', traces, layout, { responsive: true, displayModeBar: false });
@@ -2330,6 +2359,7 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
         window.addEventListener('DOMContentLoaded', () => {
             initCodeMirrorEditor1();
             initCodeMirrorEditor2();
+            updatePhase1Plot(); // Dibuixa immediatament el gràfic base amb JS des del primer mil·lisegon
             initWasmPyodide();
         });
     </script>
