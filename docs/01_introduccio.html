@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ca" xml:lang="ca"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; Introducció, plantejament del problema i justificació – Pensament Computacional i Modelització en Física i Química de Batxillerat</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./02_marc_teoric.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-b589352aa5c0601728fe9ffaaa0c216f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Cap resultat",
+    "search-matching-documents-text": "documents que coincideixen",
+    "search-copy-link-title": "Copia l'enllaç a la cerca",
+    "search-hide-matches-text": "Amaga les coincidències addicionals",
+    "search-more-match-text": "altra coincidència en aquest document",
+    "search-more-matches-text": "altres coincidències en aquest document",
+    "search-clear-button-title": "Neteja",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel·la",
+    "search-submit-button-title": "Envia",
+    "search-label": "Cerca"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Commuta la navegació de la barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_introduccio.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducció, plantejament del problema i justificació</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Commuta la navegació de la barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Cerca" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Pensament Computacional i Modelització en Física i Química de Batxillerat</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/CasimirVictoria/TFM-Secundaria_FiQ_PC_Jupyter_Sagemath" title="Codi font" class="quarto-navigation-tool px-1" aria-label="Codi font"><i class="bi bi-github"></i></a>
+    <a href="./Pensament-Computacional-i-Modelització-en-Física-i-Química-de-Batxillerat.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Cerca"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Resum</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_introduccio.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducció, plantejament del problema i justificació</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_marc_teoric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Marc teòric i estat de la qüestió</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_metodologia_disseny.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Metodologia de disseny i context</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_resultats_proposta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Proposta d’innovació didàctica: disseny i desplegament</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_conclusions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conclusions, limitacions i prospectiva</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referències Bibliogràfiques</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Apèndixs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Commuta la secció">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_annexos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Annexos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índex</h2>
+   
+  <ul>
+  <li><a href="#context-i-diagnòstic-del-problema" id="toc-context-i-diagnòstic-del-problema" class="nav-link active" data-scroll-target="#context-i-diagnòstic-del-problema"><span class="header-section-number">1.1</span> Context i diagnòstic del problema</a></li>
+  <li><a href="#sec-marc-curricular" id="toc-sec-marc-curricular" class="nav-link" data-scroll-target="#sec-marc-curricular"><span class="header-section-number">1.2</span> Marc normatiu i curricular LOMLOE a la Comunitat Valenciana</a></li>
+  <li><a href="#sec-preguntes-recerca" id="toc-sec-preguntes-recerca" class="nav-link" data-scroll-target="#sec-preguntes-recerca"><span class="header-section-number">1.3</span> Plantejament del problema i preguntes de recerca</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-introduccio" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducció, plantejament del problema i justificació</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Codi</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="context-i-diagnòstic-del-problema" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="context-i-diagnòstic-del-problema"><span class="header-section-number">1.1</span> Context i diagnòstic del problema</h2>
+<p>La societat tecnològica i de la informació del segle XXI demana ciutadans crítics, reflexius i preparats científicament per a comprendre i intervenir en les problemàtiques globals i locals de l’entorn <span class="citation" data-cites="decret108_2022 rd243_2022">(<a href="references.html#ref-decret108_2022" role="doc-biblioref">Generalitat Valenciana, 2022</a>; <a href="references.html#ref-rd243_2022" role="doc-biblioref">Ministerio de Educación y Formación Profesional, 2022</a>)</span>.</p>
+<p>No obstant això, el declivi continuat en l’interès de l’alumnat cap a les disciplines de l’àmbit científic, tecnològic, enginyeria i matemàtiques (STEM) constitueix una de les preocupacions més greus i recurrents en la investigació didàctica internacional contemporània. Des de la publicació de l’informe fundacional de la Comissió Europea coordinat per Michel Rocard l’any 2007 <span class="citation" data-cites="Rocard_2007">(<a href="references.html#ref-Rocard_2007" role="doc-biblioref">Rocard et al., 2007</a>)</span>, diversos estudis han alertat sobre la pèrdua progressiva de vocacions científiques entre la joventut, assenyalant que la desafecció cap a l’estudi de la ciència s’alimenta en gran mesura dels mètodes pedagògics predominants a les aules de secundària i batxillerat.</p>
+<p>Com destaquen Solbes, Montserrat i Furió <span class="citation" data-cites="Solbes_2007">(<a href="references.html#ref-Solbes_2007" role="doc-biblioref">Solbes et al., 2007</a>)</span>, l’ensenyament de la Física i Química s’ha vist tradicionalment dominat per un enfocament transmissiu, centrat en el càlcul manual rutinari d’algorismes abstractes, exercicis mecànics i la memorització passiva de fórmules de llibre de text. Aquesta reducció descontextualitzada oculta el caràcter dinàmic, experimental i creatiu de la ciència real. Segons les dades de la recerca de la mateixa Universitat de València <span class="citation" data-cites="Solbes_2007 Solbes_2018">(<a href="references.html#ref-Solbes_2007" role="doc-biblioref">Solbes et al., 2007</a>, <a href="references.html#ref-Solbes_2018" role="doc-biblioref">2018</a>)</span>, un elevat percentatge d’estudiants qualifica les ciències físiques com a matèries abstractes, complicades i allunyades de la seua realitat quotidiana, la qual cosa redueix de manera dràstica la seua motivació intrínseca i la tria d’itineraris STEM en etapes postobligatòries.</p>
+<p>Enfront d’aquesta problemàtica, la recerca en didàctica de les ciències proposa una evolució metodològica cap a l’ensenyament basat en la indagació activa (<em>Inquiry-Based Science Education</em> - IBSE) i la modelització científica <span class="citation" data-cites="Gil_Perez_1999 Hestenes_1987">(<a href="references.html#ref-Gil_Perez_1999" role="doc-biblioref">Gil-Pérez et al., 1999</a>; <a href="references.html#ref-Hestenes_1987" role="doc-biblioref">Hestenes, 1987</a>)</span>. En la ciència real contemporània, la modelització de fenòmens complexos i l’anàlisi de dades massives es realitza de manera indispensable mitjançant la computació. Per tant, la integració del <strong>Pensament Computacional (PC)</strong> <span class="citation" data-cites="Wing_2006">(<a href="references.html#ref-Wing_2006" role="doc-biblioref">Wing, 2006</a>)</span> i d’eines de <strong>Càlcul Simbòlic per Ordinador (CAS)</strong> de codi obert com SageMath en l’entorn de quaderns Jupyter <span class="citation" data-cites="Borovsky_2023 Hanc_2020">(<a href="references.html#ref-Borovsky_2023" role="doc-biblioref">Borovský et al., 2023</a>; <a href="references.html#ref-Hanc_2020" role="doc-biblioref">Hanč et al., 2020</a>)</span> ofereix una oportunitat didàctica única. Aquesta tecnologia lliure actua com una <strong>«caixa blanca» cognitiva</strong> <span class="citation" data-cites="Hanc_2020">(<a href="references.html#ref-Hanc_2020" role="doc-biblioref">Hanč et al., 2020</a>)</span>: permet alliberar els estudiants de la pesada càrrega procedimental de l’àlgebra mecànica manual per a reorientar tot el seu esforç cognitiu cap a la formulació d’hipòtesis, la interpretació física de corbes, l’anàlisi de casos límit i la validació de models científics reals enfront de dades experimentals <span class="citation" data-cites="Belu_2009 Borovsky_2023 Gil_Perez_1999">(<a href="references.html#ref-Belu_2009" role="doc-biblioref">Belu, 2009</a>; <a href="references.html#ref-Borovsky_2023" role="doc-biblioref">Borovský et al., 2023</a>; <a href="references.html#ref-Gil_Perez_1999" role="doc-biblioref">Gil-Pérez et al., 1999</a>)</span>.</p>
+</section>
+<section id="sec-marc-curricular" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec-marc-curricular"><span class="header-section-number">1.2</span> Marc normatiu i curricular LOMLOE a la Comunitat Valenciana</h2>
+<p>La present proposta d’innovació no es planteja com una activitat aïllada o un afegit extracurricular, sinó que s’alinea amb el marc normatiu i curricular vigent de la Comunitat Valenciana, conformat pel <strong>Decret 108/2022</strong>, de 5 d’agost, del Consell, pel qual s’estableix l’ordenació i el currículum del Batxillerat <span class="citation" data-cites="decret108_2022">(<a href="references.html#ref-decret108_2022" role="doc-biblioref">Generalitat Valenciana, 2022</a>)</span>, en desenvolupament de la Llei Orgànica estatal 3/2020 (LOMLOE) <span class="citation" data-cites="lomloe2020">(<a href="references.html#ref-lomloe2020" role="doc-biblioref">Ministerio de Educación y Formación Profesional, 2020</a>)</span> i del Reial Decret estatal d’ensenyaments mínims 243/2022 <span class="citation" data-cites="rd243_2022">(<a href="references.html#ref-rd243_2022" role="doc-biblioref">Ministerio de Educación y Formación Profesional, 2022</a>)</span>.</p>
+<p>El canvi de paradigma educatiu forçat per la LOMLOE reorienta l’ensenyament cap al desenvolupament de <strong>competències clau</strong> i <strong>competències específiques</strong> mitjançant el disseny de <strong>Situacions d’Aprenentatge (SdA)</strong> contextualitzades, significatives i resolutives enfront de reptes reals de l’entorn. A la matèria de Física i Química de 1r de Batxillerat, la nostra proposta busca alinear-se amb les <strong>sis Competències Específiques (CE)</strong> definides al Decret 108/2022 <span class="citation" data-cites="decret108_2022">(<a href="references.html#ref-decret108_2022" role="doc-biblioref">Generalitat Valenciana, 2022</a>)</span>, articulant-se metodològicament al voltant dels següents eixos competencials clau:</p>
+<ul>
+<li><strong>Resolució de problemes reals i modelització (CE1 Batxillerat):</strong> L’alumnat aplica les lleis de la mecànica clàssica a la resolució d’una situació problemàtica de l’entorn real. S’utilitza la programació simbòlica i numèrica per a simular i resoldre el llançament de projectils en condicions reals (amb resistència de l’aire), on el càlcul vectorial i algebraic manual resulta inaccessible per al seu nivell, forçant-los a raonar sobre el significat físic de les equacions <span class="citation" data-cites="decret108_2022 Borovsky_2023">(<a href="references.html#ref-Borovsky_2023" role="doc-biblioref">Borovský et al., 2023</a>; <a href="references.html#ref-decret108_2022" role="doc-biblioref">Generalitat Valenciana, 2022</a>)</span>.</li>
+<li><strong>Pensament científic, indagació i experimentació (CE2 Batxillerat):</strong> S’exigeix formular hipòtesis, dissenyar un contrast empíric recopilant dades cinemàtiques reals d’un llançament al pati de l’institut mitjançant vídeo-anàlisi cinemàtica (Physics Tracker) i contrastar de forma crítica el model teòric de la simulació de SageMath amb els fets experimentals obtinguts <span class="citation" data-cites="decret108_2022 Hestenes_1987 Borovsky_2023">(<a href="references.html#ref-Borovsky_2023" role="doc-biblioref">Borovský et al., 2023</a>; <a href="references.html#ref-decret108_2022" role="doc-biblioref">Generalitat Valenciana, 2022</a>; <a href="references.html#ref-Hestenes_1987" role="doc-biblioref">Hestenes, 1987</a>)</span>.</li>
+<li><strong>Llenguatge científic, simbòlic i matemàtic (CE3 Batxillerat):</strong> Es connecta de forma directa el formalisme matemàtic (notació vectorial, expressions de cinemàtica i dinàmica) i la representació gràfica de trajectòries reals generant múltiples representacions dinàmiques a Jupyter. Mitjançant l’ordre <code>show()</code> de SageMath es renderitza tipogràficament el codi en notació LaTeX estàndard, aprenent el llenguatge universal de la ciència <span class="citation" data-cites="decret108_2022 Borovsky_2023">(<a href="references.html#ref-Borovsky_2023" role="doc-biblioref">Borovský et al., 2023</a>; <a href="references.html#ref-decret108_2022" role="doc-biblioref">Generalitat Valenciana, 2022</a>)</span>.</li>
+<li><strong>Cerca, tractament de la informació i divulgació digital (CE4 Batxillerat):</strong> S’importen les dades experimentals (.csv) des de Tracker mitjançant la llibreria <code>pandas</code> per a la seua depuració i representació. L’ús d’entorns de càlcul simbòlic i representació gràfica de codi obert (JupyterLab) democratitza l’accés a les tecnologies de modelització de primer nivell. Aquesta capacitat d’integrar en un mateix espai de treball digital múltiples registres de representació (visuals, matemàtics, textuals i numèrics) facilita l’aplicació pràctica de les pautes del Disseny Universal per a l’Aprenentatge (DUA), alhora que redueix les barreres d’accessibilitat econòmica i tecnològica <span class="citation" data-cites="decret108_2022 CAST_2024 Hanc_2020">(<a href="references.html#ref-CAST_2024" role="doc-biblioref">CAST, 2024</a>; <a href="references.html#ref-decret108_2022" role="doc-biblioref">Generalitat Valenciana, 2022</a>; <a href="references.html#ref-Hanc_2020" role="doc-biblioref">Hanč et al., 2020</a>)</span>.</li>
+<li><strong>Treball cooperatiu, inclusió i autoregulació emocional (CE5 Batxillerat):</strong> S’orquestra el treball de laboratori computacional mitjançant estructures de treball cooperatiu formal (Programa CA/AC de Pere Pujolàs) com la dinàmica de «Llapis al centre / Mans fora del teclat», acompanyada de bastides de suport socioemocional davant de la frustració provocada pels errors de sintaxi de Python, fomentant la resiliència i desmitificant l’error com a element de retroalimentació <span class="citation" data-cites="decret108_2022 Pujolas_2009 Charles_2023">(<a href="references.html#ref-Charles_2023" role="doc-biblioref">Charles &amp; Gwilliam, 2023</a>; <a href="references.html#ref-decret108_2022" role="doc-biblioref">Generalitat Valenciana, 2022</a>; <a href="references.html#ref-Pujolas_2009" role="doc-biblioref">Pujolàs Maset, 2009</a>)</span>.</li>
+<li><strong>La ciència com a construcció col·lectiva en continu canvi (CE6 Batxillerat):</strong> L’alumnat justifica la validesa i limitacions del model de cinemàtica clàssica de Galileu (tir parabòlic ideal en el buit) enfront d’un model dinàmic més avançat que s’ajusta i reconstrueix incorporant forces de fricció real (Stokes / Rayleigh). S’analitza la relativitat del moviment i com els conceptes físics evolucionen històricament gràcies a la modelització i millora de precisió de dades <span class="citation" data-cites="decret108_2022 Subramaniam_2025">(<a href="references.html#ref-decret108_2022" role="doc-biblioref">Generalitat Valenciana, 2022</a>; <a href="references.html#ref-Subramaniam_2025" role="doc-biblioref">Subramaniam et al., 2025</a>)</span>.</li>
+</ul>
+<p>La correspondència directa entre els descriptors operatius del Perfil d’Eixida de Batxillerat, els principis d’inclusió i equitat del DUA <span class="citation" data-cites="CAST_2024">(<a href="references.html#ref-CAST_2024" role="doc-biblioref">CAST, 2024</a>)</span> i les activitats computacionals programades a la present SdA de Física s’exposa de manera resumida a la <a href="#tbl-descriptors" class="quarto-xref">Taula&nbsp;<span>1.1</span></a>:</p>
+<div id="tbl-descriptors" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,25,30,25]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-descriptors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Taula&nbsp;1.1: Vinculació entre descriptors operatius del Perfil d’Eixida de Batxillerat i accions d’aprenentatge a Jupyter Notebooks
+</figcaption>
+<div aria-describedby="tbl-descriptors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 25%">
+<col style="width: 30%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Descriptor Operatiu (Perfil d’Eixida)</strong></th>
+<th style="text-align: left;"><strong>Definició Competencial (LOMLOE)</strong></th>
+<th style="text-align: left;"><strong>Acció de l’Alumnat a Jupyter (Física)</strong></th>
+<th style="text-align: left;"><strong>Evidència d’Aprenentatge (TFM)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>STEM4</strong> <em>(Batx.)</em></td>
+<td style="text-align: left;">Interpretar i transmetre processos i resultats científics en diversos formats (gràfics, taules, fórmules), aprofitant la cultura digital.</td>
+<td style="text-align: left;">L’alumnat utilitza codi en Python (amb llibreries com Matplotlib) per a <strong>graficar dades experimentals</strong> obtingudes de llançaments reals del seu entorn, superposant models teòrics.</td>
+<td style="text-align: left;"><strong>Gràfics interactius posició-temps i trajectòries</strong> generats per l’alumnat, on s’inclouen llegendes, unitats i corbes de fregament viscós i Rayleigh <span class="citation" data-cites="Borovsky_2023">(<a href="references.html#ref-Borovsky_2023" role="doc-biblioref">Borovský et al., 2023</a>)</span>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>CD2</strong> <em>(Batx.)</em></td>
+<td style="text-align: left;">Crear, integrar i reelaborar continguts digitals de manera individual o col·lectiva.</td>
+<td style="text-align: left;">L’alumnat <strong>modifica estructures de control, paràmetres o variables</strong> d’una llibreta científica (en la progressió <em>Use-Modify-Create</em>), adaptant el codi per simular el moviment ideal o real <span class="citation" data-cites="Grover_2013">(<a href="references.html#ref-Grover_2013" role="doc-biblioref">Grover &amp; Pea, 2013</a>)</span>.</td>
+<td style="text-align: left;"><strong>Jupyter Notebook desat (.ipynb)</strong> en el qual es visualitzen línies de codi alterades amb èxit, acompanyades de comentaris lògics propis (#) i conclusions analítiques.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>CD5</strong> <em>(Batx.)</em></td>
+<td style="text-align: left;">Desenvolupar solucions tecnològiques innovadores i creatives per a resoldre problemes concrets.</td>
+<td style="text-align: left;">L’alumnat modifica i aplica de forma col·laborativa el codi esquelet (<em>Skeleton Code</em>) d’ajust paramètric de dades reals cinemàtiques mitjançant la funció <code>scipy.optimize.curve_fit</code> <span class="citation" data-cites="Borovsky_2023">(<a href="references.html#ref-Borovsky_2023" role="doc-biblioref">Borovský et al., 2023</a>)</span>.</td>
+<td style="text-align: left;"><strong>Simulador i ajustador funcional de tir real</strong> que utilitza constants reals de l’entorn de programació i minimitza els errors de predicció entre dades empíriques i simulades <span class="citation" data-cites="Charles_2023">(<a href="references.html#ref-Charles_2023" role="doc-biblioref">Charles &amp; Gwilliam, 2023</a>)</span>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>CPSAA5</strong> <em>(Batx.)</em></td>
+<td style="text-align: left;">Autoregular l’aprenentatge i desenvolupar la metacognició per a <strong>aprendre dels propis errors</strong>.</td>
+<td style="text-align: left;">L’alumnat realitza de manera cooperativa el <strong>diagnòstic i la depuració (<em>debugging</em>) del codi</strong> quan Jupyter llança errors sintàctics de Python, recolzant-se en targetes de depuració en valencià.</td>
+<td style="text-align: left;"><strong>Secció de diari d’aprenentatge (Markdown)</strong> on els equips documenten el tipus d’error de sintaxi o lògic comès, la traça de l’error de Python i el mètode lògic utilitzat per a resoldre’l <span class="citation" data-cites="Charles_2023">(<a href="references.html#ref-Charles_2023" role="doc-biblioref">Charles &amp; Gwilliam, 2023</a>)</span>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>CPSAA4</strong> <em>(Batx.)</em></td>
+<td style="text-align: left;">Autoavaluar el procés i cercar fonts d’informació fiables per a validar conclusions.</td>
+<td style="text-align: left;">L’alumnat contrasta els resultats de la seua simulació i el coeficient d’arrossegament aerodinàmic obtingut amb <strong>lleis i constants físiques reals de la literatura científica</strong>.</td>
+<td style="text-align: left;"><strong>Apartat de conclusions</strong> a l’assaig computacional interactiu on es valida i discuteix críticament l’abast físic de les asseveracions del codi, redactat de forma cooperativa <span class="citation" data-cites="Hanc_2020">(<a href="references.html#ref-Hanc_2020" role="doc-biblioref">Hanč et al., 2020</a>)</span>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="sec-preguntes-recerca" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sec-preguntes-recerca"><span class="header-section-number">1.3</span> Plantejament del problema i preguntes de recerca</h2>
+<p>El problema central que aborda aquest treball és la necessitat de superar la bretxa existent entre la pràctica científica real —que utilitza de forma ineludible eines computacionals per a modelitzar fenòmens complexos i analitzar dades— i l’ensenyament de la Física a secundària i batxillerat, tradicionalment ancorat en el càlcul manual de «llapis i paper» de casos ideals irrealistes (com el tir parabòlic al buit, on la resistència de l’aire s’ignora de forma continuada).</p>
+<p>En el context educatiu, aquesta bretxa s’agreuja per l’ús predominant de programaris de caràcter privatiu, comercial i tancat (com fulls de càlcul d’Excel o plataformes de representació gràfica tancades), si bé és cert que a la Comunitat Valenciana s’estan impulsant eines de codi obert, com la distribució LliureX basada en el sistema operatiu GNU/Linux. Aquestes eines solen actuar com a autèntiques <strong>«caixes negres» de codi bloquejat</strong> on l’alumnat es limita a introduir dades i prémer botons per obtenir resultats automatitzats (com línies d’ajust o estadístiques), sense comprendre realment la matemàtica subjacent ni el significat de les fórmules <span class="citation" data-cites="Vieyra_2021">(<a href="references.html#ref-Vieyra_2021" role="doc-biblioref">Vieyra &amp; Himmelsbach, 2021</a>)</span>. El repte docent, per tant, no consisteix en la simple digitalització instrumental de l’aula, sinó a dissenyar entorns d’aprenentatge de <strong>«caixa blanca»</strong> basats en programari lliure i de codi obert <span class="citation" data-cites="Hanc_2020">(<a href="references.html#ref-Hanc_2020" role="doc-biblioref">Hanč et al., 2020</a>)</span>. Aquestes tecnologies lliures i transparents permeten a l’alumnat obrir, inspeccionar, comprendre i modificar de manera explícita el codi lògic dels models científics, facilitant l’externalització i visualització de les seues pròpies representacions mentals a través de la creació d’<strong>assaigs computacionals</strong> (<em>computational essays</em>) i potenciant una motivació intrínseca genuïna pel fet d’utilitzar les mateixes eines de recerca professional que empra la comunitat científica contemporània <span class="citation" data-cites="Hanc_2020 Borovsky_2023">(<a href="references.html#ref-Borovsky_2023" role="doc-biblioref">Borovský et al., 2023</a>; <a href="references.html#ref-Hanc_2020" role="doc-biblioref">Hanč et al., 2020</a>)</span>.</p>
+<p>Per guiar aquesta proposta d’innovació, es plantegen les següents <strong>preguntes de recerca didàctica</strong>:</p>
+<ul>
+<li><strong>PR1:</strong> De quina manera pot la integració d’un entorn de càlcul simbòlic (CAS) transparent, lliure i de codi obert (SageMath sobre quaderns Jupyter) reduir la càrrega cognitiva associada a les exigents manipulacions algebraiques rutinàries i reorientar l’atenció de l’alumnat cap a la interpretació conceptual, la presa de decisions i l’anàlisi de casos límit en la Física de Batxillerat?</li>
+<li><strong>PR2:</strong> En quina mesura l’articulació d’una Situació d’Aprenentatge d’accés obert basada en la progressió <em>Use-Modify-Create</em>, el treball cooperatiu estructurat i la gestió socioemocional de l’error de programació millora la motivació, l’autoeficàcia i l’accessibilitat universal (DUA) de l’alumnat de secundària cap a l’aprenentatge científic?</li>
+</ul>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-Belu_2009" class="csl-entry" role="listitem">
+Belu, R. (2009). Teaching Physics with Computer Algebra Systems. <em>American Society for Engineering Education (ASEE)</em>, 1-21. <a href="https://peer.asee.org/teaching-physics-with-computer-algebra-systems">https://peer.asee.org/teaching-physics-with-computer-algebra-systems</a>
+</div>
+<div id="ref-Borovsky_2023" class="csl-entry" role="listitem">
+Borovský, D., Hanč, J., &amp; Hančová, M. (2023). Scientific Computing with Open SageMath not only for Physics Education. <em>arXiv preprint arXiv:2308.07199</em>. <a href="https://doi.org/10.48550/arxiv.2308.07199">https://doi.org/10.48550/arxiv.2308.07199</a>
+</div>
+<div id="ref-CAST_2024" class="csl-entry" role="listitem">
+CAST. (2024). <em>Universal Design for Learning Guidelines version 3.0</em>. CAST. <a href="https://udlguidelines.cast.org">https://udlguidelines.cast.org</a>
+</div>
+<div id="ref-Charles_2023" class="csl-entry" role="listitem">
+Charles, T., &amp; Gwilliam, C. (2023). The Effect of Automated Error Message Feedback on Undergraduate Physics Students Learning Python: Reducing Anxiety and Building Confidence. <em>Journal for STEM Education Research</em>, <em>6</em>(3), 326-357. <a href="https://doi.org/10.1007/s41979-022-00084-4">https://doi.org/10.1007/s41979-022-00084-4</a>
+</div>
+<div id="ref-decret108_2022" class="csl-entry" role="listitem">
+Generalitat Valenciana. (2022). Decret 108/2022, de 5 d’agost, del Consell, pel qual s’estableix l’ordenació i el currículum de Batxillerat. Dins <em>Diari Oficial de la Generalitat Valenciana</em> (Núm. 9404; pp. 44373-44580). <a href="https://dogv.gva.es/datos/2022/08/12/pdf/2022_7578.pdf">https://dogv.gva.es/datos/2022/08/12/pdf/2022_7578.pdf</a>
+</div>
+<div id="ref-Gil_Perez_1999" class="csl-entry" role="listitem">
+Gil-Pérez, D., Furió-Más, C., Valdés Castro, P., Salinas, J., Martínez-Torregrosa, J., Guisasola, J., González, E. M., Dumas-Carré, A., Goffard, M., &amp; Pessoa de Carvalho, A. M. (1999). ¿Tiene sentido seguir distinguiendo entre aprendizaje de conceptos, resoluci<span>ó</span>n de problemas de l<span>á</span>piz y papel y realizaci<span>ó</span>n de pr<span>á</span>cticas de laboratorio? <em>Ense<span class="nocase">ñ</span>anza de las Ciencias</em>, <em>17</em>(2), 311-320. <a href="https://raco.cat/index.php/Ensenanza/article/view/21581">https://raco.cat/index.php/Ensenanza/article/view/21581</a>
+</div>
+<div id="ref-Grover_2013" class="csl-entry" role="listitem">
+Grover, S., &amp; Pea, R. (2013). Computational Thinking in K-12: A Review of the State of the Field. <em>Educational Researcher</em>, <em>42</em>(1), 38-43. <a href="https://doi.org/10.3102/0013189X12463051">https://doi.org/10.3102/0013189X12463051</a>
+</div>
+<div id="ref-Hanc_2020" class="csl-entry" role="listitem">
+Hanč, J., Štrauch, P., Paňková, E., &amp; Hančová, M. (2020). Teachers’ perception of Jupyter and R Shiny as digital tools for open education and science. <em>arXiv preprint arXiv:2007.11262</em>. <a href="https://doi.org/10.48550/arxiv.2007.11262">https://doi.org/10.48550/arxiv.2007.11262</a>
+</div>
+<div id="ref-Hestenes_1987" class="csl-entry" role="listitem">
+Hestenes, D. (1987). Toward a modeling theory of physics instruction. <em>American Journal of Physics</em>, <em>55</em>(5), 440-454. <a href="https://doi.org/10.1119/1.15129">https://doi.org/10.1119/1.15129</a>
+</div>
+<div id="ref-lomloe2020" class="csl-entry" role="listitem">
+Ministerio de Educación y Formación Profesional. (2020). Ley Orgánica 3/2020, de 29 de diciembre, por la que se modifica la Ley Orgánica 2/2006, de 3 de mayo, de Educación (LOMLOE). Dins <em>Boletín Oficial del Estado</em> (Núm. 340; pp. 122868-122953). <a href="https://www.boe.es/buscar/act.php?id=BOE-A-2020-17264">https://www.boe.es/buscar/act.php?id=BOE-A-2020-17264</a>
+</div>
+<div id="ref-rd243_2022" class="csl-entry" role="listitem">
+Ministerio de Educación y Formación Profesional. (2022). Real Decreto 243/2022, de 5 de abril, por el que se establecen la ordenación y las enseñanzas mínimas del Bachillerato. Dins <em>Boletín Oficial del Estado</em> (Núm. 82; pp. 46077-46299). <a href="https://www.boe.es/buscar/act.php?id=BOE-A-2022-5521">https://www.boe.es/buscar/act.php?id=BOE-A-2022-5521</a>
+</div>
+<div id="ref-Pujolas_2009" class="csl-entry" role="listitem">
+Pujolàs Maset, P. (2009). La calidad en los equipos de aprendizaje cooperativo: Algunas consideraciones para el cálculo del grado de cooperatividad. <em>Revista de Educación</em>, <em>349</em>, 225-239.
+</div>
+<div id="ref-Rocard_2007" class="csl-entry" role="listitem">
+Rocard, M., Csermely, P., Jorde, D., Lenzen, D., Wallberg-Henriksson, H., &amp; Hemmo, V. (2007). <em>Science Education NOW: A Renewed Pedagogy for the Future of Europe</em> (Report of the High Level Group on Science Education Núms. EUR 22845). European Commission, Directorate-General for Research, Science, Economy; Society; Office for Official Publications of the European Communities. <a href="https://op.europa.eu/en/publication-detail/-/publication/ea9c9e24-e3f0-40c8-abba-fd3fed9d4b3e">https://op.europa.eu/en/publication-detail/-/publication/ea9c9e24-e3f0-40c8-abba-fd3fed9d4b3e</a>
+</div>
+<div id="ref-Solbes_2018" class="csl-entry" role="listitem">
+Solbes, J., Fernández-Sánchez, J., Domínguez-Sales, M. C., Cantó, J. R., &amp; Guisasola, J. (2018). Influencia de la formación y la investigación didáctica del profesorado de ciencias sobre su práctica docente. <em>Enseñanza de las Ciencias</em>, <em>36</em>(1), 25-44. <a href="https://doi.org/10.5565/rev/ensciencias.2355">https://doi.org/10.5565/rev/ensciencias.2355</a>
+</div>
+<div id="ref-Solbes_2007" class="csl-entry" role="listitem">
+Solbes, J., Montserrat, R., &amp; Furió, C. (2007). El desinter<span>é</span>s del alumnado hacia el aprendizaje de la ciencia: implicaciones en su ense<span>ñ</span>anza. <em>Did<span class="nocase">á</span>ctica de las Ciencias Experimentales y Sociales</em>, <em>21</em>, 91-117. <a href="https://doi.org/10.7203/dces.21.2428">https://doi.org/10.7203/dces.21.2428</a>
+</div>
+<div id="ref-Subramaniam_2025" class="csl-entry" role="listitem">
+Subramaniam, R. C., Morphew, J. W., Rebello, C. M., &amp; Rebello, N. S. (2025). Presenting a STEM Ways of Thinking framework for engineering design-based physics problems. <em>Physical Review Physics Education Research</em>, <em>21</em>(1), 010122. <a href="https://doi.org/10.1103/PhysRevPhysEducRes.21.010122">https://doi.org/10.1103/PhysRevPhysEducRes.21.010122</a>
+</div>
+<div id="ref-Vieyra_2021" class="csl-entry" role="listitem">
+Vieyra, R., &amp; Himmelsbach, J. (2021). Teachers’ Disciplinary Boundedness in the Implementation of Integrated Computational Modeling in Physics. <em>Journal of Science Education and Technology</em>, <em>31</em>(2), 153-165. <a href="https://doi.org/10.1007/s10956-021-09938-9">https://doi.org/10.1007/s10956-021-09938-9</a>
+</div>
+<div id="ref-Wing_2006" class="csl-entry" role="listitem">
+Wing, J. M. (2006). Computational thinking. <em>Communications of the ACM</em>, <em>49</em>(3), 33-35. <a href="https://doi.org/10.1145/1118178.1118215">https://doi.org/10.1145/1118178.1118215</a>
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiat!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiat!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Resum">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Resum</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./02_marc_teoric.html" class="pagination-link" aria-label="Marc teòric i estat de la qüestió">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Marc teòric i estat de la qüestió</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Codi font</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introducció, plantejament del problema i justificació {#sec-introduccio}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Context i diagnòstic del problema</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>La societat tecnològica i de la informació del segle XXI demana ciutadans crítics, reflexius i preparats científicament per a comprendre i intervenir en les problemàtiques globals i locals de l'entorn <span class="co">[</span><span class="ot">@decret108_2022; @rd243_2022</span><span class="co">]</span>.</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>No obstant això, el declivi continuat en l'interès de l'alumnat cap a les disciplines de l'àmbit científic, tecnològic, enginyeria i matemàtiques (STEM) constitueix una de les preocupacions més greus i recurrents en la investigació didàctica internacional contemporània. Des de la publicació de l'informe fundacional de la Comissió Europea coordinat per Michel Rocard l'any 2007 <span class="co">[</span><span class="ot">@Rocard_2007</span><span class="co">]</span>, diversos estudis han alertat sobre la pèrdua progressiva de vocacions científiques entre la joventut, assenyalant que la desafecció cap a l'estudi de la ciència s'alimenta en gran mesura dels mètodes pedagògics predominants a les aules de secundària i batxillerat.</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Com destaquen Solbes, Montserrat i Furió <span class="co">[</span><span class="ot">@Solbes_2007</span><span class="co">]</span>, l'ensenyament de la Física i Química s'ha vist tradicionalment dominat per un enfocament transmissiu, centrat en el càlcul manual rutinari d'algorismes abstractes, exercicis mecànics i la memorització passiva de fórmules de llibre de text. Aquesta reducció descontextualitzada oculta el caràcter dinàmic, experimental i creatiu de la ciència real. Segons les dades de la recerca de la mateixa Universitat de València <span class="co">[</span><span class="ot">@Solbes_2007; @Solbes_2018</span><span class="co">]</span>, un elevat percentatge d'estudiants qualifica les ciències físiques com a matèries abstractes, complicades i allunyades de la seua realitat quotidiana, la qual cosa redueix de manera dràstica la seua motivació intrínseca i la tria d'itineraris STEM en etapes postobligatòries.</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>Enfront d'aquesta problemàtica, la recerca en didàctica de les ciències proposa una evolució metodològica cap a l'ensenyament basat en la indagació activa (*Inquiry-Based Science Education* - IBSE) i la modelització científica [@Gil_Perez_1999; @Hestenes_1987]. En la ciència real contemporània, la modelització de fenòmens complexos i l'anàlisi de dades massives es realitza de manera indispensable mitjançant la computació. Per tant, la integració del **Pensament Computacional (PC)** [@Wing_2006] i d'eines de **Càlcul Simbòlic per Ordinador (CAS)** de codi obert com SageMath en l'entorn de quaderns Jupyter [@Borovsky_2023; @Hanc_2020] ofereix una oportunitat didàctica única. Aquesta tecnologia lliure actua com una **«caixa blanca» cognitiva** <span class="co">[</span><span class="ot">@Hanc_2020</span><span class="co">]</span>: permet alliberar els estudiants de la pesada càrrega procedimental de l'àlgebra mecànica manual per a reorientar tot el seu esforç cognitiu cap a la formulació d'hipòtesis, la interpretació física de corbes, l'anàlisi de casos límit i la validació de models científics reals enfront de dades experimentals <span class="co">[</span><span class="ot">@Belu_2009; @Borovsky_2023; @Gil_Perez_1999</span><span class="co">]</span>.</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Marc normatiu i curricular LOMLOE a la Comunitat Valenciana {#sec-marc-curricular}</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>La present proposta d'innovació no es planteja com una activitat aïllada o un afegit extracurricular, sinó que s'alinea amb el marc normatiu i curricular vigent de la Comunitat Valenciana, conformat pel **Decret 108/2022**, de 5 d'agost, del Consell, pel qual s'estableix l'ordenació i el currículum del Batxillerat <span class="co">[</span><span class="ot">@decret108_2022</span><span class="co">]</span>, en desenvolupament de la Llei Orgànica estatal 3/2020 (LOMLOE) <span class="co">[</span><span class="ot">@lomloe2020</span><span class="co">]</span> i del Reial Decret estatal d'ensenyaments mínims 243/2022 <span class="co">[</span><span class="ot">@rd243_2022</span><span class="co">]</span>.</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>El canvi de paradigma educatiu forçat per la LOMLOE reorienta l'ensenyament cap al desenvolupament de **competències clau** i **competències específiques** mitjançant el disseny de **Situacions d'Aprenentatge (SdA)** contextualitzades, significatives i resolutives enfront de reptes reals de l'entorn. A la matèria de Física i Química de 1r de Batxillerat, la nostra proposta busca alinear-se amb les **sis Competències Específiques (CE)** definides al Decret 108/2022 <span class="co">[</span><span class="ot">@decret108_2022</span><span class="co">]</span>, articulant-se metodològicament al voltant dels següents eixos competencials clau:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Resolució de problemes reals i modelització (CE1 Batxillerat):** L'alumnat aplica les lleis de la mecànica clàssica a la resolució d'una situació problemàtica de l'entorn real. S'utilitza la programació simbòlica i numèrica per a simular i resoldre el llançament de projectils en condicions reals (amb resistència de l'aire), on el càlcul vectorial i algebraic manual resulta inaccessible per al seu nivell, forçant-los a raonar sobre el significat físic de les equacions <span class="co">[</span><span class="ot">@decret108_2022; @Borovsky_2023</span><span class="co">]</span>.</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Pensament científic, indagació i experimentació (CE2 Batxillerat):** S'exigeix formular hipòtesis, dissenyar un contrast empíric recopilant dades cinemàtiques reals d'un llançament al pati de l'institut mitjançant vídeo-anàlisi cinemàtica (Physics Tracker) i contrastar de forma crítica el model teòric de la simulació de SageMath amb els fets experimentals obtinguts <span class="co">[</span><span class="ot">@decret108_2022; @Hestenes_1987; @Borovsky_2023</span><span class="co">]</span>.</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Llenguatge científic, simbòlic i matemàtic (CE3 Batxillerat):** Es connecta de forma directa el formalisme matemàtic (notació vectorial, expressions de cinemàtica i dinàmica) i la representació gràfica de trajectòries reals generant múltiples representacions dinàmiques a Jupyter. Mitjançant l'ordre <span class="in">`show()`</span> de SageMath es renderitza tipogràficament el codi en notació LaTeX estàndard, aprenent el llenguatge universal de la ciència <span class="co">[</span><span class="ot">@decret108_2022; @Borovsky_2023</span><span class="co">]</span>.</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Cerca, tractament de la informació i divulgació digital (CE4 Batxillerat):** S'importen les dades experimentals (.csv) des de Tracker mitjançant la llibreria <span class="in">`pandas`</span> per a la seua depuració i representació. L'ús d'entorns de càlcul simbòlic i representació gràfica de codi obert (JupyterLab) democratitza l'accés a les tecnologies de modelització de primer nivell. Aquesta capacitat d'integrar en un mateix espai de treball digital múltiples registres de representació (visuals, matemàtics, textuals i numèrics) facilita l'aplicació pràctica de les pautes del Disseny Universal per a l'Aprenentatge (DUA), alhora que redueix les barreres d'accessibilitat econòmica i tecnològica <span class="co">[</span><span class="ot">@decret108_2022; @CAST_2024; @Hanc_2020</span><span class="co">]</span>.</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Treball cooperatiu, inclusió i autoregulació emocional (CE5 Batxillerat):** S'orquestra el treball de laboratori computacional mitjançant estructures de treball cooperatiu formal (Programa CA/AC de Pere Pujolàs) com la dinàmica de «Llapis al centre / Mans fora del teclat», acompanyada de bastides de suport socioemocional davant de la frustració provocada pels errors de sintaxi de Python, fomentant la resiliència i desmitificant l'error com a element de retroalimentació <span class="co">[</span><span class="ot">@decret108_2022; @Pujolas_2009; @Charles_2023</span><span class="co">]</span>.</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**La ciència com a construcció col·lectiva en continu canvi (CE6 Batxillerat):** L'alumnat justifica la validesa i limitacions del model de cinemàtica clàssica de Galileu (tir parabòlic ideal en el buit) enfront d'un model dinàmic més avançat que s'ajusta i reconstrueix incorporant forces de fricció real (Stokes / Rayleigh). S'analitza la relativitat del moviment i com els conceptes físics evolucionen històricament gràcies a la modelització i millora de precisió de dades <span class="co">[</span><span class="ot">@decret108_2022; @Subramaniam_2025</span><span class="co">]</span>.</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>La correspondència directa entre els descriptors operatius del Perfil d'Eixida de Batxillerat, els principis d'inclusió i equitat del DUA <span class="co">[</span><span class="ot">@CAST_2024</span><span class="co">]</span> i les activitats computacionals programades a la present SdA de Física s'exposa de manera resumida a la @tbl-descriptors:</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{=latex}</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="in">\begin{landscape}</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="in">\begingroup</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="in">\footnotesize</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Descriptor Operatiu (Perfil d'Eixida)** | **Definició Competencial (LOMLOE)** | **Acció de l'Alumnat a Jupyter (Física)** | **Evidència d'Aprenentatge (TFM)** <span class="pp">|</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="pp">| :---</span> <span class="pp">| :---</span> <span class="pp">| :---</span> <span class="pp">| :---</span> <span class="pp">|</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **STEM4** *(Batx.)* | Interpretar i transmetre processos i resultats científics en diversos formats (gràfics, taules, fórmules), aprofitant la cultura digital. | L'alumnat utilitza codi en Python (amb llibreries com Matplotlib) per a **graficar dades experimentals** obtingudes de llançaments reals del seu entorn, superposant models teòrics. | **Gràfics interactius posició-temps i trajectòries** generats per l'alumnat, on s'inclouen llegendes, unitats i corbes de fregament viscós i Rayleigh <span class="co">[</span><span class="ot">@Borovsky_2023</span><span class="co">]</span>. <span class="pp">|</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **CD2** *(Batx.)* | Crear, integrar i reelaborar continguts digitals de manera individual o col·lectiva. | L'alumnat **modifica estructures de control, paràmetres o variables** d'una llibreta científica (en la progressió *Use-Modify-Create*), adaptant el codi per simular el moviment ideal o real [@Grover_2013]. | **Jupyter Notebook desat (.ipynb)** en el qual es visualitzen línies de codi alterades amb èxit, acompanyades de comentaris lògics propis (#) i conclusions analítiques. <span class="pp">|</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **CD5** *(Batx.)* | Desenvolupar solucions tecnològiques innovadores i creatives per a resoldre problemes concrets. | L'alumnat modifica i aplica de forma col·laborativa el codi esquelet (*Skeleton Code*) d'ajust paramètric de dades reals cinemàtiques mitjançant la funció `scipy.optimize.curve_fit` [@Borovsky_2023]. | **Simulador i ajustador funcional de tir real** que utilitza constants reals de l'entorn de programació i minimitza els errors de predicció entre dades empíriques i simulades <span class="co">[</span><span class="ot">@Charles_2023</span><span class="co">]</span>. <span class="pp">|</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **CPSAA5** *(Batx.)* | Autoregular l'aprenentatge i desenvolupar la metacognició per a **aprendre dels propis errors**. | L'alumnat realitza de manera cooperativa el **diagnòstic i la depuració (*debugging*) del codi** quan Jupyter llança errors sintàctics de Python, recolzant-se en targetes de depuració en valencià. | **Secció de diari d'aprenentatge (Markdown)** on els equips documenten el tipus d'error de sintaxi o lògic comès, la traça de l'error de Python i el mètode lògic utilitzat per a resoldre'l <span class="co">[</span><span class="ot">@Charles_2023</span><span class="co">]</span>. <span class="pp">|</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **CPSAA4** *(Batx.)* | Autoavaluar el procés i cercar fonts d'informació fiables per a validar conclusions. | L'alumnat contrasta els resultats de la seua simulació i el coeficient d'arrossegament aerodinàmic obtingut amb **lleis i constants físiques reals de la literatura científica**. | **Apartat de conclusions** a l'assaig computacional interactiu on es valida i discuteix críticament l'abast físic de les asseveracions del codi, redactat de forma cooperativa <span class="co">[</span><span class="ot">@Hanc_2020</span><span class="co">]</span>. <span class="pp">|</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>: Vinculació entre descriptors operatius del Perfil d'Eixida de Batxillerat i accions d'aprenentatge a Jupyter Notebooks {#tbl-descriptors tbl-colwidths="<span class="co">[</span><span class="ot">20,25,30,25</span><span class="co">]</span>"}</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{=latex}</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="in">\endgroup</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="in">\end{landscape}</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="fu">## Plantejament del problema i preguntes de recerca {#sec-preguntes-recerca}</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>El problema central que aborda aquest treball és la necessitat de superar la bretxa existent entre la pràctica científica real —que utilitza de forma ineludible eines computacionals per a modelitzar fenòmens complexos i analitzar dades— i l'ensenyament de la Física a secundària i batxillerat, tradicionalment ancorat en el càlcul manual de «llapis i paper» de casos ideals irrealistes (com el tir parabòlic al buit, on la resistència de l'aire s'ignora de forma continuada).</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>En el context educatiu, aquesta bretxa s'agreuja per l'ús predominant de programaris de caràcter privatiu, comercial i tancat (com fulls de càlcul d'Excel o plataformes de representació gràfica tancades), si bé és cert que a la Comunitat Valenciana s'estan impulsant eines de codi obert, com la distribució LliureX basada en el sistema operatiu GNU/Linux. Aquestes eines solen actuar com a autèntiques **«caixes negres» de codi bloquejat** on l'alumnat es limita a introduir dades i prémer botons per obtenir resultats automatitzats (com línies d'ajust o estadístiques), sense comprendre realment la matemàtica subjacent ni el significat de les fórmules [@Vieyra_2021]. El repte docent, per tant, no consisteix en la simple digitalització instrumental de l'aula, sinó a dissenyar entorns d'aprenentatge de **«caixa blanca»** basats en programari lliure i de codi obert [@Hanc_2020]. Aquestes tecnologies lliures i transparents permeten a l'alumnat obrir, inspeccionar, comprendre i modificar de manera explícita el codi lògic dels models científics, facilitant l'externalització i visualització de les seues pròpies representacions mentals a través de la creació d'**assaigs computacionals** (*computational essays*) i potenciant una motivació intrínseca genuïna pel fet d'utilitzar les mateixes eines de recerca professional que empra la comunitat científica contemporània <span class="co">[</span><span class="ot">@Hanc_2020; @Borovsky_2023</span><span class="co">]</span>.</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>Per guiar aquesta proposta d'innovació, es plantegen les següents **preguntes de recerca didàctica**:</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**PR1:** De quina manera pot la integració d'un entorn de càlcul simbòlic (CAS) transparent, lliure i de codi obert (SageMath sobre quaderns Jupyter) reduir la càrrega cognitiva associada a les exigents manipulacions algebraiques rutinàries i reorientar l'atenció de l'alumnat cap a la interpretació conceptual, la presa de decisions i l'anàlisi de casos límit en la Física de Batxillerat?</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**PR2:** En quina mesura l'articulació d'una Situació d'Aprenentatge d'accés obert basada en la progressió *Use-Modify-Create*, el treball cooperatiu estructurat i la gestió socioemocional de l'error de programació millora la motivació, l'autoeficàcia i l'accessibilitat universal (DUA) de l'alumnat de secundària cap a l'aprenentatge científic?</span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

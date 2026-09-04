@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Situació d'Aprenentatge: Pensament Computacional i Modelització Física (WASM)</title>
+    <!-- Pyodide WebAssembly (Python, SymPy, NumPy, SciPy natius al navegador) -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <!-- MathJax 3 per a fórmules LaTeX -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- CodeMirror per a l'editor de codi Python interactiu -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --warning: #ea580c;
+            --danger: #dc2626;
+            --tracker: #d97706;
+            --purple: #7c3aed;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 16px 12px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1440px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 14px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            padding: 24px 20px;
+            border: 1px solid var(--border);
+            box-sizing: border-box;
+        }
+
+        header {
+            margin-bottom: 24px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .badge-header {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            margin: 0 0 8px 0;
+            color: var(--primary);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.96rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .wasm-status-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f1f5f9;
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #eab308;
+            display: inline-block;
+        }
+
+        .status-dot.ready {
+            background: var(--success);
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+        }
+
+        .phase-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            color: var(--text);
+            font-weight: 700;
+            margin: 0 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .symbolic-grid {
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            margin-bottom: 20px;
+            align-items: stretch;
+        }
+
+        .symbolic-grid .code-container {
+            flex: 1.35;
+            min-width: 0;
+        }
+
+        .symbolic-grid .theory-card {
+            flex: 0.65;
+            min-width: 0;
+        }
+
+        @media (max-width: 960px) {
+            .symbolic-grid {
+                flex-direction: column;
+            }
+        }
+
+        .btn-code-toggle {
+            background: #f1f5f9;
+            color: #1e293b;
+            border: 1px solid #cbd5e1;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-code-toggle:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+            border-color: #94a3b8;
+        }
+
+        .code-container {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .code-container.theme-dark {
+            border-color: #334155;
+            background: #282a36;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .code-topbar {
+            background: #f1f5f9;
+            color: #334155;
+            padding: 8px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .code-container.theme-dark .code-topbar {
+            background: #21222c;
+            color: #f8f8f2;
+            border-bottom: 1px solid #44475a;
+        }
+
+        .code-filename {
+            font-size: 0.85rem;
+            font-family: monospace;
+            color: #1e293b;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-container.theme-dark .code-filename {
+            color: #8be9fd;
+        }
+
+        .btn-theme-toggle {
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 4px 9px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+
+        .btn-theme-toggle:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .code-container.theme-dark .btn-theme-toggle {
+            background: #44475a;
+            border-color: #6272a4;
+            color: #f8f8f2;
+        }
+
+        .code-container.theme-dark .btn-theme-toggle:hover {
+            background: #6272a4;
+        }
+
+        .btn-exec {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-exec:hover {
+            background: #15803d;
+            transform: translateY(-1px);
+        }
+
+        .btn-exec:disabled {
+            background: #64748b;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Editor CodeMirror: Tema Clar (JupyterLab clàssic per defecte) */
+        .CodeMirror {
+            height: 420px !important;
+            font-size: 0.875rem;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            line-height: 1.5;
+            background: #ffffff !important;
+            color: #0f172a !important;
+        }
+
+        .CodeMirror-gutters {
+            background-color: #f8fafc !important;
+            border-right: 1px solid #e2e8f0 !important;
+            padding-right: 2px;
+        }
+
+        .CodeMirror-linenumber {
+            padding: 0 4px 0 4px !important;
+            color: #94a3b8 !important;
+            font-size: 0.82rem;
+        }
+
+        /* Resaltat de sintaxi clar tipus JupyterLab */
+        .cm-s-default .cm-keyword { color: #0284c7 !important; font-weight: 700; }
+        .cm-s-default .cm-def { color: #059669 !important; font-weight: 700; }
+        .cm-s-default .cm-variable { color: #0f172a !important; }
+        .cm-s-default .cm-variable-2 { color: #4338ca !important; }
+        .cm-s-default .cm-property { color: #7c3aed !important; }
+        .cm-s-default .cm-operator { color: #d97706 !important; font-weight: bold; }
+        .cm-s-default .cm-comment { color: #64748b !important; font-style: italic; }
+        .cm-s-default .cm-string { color: #b45309 !important; }
+        .cm-s-default .cm-number { color: #dc2626 !important; font-weight: 600; }
+
+        /* Estils quan s'activa tema fosc Dracula */
+        .cm-s-dracula.CodeMirror {
+            background: #282a36 !important;
+            color: #f8f8f2 !important;
+        }
+        .cm-s-dracula .CodeMirror-gutters {
+            background-color: #21222c !important;
+            border-right: 1px solid #44475a !important;
+        }
+        .cm-s-dracula .CodeMirror-linenumber {
+            color: #6272a4 !important;
+        }
+
+        .CodeMirror-hints {
+            background: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
+            border-radius: 6px !important;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12) !important;
+            font-family: 'Fira Code', 'Consolas', monospace !important;
+            font-size: 0.85rem !important;
+            padding: 4px !important;
+            z-index: 1000 !important;
+        }
+
+        .CodeMirror-hint {
+            color: #1e293b !important;
+            padding: 4px 8px !important;
+            border-radius: 4px !important;
+        }
+
+        li.CodeMirror-hint-active {
+            background: #eff6ff !important;
+            color: #2563eb !important;
+            font-weight: bold !important;
+        }
+
+        /* Hints en mode fosc */
+        .theme-dark .CodeMirror-hints {
+            background: #282a36 !important;
+            border: 1px solid #6272a4 !important;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4) !important;
+        }
+        .theme-dark .CodeMirror-hint {
+            color: #f8f8f2 !important;
+        }
+        .theme-dark li.CodeMirror-hint-active {
+            background: #44475a !important;
+            color: #50fa7b !important;
+        }
+
+        .theory-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .theory-step {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 0.88rem;
+        }
+
+        .theory-step-num {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 3px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .console-output {
+            background: #0f172a;
+            color: #38bdf8;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.82rem;
+            max-height: 180px;
+            overflow-y: auto;
+            border: 1px solid #334155;
+        }
+
+        .error-card-ui {
+            background: #eff6ff;
+            border: 2px solid #3b82f6;
+            border-radius: 10px;
+            padding: 14px;
+            margin-top: 6px;
+            font-family: system-ui, sans-serif;
+            color: #1e293b;
+        }
+
+        .error-card-title {
+            color: #1d4ed8;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+        }
+
+        .error-card-desc {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .error-card-list {
+            font-size: 0.84rem;
+            line-height: 1.45;
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .two-cols-layout {
+            display: grid;
+            grid-template-columns: 370px 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .two-cols-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .controls-panel {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .control-val {
+            color: var(--primary);
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .tracker-card {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 10px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .tracker-title {
+            color: #b45309;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-tracker {
+            background: var(--tracker);
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .btn-tracker:hover {
+            background: #b45309;
+        }
+
+        .btn-fit {
+            background: var(--purple);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-fit:hover {
+            background: #6d28d9;
+        }
+
+        .btn-fit:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .metric-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 2px;
+        }
+
+        .metric-card {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 8px 6px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .metric-title {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 1.12rem;
+            font-weight: 700;
+        }
+
+        /* Capsa de Debat Seqüencial */
+        .conflict-box {
+            background: #fef2f2;
+            border: 2px solid #f87171;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+            color: #991b1b;
+        }
+
+        .conflict-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .coop-badge {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #f87171;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .debate-step-card {
+            background: white;
+            border: 1px solid #fca5a5;
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-top: 12px;
+            color: #1e293b;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .debate-step-header {
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: #b91c1c;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .debate-textarea {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 10px;
+            font-family: inherit;
+            font-size: 0.88rem;
+            margin-top: 8px;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .debate-textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .btn-debate-send {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 7px 14px;
+            border-radius: 6px;
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-debate-send:hover {
+            background: #b91c1c;
+        }
+
+        .btn-debate-hint {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #f59e0b;
+            padding: 7px 13px;
+            border-radius: 6px;
+            font-size: 0.83rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+            margin-bottom: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-debate-hint:hover {
+            background: #fde68a;
+            color: #78350f;
+            border-color: #d97706;
+        }
+
+        .debate-hint-box {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-left: 4px solid #f59e0b;
+            border-radius: 0 8px 8px 0;
+            padding: 12px 14px;
+            margin-top: 8px;
+            margin-bottom: 10px;
+            font-size: 0.86rem;
+            color: #78350f;
+            line-height: 1.55;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+
+        .submitted-response-box {
+            background: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            border-radius: 0 6px 6px 0;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-size: 0.86rem;
+            color: #14532d;
+            line-height: 1.4;
+        }
+
+        .dynamic-eq-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .dynamic-eq-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .dynamic-eq-math {
+            font-size: 0.96rem;
+            color: #1e293b;
+            text-align: center;
+            padding: 4px 0;
+        }
+
+        .plot-box {
+            width: 100%;
+            height: 380px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: white;
+        }
+
+        .fit-results-summary {
+            background: #f5f3ff;
+            border: 1px solid #ddd6fe;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 800px) {
+            .fit-results-summary {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .waiting-tracker-panel {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 32px 20px;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <span class="badge-header">Seqüència Didàctica 3 Fases • 100% WebAssembly (GitHub Pages)</span>
+                <h1>⚡ Modelització Computacional i Dinàmica de Newton</h1>
+                <p class="subtitle">Situació d'Aprenentatge: <b>Del Model Ideal al Conflicte Experimental i l'Elaboració d'un Millor Model</b>.</p>
+            </div>
+            <div class="wasm-status-card" id="wasm-status">
+                <span class="status-dot" id="status-dot"></span>
+                <span id="status-text">Iniciant motor Python WASM...</span>
+            </div>
+        </header>
+
+        <!-- ==================================================================== -->
+        <!-- FASE 1: DEDUCCIÓ SIMBÒLICA I EXPLORACIÓ TEÒRICA                       -->
+        <!-- ==================================================================== -->
+        <div class="phase-card">
+            <div class="section-title">
+                <span>🐍 Fase 1: Deducció Simbòlica i Exploració del Model Teòric Ideal (Galileu)</span>
+            </div>
+            <div style="font-size: 0.93rem; color: #334155; margin-bottom: 16px; background: #f8fafc; border-left: 4px solid var(--primary); padding: 10px 14px; border-radius: 0 8px 8px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <b>Model Dinàmic Fonamental (2a Llei de Newton):</b>
+                    <span style="color: #64748b; margin-left: 6px;">L'única força que actua sobre el projectil és el pes (\(\vec{F}_g = m\vec{g}\)):</span>
+                </div>
+                <div style="font-size: 1.05rem; font-weight: 600; color: var(--primary);">
+                    \[ \sum \vec{F} = m \vec{a} = m \vec{g} \implies \begin{cases} a_x = 0 \\ a_y = -g \end{cases} \]
+                </div>
+            </div>
+
+            <div class="symbolic-grid">
+                <div class="code-container" id="code-container-1" style="display:none;">
+                    <div class="code-topbar">
+                        <div class="code-filename">
+                            <span>💻 Codi</span>
+                            <button class="btn-theme-toggle" onclick="toggleEditorTheme(1)" title="Canvia entre tema Clar (JupyterLab) i Fosc (Dracula)">
+                                <span id="theme-icon-1">🌙</span> <span id="theme-text-1">Mode Fosc</span>
+                            </button>
+                        </div>
+                        <button class="btn-exec" id="btn-run" onclick="executeUserCode()" disabled>
+                            <span>▶</span> Executa el codi
+                        </button>
+                    </div>
+                    <textarea id="python-editor"># Modelitzacio Simbolica de Tir Parabolic Ideal (SymPy / Python)
+import sympy as sp
+import numpy as np
+
+# 1. Definir variables simboliques
+t, x, v_0, alpha, g = sp.symbols('t x v_0 alpha g')
+
+# 2. Equacio horitzontal i aillar el temps t(x)
+eq_x = sp.Eq(x, v_0 * sp.cos(alpha) * t)
+sol_t = sp.solve(eq_x, t)[0]
+
+# 3. Equacio vertical de la trajectoria y(x) ideal
+y_trajectoria = v_0 * sp.sin(alpha) * sol_t - (sp.Rational(1,2)) * g * sol_t**2
+
+# 4. Funcio compilada al vol per a evaluar numericament la corba
+f_num = sp.lambdify(
+    (x, v_0, alpha, g), y_trajectoria, modules=['numpy']
+)
+
+# Exportar expressio LaTeX simbolica pura per a MathJax
+latex_eq_simbolica = sp.latex(y_trajectoria)
+
+print("✅ Model ideal de Galileu deduït amb èxit!")
+print(f"Equació y(x) = {y_trajectoria}")</textarea>
+                </div>
+
+                <div class="theory-card">
+                    <div class="theory-step" id="theory-step-display" style="min-height: 200px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <div class="theory-step-num" id="theory-step-title" style="margin-bottom:0;">Equació de la trajectòria calculada</div>
+                            <button class="btn-code-toggle" id="btn-toggle-code-1" onclick="toggleCodeView(1)" title="Mostra o amaga el codi font Python">
+                                <span>💻</span> Codi
+                            </button>
+                        </div>
+                        <div id="sym-result-latex" style="font-size: 0.95rem; padding: 12px 0; color: var(--text-muted); font-style: italic;">
+                            Carregant model analític...
+                        </div>
+                        <span id="sym-result-caption" style="font-size:0.8rem; color:var(--text-muted); display:none;">Model analític matemàtic deduït amb SymPy.</span>
+                        <div id="console-output" style="display:none;"></div>
+                    </div>
+
+                    <div class="theory-step" style="background:#f1f5f9;">
+                        <div class="theory-step-num" style="color:#475569;">💡 Objectiu Pedagògic (Fase 1 - USE)</div>
+                        <span style="font-size:0.82rem; color:#334155; line-height:1.4;">
+                            Observeu el vincle directe: si el codi és correcte, es renderitza la fórmula analítica en LaTeX; si hi ha alguna errada, rebreu una pista formativa de depuració per a guiar l'equip.
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="two-cols-layout">
+                <div class="controls-panel">
+                    <div class="control-group">
+                        <div class="control-header">
+                            <span>Angle de Llançament (\(\alpha\)):</span>
+                            <span class="control-val" id="val-alpha-1">55°</span>
+                        </div>
+                        <input type="range" id="slider-alpha-1" min="5" max="85" value="55" step="1">
+                    </div>
+                    <div class="control-group">
+                        <div class="control-header">
+                            <span>Velocitat Inicial (\(v_0\)):</span>
+                            <span class="control-val" id="val-v0-1">22.0 m/s</span>
+                        </div>
+                        <input type="range" id="slider-v0-1" min="5" max="50" value="22.0" step="0.5">
+                    </div>
+                    <div class="control-group">
+                        <div class="control-header">
+                            <span>Gravetat (\(g\)):</span>
+                            <span class="control-val" id="val-g-1">9.81 m/s²</span>
+                        </div>
+                        <input type="range" id="slider-g-1" min="1.6" max="25" value="9.81" step="0.1">
+                    </div>
+
+                    <div class="metric-cards">
+                        <div class="metric-card">
+                            <div class="metric-title">Abast Ideal (\(X_{\text{màx}}\))</div>
+                            <div class="metric-value" id="res-xmax-1" style="color: var(--primary);">46.38 m</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Altura Màx (\(h_{\text{màx}}\))</div>
+                            <div class="metric-value" id="res-ymax-1" style="color: var(--danger);">16.53 m</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div style="font-weight:600; font-size:0.9rem; margin-bottom:6px; color:#1e293b; text-align:center;">
+                        Gràfica 1: Model calculat (interactiu)
+                    </div>
+                    <div id="plot-phase-1" class="plot-box" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================================================================== -->
+        <!-- FASE 2: CONTRAST EXPERIMENTAL I CONFLICTE COGNITIU                   -->
+        <!-- ==================================================================== -->
+        <div class="phase-card">
+            <div class="section-title">
+                <span>📹 Fase 2: Contrast Experimental amb Tracker i Conflicte Cognitiu</span>
+            </div>
+
+            <!-- Caixa de Càrrega de Tracker Superior -->
+            <div class="tracker-card">
+                <div class="tracker-title">📹 Dades Experimentals de Vídeo-Anàlisi (Physics Tracker)</div>
+                <div style="font-size: 0.85rem; color: #78350f;">
+                    Per descobrir si el model ideal de Galileu descriu el món real, carregueu les mesures de la pilota obtingudes al pati escolar:
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 6px; max-width: 420px;">
+                    <button class="btn-tracker" style="flex: 1;" onclick="loadSampleTrackerData()">📥 Carregar Mostra Pati (32 punts)</button>
+                    <label class="btn-tracker" style="flex: 1; background:#0284c7; cursor:pointer;">
+                        📁 Pujar .CSV
+                        <input type="file" id="csv-file-input" accept=".csv,.txt" style="display: none;" onchange="handleFileUpload(event)">
+                    </label>
+                </div>
+                <div id="tracker-status" style="font-size: 0.8rem; font-weight: 600; color: #b45309; margin-top: 4px;">
+                    ⚠️ Sense dades carregades. Premeu el botó superior per activar el contrast experimental.
+                </div>
+            </div>
+
+            <!-- Panell d'Espera (visible només quan NO hi ha dades) -->
+            <div id="phase2-waiting" class="waiting-tracker-panel">
+                <div style="font-size: 1.5rem; margin-bottom: 6px;">📂</div>
+                <b>Esperant dades experimentals de Physics Tracker</b><br>
+                Premeu <i>«Carregar Mostra Pati»</i> o pengeu un fitxer <code>.csv</code> per visualitzar la discrepància experimental i obrir el debat científic.
+            </div>
+
+            <!-- Contingut revelat NOMÉS després de carregar les dades de Tracker -->
+            <div id="phase2-content" style="display: none; margin-top: 20px;">
+                <!-- 1. GRÀFICA 2: EL CONFLICTE PUR (Sense fricció, no interactiva) -->
+                <div class="two-cols-layout">
+                    <div class="controls-panel">
+                        <div class="metric-cards">
+                            <div class="metric-card">
+                                <div class="metric-title">Abast Previst Ideal (\(v_0=22\text{m/s}\))</div>
+                                <div class="metric-value" id="res-xmax-ideal-2" style="color: var(--primary);">46.38 m</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-title">Abast Mesurat al Pati</div>
+                                <div class="metric-value" id="res-xreal-2" style="color: var(--tracker);">23.93 m</div>
+                            </div>
+                            <div class="metric-card" style="grid-column: span 2;">
+                                <div class="metric-title">Discrepància Inicial del Model Ideal</div>
+                                <div class="metric-value" id="res-error-2" style="color: var(--danger); font-size: 1.15rem;">93.8% (Error enorme!)</div>
+                            </div>
+                        </div>
+
+                        <div class="formula-box">
+                            <div style="font-weight: 600; margin-bottom: 2px; color: var(--danger);">⚠️ Discrepància Crítica:</div>
+                            <div style="font-size:0.82rem; color:#334155;">
+                                El model de Galileu preveu més del doble de la distància real mesurada!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="font-weight:600; font-size:0.9rem; margin-bottom:6px; color:#1e293b; text-align:center;">
+                            Gràfica 2: El Conflicte Inicial (Model Ideal de Galileu vs Punts Reals de Tracker)
+                        </div>
+                        <div id="plot-phase-2-conflict" class="plot-box"></div>
+                    </div>
+                </div>
+
+                <!-- 2. CAPSA DE CONFLICTE I DEBAT EPISTEMOLÒGIC SEQÜENCIAL -->
+                <div class="conflict-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                        <div class="conflict-title">
+                            <span>🤔 Conflicte Cognitiu i Debat Epistemològic a l'Aula:</span>
+                        </div>
+                        <span class="coop-badge">🤝 Estructura «Llapissos al centre»</span>
+                    </div>
+
+                    <div style="font-size:0.92rem; line-height:1.5; margin: 6px 0 12px 0;">
+                        Amb la mateixa velocitat (\(v_0 = 22.0\text{ m/s}\)) i angle (\(\alpha = 55^\circ\)), <b>la fórmula ideal diu que arriba a 46.4 m, però la pilota cau als 23.9 m!</b>
+                    </div>
+
+                    <div style="background:#fef2f2; border:1px dashed #f87171; border-radius:8px; padding:8px 12px; font-size:0.84rem; color:#991b1b; font-weight:600; margin-bottom:12px;">
+                        ⚠️ <b>Instrucció Docent:</b> Dialogueu en equip sense tocar el teclat. <u>Només podeu prémer 'Enviar Resposta' quan el professor o professora done el senyal a l'aula!</u>
+                    </div>
+
+                    <!-- PREGUNTA 1 -->
+                    <div class="debate-step-card" id="debate-card-1">
+                        <div class="debate-step-header">
+                            <span>❓ Pregunta 1:</span> Falla la ciència? No se suposa que la física és la millor eina que tenim per descriure la realitat? Com s'explica aquest abisme entre la fórmula i la mesura al pati?
+                        </div>
+                        <div id="debate-input-container-1">
+                            <textarea id="debate-ans-1" class="debate-textarea" placeholder="Debateu en equip: Per què una llei científica vàlida no encerta el llançament real?"></textarea>
+                            <button class="btn-debate-send" onclick="submitDebateAnswer(1)">
+                                <span>📤</span> Enviar Resposta a la Pregunta 1
+                            </button>
+                        </div>
+                        <div id="debate-submitted-1" style="display:none;" class="submitted-response-box"></div>
+                    </div>
+
+                    <!-- PREGUNTA 2 (Oculta d'inici) -->
+                    <div class="debate-step-card" id="debate-card-2" style="display:none;">
+                        <div style="background:#eff6ff; border-left:4px solid #3b82f6; padding:10px 14px; border-radius:0 8px 8px 0; margin-bottom:12px; font-size:0.86rem; color:#1e3a8a; line-height:1.5;">
+                            💡 <b>Reflexió Epistemològica Docent:</b><br>
+                            <i>La ciència no falla!</i> El que passa és que la ciència no descriu la realitat de forma màgica o absoluta, sinó mitjançant <b>models teòrics basats en hipòtesis simplificadores</b>. Si les condicions del món real no coincideixen amb les hipòtesis de partida, el model predictiu es desvia.
+                        </div>
+                        <div class="debate-step-header">
+                            <span>❓ Pregunta 2:</span> Quina hipòtesi simplificadora fonamental hem assumit en el model de Galileu que no es compleix a l'atmosfera de la Terra?
+                        </div>
+                        <div id="debate-input-container-2">
+                            <textarea id="debate-ans-2" class="debate-textarea" placeholder="Què hem ignorat a les equacions de la Fase 1 que sí que està present a l'aire del pati?"></textarea>
+                            <button class="btn-debate-send" onclick="submitDebateAnswer(2)">
+                                <span>📤</span> Enviar Resposta a la Pregunta 2
+                            </button>
+                        </div>
+                        <div id="debate-submitted-2" style="display:none;" class="submitted-response-box"></div>
+                    </div>
+
+                    <!-- PREGUNTA 3 (Oculta d'inici) -->
+                    <div class="debate-step-card" id="debate-card-3" style="display:none;">
+                        <div style="background:#f0fdf4; border-left:4px solid #16a34a; padding:12px 14px; border-radius:0 8px 8px 0; margin-bottom:12px; font-size:0.86rem; color:#14532d; line-height:1.55;">
+                            🪐 <b>El Triomf de Newton al Buit de l'Espai vs el Pati Escolar:</b><br>
+                            Les equacions pures de Newton i Galileu (sense fregament) <b>són increïblement exactes quan hi ha buit!</b> Descriuen amb una precisió mil·limètrica (error &lt; 0.001%) l'òrbita de la Lluna al voltant de la Terra, la trajectòria dels planetes al voltant del Sol o les sondes enviades a Mart. A més, a la Lluna, una ploma i un martell cauen alhora (missió Apol·lo 15, 1971).<br>
+                            <b>La diferència fonamental:</b> A la Terra vivim submergits en un «oceà d'aire» dens (\(\rho_{\text{aire}} \approx 1.2\text{ kg/m}^3\)), de manera que el fregament frena dràsticament la pilota.
+                        </div>
+                        <div class="debate-step-header">
+                            <span>❓ Pregunta 3:</span> Com introduiríeu matemàticament el fregament de l'aire per escriure correctament l'equació de Newton a la Terra?
+                        </div>
+
+                        <button type="button" class="btn-debate-hint" id="btn-hint-3" onclick="toggleDebateHint(3)">
+                            <span>💡</span> Pista d'Orientació: Penseu en la vida quotidiana (anar en bicicleta o en moto)
+                        </button>
+
+                        <div id="debate-hint-3" class="debate-hint-box" style="display:none;">
+                            <div style="font-weight:700; margin-bottom:6px; color:#92400e; font-size:0.9rem;">
+                                🚴 Pista d'Orientació Fenomenològica: Quan anem en bicicleta, patinet o moto...
+                            </div>
+                            <div style="line-height:1.55; font-size:0.87rem; color:#78350f;">
+                                <p style="margin: 4px 0 8px 0;">
+                                    Tothom ha experimentat la força de l'aire a la cara i al cos quan va de pressa. Analitzeu en equip aquestes <b>tres preguntes clau</b> abans d'escriure l'equació:
+                                </p>
+                                <ul style="margin:4px 0 8px 18px; padding:0; display:flex; flex-direction:column; gap:6px;">
+                                    <li>
+                                        <b>1. Quina direcció i sentit té la força de fregament?</b><br>
+                                        S'oposa sempre al moviment! Actua exactament en la mateixa direcció que el vector velocitat \(\vec{v}\), però en <b>sentit contrari</b> (per això s'expressa amb un signe negatiu davant: frena el cos).
+                                    </li>
+                                    <li>
+                                        <b>2. Com varia segons anem més ràpids o més lents?</b><br>
+                                        Si caminem a poc a poc gairebé no la sentim, però si pedaleu a fons o aneu en moto, l'aire espenta amb molta força. És a dir, la intensitat de la força <b>augmenta en augmentar el mòdul de la velocitat</b> (\(v\) o \(v^2\)).
+                                    </li>
+                                    <li>
+                                        <b>3. Depén de la forma i mida de l'objecte?</b><br>
+                                        Per què els ciclistes professionals s'ajupen sobre la bicicleta i porten cascos aerodinàmics? Perquè per reduir aquesta força intentem <b>disminuir la superfície de contacte frontal</b> amb l'aire! La geometria i el medi es recullen en una constant de fregament (\(k\) o \(c\)).
+                                    </li>
+                                </ul>
+                                <div style="background:#fef3c7; border:1px dashed #d97706; padding:8px 12px; border-radius:6px; margin-top:8px;">
+                                    ✍️ <b>Repte de l'Equip:</b> Després de reflexionar sobre aquests 3 punts en equip, escriviu una <b>equació matemàtica per a aquesta força de fregament \(\vec{F}_{\text{freg}}\)</b>. Com canvia la Segona Llei de Newton (\(\sum \vec{F} = m\vec{a}\)) a la Terra quan sumem el pes i el fregament?
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="debate-input-container-3">
+                            <textarea id="debate-ans-3" class="debate-textarea" placeholder="Després de parlar-ho en equip i analitzar la pista, escriviu una equació per a la força de fregament i la nova suma de forces ∑F = m·a..."></textarea>
+                            <button class="btn-debate-send" onclick="submitDebateAnswer(3)">
+                                <span>📤</span> Enviar Resposta de l'Equip i Desbloquejar Fase 3
+                            </button>
+                        </div>
+                        <div id="debate-submitted-3" style="display:none;" class="submitted-response-box"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================================================================== -->
+        <!-- FASE 3: ELABOREM UN MILLOR MODEL I SÍNTESI COMPUTACIONAL             -->
+        <!-- (Desbloquejada NOMÉS en completar la Fase 2)                         -->
+        <!-- ==================================================================== -->
+        <div class="phase-card" id="phase3-card" style="display:none; background:#faf5ff; border-color:#ddd6fe;">
+            <div class="section-title" style="color:#6d28d9;">
+                <span>🎯 Fase 3: Elaborem un Millor Model (Exploració Dinàmica i Ajust Òptim amb SciPy)</span>
+            </div>
+
+            <!-- PAS 3.1: MODIFICACIÓ COMPUTACIONAL DEL MODEL DINÀMIC (SymPy) - MATEIXA ESTRUCTURA QUE FASE 1 -->
+            <div style="margin-bottom:24px; background:white; border:1px solid #e2e8f0; border-radius:12px; padding:18px;">
+                <div style="font-weight:700; color:#1e293b; font-size:1.02rem; margin-bottom:12px;">
+                    💻 Pas 3.1: Modificació Computacional del Model Dinàmic de Newton (SymPy)
+                </div>
+
+                <div class="symbolic-grid">
+                    <div class="code-container" id="code-container-2" style="display:none;">
+                        <div class="code-topbar">
+                            <div class="code-filename">
+                                <span>💻 Codi</span>
+                                <button class="btn-theme-toggle" onclick="toggleEditorTheme(2)" title="Canvia entre tema Clar (JupyterLab) i Fosc (Dracula)">
+                                    <span id="theme-icon-2">🌙</span> <span id="theme-text-2">Mode Fosc</span>
+                                </button>
+                            </div>
+                            <button class="btn-exec" id="btn-run-code2" onclick="executeModelFriccioCode()">
+                                <span>▶</span> Executa el codi
+                            </button>
+                        </div>
+                        <textarea id="python-editor-phase2"># Model Dinàmic de Newton amb Fregament Aerodinàmic (SymPy)
+import sympy as sp
+
+# 1. Definir variables i paràmetres simbòlics
+t, x, v_0, alpha, g, k_drag = sp.symbols('t x v_0 alpha g k_drag', positive=True)
+
+# 2. Components de velocitat inicial
+v_0x = v_0 * sp.cos(alpha)
+v_0y = v_0 * sp.sin(alpha)
+
+# 3. Proposta de moviment frenat en l'eix X per l'aire
+# Hipòtesi d'ordre 1: La frenada horitzontal és la responsable principal de la pèrdua d'abast.
+# (A l'eix Y el fregament canvia de signe en l'apogeu; a la Fase 3 s'integrarà el model 2D complet!).
+x_t = v_0x * t * (1 - sp.Rational(1, 2) * k_drag * t)
+y_t = v_0y * t - sp.Rational(1, 2) * g * t**2
+
+# 4. Derivades simbòliques temporals (Càlcul Diferencial Curricular):
+# Velocitat: v(t) = dr/dt  i  Acceleració: a(t) = dv/dt (2a Llei de Newton)
+v_x = sp.diff(x_t, t)
+a_x = sp.diff(v_x, t)
+
+v_y = sp.diff(y_t, t)
+a_y = sp.diff(v_y, t)
+
+# 5. Model aproximat de la trajectòria y(x) amb el terme corrector de l'aire:
+# Quan x augmenta, la frenada acumulada fa que la paràbola caiga abans
+y_freg = x * sp.tan(alpha) - (g * x**2) / (2 * v_0**2 * sp.cos(alpha)**2) * (1 + k_drag * x)
+
+# Exportació simbòlica a LaTeX per a visualització
+latex_vx = sp.latex(v_x)
+latex_ax = sp.latex(a_x)
+latex_ay = sp.latex(a_y)
+latex_corregit = sp.latex(y_freg)
+
+print("✅ Càlcul diferencial completat amb èxit!")
+print(f"Velocitat horitzontal:  v_x(t) = {v_x}")
+print(f"Acceleració horitzontal: a_x(t) = {a_x}  (Frenada oposada al moviment!)")
+print(f"Nova equació y(x) = {y_freg}")</textarea>
+                    </div>
+
+                    <div class="theory-card">
+                        <div class="theory-step" id="theory-step-display-2" style="min-height: 200px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                <div class="theory-step-num" id="theory-step-title-2" style="margin-bottom:0;">Equació i Acceleració Deduïdes (SymPy)</div>
+                                <button class="btn-code-toggle" id="btn-toggle-code-2" onclick="toggleCodeView(2)" title="Mostra o amaga el codi font Python">
+                                    <span>💻</span> Codi
+                                </button>
+                            </div>
+                            <div id="sym-result-latex-2" style="font-size: 0.92rem; padding: 12px 0; color: var(--text-muted); font-style: italic;">
+                                Carregant nou model diferencial...
+                            </div>
+                            <span id="sym-result-caption-2" style="font-size:0.8rem; color:var(--text-muted); display:none;">Càlcul diferencial de Newton amb SymPy.</span>
+                        </div>
+
+                        <div class="theory-step" style="background:#f1f5f9;">
+                            <div class="theory-step-num" style="color:#475569;">💡 Objectiu Pedagògic (Fase 3 - CREATE / Refinament)</div>
+                            <span style="font-size:0.82rem; color:#334155; line-height:1.4;">
+                                Comproveu com la derivada temporal \(\frac{dv_x}{dt}\) manifesta la frenada oposada al moviment (\(a_x &lt; 0\)). Aquest model analític ens permet comprendre per què la corba cau abans i és el punt de partida per a l'ajust empíric de dades.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAS 3.2: EXPLORACIÓ DINÀMICA DE RAYLEIGH (k_drag interactiu) -->
+            <div style="margin-bottom:24px; background:white; border:1px solid #e2e8f0; border-radius:12px; padding:18px;">
+                <div style="font-weight:700; color:#1e293b; font-size:1.02rem; margin-bottom:12px;">
+                    🛠️ Pas 3.2: Exploració Manual del Model Dinàmic de Rayleigh (\(k_{\text{drag}} = c/m\))
+                </div>
+
+                <div class="two-cols-layout">
+                    <div class="controls-panel" style="background:#fffbeb; border-color:#fde68a;">
+                        <div class="control-group">
+                            <div class="control-header">
+                                <span>Ajusta el Coeficient de Fricció (\(k_{\text{drag}}\)):</span>
+                                <span class="control-val" id="val-drag-3" style="color:var(--purple); font-weight:700;">0.040</span>
+                            </div>
+                            <input type="range" id="slider-drag-3" min="0" max="0.12" value="0.040" step="0.002">
+                        </div>
+
+                        <div class="metric-cards">
+                            <div class="metric-card">
+                                <div class="metric-title">Abast Model amb Fricció</div>
+                                <div class="metric-value" id="res-xmax-friction-3" style="color: var(--purple);">23.90 m</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-title">Discrepància Corregida</div>
+                                <div class="metric-value" id="res-error-friction-3" style="color: var(--success); font-size:1.1rem;">0.1%</div>
+                            </div>
+                        </div>
+
+                        <div class="formula-box">
+                            <div style="font-weight:600; margin-bottom:2px; color:var(--primary);">💡 Conclusió de l'Alumnat:</div>
+                            <div style="font-size:0.8rem; color:#334155;">
+                                En afegir la força de fregament de Newton, la corba blava s'adapta a la realitat empírica.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="font-weight:600; font-size:0.9rem; margin-bottom:6px; color:#1e293b; text-align:center;">
+                            Gràfica Dinàmica: Model Modificat amb Fricció vs Tracker
+                        </div>
+                        <div id="plot-phase-3-dynamic" class="plot-box"></div>
+
+                        <div class="dynamic-eq-box" style="border-color:#fde68a; background:#fffbeb;">
+                            <div class="dynamic-eq-title" style="color:#b45309;">📐 Equació Dinàmica Real (Newton amb Fricció Aerodinàmica de Rayleigh):</div>
+                            <div class="dynamic-eq-math">
+                                \[ \sum \vec{F} = m \vec{g} + \vec{F}_{\text{freg}} \implies m \frac{d\vec{v}}{dt} = m \vec{g} - c |\vec{v}| \vec{v} \implies \begin{cases} \frac{dv_x}{dt} = -k_{\text{drag}} v v_x \\ \frac{dv_y}{dt} = -g - k_{\text{drag}} v v_y \end{cases} \]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. SÍNTESI GLOBAL AMB SCIPY CURVE_FIT -->
+            <div style="background:white; border:1px solid #ddd6fe; border-radius:12px; padding:18px;">
+                <div style="font-weight:700; color:#5b21b6; font-size:1.02rem; margin-bottom:12px;">
+                    🎯 Pas 3.3: Síntesi Global de les 3 Trajectòries (Ajust Òptim amb SciPy Curve_fit)
+                </div>
+
+                <div class="fit-results-summary">
+                    <div>
+                        <div style="font-weight:700; font-size:0.88rem; color:#5b21b6; margin-bottom:6px;">
+                            ⚙️ Optimització Computacional No Lineal (Levenberg-Marquardt):
+                        </div>
+                        <div style="font-size:0.84rem; color:#374151; margin-bottom:10px;">
+                            SciPy calcula automàticament el coeficient de fregament real que fa coincidir el model amb les dades del pati:
+                        </div>
+                        <button class="btn-fit" id="btn-run-fit" onclick="runCurveFitWasm()">
+                            <span>🎯</span> Executar Ajust Òptim amb Curve_fit (SciPy WASM)
+                        </button>
+                    </div>
+                    <div>
+                        <div style="font-weight:700; font-size:0.88rem; color:#5b21b6; margin-bottom:6px;">📊 Resultats de la Síntesi:</div>
+                        <div id="fit-summary-text" style="font-size:0.84rem; color:#1e293b; line-height:1.6;">
+                            • Premeu el botó per generar la 3a corba ajustada de síntesi.
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div style="font-weight:600; font-size:0.9rem; margin-bottom:6px; color:#5b21b6; text-align:center;">
+                        Gràfica 3: Contrast Triple (Ideal Galileu vs Tracker Real vs Model Ajustat)
+                    </div>
+                    <div id="plot-phase-3" class="plot-box" style="height: 420px;"></div>
+
+                    <div class="dynamic-eq-box" style="border-color:#ddd6fe; background:white;">
+                        <div class="dynamic-eq-title" style="color:#6d28d9;">📐 Model Ajustat per Optimització Paramètrica:</div>
+                        <div class="dynamic-eq-math" id="fit-dynamic-eq">
+                            \[ y(x) = x \tan(55^\circ) - \frac{g x^2}{2 v_0^2 \cos^2(55^\circ)} \cdot (1 + k_{\text{drag}} x) \quad \text{amb} \quad v_0 = 22.0\text{ m/s}, \quad k_{\text{drag}} = 0.040 \]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let editor1 = null;
+        let editor2 = null;
+        let pyodideInstance = null;
+        let currentLatexSimbolica = "x \\tan\\alpha - \\frac{g x^2}{2 v_0^2 \\cos^2\\alpha}";
+        let trackerData = null;
+        let fittedResult = null;
+
+        const sampleTrackerCSV = `t,x,y
+0.000,0.00,0.00
+0.097,1.19,1.66
+0.194,2.33,3.15
+0.292,3.44,4.51
+0.389,4.48,5.70
+0.487,5.50,6.78
+0.584,6.48,7.71
+0.681,7.43,8.53
+0.779,8.36,9.23
+0.876,9.25,9.82
+0.974,10.13,10.31
+1.071,10.99,10.69
+1.169,11.83,10.98
+1.266,12.65,11.16
+1.363,13.45,11.25
+1.461,14.24,11.24
+1.558,15.01,11.15
+1.656,15.78,10.96
+1.753,16.52,10.68
+1.850,17.25,10.32
+1.948,17.97,9.87
+2.045,18.67,9.34
+2.143,19.36,8.73
+2.240,20.03,8.04
+2.338,20.69,7.27
+2.435,21.33,6.43
+2.532,21.95,5.53
+2.630,22.56,4.54
+2.727,23.15,3.50
+2.825,23.73,2.39
+2.922,24.28,1.24
+3.020,24.82,0.01`;
+
+        function loadSampleTrackerData() {
+            parseCSV(sampleTrackerCSV);
+            document.getElementById('tracker-status').innerText = "✅ 32 punts de Tracker carregats (Llançament Pati).";
+            document.getElementById('phase2-waiting').style.display = 'none';
+            document.getElementById('phase2-content').style.display = 'block';
+            updatePhase2Plots();
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                parseCSV(e.target.result);
+                document.getElementById('tracker-status').innerText = `✅ Carregat: ${file.name} (${trackerData.x.length} punts).`;
+                document.getElementById('phase2-waiting').style.display = 'none';
+                document.getElementById('phase2-content').style.display = 'block';
+                updatePhase2Plots();
+            };
+            reader.readAsText(file);
+        }
+
+        function parseCSV(text) {
+            const lines = text.trim().split('\n');
+            const xs = [];
+            const ys = [];
+            for (let line of lines) {
+                line = line.trim();
+                if (line.startsWith('#') || line.startsWith('t') || line.startsWith('x') || !line) continue;
+                const parts = line.split(/[,;\t]+/);
+                if (parts.length >= 2) {
+                    if (parts.length >= 3) {
+                        xs.push(parseFloat(parts[1]));
+                        ys.push(parseFloat(parts[2]));
+                    } else {
+                        xs.push(parseFloat(parts[0]));
+                        ys.push(parseFloat(parts[1]));
+                    }
+                }
+            }
+            trackerData = { x: xs, y: ys };
+        }
+
+        // Gestió del Debat Seqüencial Cooperatiu
+        function submitDebateAnswer(stepNum) {
+            const textarea = document.getElementById(`debate-ans-${stepNum}`);
+            const answer = textarea.value.trim();
+            if (!answer) {
+                alert("Per favor, redacteu la resposta acordada pel vostre equip abans d'enviar.");
+                return;
+            }
+
+            document.getElementById(`debate-input-container-${stepNum}`).style.display = 'none';
+            const submittedDiv = document.getElementById(`debate-submitted-${stepNum}`);
+            submittedDiv.style.display = 'block';
+            const now = new Date().toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' });
+            submittedDiv.innerHTML = `✅ <b>Resposta consensuada de l'equip [${now}]:</b> <i>«${answer}»</i>`;
+
+            if (stepNum === 1) {
+                document.getElementById('debate-card-2').style.display = 'block';
+            } else if (stepNum === 2) {
+                document.getElementById('debate-card-3').style.display = 'block';
+            } else if (stepNum === 3) {
+                // Després de la Pregunta 3, desbloquejar directament la Fase 3!
+                const p3 = document.getElementById('phase3-card');
+                p3.style.display = 'block';
+                initCodeMirrorEditor2();
+                updatePhase3Plots();
+                p3.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Commutador de la Pista d'Orientació Fenomenològica (DUA)
+        function toggleDebateHint(stepNum) {
+            const hintBox = document.getElementById(`debate-hint-${stepNum}`);
+            const btnHint = document.getElementById(`btn-hint-${stepNum}`);
+            if (!hintBox) return;
+            const isHidden = (hintBox.style.display === 'none' || !hintBox.style.display);
+            if (isHidden) {
+                hintBox.style.display = 'block';
+                if (btnHint) btnHint.innerHTML = "<span>💡</span> Amagar la Pista d'Orientació";
+                if (window.MathJax && MathJax.typesetPromise) {
+                    MathJax.typesetPromise([hintBox]);
+                }
+            } else {
+                hintBox.style.display = 'none';
+                if (btnHint) btnHint.innerHTML = "<span>💡</span> Pista d'Orientació: Penseu en la vida quotidiana (anar en bicicleta o en moto)";
+            }
+        }
+
+        // Targetes de Depuració d'Errors Formatives en Valencià (Caixa Blanca - DUA / Annex III)
+        function formatPythonError(errStr) {
+            let errorType = "PythonError";
+            let details = errStr;
+
+            if (errStr.includes("SyntaxError")) errorType = "SyntaxError";
+            else if (errStr.includes("NameError")) errorType = "NameError";
+            else if (errStr.includes("TypeError")) errorType = "TypeError";
+            else if (errStr.includes("ZeroDivisionError")) errorType = "ZeroDivisionError";
+            else if (errStr.includes("IndexError")) errorType = "IndexError";
+
+            const cards = {
+                "SyntaxError": {
+                    title: "🌟 TARGETA DE DEPURACIÓ: SyntaxError (Error d'ortografia del codi)",
+                    desc: "<b>💡 Què ens diu l'ordinador?:</b> Que no s'ha pogut interpretar aquesta línia de codi perquè hi ha alguna errada en la seua «escriptura» o estructura gramatical.",
+                    hints: [
+                        "<b>Tens algun parèntesi, clau o cometa sense tancar?</b> (Exemple comú: <code>symbols('x'</code> sense el <code>)</code> final). Recompteu-los detingudament un per un!",
+                        "<b>Has oblidat posar el símbol de multiplicació (*)?</b> En física escrivim <i>2t</i> o <i>kx</i>, però en programació cal escriure sempre <code>2 * t</code> o <code>k * x</code>.",
+                        "Mira cap on apunta la xicoteta fletxa (<code>^</code>) de la traça de Python; normalment la falta d'ortografia està just en eixe punt o en la línia immediatament anterior."
+                    ]
+                },
+                "NameError": {
+                    title: "🌟 TARGETA DE DEPURACIÓ: NameError (Variable o funció no declarada)",
+                    desc: "<b>💡 Què ens diu l'ordinador?:</b> S'està intentant fer servir una variable o funció amb un nom que el motor de Python/SymPy no reconeix.",
+                    hints: [
+                        "<b>Has declarat la variable abans d'usar-la?</b> Per utilitzar símbols algebraics (com <i>t</i>, <i>v_0</i> o <i>k_drag</i>) han d'haver estat definits amb <code>sp.symbols(...)</code>.",
+                        "<b>Comprova majúscules i minúscules:</b> Python és estricte (<i>case-sensitive</i>). No és el mateix <code>V_0</code> que <code>v_0</code>.",
+                        "<b>Revisa possibles errades de picatge (typos):</b> Comprova que hagis escrit bé funcions com <code>sp.cos</code>, <code>sp.sin</code> o <code>sp.tan</code>."
+                    ]
+                },
+                "TypeError": {
+                    title: "🌟 TARGETA DE DEPURACIÓ: TypeError (Conflicte de tipus d'objectes)",
+                    desc: "<b>💡 Què ens diu l'ordinador?:</b> S'estan intentant combinar o operar estructures de dades incompatibles entre si.",
+                    hints: [
+                        "<b>Estàs barrejant càlcul simbòlic amb numèric directe?</b> Revisa que no estiguis cridant una funció que espera nombres amb expressions algebraiques sense avaluar.",
+                        "Comprova que no s'estigui passant un nombre on s'espera una llista o viceversa."
+                    ]
+                },
+                "ZeroDivisionError": {
+                    title: "🌟 TARGETA DE DEPURACIÓ: ZeroDivisionError (Divisió per zero / Límit físic impossible)",
+                    desc: "<b>💡 Què ens diu l'ordinador?:</b> S'ha intentat dividir per zero en avaluar numèricament les equacions de la trajectòria.",
+                    hints: [
+                        "<b>Has assignat valor nul a la velocitat o a un paràmetre al denominador?</b> Si <i>v_0 = 0</i> o <i>cos(90°) = 0</i>, la fórmula divergeix.",
+                        "Comprova els valors dels paràmetres físics per assegurar que mantenen el sentit físic del llançament."
+                    ]
+                },
+                "IndexError": {
+                    title: "🌟 TARGETA DE DEPURACIÓ: IndexError (Posició o índex fora de rang)",
+                    desc: "<b>💡 Què ens diu l'ordinador?:</b> S'està intentant accedir a una posició d'una llista o vector que no existeix.",
+                    hints: [
+                        "Recordeu que en Python els índexs comencen en <code>0</code>.",
+                        "Comproveu que la llista tingui suficients elements abans d'indexar-la."
+                    ]
+                }
+            };
+
+            const card = cards[errorType] || {
+                title: `🌟 PISTA FORMATIVA: ${errorType}`,
+                desc: "L'ordinador ha trobat una dificultat durant l'execució del model de física computacional.",
+                hints: [
+                    "Reviseu col·laborativament la darrera línia modificada.",
+                    "Si us sentiu encallats, activeu el diàleg cooperatiu «Llapissos al centre» i demaneu l'andamiatge docent."
+                ]
+            };
+
+            const hintsHtml = card.hints.map(h => `<li>${h}</li>`).join('');
+
+            return `
+                <div class="error-card-ui">
+                    <div class="error-card-title">${card.title}</div>
+                    <div class="error-card-desc">${card.desc}</div>
+                    <ul class="error-card-list">${hintsHtml}</ul>
+                    <div style="font-size:0.8rem; color:#475569; margin-top:10px; font-style:italic;">
+                        🤝 "L'error és la millor pista per a comprendre la lògica del programa. Discutiu-ho en equip abans de tocar el teclat!"
+                    </div>
+                    <details style="margin-top:10px; font-size:0.75rem; color:#64748b; cursor:pointer;">
+                        <summary style="outline:none;">🔍 Veure traça tècnica de Python (opcional per al docent)</summary>
+                        <pre style="background:#fef2f2; color:#b91c1c; padding:8px; border-radius:6px; border:1px solid #fecaca; margin-top:6px; white-space:pre-wrap; max-height:80px; overflow-y:auto; font-family:monospace;">${details}</pre>
+                    </details>
+                </div>
+            `;
+        }
+
+        function executeModelFriccioCode() {
+            if (!pyodideInstance) return;
+            const code = editor2 ? editor2.getValue() : (document.getElementById("python-editor-phase2") ? document.getElementById("python-editor-phase2").value : "");
+            const resDiv2 = document.getElementById('sym-result-latex-2');
+            const titleDiv2 = document.getElementById('theory-step-title-2');
+            const capSpan2 = document.getElementById('sym-result-caption-2');
+            const btn = document.getElementById('btn-run-code2');
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = "<span>⏳</span> Calculant el model...";
+            }
+
+            try {
+                pyodideInstance.runPython(code);
+                
+                const axFromPy = pyodideInstance.globals.get('latex_ax') || '- k_{drag} v_{0} \\cos(\\alpha)';
+                const ayFromPy = pyodideInstance.globals.get('latex_ay') || '- g';
+                const yfregFromPy = pyodideInstance.globals.get('latex_corregit') || '';
+
+                if (titleDiv2) titleDiv2.innerText = "Equació i Acceleració Deduïdes (SymPy)";
+                if (capSpan2) capSpan2.style.display = "inline";
+
+                if (resDiv2) {
+                    resDiv2.style.fontStyle = "normal";
+                    resDiv2.style.color = "var(--text)";
+                    resDiv2.innerHTML = `
+                        <div style="font-size:0.88rem; line-height:1.5;">
+                            <div style="margin-bottom:8px;">
+                                <b>Acceleració horitzontal derivada:</b>\\[ a_x(t) = \\frac{dv_x}{dt} = ${axFromPy} \\]
+                                <span style="color:#d97706; font-size:0.8rem; font-weight:600;">(Frenada efectiva en sentit oposat a la marxa!)</span>
+                            </div>
+                            <div style="margin-bottom:8px;">
+                                <b>Acceleració vertical:</b>\\[ a_y(t) = \\frac{dv_y}{dt} = ${ayFromPy} \\]
+                                <span style="color:var(--text-muted); font-size:0.8rem;">(Aproximació d'ordre 1; al Pas 3.2 s'integra el fregament 2D complet)</span>
+                            </div>
+                            <div>
+                                <b>Nova equació de la trajectòria:</b>\\[ y(x) = ${yfregFromPy} \\]
+                            </div>
+                        </div>
+                    `;
+
+                    if (window.MathJax && MathJax.typesetPromise) {
+                        MathJax.typesetPromise([resDiv2]);
+                    }
+                }
+            } catch (err) {
+                if (titleDiv2) titleDiv2.innerText = "🛠️ Assistència de Depuració (DUA)";
+                if (capSpan2) capSpan2.style.display = "none";
+                if (resDiv2) {
+                    resDiv2.style.fontStyle = "normal";
+                    resDiv2.innerHTML = formatPythonError(String(err));
+                }
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = "<span>▶</span> Executa el codi";
+                }
+            }
+        }
+
+        // Llista de paraules clau i funcions de Python / SymPy / NumPy per a l'autocompletat tipus Jupyter
+        const PYTHON_JUPYTER_KEYWORDS = [
+            "sp.symbols", "sp.solve", "sp.diff", "sp.integrate", "sp.Eq", "sp.sin", "sp.cos", "sp.tan",
+            "sp.sqrt", "sp.exp", "sp.log", "sp.pi", "sp.Function", "sp.dsolve", "sp.Matrix",
+            "np.linspace", "np.array", "np.zeros", "np.arange", "np.sin", "np.cos", "np.pi", "np.sqrt",
+            "odeint", "solve_ivp", "curve_fit", "plt.plot", "plt.show", "plt.xlabel", "plt.ylabel",
+            "def ", "return ", "import ", "from ", "as ", "for ", "in ", "if ", "elif ", "else ",
+            "print(", "range(", "len(", "float(", "int(", "str("
+        ];
+
+        function pythonCustomHint(editor) {
+            const cur = editor.getCursor();
+            const token = editor.getTokenAt(cur);
+            const start = token.start;
+            const end = cur.ch;
+            const line = cur.line;
+            const currentWord = token.string.trim();
+
+            let list = [];
+            if (currentWord.length > 0) {
+                list = PYTHON_JUPYTER_KEYWORDS.filter(k => k.toLowerCase().startsWith(currentWord.toLowerCase()));
+            }
+
+            return {
+                list: list,
+                from: CodeMirror.Pos(line, start),
+                to: CodeMirror.Pos(line, end)
+            };
+        }
+
+        function handleJupyterTab(cm) {
+            if (cm.somethingSelected()) {
+                cm.indentSelection("add");
+                return;
+            }
+            const cur = cm.getCursor();
+            const line = cm.getLine(cur.line);
+            const before = line.slice(0, cur.ch);
+
+            // Si està al principi de la línia o després d'espais, sagna 4 espais
+            if (/^\s*$/.test(before)) {
+                cm.replaceSelection("    ", "end");
+            } else {
+                // Si està escrivint codi, dispara l'autocompletat tipus Jupyter
+                cm.showHint({
+                    hint: pythonCustomHint,
+                    completeSingle: false
+                });
+                // Si no hi ha coincidència, fallback a 4 espais
+                if (!document.querySelector(".CodeMirror-hints")) {
+                    cm.replaceSelection("    ", "end");
+                }
+            }
+        }
+
+        let currentTheme1 = "default";
+        let currentTheme2 = "default";
+
+        function toggleEditorTheme(editorNum) {
+            if (editorNum === 1 && editor1) {
+                const container = document.getElementById('code-container-1');
+                const icon = document.getElementById('theme-icon-1');
+                const text = document.getElementById('theme-text-1');
+                if (currentTheme1 === "default") {
+                    editor1.setOption("theme", "dracula");
+                    container.classList.add('theme-dark');
+                    currentTheme1 = "dracula";
+                    icon.innerText = "☀️";
+                    text.innerText = "Mode Clar";
+                } else {
+                    editor1.setOption("theme", "default");
+                    container.classList.remove('theme-dark');
+                    currentTheme1 = "default";
+                    icon.innerText = "🌙";
+                    text.innerText = "Mode Fosc";
+                }
+            } else if (editorNum === 2 && editor2) {
+                const container = document.getElementById('code-container-2');
+                const icon = document.getElementById('theme-icon-2');
+                const text = document.getElementById('theme-text-2');
+                if (currentTheme2 === "default") {
+                    editor2.setOption("theme", "dracula");
+                    container.classList.add('theme-dark');
+                    currentTheme2 = "dracula";
+                    icon.innerText = "☀️";
+                    text.innerText = "Mode Clar";
+                } else {
+                    editor2.setOption("theme", "default");
+                    container.classList.remove('theme-dark');
+                    currentTheme2 = "default";
+                    icon.innerText = "🌙";
+                    text.innerText = "Mode Fosc";
+                }
+            }
+        }
+
+        function initCodeMirrorEditor1() {
+            const textarea = document.getElementById("python-editor");
+            if (!textarea) return;
+            editor1 = CodeMirror.fromTextArea(textarea, {
+                mode: "python",
+                theme: "default",
+                lineNumbers: true,
+                indentUnit: 4,
+                tabSize: 4,
+                indentWithTabs: false,
+                matchBrackets: true,
+                extraKeys: {
+                    "Tab": handleJupyterTab,
+                    "Shift-Tab": function(cm) { cm.indentSelection("subtract"); },
+                    "Ctrl-Space": function(cm) { cm.showHint({ hint: pythonCustomHint, completeSingle: false }); }
+                }
+            });
+            setTimeout(() => { editor1.refresh(); }, 200);
+        }
+
+        function initCodeMirrorEditor2() {
+            if (editor2) {
+                editor2.refresh();
+                return;
+            }
+            const textarea = document.getElementById("python-editor-phase2");
+            if (!textarea) return;
+            editor2 = CodeMirror.fromTextArea(textarea, {
+                mode: "python",
+                theme: "default",
+                lineNumbers: true,
+                indentUnit: 4,
+                tabSize: 4,
+                indentWithTabs: false,
+                matchBrackets: true,
+                extraKeys: {
+                    "Tab": handleJupyterTab,
+                    "Shift-Tab": function(cm) { cm.indentSelection("subtract"); },
+                    "Ctrl-Space": function(cm) { cm.showHint({ hint: pythonCustomHint, completeSingle: false }); }
+                }
+            });
+            setTimeout(() => { editor2.refresh(); }, 200);
+        }
+
+        function toggleCodeView(num) {
+            const container = document.getElementById(`code-container-${num}`);
+            const btn = document.getElementById(`btn-toggle-code-${num}`);
+            if (!container) return;
+            const isHidden = (window.getComputedStyle(container).display === 'none');
+            if (isHidden) {
+                container.style.display = 'flex';
+                if (btn) btn.innerHTML = "<span>▲</span> Amaga el codi";
+                setTimeout(() => {
+                    if (num === 1) {
+                        if (!editor1) initCodeMirrorEditor1();
+                        else editor1.refresh();
+                    } else if (num === 2) {
+                        if (!editor2) initCodeMirrorEditor2();
+                        else editor2.refresh();
+                    }
+                }, 50);
+            } else {
+                container.style.display = 'none';
+                if (btn) btn.innerHTML = "<span>💻</span> Codi";
+            }
+        }
+
+        async function initWasmPyodide() {
+            try {
+                const statusDot = document.getElementById('status-dot');
+                const statusText = document.getElementById('status-text');
+                const consoleDiv = document.getElementById('console-output');
+
+                consoleDiv.innerText = "⏳ Descarregant entorn WebAssembly Pyodide...";
+                pyodideInstance = await loadPyodide();
+
+                consoleDiv.innerText += "\n📦 Carregant paquets científics SymPy, NumPy i SciPy...";
+                await pyodideInstance.loadPackage(['sympy', 'numpy', 'scipy']);
+
+                statusDot.classList.add('ready');
+                statusText.innerText = "Python (WASM) Actiu i Llest";
+                const btnRun = document.getElementById('btn-run');
+                if (btnRun) btnRun.disabled = false;
+
+                if (editor1) editor1.refresh();
+
+                // Execució automàtica en obrir el quadern per primera vegada
+                await executeUserCode();
+                try {
+                    executeModelFriccioCode();
+                } catch (e) {
+                    console.warn("Auto-execució model fricció inicial:", e);
+                }
+            } catch (err) {
+                document.getElementById('status-text').innerText = "Error en carregar Pyodide";
+                const resDiv = document.getElementById('sym-result-latex');
+                if (resDiv) resDiv.innerHTML = `<div style="color:var(--danger); font-size:0.85rem;">Error en inicialitzar Pyodide: ${err}</div>`;
+            }
+        }
+
+        async function executeUserCode() {
+            if (!pyodideInstance) return;
+            const code = editor1 ? editor1.getValue() : (document.getElementById('python-editor') ? document.getElementById('python-editor').value : '');
+            const btn = document.getElementById('btn-run');
+            const resDiv = document.getElementById('sym-result-latex');
+            const titleDiv = document.getElementById('theory-step-title');
+            const capSpan = document.getElementById('sym-result-caption');
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = "<span>⏳</span> Calculant l'equació...";
+            }
+
+            try {
+                pyodideInstance.runPython(`
+import sys
+import io
+sys.stdout = io.StringIO()
+`);
+                await pyodideInstance.runPythonAsync(code);
+
+                const latexFromPy = pyodideInstance.globals.get('latex_eq_simbolica');
+                if (latexFromPy) currentLatexSimbolica = latexFromPy;
+
+                // Execució amb èxit: Mostrem l'Equació de la trajectòria calculada en LaTeX
+                if (titleDiv) titleDiv.innerText = "Equació de la trajectòria calculada";
+                if (resDiv) {
+                    resDiv.style.fontStyle = "normal";
+                    resDiv.style.color = "var(--text)";
+                    resDiv.innerHTML = `\\[ y(x) = ${currentLatexSimbolica} \\]`;
+                }
+
+                if (capSpan) capSpan.style.display = "inline";
+
+                if (window.MathJax && MathJax.typesetPromise && resDiv) {
+                    MathJax.typesetPromise([resDiv]);
+                }
+
+                updatePhase1Plot();
+                if (trackerData) {
+                    updatePhase2Plots();
+                }
+            } catch (err) {
+                // En cas d'error en el codi de l'alumne: Mostrem la Targeta de Depuració Formativa
+                if (titleDiv) titleDiv.innerText = "🛠️ Assistència de Depuració (DUA)";
+                if (capSpan) capSpan.style.display = "none";
+                if (resDiv) {
+                    resDiv.style.fontStyle = "normal";
+                    resDiv.innerHTML = formatPythonError(String(err));
+                }
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = "<span>▶</span> Executa el codi";
+                }
+            }
+        }
+
+        function updatePhase1Plot() {
+            const alphaDeg = parseFloat(document.getElementById('slider-alpha-1').value);
+            const v0 = parseFloat(document.getElementById('slider-v0-1').value);
+            const g = parseFloat(document.getElementById('slider-g-1').value);
+
+            document.getElementById('val-alpha-1').innerText = alphaDeg + "°";
+            document.getElementById('val-v0-1').innerText = v0.toFixed(1) + " m/s";
+            document.getElementById('val-g-1').innerText = g + " m/s²";
+
+            const alphaRad = (alphaDeg * Math.PI) / 180.0;
+            const tVol = (2 * v0 * Math.sin(alphaRad)) / g;
+            const xMax = (Math.pow(v0, 2) * Math.sin(2 * alphaRad)) / g;
+            const yMax = (Math.pow(v0, 2) * Math.pow(Math.sin(alphaRad), 2)) / (2 * g);
+
+            const xs = [];
+            const N = 120;
+            for (let i = 0; i <= N; i++) {
+                const t = (i / N) * tVol;
+                xs.push(v0 * Math.cos(alphaRad) * t);
+            }
+
+            let ys = [];
+            let hasEvaluatedWithPyodide = false;
+
+            // Avaluació directa del model deduït per l'alumne a Pyodide (f_num)
+            if (window.pyodideInstance && pyodideInstance.globals && pyodideInstance.globals.get('f_num')) {
+                try {
+                    pyodideInstance.globals.set('_eval_xs', xs);
+                    pyodideInstance.globals.set('_eval_v0', v0);
+                    pyodideInstance.globals.set('_eval_alpha', alphaRad);
+                    pyodideInstance.globals.set('_eval_g', g);
+                    const pyRes = pyodideInstance.runPython(`
+                        import numpy as _np
+                        try:
+                            _arr_x = _np.array(_eval_xs, dtype=float)
+                            _calc_y = f_num(_arr_x, float(_eval_v0), float(_eval_alpha), float(_eval_g))
+                            if _np.isscalar(_calc_y):
+                                _out_ys = [float(_calc_y)] * len(_eval_xs)
+                            else:
+                                _out_ys = [float(val) if not _np.isnan(val) and not _np.isinf(val) else 0.0 for val in _calc_y]
+                        except Exception:
+                            _out_ys = None
+                        _out_ys
+                    `);
+                    if (pyRes) {
+                        ys = pyRes.toJs();
+                        pyRes.destroy();
+                        hasEvaluatedWithPyodide = true;
+                    }
+                } catch (err) {
+                    console.warn("Avís en avaluar f_num a Pyodide:", err);
+                }
+            }
+
+            if (!hasEvaluatedWithPyodide || ys.length === 0) {
+                ys = [];
+                for (let i = 0; i <= N; i++) {
+                    const t = (i / N) * tVol;
+                    ys.push(Math.max(0, v0 * Math.sin(alphaRad) * t - 0.5 * g * Math.pow(t, 2)));
+                }
+            }
+
+            let displayYMax = yMax;
+            if (hasEvaluatedWithPyodide && ys.length > 0) {
+                const computedMax = Math.max(...ys);
+                if (Number.isFinite(computedMax) && computedMax > 0) {
+                    displayYMax = computedMax;
+                }
+            }
+
+            document.getElementById('res-xmax-1').innerText = xMax.toFixed(2) + " m";
+            document.getElementById('res-ymax-1').innerText = displayYMax.toFixed(2) + " m";
+
+            const traces = [
+                {
+                    x: xs,
+                    y: ys,
+                    mode: 'lines',
+                    name: 'Model calculat',
+                    line: { color: '#2563eb', width: 3.5 },
+                    hovertemplate: 'x: %{x:.2f} m<br>y: %{y:.2f} m<extra></extra>'
+                },
+                {
+                    x: [0, xMax / 2, xMax],
+                    y: [0, displayYMax, 0],
+                    mode: 'markers+text',
+                    name: 'Punts Claus',
+                    text: ['(0, 0)', `h_màx = ${displayYMax.toFixed(1)} m`, `Abast = ${xMax.toFixed(1)} m`],
+                    textposition: ['bottom right', 'top center', 'bottom left'],
+                    textfont: { size: 11, color: '#1e293b' },
+                    marker: { size: [7, 11, 9], color: ['#1e293b', '#dc2626', '#16a34a'] },
+                    hoverinfo: 'skip',
+                    showlegend: false
+                }
+            ];
+
+            const layout = {
+                margin: { l: 50, r: 20, t: 20, b: 40 },
+                xaxis: { title: '<b>x (m)</b>', range: [-2, Math.max(xMax * 1.08, 10)], gridcolor: '#f1f5f9' },
+                yaxis: { title: '<b>y (m)</b>', range: [-1, Math.max(displayYMax * 1.25, 5)], gridcolor: '#f1f5f9' },
+                plot_bgcolor: '#ffffff',
+                paper_bgcolor: '#ffffff'
+            };
+
+            Plotly.react('plot-phase-1', traces, layout, { responsive: true, displayModeBar: false });
+        }
+
+        function simulateRayleigh(v0, alphaDeg, g, kDrag) {
+            const alphaRad = (alphaDeg * Math.PI) / 180.0;
+            let vx = v0 * Math.cos(alphaRad);
+            let vy = v0 * Math.sin(alphaRad);
+            let x = 0.0;
+            let y = 0.0;
+            const dt = 0.005;
+            const xs = [0.0];
+            const ys = [0.0];
+
+            while (y >= 0.0 && x < 100.0 && xs.length < 3000) {
+                const v = Math.sqrt(vx * vx + vy * vy);
+                const ax = -kDrag * v * vx;
+                const ay = -g - kDrag * v * vy;
+
+                x += vx * dt;
+                y += vy * dt;
+                vx += ax * dt;
+                vy += ay * dt;
+
+                if (y >= 0.0) {
+                    xs.push(x);
+                    ys.push(y);
+                }
+            }
+            return { xs, ys, xMax: xs[xs.length - 1] };
+        }
+
+        function updatePhase2Plots() {
+            const alphaDeg = 55.0;
+            const v0 = 22.0;
+            const g = 9.81;
+            const alphaRad = (alphaDeg * Math.PI) / 180.0;
+
+            const tVolIdeal = (2 * v0 * Math.sin(alphaRad)) / g;
+            const xMaxIdeal = (Math.pow(v0, 2) * Math.sin(2 * alphaRad)) / g;
+            const xsIdeal = [];
+            for (let i = 0; i <= 100; i++) {
+                const t = (i / 100) * tVolIdeal;
+                xsIdeal.push(v0 * Math.cos(alphaRad) * t);
+            }
+
+            let ysIdeal = [];
+            let phase2PyEvaluated = false;
+            if (window.pyodideInstance && pyodideInstance.globals && pyodideInstance.globals.get('f_num')) {
+                try {
+                    pyodideInstance.globals.set('_eval_xs2', xsIdeal);
+                    pyodideInstance.globals.set('_eval_v0_2', v0);
+                    pyodideInstance.globals.set('_eval_alpha_2', alphaRad);
+                    pyodideInstance.globals.set('_eval_g_2', g);
+                    const pyRes2 = pyodideInstance.runPython(`
+                        import numpy as _np
+                        try:
+                            _arr_x2 = _np.array(_eval_xs2, dtype=float)
+                            _calc_y2 = f_num(_arr_x2, float(_eval_v0_2), float(_eval_alpha_2), float(_eval_g_2))
+                            if _np.isscalar(_calc_y2):
+                                _out_ys2 = [float(_calc_y2)] * len(_eval_xs2)
+                            else:
+                                _out_ys2 = [float(val) if not _np.isnan(val) and not _np.isinf(val) else 0.0 for val in _calc_y2]
+                        except Exception:
+                            _out_ys2 = None
+                        _out_ys2
+                    `);
+                    if (pyRes2) {
+                        ysIdeal = pyRes2.toJs();
+                        pyRes2.destroy();
+                        phase2PyEvaluated = true;
+                    }
+                } catch (e) {}
+            }
+            if (!phase2PyEvaluated || ysIdeal.length === 0) {
+                ysIdeal = [];
+                for (let i = 0; i <= 100; i++) {
+                    const t = (i / 100) * tVolIdeal;
+                    ysIdeal.push(Math.max(0, v0 * Math.sin(alphaRad) * t - 0.5 * g * Math.pow(t, 2)));
+                }
+            }
+
+            document.getElementById('res-xmax-ideal-2').innerText = xMaxIdeal.toFixed(2) + " m";
+
+            // Gràfica 2 de Conflicte Pur
+            const tracesConflict = [];
+            tracesConflict.push({
+                x: xsIdeal,
+                y: ysIdeal,
+                mode: 'lines',
+                name: 'Model calculat (Sense Fricció)',
+                line: { color: '#2563eb', width: 3.5, dash: 'dash' }
+            });
+
+            if (trackerData && trackerData.x.length > 0) {
+                const xExpMax = trackerData.x[trackerData.x.length - 1];
+                document.getElementById('res-xreal-2').innerText = xExpMax.toFixed(2) + " m";
+                const errRel = Math.abs((xMaxIdeal - xExpMax) / xExpMax) * 100;
+                document.getElementById('res-error-2').innerText = `${errRel.toFixed(1)}% (Discrepància!)`;
+
+                tracesConflict.push({
+                    x: trackerData.x,
+                    y: trackerData.y,
+                    mode: 'markers',
+                    name: 'Dades Reals Tracker (Pati Escolar)',
+                    marker: { size: 7.5, color: '#d97706', symbol: 'circle-open', line: { width: 2, color: '#d97706' } }
+                });
+            }
+
+            const layout2A = {
+                margin: { l: 50, r: 20, t: 20, b: 40 },
+                xaxis: { title: '<b>x (m)</b>', range: [-1, 52], gridcolor: '#f1f5f9' },
+                yaxis: { title: '<b>y (m)</b>', range: [-0.5, 20], gridcolor: '#f1f5f9' },
+                legend: { x: 0.02, y: 0.98, bgcolor: 'rgba(255,255,255,0.85)' },
+                plot_bgcolor: '#ffffff',
+                paper_bgcolor: '#ffffff'
+            };
+            Plotly.react('plot-phase-2-conflict', tracesConflict, layout2A, { responsive: true, staticPlot: false, displayModeBar: false });
+        }
+
+        function updatePhase3Plots() {
+            const alphaDeg = 55.0;
+            const v0 = 22.0;
+            const g = 9.81;
+
+            // 1. Gràfica Dinàmica de Fricció de Rayleigh (Pas 3.1)
+            const kDrag = parseFloat(document.getElementById('slider-drag-3').value);
+            document.getElementById('val-drag-3').innerText = kDrag.toFixed(3);
+
+            const sim = simulateRayleigh(v0, alphaDeg, g, kDrag);
+            document.getElementById('res-xmax-friction-3').innerText = sim.xMax.toFixed(2) + " m";
+
+            if (trackerData && trackerData.x.length > 0) {
+                const xExpMax = trackerData.x[trackerData.x.length - 1];
+                const errFricRel = Math.abs((sim.xMax - xExpMax) / xExpMax) * 100;
+                document.getElementById('res-error-friction-3').innerText = `${errFricRel.toFixed(1)}%`;
+                document.getElementById('res-error-friction-3').style.color = errFricRel < 5 ? 'var(--success)' : 'var(--danger)';
+            }
+
+            const alphaRad = (alphaDeg * Math.PI) / 180.0;
+            const tVolIdeal = (2 * v0 * Math.sin(alphaRad)) / g;
+            const xsIdeal = [];
+            let ysIdeal = [];
+            for (let i = 0; i <= 100; i++) {
+                const t = (i / 100) * tVolIdeal;
+                xsIdeal.push(v0 * Math.cos(alphaRad) * t);
+            }
+
+            let phase3PyEvaluated = false;
+            if (window.pyodideInstance && pyodideInstance.globals && pyodideInstance.globals.get('f_num')) {
+                try {
+                    pyodideInstance.globals.set('_eval_xs3', xsIdeal);
+                    pyodideInstance.globals.set('_eval_v0_3', v0);
+                    pyodideInstance.globals.set('_eval_alpha_3', alphaRad);
+                    pyodideInstance.globals.set('_eval_g_3', g);
+                    const pyRes3 = pyodideInstance.runPython(`
+                        import numpy as _np
+                        try:
+                            _arr_x3 = _np.array(_eval_xs3, dtype=float)
+                            _calc_y3 = f_num(_arr_x3, float(_eval_v0_3), float(_eval_alpha_3), float(_eval_g_3))
+                            if _np.isscalar(_calc_y3):
+                                _out_ys3 = [float(_calc_y3)] * len(_eval_xs3)
+                            else:
+                                _out_ys3 = [float(val) if not _np.isnan(val) and not _np.isinf(val) else 0.0 for val in _calc_y3]
+                        except Exception:
+                            _out_ys3 = None
+                        _out_ys3
+                    `);
+                    if (pyRes3) {
+                        ysIdeal = pyRes3.toJs();
+                        pyRes3.destroy();
+                        phase3PyEvaluated = true;
+                    }
+                } catch (e) {}
+            }
+            if (!phase3PyEvaluated || ysIdeal.length === 0) {
+                ysIdeal = [];
+                for (let i = 0; i <= 100; i++) {
+                    const t = (i / 100) * tVolIdeal;
+                    ysIdeal.push(Math.max(0, v0 * Math.sin(alphaRad) * t - 0.5 * g * Math.pow(t, 2)));
+                }
+            }
+
+            const tracesDynamic = [
+                {
+                    x: xsIdeal,
+                    y: ysIdeal,
+                    mode: 'lines',
+                    name: 'Model Ideal Galileu (Sense Fricció)',
+                    line: { color: '#2563eb', width: 2.5, dash: 'dash' }
+                },
+                {
+                    x: sim.xs,
+                    y: sim.ys,
+                    mode: 'lines',
+                    name: `Model Dinàmic Modificat (k=${kDrag.toFixed(3)})`,
+                    line: { color: '#7c3aed', width: 3.5 }
+                }
+            ];
+
+            if (trackerData && trackerData.x.length > 0) {
+                tracesDynamic.push({
+                    x: trackerData.x,
+                    y: trackerData.y,
+                    mode: 'markers',
+                    name: 'Dades Reals Tracker (Pati)',
+                    marker: { size: 7.5, color: '#d97706', symbol: 'circle-open', line: { width: 2, color: '#d97706' } }
+                });
+            }
+
+            const layout3A = {
+                margin: { l: 50, r: 20, t: 20, b: 40 },
+                xaxis: { title: '<b>x (m)</b>', range: [-1, 52], gridcolor: '#f1f5f9' },
+                yaxis: { title: '<b>y (m)</b>', range: [-0.5, 20], gridcolor: '#f1f5f9' },
+                legend: { x: 0.02, y: 0.98, bgcolor: 'rgba(255,255,255,0.85)' },
+                plot_bgcolor: '#ffffff',
+                paper_bgcolor: '#ffffff'
+            };
+            Plotly.react('plot-phase-3-dynamic', tracesDynamic, layout3A, { responsive: true, displayModeBar: false });
+
+            // 2. Gràfica 3 de Síntesi Global
+            updatePhase3Plot();
+        }
+
+        async function runCurveFitWasm() {
+            if (!pyodideInstance || !trackerData || trackerData.x.length === 0) return;
+            const btn = document.getElementById('btn-run-fit');
+            btn.disabled = true;
+            btn.innerHTML = "<span>⏳</span> SciPy Optimitzant...";
+
+            try {
+                const alphaDeg = 55.0;
+                const g = 9.81;
+                const alphaRad = (alphaDeg * Math.PI) / 180.0;
+
+                pyodideInstance.globals.set("exp_x", pyodideInstance.toPy(trackerData.x));
+                pyodideInstance.globals.set("exp_y", pyodideInstance.toPy(trackerData.y));
+
+                const fitPyCode = `
+import numpy as np
+from scipy.optimize import curve_fit
+
+x_data = np.array(exp_x)
+y_data = np.array(exp_y)
+
+def model_fit(x, v0_val, k_val):
+    return x * np.tan(${alphaRad}) - (${g} * x**2) / (2 * v0_val**2 * np.cos(${alphaRad})**2) * (1.0 + k_val * x)
+
+popt, pcov = curve_fit(model_fit, x_data, y_data, p0=[22.0, 0.02], bounds=([10.0, 0.0], [40.0, 0.2]), maxfev=4000)
+v0_opt = float(popt[0])
+k_opt = float(popt[1])
+
+inc_v0 = float(np.sqrt(np.diag(pcov))[0]) if pcov is not None else 0.1
+inc_k = float(np.sqrt(np.diag(pcov))[1]) if pcov is not None else 0.001
+
+x_dense = np.linspace(0, 30, 250)
+y_dense = model_fit(x_dense, v0_opt, k_opt)
+val = y_dense >= 0
+x_fit_res = x_dense[val].tolist()
+y_fit_res = y_dense[val].tolist()
+
+v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
+`;
+                const fitRes = pyodideInstance.runPython(fitPyCode);
+                const v0Opt = fitRes.get(0);
+                const kOpt = fitRes.get(1);
+                const incV0 = fitRes.get(2);
+                const incK = fitRes.get(3);
+                const xFit = fitRes.get(4).toJs();
+                const yFit = fitRes.get(5).toJs();
+
+                fittedResult = {
+                    x: xFit,
+                    y: yFit,
+                    v0: v0Opt,
+                    k: kOpt
+                };
+
+                const slider3 = document.getElementById('slider-drag-3');
+                if (slider3) {
+                    slider3.value = kOpt.toFixed(3);
+                    updatePhase3Plots();
+                }
+
+                const xExpMax = trackerData.x[trackerData.x.length - 1];
+                const xFitMax = xFit[xFit.length - 1];
+                const errResidual = Math.abs((xFitMax - xExpMax) / xExpMax) * 100;
+
+                document.getElementById('fit-summary-text').innerHTML = `
+                    • Velocitat real d'eixida: <b>v_0 = ${v0Opt.toFixed(2)} ± ${incV0.toFixed(2)} m/s</b><br>
+                    • Coeficient de fricció òptim: <b>k_drag = ${kOpt.toFixed(4)} ± ${incK.toFixed(4)}</b><br>
+                    • Discrepància residual minimitzada: <b style="color:var(--success); font-size:1.05rem;">${errResidual.toFixed(1)}%</b> (Ajust mil·limètric!)
+                `;
+
+                const fitEqDiv = document.getElementById('fit-dynamic-eq');
+                fitEqDiv.innerHTML = `\\[ y(x) = x \\tan(55^\\circ) - \\frac{9.81 x^2}{2 \\cdot (${v0Opt.toFixed(1)})^2 \\cos^2(55^\\circ)} \\cdot (1 + ${kOpt.toFixed(4)} x) \\]`;
+                if (window.MathJax && MathJax.typesetPromise) {
+                    MathJax.typesetPromise([fitEqDiv]);
+                }
+
+                updatePhase3Plot();
+
+            } catch (err) {
+                alert("Error en l'ajust de SciPy: " + err);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = "<span>🎯</span> Executar Ajust Òptim amb Curve_fit (SciPy WASM)";
+            }
+        }
+
+        function updatePhase3Plot() {
+            const alphaDeg = 55.0;
+            const v0Ideal = 22.0;
+            const g = 9.81;
+            const alphaRad = (alphaDeg * Math.PI) / 180.0;
+
+            const tVolIdeal = (2 * v0Ideal * Math.sin(alphaRad)) / g;
+            const xsIdeal = [];
+            const ysIdeal = [];
+            for (let i = 0; i <= 100; i++) {
+                const t = (i / 100) * tVolIdeal;
+                xsIdeal.push(v0Ideal * Math.cos(alphaRad) * t);
+                ysIdeal.push(Math.max(0, v0Ideal * Math.sin(alphaRad) * t - 0.5 * g * Math.pow(t, 2)));
+            }
+
+            const traces = [];
+
+            traces.push({
+                x: xsIdeal,
+                y: ysIdeal,
+                mode: 'lines',
+                name: '1. Model Ideal Galileu (Sense Fricció)',
+                line: { color: '#2563eb', width: 3, dash: 'dash' }
+            });
+
+            if (trackerData && trackerData.x.length > 0) {
+                traces.push({
+                    x: trackerData.x,
+                    y: trackerData.y,
+                    mode: 'markers',
+                    name: '2. Dades Reals Tracker (Pati Escolar)',
+                    marker: { size: 7.5, color: '#d97706', symbol: 'circle-open', line: { width: 2, color: '#d97706' } }
+                });
+            }
+
+            if (fittedResult && fittedResult.x.length > 0) {
+                traces.push({
+                    x: fittedResult.x,
+                    y: fittedResult.y,
+                    mode: 'lines',
+                    name: '3. Model Fregament Ajustat (SciPy Curve_fit)',
+                    line: { color: '#16a34a', width: 4 }
+                });
+            }
+
+            const layout = {
+                margin: { l: 55, r: 25, t: 25, b: 45 },
+                xaxis: { title: '<b>Abast horitzontal x (m)</b>', range: [-2, 52], gridcolor: '#f1f5f9' },
+                yaxis: { title: '<b>Altura vertical y (m)</b>', range: [-1, 20], gridcolor: '#f1f5f9' },
+                legend: { x: 0.02, y: 0.98, bgcolor: 'rgba(255,255,255,0.9)', bordercolor: '#e2e8f0', borderwidth: 1 },
+                plot_bgcolor: '#ffffff',
+                paper_bgcolor: '#ffffff'
+            };
+
+            Plotly.react('plot-phase-3', traces, layout, { responsive: true, staticPlot: false, displayModeBar: true });
+        }
+
+        document.getElementById('slider-alpha-1').addEventListener('input', updatePhase1Plot);
+        document.getElementById('slider-v0-1').addEventListener('input', updatePhase1Plot);
+        document.getElementById('slider-g-1').addEventListener('input', updatePhase1Plot);
+        document.getElementById('slider-drag-3').addEventListener('input', updatePhase3Plots);
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initCodeMirrorEditor1();
+            initCodeMirrorEditor2();
+            initWasmPyodide();
+        });
+    </script>
+</body>
+</html>

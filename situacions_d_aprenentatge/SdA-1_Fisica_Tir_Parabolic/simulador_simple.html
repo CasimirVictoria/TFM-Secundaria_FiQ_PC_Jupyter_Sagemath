@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelització Computacional i Simulació del Tir Parabòlic - Didàctica F&Q</title>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <!-- MathJax 3 per a LaTeX -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Highlight.js per a ressaltat de sintaxi de codi Python / SageMath -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 24px 16px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            padding: 32px;
+            border: 1px solid var(--border);
+        }
+
+        header {
+            margin-bottom: 28px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 20px;
+        }
+
+        .badge-header {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            margin: 0 0 8px 0;
+            color: var(--primary);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Secció 1: Marc Metodològic de Caixa Blanca */
+        .intro-callout {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+            border-radius: 0 10px 10px 0;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+            font-size: 0.94rem;
+            line-height: 1.6;
+            border-top: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            color: var(--text);
+            font-weight: 700;
+            margin: 32px 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Columnes de la fase 1 (Codi Simbòlic + Deducció Matemàtica) */
+        .symbolic-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 900px) {
+            .symbolic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-card {
+            background: #282c34;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .code-header {
+            background: #21252b;
+            color: #abb2bf;
+            padding: 10px 16px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #181a1f;
+        }
+
+        pre {
+            margin: 0;
+            padding: 16px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+
+        .theory-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .theory-step {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 0.9rem;
+        }
+
+        .theory-step-num {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+        }
+
+        /* Secció 2: Simulació Interactiva */
+        .sim-container {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            background: #fafafa;
+        }
+
+        .sim-grid {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 880px) {
+            .sim-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .controls-panel {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .control-val {
+            color: var(--primary);
+            font-family: monospace;
+            font-size: 0.95rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .metric-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .metric-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 10px 6px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .metric-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 1.18rem;
+            font-weight: 700;
+        }
+
+        .formula-box {
+            background: var(--primary-light);
+            border: 1px solid #bfdbfe;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .plot-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .plot-dynamic-header {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 8px 14px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text);
+            text-align: center;
+        }
+
+        #plot-container {
+            width: 100%;
+            height: 440px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="badge-header">Modelització Didàctica LOMLOE • 1r de Batxillerat</span>
+            <h1>🚀 Del Càlcul Simbòlic (SageMath) a la Simulació Interactiva</h1>
+            <p class="subtitle">Entorn integrat d'aprenentatge de <b>Caixa Blanca</b>: formulació analítica, resolució simbòlica i exploració dinàmica en temps real.</p>
+        </header>
+
+        <!-- Marc didàctic -->
+        <div class="intro-callout">
+            💡 <b>Fonamentació Pedagògica:</b> En compte de memoritzar fórmules opaques o emprar simuladors de <i>caixa negra</i>, l'alumnat utilitza <b>SageMath/Python</b> per deduir algebraicament l'equació de la trajectòria \(y(x)\) i l'abast màxim \(X_{\text{màx}}\). Posteriorment, experimenta amb el model gràfic interactiu per comprovar les seues prediccions.
+        </div>
+
+        <!-- FASE 1: DEDUCIÓ SIMBÒLICA AMB SAGEMATH -->
+        <div class="section-title">
+            <span>🐍 Fase 1: Deducció Simbòlica de la Trajectòria (SageMath / Python)</span>
+        </div>
+
+        <div class="symbolic-grid">
+            <!-- Bloc de codi SageMath -->
+            <div class="code-card">
+                <div class="code-header">
+                    <span>Quadern Jupyter • Nucli SageMath 10.x</span>
+                    <span style="color:#61afef;">sagemath_trajectoria.py</span>
+                </div>
+                <pre><code class="language-python"># 1. Definició de variables simbòliques
+var('t, x, y, v_0, alpha, g')
+
+# 2. Equacions paramètriques de moviment
+eq_x = x == v_0 * cos(alpha) * t
+eq_y = y == v_0 * sin(alpha) * t - (1/2) * g * t^2
+
+# 3. Aïllar el temps simbòlicament a partir de x(t)
+sol_t = solve(eq_x, t)[0].rhs()   # t = x / (v_0 * cos(alpha))
+
+# 4. Substitució de t(x) en y(t) -> Equació de la Trajectòria
+y_trajectoria = eq_y.rhs().subs(t=sol_t).simplify_trig()
+
+# 5. Càlcul de l'Abast Màxim X_max quan y(x) = 0
+sols_x = solve(y_trajectoria == 0, x)
+X_max = sols_x[1].rhs().simplify_trig()  # X_max = (v_0^2 * sin(2*alpha)) / g
+
+# 6. Càlcul de l'Altura Màxima h_max (dy/dx = 0)
+dy_dx = diff(y_trajectoria, x)
+x_hmax = solve(dy_dx == 0, x)[0].rhs()
+h_max = y_trajectoria.subs(x=x_hmax).simplify_trig()</code></pre>
+            </div>
+
+            <!-- Explicació matemàtica pas a pas -->
+            <div class="theory-card">
+                <div class="theory-step">
+                    <div class="theory-step-num">Pas 1 • Aïllar el Paràmetre Temps</div>
+                    \[ t(x) = \frac{x}{v_0 \cos\alpha} \]
+                    <span style="font-size:0.82rem; color:var(--text-muted);">Aïllament algebraic exacte del temps a partir del moviment uniforme en l'eix horitzontal.</span>
+                </div>
+
+                <div class="theory-step">
+                    <div class="theory-step-num">Pas 2 • Equació de la Trajectòria</div>
+                    \[ y(x) = x \tan\alpha - \frac{g}{2 v_0^2 \cos^2\alpha} x^2 \]
+                    <span style="font-size:0.82rem; color:var(--text-muted);">Deducció de la funció parabòlica \(y = f(x)\) eliminant la dependència temporal.</span>
+                </div>
+
+                <div class="theory-step">
+                    <div class="theory-step-num">Pas 3 • Punts Singulars Deduïts</div>
+                    \[ h_{\text{màx}} = \frac{v_0^2 \sin^2\alpha}{2g}, \quad X_{\text{màx}} = \frac{v_0^2 \sin(2\alpha)}{g} \]
+                </div>
+            </div>
+        </div>
+
+        <!-- FASE 2: SIMULACIÓ I EXPLORACIÓ DINÀMICA -->
+        <div class="section-title">
+            <span>📊 Fase 2: Exploració Dinàmica i Validació del Model (Plotly.js)</span>
+        </div>
+
+        <div class="sim-container">
+            <div class="sim-grid">
+                <!-- Panell de Controls -->
+                <div class="controls-panel">
+                    <div class="control-group">
+                        <div class="control-header">
+                            <span>Angle de Llançament (\(\alpha\)):</span>
+                            <span class="control-val" id="val-alpha">55°</span>
+                        </div>
+                        <input type="range" id="slider-alpha" min="5" max="85" value="55" step="1">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-header">
+                            <span>Velocitat Inicial (\(v_0\)):</span>
+                            <span class="control-val" id="val-v0">27 m/s</span>
+                        </div>
+                        <input type="range" id="slider-v0" min="5" max="50" value="27" step="1">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-header">
+                            <span>Gravetat (\(g\)):</span>
+                            <span class="control-val" id="val-g">9.81 m/s²</span>
+                        </div>
+                        <input type="range" id="slider-g" min="1.6" max="25" value="9.81" step="0.1">
+                    </div>
+
+                    <!-- Mètriques en Temps Real -->
+                    <div class="metric-cards">
+                        <div class="metric-card">
+                            <div class="metric-title">Abast Màxim (\(X_{\text{màx}}\))</div>
+                            <div class="metric-value" id="res-xmax" style="color: var(--success);">70.01 m</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Altura Màxima (\(h_{\text{màx}}\))</div>
+                            <div class="metric-value" id="res-ymax" style="color: var(--danger);">24.96 m</div>
+                        </div>
+                        <div class="metric-card" style="grid-column: span 2;">
+                            <div class="metric-title">Temps de Vol (\(t_{\text{vol}}\))</div>
+                            <div class="metric-value" id="res-tvol" style="color: var(--primary);">4.51 s</div>
+                        </div>
+                    </div>
+
+                    <!-- Fórmula Dinàmica -->
+                    <div class="formula-box">
+                        <div style="font-weight: 600; margin-bottom: 4px; color: var(--primary);">📐 Equació de la trajectòria \(y(x)\):</div>
+                        <div id="formula-latex">
+                            \[ y(x) = x \tan(55^\circ) - \frac{9.81}{2 \cdot 27^2 \cos^2(55^\circ)} x^2 \]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gràfic Interactiu Plotly -->
+                <div class="plot-wrapper">
+                    <div class="plot-dynamic-header" id="plot-header-latex">
+                        Trajectòria per a: \(\alpha = 55^\circ\), \(v_0 = 27\text{ m/s}\), \(g = 9.81\text{ m/s}^2\)
+                    </div>
+                    <div id="plot-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        hljs.highlightAll();
+
+        function updateSimulation() {
+            const alphaDeg = parseFloat(document.getElementById('slider-alpha').value);
+            const v0 = parseFloat(document.getElementById('slider-v0').value);
+            const g = parseFloat(document.getElementById('slider-g').value);
+
+            document.getElementById('val-alpha').innerText = alphaDeg + "°";
+            document.getElementById('val-v0').innerText = v0 + " m/s";
+            document.getElementById('val-g').innerText = g + " m/s²";
+
+            const alphaRad = (alphaDeg * Math.PI) / 180.0;
+
+            const tVol = (2 * v0 * Math.sin(alphaRad)) / g;
+            const xMax = (Math.pow(v0, 2) * Math.sin(2 * alphaRad)) / g;
+            const yMax = (Math.pow(v0, 2) * Math.pow(Math.sin(alphaRad), 2)) / (2 * g);
+            const xVertex = xMax / 2;
+
+            document.getElementById('res-xmax').innerText = xMax.toFixed(2) + " m";
+            document.getElementById('res-ymax').innerText = yMax.toFixed(2) + " m";
+            document.getElementById('res-tvol').innerText = tVol.toFixed(2) + " s";
+
+            const headerDiv = document.getElementById('plot-header-latex');
+            headerDiv.innerHTML = `Trajectòria per a: \\(\\alpha = ${alphaDeg}^\\circ\\), \\(v_0 = ${v0}\\text{ m/s}\\), \\(g = ${g}\\text{ m/s}^2\\)`;
+
+            const formulaDiv = document.getElementById('formula-latex');
+            formulaDiv.innerHTML = `\\[ y(x) = x \\tan(${alphaDeg}^\\circ) - \\frac{${g}}{2 \\cdot ${v0}^2 \\cos^2(${alphaDeg}^\\circ)} x^2 \\]`;
+
+            if (window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise([headerDiv, formulaDiv]);
+            }
+
+            const N = 250;
+            const xVals = [];
+            const yVals = [];
+            for (let i = 0; i <= N; i++) {
+                const t = (i / N) * tVol;
+                const x = v0 * Math.cos(alphaRad) * t;
+                const y = Math.max(0, v0 * Math.sin(alphaRad) * t - 0.5 * g * Math.pow(t, 2));
+                xVals.push(x);
+                yVals.push(y);
+            }
+
+            const traceTrajectory = {
+                x: xVals,
+                y: yVals,
+                mode: 'lines',
+                name: 'Trajectòria y(x)',
+                line: { color: '#2563eb', width: 3.5 },
+                hovertemplate: '<b>x:</b> %{x:.2f} m<br><b>y:</b> %{y:.2f} m<extra></extra>'
+            };
+
+            const tracePoints = {
+                x: [0, xVertex, xMax],
+                y: [0, yMax, 0],
+                mode: 'markers+text',
+                name: 'Punts Claus',
+                text: ['(0, 0)', `h_màx = ${yMax.toFixed(1)} m`, `Abast = ${xMax.toFixed(1)} m`],
+                textposition: ['bottom right', 'top center', 'bottom left'],
+                textfont: { size: 12, color: '#1e293b', family: 'sans-serif' },
+                marker: {
+                    size: [8, 12, 10],
+                    color: ['#1e293b', '#dc2626', '#16a34a']
+                },
+                hoverinfo: 'skip'
+            };
+
+            const traceVertexGuides = {
+                x: [xVertex, xVertex, null, 0, xVertex],
+                y: [0, yMax, null, yMax, yMax],
+                mode: 'lines',
+                name: 'Cotes de h_màx',
+                line: { color: '#dc2626', width: 1.5, dash: 'dash' },
+                hoverinfo: 'skip',
+                showlegend: false
+            };
+
+            const layout = {
+                margin: { l: 55, r: 25, t: 25, b: 45 },
+                xaxis: {
+                    title: '<b>Abast horitzontal x (m)</b>',
+                    range: [-2, Math.max(xMax * 1.08, 10)],
+                    zeroline: true,
+                    gridcolor: '#f1f5f9'
+                },
+                yaxis: {
+                    title: '<b>Altura vertical y (m)</b>',
+                    range: [-1, Math.max(yMax * 1.25, 5)],
+                    zeroline: true,
+                    gridcolor: '#f1f5f9'
+                },
+                showlegend: false,
+                plot_bgcolor: '#ffffff',
+                paper_bgcolor: '#ffffff'
+            };
+
+            const config = {
+                responsive: true,
+                displayModeBar: true,
+                modeBarButtonsToRemove: ['lasso2d', 'select2d']
+            };
+
+            Plotly.react('plot-container', [traceTrajectory, traceVertexGuides, tracePoints], layout, config);
+        }
+
+        document.getElementById('slider-alpha').addEventListener('input', updateSimulation);
+        document.getElementById('slider-v0').addEventListener('input', updateSimulation);
+        document.getElementById('slider-g').addEventListener('input', updateSimulation);
+
+        window.addEventListener('load', () => {
+            updateSimulation();
+            if (window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise();
+            }
+        });
+    </script>
+</body>
+</html>

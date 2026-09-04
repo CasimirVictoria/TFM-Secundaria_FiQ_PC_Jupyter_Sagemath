@@ -1,0 +1,34 @@
+::: {.content-visible when-format="html"}
+> ### 🏛️ Dades Oficials del Treball de Final de Màster (UV)
+> - **Títol:**  Pensament computacional i modelització en física i química de batxillerat
+> - **Autor:**  Casimiro Victoria Castillo
+> - **Tutora del TFM:**  Paula Tuzón Marco
+> - **Titulació:**  Màster Universitari en Professor/a d'Educació Secundària (Especialitat Física i Química)
+> - **Departament:**  Departament de Didàctica de les Ciències Experimentals i Socials
+> - **Institució:**  Universitat de València
+> - **Curs Acadèmic:**  2025-2026
+:::
+
+# Resum {.unnumbered}
+
+Aquest Treball de Fi de Màster presenta una proposta d'innovació didàctica fonamentada en la integració del Pensament Computacional (PC) i la modelització científica en l'ensenyament de la Física a 1r de Batxillerat. Davant del desinterés cap a les ciències provocat per l'abús d'exercicis algorítmics mecànics de «llapis i paper», es proposa l'ús de quaderns interactius Jupyter amb el programari lliure de càlcul simbòlic SageMath. La computació simbòlica actua com a caixa blanca cognitiva que allibera l'alumnat de la sobrecàrrega algebraica rutinària i reorienta l'atenció cap a la interpretació conceptual, l'anàlisi de casos límit i la física del món real. La proposta es concreta en el disseny complet d'una única Situació d'Aprenentatge (SdA), basada en la progressió *Use-Modify-Create* i el cicle de modelització d'Hestenes, on l'alumnat modelitza el tir parabòlic en un medi real amb resistència aerodinàmica (fregament viscós i de Rayleigh). La intervenció s'alinea amb la LOMLOE i el Decret 108/2022 de la Comunitat Valenciana, integrant de manera transversal pautes del DUA, de l'aprenentatge cooperatiu formal (Programa CA/AC de Pere Pujolàs) i un suport afectiu programat davant dels missatges d'error de programació.
+
+**Paraules clau:** Pensament Computacional, SageMath, Didàctica de la Física, 1r de Batxillerat, LOMLOE.
+
+\newpage
+
+# Resumen {.unnumbered .unlisted}
+
+Este Trabajo de Fin de Máster presenta una propuesta de innovación didáctica fundamentada en la integración del Pensamiento Computacional (PC) y la modelización científica en la enseñanza de la Física en 1.º de Bachillerato. Ante el desinterés hacia las ciencias provocado por el abuso de ejercicios algorítmicos mecánicos de «lápiz y papel», se propone el uso de cuadernos interactivos Jupyter con el software libre de cálculo simbólico SageMath. La computación simbólica actúa como caja blanca cognitiva que libera al alumnado de la sobrecarga algebraica rutinaria y reorienta la atención hacia la interpretación conceptual, el análisis de casos límite y la física del mundo real. La propuesta se concreta en el diseño completo de una única Situación de Aprendizaje (SdA), basada en la progresión *Use-Modify-Create* y el ciclo de modelización de Hestenes, donde el alumnado modeliza el tiro parabólico en un medio real con resistencia aerodinámica (fricción viscosa y de Rayleigh). La intervención se alinea con la LOMLOE y el Decreto 108/2022 de la Comunidad Valenciana, integrando de manera transversal pautas del DUA, de aprendizaje cooperativo formal (Programa CA/AC de Pere Pujolàs) y un apoyo afectivo programado ante los mensajes de error de programación.
+
+**Palabras clave:** Pensamiento Computacional, SageMath, Didáctica de la Física, 1.º de Bachillerato, LOMLOE.
+
+\newpage
+
+# Abstract {.unnumbered .unlisted}
+
+This Master's Thesis presents a didactic innovation proposal grounded in the integration of Computational Thinking (CT) and scientific modeling in physics education for the 1st year of High School (*1.º de Bachillerato*). To address the lack of interest in science caused by the excessive use of routine "pencil and paper" algorithmic exercises, we propose using interactive Jupyter notebooks with the free symbolic computation software SageMath. Symbolic computation acts as a cognitive white box that relieves students of routine algebraic calculations, shifting focus toward conceptual interpretation, boundary-case analysis, and real-world physics. The proposal takes shape in the comprehensive design of a single, highly detailed, Learning Situation (*Situación de Aprendizaje - SdA*). This design is based on the *Use-Modify-Create* progression and Hestenes' modeling cycle, in which students model projectile motion in a real medium with aerodynamic drag (viscous and Rayleigh friction). The intervention aligns with the LOMLOE law and Decree 108/2022 of the Valencian Community, transversally integrating UDL guidelines, formal cooperative learning (Pere Pujolàs' CA/AC Program), and planned affective support to manage programming error messages.
+
+**Keywords:** Computational Thinking, SageMath, Physics Didactics, 1st year of High School, LOMLOE.
+
+\newpage

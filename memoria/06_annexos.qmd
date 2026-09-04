@@ -1,0 +1,246 @@
+# Annexos {#sec-annexos .unnumbered}
+
+## Annex I: Quadern Jupyter de física — cinemàtica i dinàmica amb SageMath {#sec-annex-fisica}
+
+Aquest annex reprodueix el codi font complet i comentat del quadern de treball desenvolupat per a la **Situació d'Aprenentatge 1 (1r de Batxillerat)**.
+
+```{sage}
+# ==============================================================================
+# PROJECTE COMPUTACIONAL DE FÍSICA: MODELITZACIÓ DE TIR PARABÒLIC REAL
+# Curs acadèmic: 2025-2026 | Recursos Educatius Oberts (REA CC0)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Fase d'USE i Descripció: Constants i Variables simbòliques
+# ------------------------------------------------------------------------------
+from scipy.constants import g as g_real
+import numpy as np
+
+# Declaració de variables simbòliques d'Hestenes (var())
+t = var('t')          # Variable independent de temps (s)
+v_0 = var('v_0')      # Velocitat de llançament inicial (m/s)
+alpha = var('alpha')  # Angle d'elevació inicial (rad)
+m = var('m')          # Massa de l'objecte (kg)
+g = var('g')          # Acceleració de la gravetat (m/s^2)
+b = var('b')          # Coeficient de fricció lineal de Stokes (kg/s)
+c = var('c')          # Coeficient de fricció quadràtic de Rayleigh (kg/m)
+
+# Assignació de constants oficials del NIST via scipy.constants
+g_NIST = g_real       # 9.80665 m/s^2
+show(f"Acceleració de la gravetat oficial (NIST): {g_NIST} m/s^2")
+
+# ------------------------------------------------------------------------------
+# 2. Fase de MODIFY: Resolució Simbòlica del Model Ideal (desolve())
+# ------------------------------------------------------------------------------
+# Model Ideal cinemàtic clàssic (sense fricció aerodinàmica)
+vx_ideal = v_0 * cos(alpha)
+vy_ideal = v_0 * sin(alpha) - g * t
+
+# Integració simbòlica de posicions
+x_ideal = integral(vx_ideal, t)
+y_ideal = integral(vy_ideal, t)
+
+print("Equacions de posició del model ideal de llibre de text:")
+show(f"x(t) = {x_ideal}")
+show(f"y(t) = {y_ideal}")
+
+# Càlcul analític de l'abast mitjançant solve()
+temps_vol = solve(y_ideal == 0, t)
+show(f"Temps de vol teòric resolt simbòlicament:")
+show(temps_vol)
+
+# ------------------------------------------------------------------------------
+# 3. Fase de CREATE: Integració Numèrica del Model de Rayleigh (desolve_odeint)
+# ------------------------------------------------------------------------------
+# Model quadràtic de fricció aerodinàmica realista per a pilotes reals
+def model_rayleigh(freg_c, massa, v0_val, alpha_val, t_array):
+    # Simula la trajectòria real d'un llançament amb fricció aerodinàmica quadràtica
+    # integrant numèricament les equacions diferencials mitjançant desolve_odeint.
+    g_val = 9.80665
+    k_drag = freg_c / massa
+    
+    # Condicions inicials vectorials
+    x0 = 0.0
+    y0 = 0.0
+    vx0 = v0_val * np.cos(alpha_val)
+    vy0 = v0_val * np.sin(alpha_val)
+    
+    # Equacions de canvi d'estat
+    def derivades(variables, temps):
+        rx, ry, vx, vy = variables
+        v_instantania = np.sqrt(vx**2 + vy**2)
+        # Forces de canvi de Newton
+        d_rx = vx
+        d_ry = vy
+        d_vx = -k_drag * v_instantania * vx
+        d_vy = -g_val - k_drag * v_instantania * vy
+        return [d_rx, d_ry, d_vx, d_vy]
+    
+    # Integració ultra-ràpida del sistema de Rayleigh
+    solucio = desolve_odeint(derivades, [x0, y0, vx0, vy0], t_array, 
+                            ivar=t, dvars=[var('rx'), var('ry'), var('vx'), var('vy')])
+    return solucio
+
+print("Modelització real de Rayleigh completada.")
+```
+
+--------------------------------------------------------------------------------
+
+## Annex II: Guia tècnica docent d'instal·lació i desplegament {#sec-annex-guia-docent}
+
+Aquesta guia ofereix les pautes pràctiques per al professorat de Física interessat a desplegar la proposta d'assaigs computacionals cinemàtics a les seues aules.
+
+### Opció 1: Desplegament al núvol amb CoCalc (Recomanada) {.unnumbered}
+
+1. **Creació del projecte docent:**
+   * Accedir a [cocalc.com](https://cocalc.com) i crear un compte gratuït de professor.
+   * Crear un nou projecte anomenat `Fisica_TFM_SageMath`.
+2. **Creació del curs i gestió d'alumnes:**
+   * Dins del projecte, crear un fitxer amb extensió `.course` (Gestor de Curs).
+   * Afegir les adreces de correu electrònic de l'alumnat de la classe. CoCalc crearà automàticament un projecte individual per a cada estudiant o equip cooperatiu.
+3. **Distribució i recollida automatitzada de quaderns:**
+   * Pujar els fitxers `.ipynb` de les SdA a la carpeta de tasques del professor.
+   * Prémer el botó *«Distribute to Students»*. En segons, tots els equips rebran la seua còpia editable.
+   * En finalitzar la sessió, prémer *«Collect from Students»* per tancar la recepció de l'assaig computacional de l'alumnat i procedir a l'avaluació formativa.
+
+### Opció 2: Desplegament local portable (sense connexió a internet) {.unnumbered}
+
+Per a centres amb restriccions d'ample de banda o aules sense accés estable a la xarxa:
+
+1. Descarregar la distribució lliure portable **WinPython** o la imatge Docker de **SageMath / JupyterLab**.
+2. Copiar la carpeta de l'aplicació en memòries USB (un llapis per cada equip de 4 alumnes).
+3. Executar directament l'arxiu `JupyterLab.exe` des del dispositiu USB sense requerir drets d'administrador ni instal·lació al disc dur de l'institut.
+
+## Anex III: Bastida socioemocional i targetes de depuració d'errors a SageMath/Jupyter {#sec-annex-targetes}
+
+Aquest annex presenta el disseny, el codi d'implementació i la metodologia d'integració de les targetes de depuració d'errors per a l'entorn de treball de l'alumnat. Aquesta eina, inspirada de forma directa en el programari experimental Error Explainer de Charles i Gwilliam (2023) [@Charles_2023], actua com una mediació de «caixa blanca» cognitiva i regulació de la dimensió afectiva [@Mellado_2014; @Hanc_2020].
+
+1. Metodologia d'Implementació i Integració Tecnològica
+
+Perquè les targetes es mostren de forma completament dinàmica i automatitzada en el propi intèrpret de Python/SageMath sobre el qual treballa l'alumnat, s'evita modificar el nucli de Python i es recorre a un ganxo (hook) o controlador d'excepcions personalitzat de Jupyter (set_custom_exc). Això permet interceptar qualsevol error que es produïsca durant l'execució de les cel·les de codi, mostrant primer el traceback original del sistema i, immediatament després, renderitzant una targeta didàctica en format HTML amb un disseny amable, empàtic i explicat en valencià.
+
+Per a la seua integració a l'aula, es desa el següent script sota el nom de suport_errors.py en el directori de treball dels equips. Per a activar-lo, l'alumnat només ha d'executar aquesta única línia en la primera cel·la de configuració del seu quadern de Jupyter:
+
+```python
+import suport_errors
+```
+
+2. Codi Font del Controlador de Suport (suport_errors.py)
+
+A continuació, es recull el codi font complet dissenyat en Python per a la bastida de l'alumnat:
+
+```python
+# suport_errors.py
+from IPython import get_ipython
+from IPython.display import display, HTML
+
+def custom_exception_handler(shell, etype, value, tb, tb_offset=None):
+    # 1. Ensenya el traceback d'error original de Python/SageMath
+    shell.showtraceback((etype, value, tb), tb_offset=tb_offset)
+
+    # 2. Diccionari d'explicacions i bastides formatius en valencià
+    targetes = {
+        "SyntaxError": """
+            <div style="border: 2px solid #2b5c8f; background-color: #f0f7fc; padding: 15px; border-radius: 8px; margin-top: 15px; font-family: sans-serif;">
+                <h4 style="color: #2b5c8f; margin-top: 0; font-size: 1.1em;">🌟 TARGETA DE DEPURACIÓ: SyntaxError (Error d'ortografia del codi)</h4>
+                <p style="color: #333; line-height: 1.5; margin-bottom: 8px;">
+                    <b>💡 Què ens diu l'ordinador?:</b> Que no s'ha pogut llegir aquesta línia de codi perquè hi ha alguna errada en la seua "escriptura" o estructura gramatical.
+                </p>
+                <ul style="color: #333; line-height: 1.4; padding-left: 20px;">
+                    <li><b>Has oblidat posar el símbol de multiplicació (*)?</b> En física escrivim <i>2t</i>, però en programació cal escriure sempre <code>2 * t</code>.</li>
+                    <li><b>Tens algun parèntesi, clau o cometa obert sense tancar?</b> Recompte'ls detingudament un per un.</li>
+                    <li>Mira cap on apunta la xicoteta fletxa taronja (<code>^</code>) de l'error de Python; normalment la falta d'ortografia està just en eixe punt o en la línia immediatament anterior.</li>
+                </ul>
+                <p style="font-size: 0.9em; color: #555; margin-top: 10px; font-style: italic;">"L'error és la millor pista per a comprendre la lògica del programa. Discuteix amb el teu equip abans de tocar el teclat!"</p>
+            </div>
+        """,
+        "NameError": """
+            <div style="border: 2px solid #2b5c8f; background-color: #f0f7fc; padding: 15px; border-radius: 8px; margin-top: 15px; font-family: sans-serif;">
+                <h4 style="color: #2b5c8f; margin-top: 0; font-size: 1.1em;">🌟 TARGETA DE DEPURACIÓ: NameError (La variable invisible o no declarada)</h4>
+                <p style="color: #333; line-height: 1.5; margin-bottom: 8px;">
+                    <b>💡 Què ens diu l'ordinador?:</b> Que s'està intentant fer servir una variable o funció amb un nom que el motor de SageMath no coneix en absolut.
+                </p>
+                <ul style="color: #333; line-height: 1.4; padding-left: 20px;">
+                    <li><b>Has presentat la variable a SageMath primer?</b> Recorda que per a usar una lletra en el càlcul simbòlic de forces (com <i>t</i>, <i>g</i> o <i>y</i>) has d'haver executat abans la declaració simbòlica: <code>var('t')</code>.</li>
+                    <li><b>Comprova les majúscules i minúscules:</b> Python és molt sensible a les diferències (<i>Case-sensitive</i>). No és el metro utilitzar la variable de massa <code>m</code> que <code>M</code>.</li>
+                    <li><b>Revisa errors de picatge (typos):</b> Comprova que hagis escrit perfectament el nom de la funció (per exemple, <code>desolve</code> en lloc de <code>dsolve</code>).</li>
+                </ul>
+                <p style="font-size: 0.9em; color: #555; margin-top: 10px; font-style: italic;">"Preneu-vos un segon: les mans fora del teclat i repasseu de manera col·laborativa la declaració d'equacions!"</p>
+            </div>
+        """,
+        "TypeError": """
+            <div style="border: 2px solid #2b5c8f; background-color: #f0f7fc; padding: 15px; border-radius: 8px; margin-top: 15px; font-family: sans-serif;">
+                <h4 style="color: #2b5c8f; margin-top: 0; font-size: 1.1em;">🌟 TARGETA DE DEPURACIÓ: TypeError (Conflicte de tipus d'objectes)</h4>
+                <p style="color: #333; line-height: 1.5; margin-bottom: 8px;">
+                    <b>💡 Què ens diu l'ordinador?:</b> Que s'estan intentant combinar o comparar estructures que són totalment incompatibles entre si (com sumar pomes amb taronges).
+                </p>
+                <ul style="color: #333; line-height: 1.4; padding-left: 20px;">
+                    <li><b>Estàs barrejant càlcul simbòlic amb ajust numèric?</b> Recorda que funcions d'ajust com <code>curve_fit</code> necessiten llistes de dades numèriques reals (vectors de dades extrets de Tracker) i no equacions abstractes o variables simbòliques de SageMath.</li>
+                    <li><b>Has intentat sumar un text "literal" (com una etiqueta d'eix) amb un nombre?</b> Comprova els paràmetres de graficació de <code>matplotlib</code>.</li>
+                </ul>
+                <p style="font-size: 0.9em; color: #555; margin-top: 10px; font-style: italic;">"L'ordinador processa dades lògiques molt diferents. Comproveu com a equip quin format de dades correspon a cada fase."</p>
+            </div>
+        """,
+        "ZeroDivisionError": """
+            <div style="border: 2px solid #2b5c8f; background-color: #f0f7fc; padding: 15px; border-radius: 8px; margin-top: 15px; font-family: sans-serif;">
+                <h4 style="color: #2b5c8f; margin-top: 0; font-size: 1.1em;">🌟 TARGETA DE DEPURACIÓ: ZeroDivisionError (Divisió per zero o límit físic impossible)</h4>
+                <p style="color: #333; line-height: 1.5; margin-bottom: 8px;">
+                    <b>💡 Què ens diu l'ordinador?:</b> Que s'ha intentat realitzar una divisió matemàtica per zero durant l'avaluació numèrica de les equacions de l'estat del moviment.
+                </p>
+                <ul style="color: #333; line-height: 1.4; padding-left: 20px;">
+                    <li><b>Heu assignat massa zero a la partícula?</b> En la física real amb fricció, la massa <code>m</code> apareix al denominador. Si <code>m = 0</code>, l'equació perd el sentit físic i l'intèrpret d'ordinador es bloqueja.</li>
+                    <li><b>El coeficient de fregament té valors inadequats?</b> Comproveu si teniu valors nuls o impossibles que generen divergències en el vostre bucle d'integració temporal d'Euler.</li>
+                </ul>
+                <p style="font-size: 0.9em; color: #555; margin-top: 10px; font-style: italic;">"Comproveu les unitats i els valors dels vostres paràmetres físics!"</p>
+            </div>
+        """,
+        "IndexError": """
+            <div style="border: 2px solid #2b5c8f; background-color: #f0f7fc; padding: 15px; border-radius: 8px; margin-top: 15px; font-family: sans-serif;">
+                <h4 style="color: #2b5c8f; margin-top: 0; font-size: 1.1em;">🌟 TARGETA DE DEPURACIÓ: IndexError (Les coordenades inexistents)</h4>
+                <p style="color: #333; line-height: 1.5; margin-bottom: 8px;">
+                    <b>💡 Què ens diu l'ordinador?:</b> Que s'està intentant accedir a una posició d'una llista de dades que està fora de rang (no existeix).
+                </p>
+                <ul style="color: #333; line-height: 1.4; padding-left: 20px;">
+                    <li><b>Heu demanat una posició que supera la llargada de les vostres mesures?</b> Recordeu que en Python els índexs de les llistes comencen en <code>0</code>. Si una llista té 10 mesures obtingudes amb Tracker, els índexs vàlids van del <code>0</code> al <code>9</code>.</li>
+                    <li><b>Heu fet un bucle de recorregut massa llarg?</b> Recompileu el rang del vostre bucle utilitzant <code>for i in range(len(dades))</code> en lloc de valors fixos que puguen excedir el límit.</li>
+                </ul>
+                <p style="font-size: 0.9em; color: #555; margin-top: 10px; font-style: italic;">"Alineeu les dades de l'escombrat de l'abast; la cohesió en l'anàlisi de dades és clau!"</p>
+            </div>
+        """
+    }
+
+    # 3. Detectem el tipus d'error ocorregut i renderitzem l'HTML si existeix la targeta adaptada
+    error_nom = etype.__name__
+    if error_nom in targetes:
+        display(HTML(targetes[error_nom]))
+    else:
+        # Pista genèrica de suport
+        display(HTML(f"""
+            <div style="border: 2px solid #777; background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin-top: 15px; font-family: sans-serif;">
+                <h4 style="color: #555; margin-top: 0;">🌟 PISTA FORMATIVA: Error tipus {error_nom}</h4>
+                <p style="color: #333;">L'ordinador ha trobat un repte poc habitual durant l'execució de la física del moviment. No us en preocupeu:</p>
+                <ul style="color: #333;">
+                    <li>Consulteu el diari d'equip o recordeu la darrera targeta d'errors del laboratori.</li>
+                    <li>Si us sentiu encallats, activeu el diàleg cooperatiu «Llapissos al centre» i demaneu la bastida del professor.</li>
+                </ul>
+            </div>
+        """))
+
+# Registrem el controlador en l'entorn actiu de Jupyter/SageMath
+ip = get_ipython()
+if ip is not None:
+    ip.set_custom_exc((Exception,), custom_exception_handler)
+```
+
+## Annex IV: Repositori de Codi Obert i Recursos Educatius Oberts (REA) {#sec-annex-github}
+
+Tots els materials docents, quaderns interactius de Jupyter (`.ipynb`), scripts de simulació en SageMath, dades de vídeo-anàlisi de Physics Tracker i el codi font complet d'aquesta memòria en format Quarto Markdown (`.qmd`) estan disponibles lliurement per a tota la comunitat educativa:
+
+* **Repositori oficial a GitHub:** [https://github.com/CasimirVictoria/TFM-Secundaria_FiQ_PC_Jupyter_Sagemath](https://github.com/CasimirVictoria/TFM-Secundaria_FiQ_PC_Jupyter_Sagemath)
+* **Comandes de clonació directa:**
+
+```{bash}
+git clone https://github.com/CasimirVictoria/TFM-Secundaria_FiQ_PC_Jupyter_Sagemath.git
+```
+
+* **Llicència de distribució:** [Creative Commons Zero 1.0 (CC0 1.0 - Domini Públic)](https://creativecommons.org/publicdomain/zero/1.0/), en compliment de les directrius internacionals de la UNESCO sobre Ciència Oberta (*Open Science*) i Recursos Educatius Oberts (*REA*).

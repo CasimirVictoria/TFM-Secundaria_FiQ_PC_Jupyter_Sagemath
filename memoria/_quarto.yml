@@ -1,0 +1,89 @@
+project:
+  type: book
+  output-dir: ../docs
+
+book:
+  title: "Pensament Computacional i Modelització en Física i Química de Batxillerat"
+  subtitle: "Treball de Fi de Màster en Professor/a d'Educació Secundària — Especialitat Física i Química"
+  author: "Casimiro Victoria Castillo"
+  date: "2026"
+  language: ca
+  downloads: [pdf]
+  repo-url: https://github.com/CasimirVictoria/TFM-Secundaria_FiQ_PC_Jupyter_Sagemath
+  chapters:
+    - index.qmd
+    - 01_introduccio.qmd
+    - 02_marc_teoric.qmd
+    - 03_metodologia_disseny.qmd
+    - 04_resultats_proposta.qmd
+    - 05_conclusions.qmd
+    - references.qmd
+  appendices:
+    - 06_annexos.qmd
+
+bibliography: references.bib
+csl: /usr/share/texlive/texmf-dist/tex/latex/citation-style-language/styles/apa.csl
+
+lang: ca
+language:
+  ca:
+    crossref-fig-title: "Figura"
+    crossref-tbl-title: "Taula"
+    crossref-sec-title: "Secció"
+    crossref-eq-title: "Equació"
+    toc-title-document: "Índex"
+    toc-title-website: "En aquesta pàgina"
+
+toc-title: "Índex"
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    toc-title: "Índex"
+    number-sections: true
+    code-fold: show
+    code-tools: true
+    smooth-scroll: true
+    fig-align: center
+  pdf:
+    documentclass: scrreprt
+    papersize: a4
+    classoption: [a4paper, 12pt, oneside, headings=small, DIV=12]
+    callout-icon: false
+    callout-appearance: simple
+    geometry:
+      - top=2.5cm
+      - bottom=2.5cm
+      - left=2.5cm
+      - right=2.5cm
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    colorlinks: true
+    linkcolor: NavyBlue
+    citecolor: ForestGreen
+    urlcolor: BrickRed
+    linestretch: 1.5
+    mainfont: "Liberation Sans"
+    monofont: "Liberation Mono"
+    monofontoptions: "Scale=0.78"
+    keep-tex: true
+    pdf-engine: xelatex
+    header-includes:
+      - \renewcommand{\maketitle}{}
+      - \renewcommand{\contentsname}{Índex}
+      - \setkomafont{chapter}{\Large\bfseries}
+      - \setkomafont{section}{\large\bfseries}
+      - \setkomafont{subsection}{\normalsize\bfseries}
+      - \RedeclareSectionCommand[beforeskip=0pt, afterskip=6pt]{chapter}
+      - \RedeclareSectionCommand[beforeskip=4pt, afterskip=2pt]{section}
+      - \RedeclareSectionCommand[beforeskip=2pt, afterskip=2pt]{subsection}
+      - \setkomafont{chapterentry}{\normalsize\bfseries}
+      - \widowpenalty=10000
+      - \clubpenalty=10000
+      - \usepackage{fvextra}
+      - \usepackage{pdflscape}
+      - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,breakanywhere,fontsize=\footnotesize,commandchars=\\\{\}}
+    include-before-body: 00_portada.tex

@@ -1,0 +1,33 @@
+# --- Entorns i directoris locals de treball ---
+.venv/
+__pycache__/
+.agents/
+_archive/
+_docs_dev/
+Proves/
+defensa/
+PDFs/
+Memoria/
+
+# --- Temporals de LaTeX, Quarto i Jupyter ---
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+/.quarto/
+_book/
+**/*.quarto_ipynb
+
+# --- Temporals d'editors (Emacs, Vim, VSCode) ---
+*~
+#*#
+.#*
+
+# --- Fitxers binaris/HTML locals (excepte web pública i SdA) ---
+*.pdf
+*.html
+!docs/**
+!situacions_d_aprenentatge/**
