@@ -829,27 +829,22 @@
                             <span>▶</span> Executa el codi
                         </button>
                     </div>
-                    <textarea id="python-editor"># Modelitzacio Simbolica de Tir Parabolic Ideal (SymPy / Python)
-import sympy as sp
-import numpy as np
+                    <textarea id="python-editor"># Modelització Simbòlica de Tir Parabòlic Ideal (Sintaxi SageMath / Python)
+# 1. Definir variables simbòliques (sintaxi directa SageMath)
+var('t x v_0 alpha g')
 
-# 1. Definir variables simboliques
-t, x, v_0, alpha, g = sp.symbols('t x v_0 alpha g')
+# 2. Equació horitzontal i aïllar el temps t(x)
+eq_x = Eq(x, v_0 * cos(alpha) * t)
+sol_t = solve(eq_x, t)[0]
 
-# 2. Equacio horitzontal i aillar el temps t(x)
-eq_x = sp.Eq(x, v_0 * sp.cos(alpha) * t)
-sol_t = sp.solve(eq_x, t)[0]
+# 3. Equació vertical de la trajectòria y(x) ideal
+y_trajectoria = v_0 * sin(alpha) * sol_t - Rational(1, 2) * g * sol_t**2
 
-# 3. Equacio vertical de la trajectoria y(x) ideal
-y_trajectoria = v_0 * sp.sin(alpha) * sol_t - (sp.Rational(1,2)) * g * sol_t**2
+# 4. Funció compilada al vol per a avaluar numèricament la corba
+f_num = lambdify((x, v_0, alpha, g), y_trajectoria, modules=['numpy'])
 
-# 4. Funcio compilada al vol per a evaluar numericament la corba
-f_num = sp.lambdify(
-    (x, v_0, alpha, g), y_trajectoria, modules=['numpy']
-)
-
-# Exportar expressio LaTeX simbolica pura per a MathJax
-latex_eq_simbolica = sp.latex(y_trajectoria)
+# Exportar expressió LaTeX simbòlica pura per a MathJax
+latex_eq_simbolica = latex(y_trajectoria)
 
 print("✅ Model ideal de Galileu deduït amb èxit!")
 print(f"Equació y(x) = {y_trajectoria}")</textarea>
@@ -866,7 +861,7 @@ print(f"Equació y(x) = {y_trajectoria}")</textarea>
                         <div id="sym-result-latex" style="font-size: 0.95rem; padding: 12px 0; color: var(--text-muted); font-style: italic;">
                             Carregant model analític...
                         </div>
-                        <span id="sym-result-caption" style="font-size:0.8rem; color:var(--text-muted); display:none;">Model analític matemàtic deduït amb SymPy.</span>
+                        <span id="sym-result-caption" style="font-size:0.8rem; color:var(--text-muted); display:none;">Model analític matemàtic deduït amb sintaxi SageMath (WASM).</span>
                         <div id="console-output" style="display:none;"></div>
                     </div>
 
@@ -1106,10 +1101,10 @@ print(f"Equació y(x) = {y_trajectoria}")</textarea>
                 <span>🎯 Fase 3: Elaborem un Millor Model (Exploració Dinàmica i Ajust Òptim amb SciPy)</span>
             </div>
 
-            <!-- PAS 3.1: MODIFICACIÓ COMPUTACIONAL DEL MODEL DINÀMIC (SymPy) - MATEIXA ESTRUCTURA QUE FASE 1 -->
+            <!-- PAS 3.1: MODIFICACIÓ COMPUTACIONAL DEL MODEL DINÀMIC (SageMath) - MATEIXA ESTRUCTURA QUE FASE 1 -->
             <div style="margin-bottom:24px; background:white; border:1px solid #e2e8f0; border-radius:12px; padding:18px;">
                 <div style="font-weight:700; color:#1e293b; font-size:1.02rem; margin-bottom:12px;">
-                    💻 Pas 3.1: Modificació Computacional del Model Dinàmic de Newton (SymPy)
+                    💻 Pas 3.1: Modificació Computacional del Model Dinàmic de Newton (Sintaxi SageMath)
                 </div>
 
                 <div class="symbolic-grid">
@@ -1125,39 +1120,37 @@ print(f"Equació y(x) = {y_trajectoria}")</textarea>
                                 <span>▶</span> Executa el codi
                             </button>
                         </div>
-                        <textarea id="python-editor-phase2"># Model Dinàmic de Newton amb Fregament Aerodinàmic (SymPy)
-import sympy as sp
-
-# 1. Definir variables i paràmetres simbòlics
-t, x, v_0, alpha, g, k_drag = sp.symbols('t x v_0 alpha g k_drag', positive=True)
+                        <textarea id="python-editor-phase2"># Model Dinàmic de Newton amb Fregament Aerodinàmic (Sintaxi SageMath / Python)
+# 1. Definir variables i paràmetres simbòlics (sintaxi directa SageMath)
+var('t x v_0 alpha g k_drag', positive=True)
 
 # 2. Components de velocitat inicial
-v_0x = v_0 * sp.cos(alpha)
-v_0y = v_0 * sp.sin(alpha)
+v_0x = v_0 * cos(alpha)
+v_0y = v_0 * sin(alpha)
 
 # 3. Proposta de moviment frenat en l'eix X per l'aire
 # Hipòtesi d'ordre 1: La frenada horitzontal és la responsable principal de la pèrdua d'abast.
 # (A l'eix Y el fregament canvia de signe en l'apogeu; a la Fase 3 s'integrarà el model 2D complet!).
-x_t = v_0x * t * (1 - sp.Rational(1, 2) * k_drag * t)
-y_t = v_0y * t - sp.Rational(1, 2) * g * t**2
+x_t = v_0x * t * (1 - Rational(1, 2) * k_drag * t)
+y_t = v_0y * t - Rational(1, 2) * g * t**2
 
 # 4. Derivades simbòliques temporals (Càlcul Diferencial Curricular):
 # Velocitat: v(t) = dr/dt  i  Acceleració: a(t) = dv/dt (2a Llei de Newton)
-v_x = sp.diff(x_t, t)
-a_x = sp.diff(v_x, t)
+v_x = diff(x_t, t)
+a_x = diff(v_x, t)
 
-v_y = sp.diff(y_t, t)
-a_y = sp.diff(v_y, t)
+v_y = diff(y_t, t)
+a_y = diff(v_y, t)
 
 # 5. Model aproximat de la trajectòria y(x) amb el terme corrector de l'aire:
 # Quan x augmenta, la frenada acumulada fa que la paràbola caiga abans
-y_freg = x * sp.tan(alpha) - (g * x**2) / (2 * v_0**2 * sp.cos(alpha)**2) * (1 + k_drag * x)
+y_freg = x * tan(alpha) - (g * x**2) / (2 * v_0**2 * cos(alpha)**2) * (1 + k_drag * x)
 
 # Exportació simbòlica a LaTeX per a visualització
-latex_vx = sp.latex(v_x)
-latex_ax = sp.latex(a_x)
-latex_ay = sp.latex(a_y)
-latex_corregit = sp.latex(y_freg)
+latex_vx = latex(v_x)
+latex_ax = latex(a_x)
+latex_ay = latex(a_y)
+latex_corregit = latex(y_freg)
 
 print("✅ Càlcul diferencial completat amb èxit!")
 print(f"Velocitat horitzontal:  v_x(t) = {v_x}")
@@ -1168,7 +1161,7 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
                     <div class="theory-card">
                         <div class="theory-step" id="theory-step-display-2" style="min-height: 200px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                <div class="theory-step-num" id="theory-step-title-2" style="margin-bottom:0;">Equació i Acceleració Deduïdes (SymPy)</div>
+                                <div class="theory-step-num" id="theory-step-title-2" style="margin-bottom:0;">Equació i Acceleració Deduïdes (Sintaxi SageMath)</div>
                                 <button class="btn-code-toggle" id="btn-toggle-code-2" onclick="toggleCodeView(2)" title="Mostra o amaga el codi font Python">
                                     <span>💻</span> Codi
                                 </button>
@@ -1176,7 +1169,7 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
                             <div id="sym-result-latex-2" style="font-size: 0.92rem; padding: 12px 0; color: var(--text-muted); font-style: italic;">
                                 Carregant nou model diferencial...
                             </div>
-                            <span id="sym-result-caption-2" style="font-size:0.8rem; color:var(--text-muted); display:none;">Càlcul diferencial de Newton amb SymPy.</span>
+                            <span id="sym-result-caption-2" style="font-size:0.8rem; color:var(--text-muted); display:none;">Càlcul diferencial de Newton amb sintaxi SageMath (WASM).</span>
                         </div>
 
                         <div class="theory-step" style="background:#f1f5f9;">
@@ -1440,9 +1433,9 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
                     title: "🌟 TARGETA DE DEPURACIÓ: NameError (Variable o funció no declarada)",
                     desc: "<b>💡 Què ens diu l'ordinador?:</b> S'està intentant fer servir una variable o funció amb un nom que el motor de Python/SymPy no reconeix.",
                     hints: [
-                        "<b>Has declarat la variable abans d'usar-la?</b> Per utilitzar símbols algebraics (com <i>t</i>, <i>v_0</i> o <i>k_drag</i>) han d'haver estat definits amb <code>sp.symbols(...)</code>.",
+                        "<b>Has declarat la variable abans d'usar-la?</b> Per utilitzar símbols algebraics (com <i>t</i>, <i>v_0</i> o <i>k_drag</i>) han d'haver estat definits amb <code>var('...')</code> o <code>sp.symbols(...)</code>.",
                         "<b>Comprova majúscules i minúscules:</b> Python és estricte (<i>case-sensitive</i>). No és el mateix <code>V_0</code> que <code>v_0</code>.",
-                        "<b>Revisa possibles errades de picatge (typos):</b> Comprova que hagis escrit bé funcions com <code>sp.cos</code>, <code>sp.sin</code> o <code>sp.tan</code>."
+                        "<b>Revisa possibles errades de picatge (typos):</b> Comprova que hagis escrit bé funcions com <code>cos</code>, <code>sin</code>, <code>tan</code>, <code>diff</code> o <code>solve</code>."
                     ]
                 },
                 "TypeError": {
@@ -1559,8 +1552,10 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
             }
         }
 
-        // Llista de paraules clau i funcions de Python / SymPy / NumPy per a l'autocompletat tipus Jupyter
+        // Llista de paraules clau i funcions de Python / SageMath / SymPy / NumPy per a l'autocompletat tipus Jupyter
         const PYTHON_JUPYTER_KEYWORDS = [
+            "var(", "diff(", "solve(", "integrate(", "integral(", "Eq(", "Rational(", "latex(", "lambdify(",
+            "sin(", "cos(", "tan(", "sqrt(", "exp(", "log(", "pi", "positive=True",
             "sp.symbols", "sp.solve", "sp.diff", "sp.integrate", "sp.Eq", "sp.sin", "sp.cos", "sp.tan",
             "sp.sqrt", "sp.exp", "sp.log", "sp.pi", "sp.Function", "sp.dsolve", "sp.Matrix",
             "np.linspace", "np.array", "np.zeros", "np.arange", "np.sin", "np.cos", "np.pi", "np.sqrt",
@@ -1733,6 +1728,50 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
 
                 consoleDiv.innerText += "\n📦 Carregant paquets científics SymPy, NumPy i SciPy...";
                 await pyodideInstance.loadPackage(['sympy', 'numpy', 'scipy']);
+
+                // Capa de compatibilitat d'àlies de sintaxi SageMath directa (var, diff, solve, integrate, etc.)
+                pyodideInstance.runPython(`
+import sys
+import sympy as sp
+import numpy as np
+
+def var(names, **kwargs):
+    """Funció var() nativa a l'estil SageMath per a injectar símbols automàticament a l'espai de noms global."""
+    syms = sp.symbols(names, **kwargs)
+    if not isinstance(syms, (list, tuple)):
+        syms = [syms]
+    mod = sys.modules['__main__']
+    for s in syms:
+        setattr(mod, str(s), s)
+        globals()[str(s)] = s
+    return syms[0] if len(syms) == 1 else syms
+
+mod = sys.modules['__main__']
+_sagemath_builtins = {
+    'var': var,
+    'diff': sp.diff,
+    'derivative': sp.diff,
+    'solve': sp.solve,
+    'integrate': sp.integrate,
+    'integral': sp.integrate,
+    'sin': sp.sin,
+    'cos': sp.cos,
+    'tan': sp.tan,
+    'sqrt': sp.sqrt,
+    'exp': sp.exp,
+    'log': sp.log,
+    'pi': sp.pi,
+    'Eq': sp.Eq,
+    'Rational': sp.Rational,
+    'latex': sp.latex,
+    'lambdify': sp.lambdify,
+    'sp': sp,
+    'np': np
+}
+for _k, _v in _sagemath_builtins.items():
+    setattr(mod, _k, _v)
+    globals()[_k] = _v
+`);
 
                 statusDot.classList.add('ready');
                 statusText.innerText = "Python (WASM) Actiu i Llest";
