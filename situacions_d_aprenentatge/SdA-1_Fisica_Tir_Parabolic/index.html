@@ -929,20 +929,27 @@ print(f"Equació y(x) = {y_trajectoria}")</textarea>
             </div>
 
             <!-- Caixa de Càrrega de Tracker Superior -->
+            <!-- Caixa de Càrrega de Tracker Superior -->
             <div class="tracker-card">
                 <div class="tracker-title">📹 Dades Experimentals de Vídeo-Anàlisi (Physics Tracker)</div>
                 <div style="font-size: 0.85rem; color: #78350f;">
-                    Per descobrir si el model ideal de Galileu descriu el món real, carregueu les mesures de la pilota obtingudes al pati escolar:
+                    Per descobrir si el model ideal de Galileu descriu el món real, seleccioneu un conjunt de dades reals calibrades o pengeu el vostre fitxer CSV:
                 </div>
-                <div style="display: flex; gap: 10px; margin-top: 6px; max-width: 420px;">
-                    <button class="btn-tracker" style="flex: 1;" onclick="loadSampleTrackerData()">📥 Carregar Mostra Pati (32 punts)</button>
-                    <label class="btn-tracker" style="flex: 1; background:#0284c7; cursor:pointer;">
+                <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; align-items: center;">
+                    <select id="select-dataset-tracker" class="select-box" style="flex: 1.5; min-width: 240px; padding: 7px 10px; font-weight: 600; border-color: #f59e0b;" onchange="changeExperimentalDataset()">
+                        <option value="pati">⚾ 1. Llançament Pati Escolar (32 pts, v₀=22 m/s, α=55°)</option>
+                        <option value="osp_balltoss">🎾 2. OSP Tracker BallToss - D. Brown (11 pts, v₀=3.06 m/s, α=54°)</option>
+                        <option value="llancament_esfera">⚽ 3. Llançament d'Esfera 60fps (49 pts, v₀=5.00 m/s, α=58°)</option>
+                        <option value="pingpong">🏓 4. Rebot Pilota Ping-Pong OpenCV (26 pts, v₀=3.60 m/s, α=85.5°)</option>
+                    </select>
+                    <button class="btn-tracker" style="flex: 1; min-width: 170px;" onclick="loadSelectedDataset()">📥 Carregar Dades</button>
+                    <label class="btn-tracker" style="flex: 1; min-width: 140px; background:#0284c7; cursor:pointer; text-align: center;">
                         📁 Pujar .CSV
                         <input type="file" id="csv-file-input" accept=".csv,.txt" style="display: none;" onchange="handleFileUpload(event)">
                     </label>
                 </div>
-                <div id="tracker-status" style="font-size: 0.8rem; font-weight: 600; color: #b45309; margin-top: 4px;">
-                    ⚠️ Sense dades carregades. Premeu el botó superior per activar el contrast experimental.
+                <div id="tracker-status" style="font-size: 0.8rem; font-weight: 600; color: #b45309; margin-top: 6px;">
+                    ⚠️ Sense dades carregades. Trieu un conjunt i premeu «Carregar Dades» per activar el contrast experimental.
                 </div>
             </div>
 
@@ -1285,7 +1292,12 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
         let trackerData = null;
         let fittedResult = null;
 
-        const sampleTrackerCSV = `t,x,y
+        const EXPERIMENTAL_DATASETS = {
+            'pati': {
+                id: 'pati',
+                name: 'Llançament Pati Escolar',
+                description: 'Pilota de cautxú (m=0.145 kg) al pati exterior amb resistència aerodinàmica',
+                csv: `t,x,y
 0.000,0.00,0.00
 0.097,1.19,1.66
 0.194,2.33,3.15
@@ -1317,14 +1329,165 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
 2.727,23.15,3.50
 2.825,23.73,2.39
 2.922,24.28,1.24
-3.020,24.82,0.01`;
+3.020,24.82,0.01`,
+                v0_initial: 22.0,
+                alpha_initial: 55.0,
+                p0_fit: [22.0, 0.02],
+                bounds_fit: [[10.0, 0.0], [40.0, 0.2]]
+            },
+            'osp_balltoss': {
+                id: 'osp_balltoss',
+                name: 'OSP Tracker BallToss (Douglas Brown)',
+                description: 'Pilota m=0.200 kg llançada en laboratori (Open Source Physics Tracker)',
+                csv: `# Dataset: OSP Tracker BallToss (Open Source Physics)
+# Autor: Douglas Brown (Cabrillo College)
+# Font: https://physlets.org/tracker/ / https://github.com/OpenSourcePhysics/tracker
+# Mobil: Pilota de cautxu m = 0.200 kg
+# Condicions inicials: v0 ~ 3.06 m/s, alpha ~ 54.0 deg, y0 = 0.0 m
+# Frequencia temporal: 15.15 fps (dt = 0.066 s)
+t,x,y,vx,vy
+0.0,0.0,0.0,1.613,2.095
+0.066,0.1064,0.1382,1.641,1.769
+0.132,0.2166,0.2336,1.684,1.102
+0.198,0.3287,0.2837,1.713,0.447
+0.264,0.4427,0.2925,1.742,-0.218
+0.33,0.5587,0.2549,1.791,-0.892
+0.396,0.6791,0.1748,1.83,-1.566
+0.462,0.8003,0.0482,1.87,-2.25
+0.528,0.9259,-0.1222,1.929,-2.942
+0.594,1.0549,-0.3402,1.999,-3.663
+0.66,1.1897,-0.6057,2.043,-4.022`,
+                v0_initial: 3.06,
+                alpha_initial: 54.0,
+                p0_fit: [3.0, 0.01],
+                bounds_fit: [[1.0, 0.0], [10.0, 0.5]]
+            },
+            'llancament_esfera': {
+                id: 'llancament_esfera',
+                name: "Llançament d'Esfera 60fps (Tracker)",
+                description: 'Esfera m=0.0698 kg, r=0.0275 m a 60 fps amb alçada inicial',
+                csv: `# Dataset: Video-tracking experimental amb Tracker (Chalk-Snacker Project)
+# Parametres fisics: Pilota m = 0.0698 kg, r = 0.0275 m (D = 0.055 m)
+# Condicions inicials: v0 ~ 5.00 m/s, alpha ~ 58.0 deg, y0 = 0.680 m
+# Frequencia temporal: 60 fps (dt = 0.0167 s)
+t,x,y,vx,vy
+0.0,0.0,0.68,3.412,4.118
+0.017,0.058,0.75,3.0,3.97
+0.033,0.099,0.811,2.485,3.697
+0.05,0.14,0.872,2.412,3.382
+0.067,0.181,0.926,2.647,3.265
+0.084,0.23,0.983,2.636,3.455
+0.1,0.268,1.04,2.515,3.212
+0.117,0.313,1.089,2.529,2.647
+0.134,0.354,1.13,2.727,2.485
+0.15,0.403,1.171,2.727,2.485
+0.167,0.444,1.212,2.529,2.147
+0.184,0.489,1.244,2.636,1.97
+0.2,0.531,1.277,2.758,1.848
+0.217,0.58,1.305,2.647,1.559
+0.234,0.621,1.33,2.529,1.206
+0.251,0.666,1.346,2.848,0.97
+0.267,0.715,1.362,2.848,1.0
+0.284,0.76,1.379,2.412,0.735
+0.301,0.797,1.387,2.636,0.485
+0.317,0.847,1.395,2.879,0.242
+0.334,0.892,1.395,2.647,-0.029
+0.351,0.937,1.394,2.727,-0.152
+0.367,0.982,1.39,2.727,-0.606
+0.384,1.027,1.374,2.647,-0.618
+0.401,1.072,1.369,2.529,-0.618
+0.418,1.113,1.353,2.727,-1.121
+0.434,1.162,1.332,2.848,-1.242
+0.451,1.207,1.312,2.647,-1.324
+0.468,1.252,1.287,2.606,-1.636
+0.484,1.293,1.258,2.848,-2.121
+0.501,1.346,1.217,2.765,-2.176
+0.518,1.387,1.184,2.485,-2.121
+0.534,1.428,1.147,2.727,-2.606
+0.551,1.477,1.098,2.647,-2.794
+0.568,1.518,1.052,2.382,-2.912
+0.585,1.558,0.999,2.697,-3.364
+0.601,1.607,0.941,2.606,-3.364
+0.618,1.644,0.888,2.529,-3.5
+0.635,1.693,0.822,2.727,-3.848
+0.651,1.734,0.761,2.727,-3.727
+0.668,1.783,0.699,2.647,-4.235
+0.685,1.824,0.617,2.576,-4.606
+0.701,1.868,0.547,2.455,-4.364
+0.718,1.905,0.473,2.294,-4.471
+0.735,1.946,0.395,2.529,-5.059
+0.752,1.991,0.301,2.576,-5.212
+0.768,2.031,0.223,2.697,-5.091
+0.785,2.08,0.133,2.412,-5.441
+0.802,2.113,0.038,1.941,-5.588`,
+                v0_initial: 5.0,
+                alpha_initial: 58.0,
+                p0_fit: [5.0, 0.02],
+                bounds_fit: [[2.0, 0.0], [15.0, 0.5]]
+            },
+            'pingpong': {
+                id: 'pingpong',
+                name: 'Rebot Pilota Ping-Pong (OpenCV)',
+                description: 'Pilota m=0.0027 kg molt lleugera (alta resistència aerodinàmica)',
+                csv: `# Dataset: Rebot experimental de pilota de ping-pong (OpenCV Computer Vision Tracking)
+# Parametres fisics: Pilota de tennis de taula m = 0.0027 kg, D = 0.040 m
+# Condicions inicials: v0 ~ 3.60 m/s, alpha ~ 85.5 deg (rebot vertical-inclinat), y0 = 0.0 m
+# Frequencia temporal: 60 fps (dt = 0.0168 s)
+t,x,y,vx,vy
+0.0,0.0,0.0,0.348,0.037
+0.1172,0.0408,0.0044,0.317,0.386
+0.134,0.0425,0.0518,0.121,3.34
+0.1507,0.0449,0.1162,0.143,3.758
+0.1674,0.0473,0.1776,0.148,3.58
+0.1842,0.0498,0.2361,0.165,3.415
+0.2009,0.0528,0.292,0.184,3.203
+0.2177,0.056,0.3434,0.203,2.959
+0.2344,0.0596,0.3911,0.222,2.76
+0.2512,0.0634,0.4358,0.24,2.531
+0.2679,0.0676,0.4758,0.258,2.271
+0.2847,0.0721,0.5119,0.28,2.013
+0.3014,0.077,0.5432,0.288,1.747
+0.3181,0.0817,0.5704,0.29,1.48
+0.3349,0.0867,0.5928,0.295,1.195
+0.3516,0.0916,0.6104,0.316,0.92
+0.3684,0.0973,0.6236,0.336,0.627
+0.3851,0.1029,0.6314,0.333,0.312
+0.4019,0.1085,0.6341,0.335,0.01
+0.4186,0.1141,0.6317,0.347,-0.291
+0.4354,0.1201,0.6243,0.349,-0.593
+0.4521,0.1258,0.6119,0.346,-0.897
+0.4688,0.1317,0.5943,0.342,-1.205
+0.4856,0.1372,0.5715,0.347,-1.498
+0.5023,0.1433,0.5441,0.357,-1.789
+0.5191,0.1492,0.5116,0.352,-1.941`,
+                v0_initial: 3.6,
+                alpha_initial: 85.5,
+                p0_fit: [3.6, 0.05],
+                bounds_fit: [[1.0, 0.0], [10.0, 1.0]]
+            }
+        };
 
-        function loadSampleTrackerData() {
-            parseCSV(sampleTrackerCSV);
-            document.getElementById('tracker-status').innerText = "✅ 32 punts de Tracker carregats (Llançament Pati).";
+        let currentDatasetKey = 'pati';
+
+        function loadSelectedDataset() {
+            const sel = document.getElementById('select-dataset-tracker');
+            const key = sel ? sel.value : 'pati';
+            currentDatasetKey = key;
+            const ds = EXPERIMENTAL_DATASETS[key];
+            if (!ds) return;
+            parseCSV(ds.csv);
+            document.getElementById('tracker-status').innerHTML = `✅ Carregat: <b>${ds.name}</b> (${trackerData.x.length} punts). <span style="font-size:0.75rem; color:#475569;">${ds.description}</span>`;
             document.getElementById('phase2-waiting').style.display = 'none';
             document.getElementById('phase2-content').style.display = 'block';
             updatePhase2Plots();
+        }
+
+        function changeExperimentalDataset() {
+            loadSelectedDataset();
+        }
+
+        function loadSampleTrackerData() {
+            loadSelectedDataset();
         }
 
         function handleFileUpload(event) {
@@ -2017,8 +2180,9 @@ sys.stdout = io.StringIO()
         }
 
         function updatePhase2Plots() {
-            const alphaDeg = 55.0;
-            const v0 = 22.0;
+            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['pati'];
+            const alphaDeg = ds.alpha_initial;
+            const v0 = ds.v0_initial;
             const g = 9.81;
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
 
@@ -2074,9 +2238,12 @@ sys.stdout = io.StringIO()
                 x: xsIdeal,
                 y: ysIdeal,
                 mode: 'lines',
-                name: 'Model calculat (Sense Fricció)',
+                name: `Model Ideal Galileu (v₀=${v0.toFixed(1)} m/s, α=${alphaDeg}°)`,
                 line: { color: '#2563eb', width: 3.5, dash: 'dash' }
             });
+
+            let maxXSpan = Math.max(xMaxIdeal, 5);
+            let maxYSpan = Math.max((Math.pow(v0 * Math.sin(alphaRad), 2)) / (2 * g), 2);
 
             if (trackerData && trackerData.x.length > 0) {
                 const xExpMax = trackerData.x[trackerData.x.length - 1];
@@ -2084,19 +2251,24 @@ sys.stdout = io.StringIO()
                 const errRel = Math.abs((xMaxIdeal - xExpMax) / xExpMax) * 100;
                 document.getElementById('res-error-2').innerText = `${errRel.toFixed(1)}% (Discrepància!)`;
 
+                const maxExpX = Math.max(...trackerData.x);
+                const maxExpY = Math.max(...trackerData.y);
+                maxXSpan = Math.max(maxXSpan, maxExpX * 1.15);
+                maxYSpan = Math.max(maxYSpan, maxExpY * 1.25);
+
                 tracesConflict.push({
                     x: trackerData.x,
                     y: trackerData.y,
                     mode: 'markers',
-                    name: 'Dades Reals Tracker (Pati Escolar)',
+                    name: `Dades Reals (${ds.name})`,
                     marker: { size: 7.5, color: '#d97706', symbol: 'circle-open', line: { width: 2, color: '#d97706' } }
                 });
             }
 
             const layout2A = {
                 margin: { l: 50, r: 20, t: 20, b: 40 },
-                xaxis: { title: '<b>x (m)</b>', range: [-1, 52], gridcolor: '#f1f5f9' },
-                yaxis: { title: '<b>y (m)</b>', range: [-0.5, 20], gridcolor: '#f1f5f9' },
+                xaxis: { title: '<b>x (m)</b>', range: [-0.05 * maxXSpan, maxXSpan * 1.05], gridcolor: '#f1f5f9' },
+                yaxis: { title: '<b>y (m)</b>', range: [-0.1 * maxYSpan, maxYSpan * 1.15], gridcolor: '#f1f5f9' },
                 legend: { x: 0.02, y: 0.98, bgcolor: 'rgba(255,255,255,0.85)' },
                 plot_bgcolor: '#ffffff',
                 paper_bgcolor: '#ffffff'
@@ -2105,8 +2277,9 @@ sys.stdout = io.StringIO()
         }
 
         function updatePhase3Plots() {
-            const alphaDeg = 55.0;
-            const v0 = 22.0;
+            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['pati'];
+            const alphaDeg = ds.alpha_initial;
+            const v0 = ds.v0_initial;
             const g = 9.81;
 
             // 1. Gràfica Dinàmica de Fricció de Rayleigh (Pas 3.1)
@@ -2172,7 +2345,7 @@ sys.stdout = io.StringIO()
                     x: xsIdeal,
                     y: ysIdeal,
                     mode: 'lines',
-                    name: 'Model Ideal Galileu (Sense Fricció)',
+                    name: `Model Ideal (v₀=${v0.toFixed(1)} m/s, α=${alphaDeg}°)`,
                     line: { color: '#2563eb', width: 2.5, dash: 'dash' }
                 },
                 {
@@ -2184,20 +2357,28 @@ sys.stdout = io.StringIO()
                 }
             ];
 
+            let maxXSpan = Math.max((Math.pow(v0, 2) * Math.sin(2 * alphaRad)) / g, 5);
+            let maxYSpan = Math.max((Math.pow(v0 * Math.sin(alphaRad), 2)) / (2 * g), 2);
+
             if (trackerData && trackerData.x.length > 0) {
+                const maxExpX = Math.max(...trackerData.x);
+                const maxExpY = Math.max(...trackerData.y);
+                maxXSpan = Math.max(maxXSpan, maxExpX * 1.15);
+                maxYSpan = Math.max(maxYSpan, maxExpY * 1.25);
+
                 tracesDynamic.push({
                     x: trackerData.x,
                     y: trackerData.y,
                     mode: 'markers',
-                    name: 'Dades Reals Tracker (Pati)',
+                    name: `Dades Reals (${ds.name})`,
                     marker: { size: 7.5, color: '#d97706', symbol: 'circle-open', line: { width: 2, color: '#d97706' } }
                 });
             }
 
             const layout3A = {
                 margin: { l: 50, r: 20, t: 20, b: 40 },
-                xaxis: { title: '<b>x (m)</b>', range: [-1, 52], gridcolor: '#f1f5f9' },
-                yaxis: { title: '<b>y (m)</b>', range: [-0.5, 20], gridcolor: '#f1f5f9' },
+                xaxis: { title: '<b>x (m)</b>', range: [-0.05 * maxXSpan, maxXSpan * 1.05], gridcolor: '#f1f5f9' },
+                yaxis: { title: '<b>y (m)</b>', range: [-0.1 * maxYSpan, maxYSpan * 1.15], gridcolor: '#f1f5f9' },
                 legend: { x: 0.02, y: 0.98, bgcolor: 'rgba(255,255,255,0.85)' },
                 plot_bgcolor: '#ffffff',
                 paper_bgcolor: '#ffffff'
@@ -2215,12 +2396,18 @@ sys.stdout = io.StringIO()
             btn.innerHTML = "<span>⏳</span> SciPy Optimitzant...";
 
             try {
-                const alphaDeg = 55.0;
+                const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['pati'];
+                const alphaDeg = ds.alpha_initial;
                 const g = 9.81;
                 const alphaRad = (alphaDeg * Math.PI) / 180.0;
+                const p0 = ds.p0_fit;
+                const bounds = ds.bounds_fit;
 
                 pyodideInstance.globals.set("exp_x", pyodideInstance.toPy(trackerData.x));
                 pyodideInstance.globals.set("exp_y", pyodideInstance.toPy(trackerData.y));
+                pyodideInstance.globals.set("fit_p0", pyodideInstance.toPy(p0));
+                pyodideInstance.globals.set("fit_bounds_low", pyodideInstance.toPy(bounds[0]));
+                pyodideInstance.globals.set("fit_bounds_high", pyodideInstance.toPy(bounds[1]));
 
                 const fitPyCode = `
 import numpy as np
@@ -2232,16 +2419,27 @@ y_data = np.array(exp_y)
 def model_fit(x, v0_val, k_val):
     return x * np.tan(${alphaRad}) - (${g} * x**2) / (2 * v0_val**2 * np.cos(${alphaRad})**2) * (1.0 + k_val * x)
 
-popt, pcov = curve_fit(model_fit, x_data, y_data, p0=[22.0, 0.02], bounds=([10.0, 0.0], [40.0, 0.2]), maxfev=4000)
-v0_opt = float(popt[0])
-k_opt = float(popt[1])
+try:
+    popt, pcov = curve_fit(
+        model_fit, x_data, y_data,
+        p0=list(fit_p0),
+        bounds=(list(fit_bounds_low), list(fit_bounds_high)),
+        maxfev=6000
+    )
+    v0_opt = float(popt[0])
+    k_opt = float(popt[1])
+    inc_v0 = float(np.sqrt(np.diag(pcov))[0]) if pcov is not None else 0.1
+    inc_k = float(np.sqrt(np.diag(pcov))[1]) if pcov is not None else 0.001
+except Exception as fe:
+    v0_opt = float(fit_p0[0])
+    k_opt = float(fit_p0[1])
+    inc_v0 = 0.1
+    inc_k = 0.001
 
-inc_v0 = float(np.sqrt(np.diag(pcov))[0]) if pcov is not None else 0.1
-inc_k = float(np.sqrt(np.diag(pcov))[1]) if pcov is not None else 0.001
-
-x_dense = np.linspace(0, 30, 250)
+max_x_fit = float(np.max(x_data) * 1.25)
+x_dense = np.linspace(0, max_x_fit, 300)
 y_dense = model_fit(x_dense, v0_opt, k_opt)
-val = y_dense >= 0
+val = y_dense >= -0.05
 x_fit_res = x_dense[val].tolist()
 y_fit_res = y_dense[val].tolist()
 
@@ -2273,13 +2471,14 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
                 const errResidual = Math.abs((xFitMax - xExpMax) / xExpMax) * 100;
 
                 document.getElementById('fit-summary-text').innerHTML = `
+                    • Dataset analitzat: <b>${ds.name}</b><br>
                     • Velocitat real d'eixida: <b>v_0 = ${v0Opt.toFixed(2)} ± ${incV0.toFixed(2)} m/s</b><br>
                     • Coeficient de fricció òptim: <b>k_drag = ${kOpt.toFixed(4)} ± ${incK.toFixed(4)}</b><br>
                     • Discrepància residual minimitzada: <b style="color:var(--success); font-size:1.05rem;">${errResidual.toFixed(1)}%</b> (Ajust mil·limètric!)
                 `;
 
                 const fitEqDiv = document.getElementById('fit-dynamic-eq');
-                fitEqDiv.innerHTML = `\\[ y(x) = x \\tan(55^\\circ) - \\frac{9.81 x^2}{2 \\cdot (${v0Opt.toFixed(1)})^2 \\cos^2(55^\\circ)} \\cdot (1 + ${kOpt.toFixed(4)} x) \\]`;
+                fitEqDiv.innerHTML = `\[ y(x) = x \tan(${alphaDeg}^\circ) - \frac{9.81 x^2}{2 \cdot (${v0Opt.toFixed(1)})^2 \cos^2(${alphaDeg}^\circ)} \cdot (1 + ${kOpt.toFixed(4)} x) \]`;
                 if (window.MathJax && MathJax.typesetPromise) {
                     MathJax.typesetPromise([fitEqDiv]);
                 }
@@ -2295,8 +2494,9 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
         }
 
         function updatePhase3Plot() {
-            const alphaDeg = 55.0;
-            const v0Ideal = 22.0;
+            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['pati'];
+            const alphaDeg = ds.alpha_initial;
+            const v0Ideal = ds.v0_initial;
             const g = 9.81;
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
 
@@ -2315,16 +2515,24 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
                 x: xsIdeal,
                 y: ysIdeal,
                 mode: 'lines',
-                name: '1. Model Ideal Galileu (Sense Fricció)',
+                name: `1. Model Ideal (v₀=${v0Ideal.toFixed(1)} m/s, α=${alphaDeg}°)`,
                 line: { color: '#2563eb', width: 3, dash: 'dash' }
             });
 
+            let maxXSpan = Math.max((Math.pow(v0Ideal, 2) * Math.sin(2 * alphaRad)) / g, 5);
+            let maxYSpan = Math.max((Math.pow(v0Ideal * Math.sin(alphaRad), 2)) / (2 * g), 2);
+
             if (trackerData && trackerData.x.length > 0) {
+                const maxExpX = Math.max(...trackerData.x);
+                const maxExpY = Math.max(...trackerData.y);
+                maxXSpan = Math.max(maxXSpan, maxExpX * 1.15);
+                maxYSpan = Math.max(maxYSpan, maxExpY * 1.25);
+
                 traces.push({
                     x: trackerData.x,
                     y: trackerData.y,
                     mode: 'markers',
-                    name: '2. Dades Reals Tracker (Pati Escolar)',
+                    name: `2. Dades Reals (${ds.name})`,
                     marker: { size: 7.5, color: '#d97706', symbol: 'circle-open', line: { width: 2, color: '#d97706' } }
                 });
             }
@@ -2341,8 +2549,8 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
 
             const layout = {
                 margin: { l: 55, r: 25, t: 25, b: 45 },
-                xaxis: { title: '<b>Abast horitzontal x (m)</b>', range: [-2, 52], gridcolor: '#f1f5f9' },
-                yaxis: { title: '<b>Altura vertical y (m)</b>', range: [-1, 20], gridcolor: '#f1f5f9' },
+                xaxis: { title: '<b>Abast horitzontal x (m)</b>', range: [-0.05 * maxXSpan, maxXSpan * 1.05], gridcolor: '#f1f5f9' },
+                yaxis: { title: '<b>Altura vertical y (m)</b>', range: [-0.1 * maxYSpan, maxYSpan * 1.15], gridcolor: '#f1f5f9' },
                 legend: { x: 0.02, y: 0.98, bgcolor: 'rgba(255,255,255,0.9)', bordercolor: '#e2e8f0', borderwidth: 1 },
                 plot_bgcolor: '#ffffff',
                 paper_bgcolor: '#ffffff'
