@@ -7,6 +7,15 @@
 > - **Departament:**  Departament de Didàctica de les Ciències Experimentals i Socials
 > - **Institució:**  Universitat de València
 > - **Curs Acadèmic:**  2025-2026
+
+::: {.callout-tip}
+### 🧪 Prototip Didàctic Interactiu (Recurs Educatiu Obert - REA)
+Com a prova de concepte de la **Situació d'Aprenentatge 1** (*Cinemàtica i Dinàmica del Tir Parabòlic Real amb Fricció*), s'ha desenvolupat un **prototip funcional d'execució directa al navegador (WebAssembly / Pyodide)**:
+
+👉 [**Obrir el Prototip de la Simulació Interactiva (SdA-1)**](simulacio/index.html){.btn .btn-primary role="button" target="_blank"}
+
+*Nota metodològica:* Aquest recurs constitueix un **prototip experimental de caixa blanca** dissenyat per a la validació docent de la seqüència didàctica a l'aula (LOMLOE). Permet operar amb càlcul simbòlic (`SymPy`), contrast empíric (`Tracker`) i ajust de corbes (`SciPy`) des de qualsevol dispositiu mòbil o ordinador d'institut sense necessitat d'instal·lacions prèvies.
+:::
 :::
 
 # Resum {.unnumbered}

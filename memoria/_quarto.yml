@@ -10,6 +10,11 @@ book:
   language: ca
   downloads: [pdf]
   repo-url: https://github.com/CasimirVictoria/TFM-Secundaria_FiQ_PC_Jupyter_Sagemath
+  navbar:
+    right:
+      - text: "🧪 Prototip Simulador SdA"
+        href: simulacio/index.html
+        target: _blank
   chapters:
     - index.qmd
     - 01_introduccio.qmd
