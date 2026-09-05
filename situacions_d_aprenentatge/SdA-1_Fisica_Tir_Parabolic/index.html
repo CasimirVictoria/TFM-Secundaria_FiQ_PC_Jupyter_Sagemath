@@ -884,12 +884,14 @@ y_trajectoria = y_t.subs(t, sol_t)</textarea>
                         </div>
                         <input type="range" id="slider-v0-1" min="5" max="50" value="22.0" step="0.5">
                     </div>
-                    <div class="control-group">
-                        <div class="control-header">
-                            <span>Gravetat (\(g\)):</span>
-                            <span class="control-val" id="val-g-1">9.81 m/s²</span>
+                    <div class="control-group" style="background: #f1f5f9; padding: 10px 12px; border-radius: 8px; border: 1px dashed #cbd5e1;">
+                        <div class="control-header" style="color: #475569;">
+                            <span>🌍 Gravetat terrestre local (\(g\)):</span>
+                            <span class="control-val" style="color: #1e293b; font-weight: 700;">9.81 m/s²</span>
                         </div>
-                        <input type="range" id="slider-g-1" min="1.6" max="25" value="9.81" step="0.1">
+                        <div style="font-size: 0.75rem; color: #64748b; margin-top: 3px;">
+                            Constant física invariable de referència a la superfície terrestre.
+                        </div>
                     </div>
 
                     <div class="metric-cards">
@@ -2260,11 +2262,10 @@ if 'y_trajectoria' in globals():
         function updatePhase1Plot() {
             const alphaDeg = parseFloat(document.getElementById('slider-alpha-1').value);
             const v0 = parseFloat(document.getElementById('slider-v0-1').value);
-            const g = parseFloat(document.getElementById('slider-g-1').value);
+            const g = 9.81;
 
             document.getElementById('val-alpha-1').innerText = alphaDeg + "°";
             document.getElementById('val-v0-1').innerText = v0.toFixed(1) + " m/s";
-            document.getElementById('val-g-1').innerText = g + " m/s²";
 
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
             let xs = [];
@@ -2878,7 +2879,6 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
 
         document.getElementById('slider-alpha-1').addEventListener('input', updatePhase1Plot);
         document.getElementById('slider-v0-1').addEventListener('input', updatePhase1Plot);
-        document.getElementById('slider-g-1').addEventListener('input', updatePhase1Plot);
         document.getElementById('slider-drag-3').addEventListener('input', updatePhase3Plots);
 
         window.addEventListener('DOMContentLoaded', () => {
