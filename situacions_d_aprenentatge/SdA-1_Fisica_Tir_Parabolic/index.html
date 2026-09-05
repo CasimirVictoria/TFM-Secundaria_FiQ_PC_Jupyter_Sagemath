@@ -829,19 +829,19 @@
                             <span>▶</span> Executa el codi
                         </button>
                     </div>
-                    <textarea id="python-editor"># Modelització Simbòlica de Tir Parabòlic Ideal (Sintaxi SageMath)
-# 1. Definir variables simbòliques (sintaxi directa SageMath)
+                    <textarea id="python-editor"># Modelització Simbòlica de Tir Parabòlic Ideal
+
+# 1. Definir variables simbòliques
 var('t x v_0 alpha g')
 
-# 2. Equació horitzontal i aïllar el temps t(x)
+# 2. Equació horitzontal
 eq_x = Eq(x, v_0 * cos(alpha) * t)
+
+# 3. Aïllem el temps t(x)
 sol_t = solve(eq_x, t)[0]
 
-# 3. Equació vertical de la trajectòria y(x) ideal (Preparser SageMath: 1/2 i ^ directes)
-y_trajectoria = v_0 * sin(alpha) * sol_t - 1/2 * g * sol_t^2
-
-print("✅ Model ideal de Galileu deduït amb èxit!")
-print(f"Equació y(x) = {y_trajectoria}")</textarea>
+# 4. Equació vertical de la trajectòria y(x)
+y_trajectoria = v_0 * sin(alpha) * sol_t - 1/2 * g * sol_t^2</textarea>
                 </div>
 
                 <div class="theory-card">
