@@ -1229,6 +1229,70 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
                 </div>
             </div>
 
+            <!-- ================================================================ -->
+            <!-- PAS 0: DEDUCCIÓ TRADICIONAL A MÀ (BASTIDA COGNITIVA / DUA)        -->
+            <!-- ================================================================ -->
+            <div class="pas0-card" style="margin-bottom: 18px; background: #ffffff; border: 1px solid #bfdbfe; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(37,99,235,0.06);">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #eff6ff; cursor: pointer; user-select: none;" onclick="togglePas0()">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.2rem;">✍️</span>
+                        <div>
+                            <span style="font-weight: 700; color: #1e40af; font-size: 0.95rem;">Pas 0: Recordatori de la deducció tradicional a mà (Llapis i Paper)</span>
+                            <span style="font-size: 0.8rem; color: #64748b; margin-left: 8px;">Comproveu el vostre raonament algebraic abans de programar</span>
+                        </div>
+                    </div>
+                    <button class="btn-code-toggle" id="btn-toggle-pas0" style="pointer-events: none;">
+                        <span id="pas0-icon">👁️</span> <span id="pas0-text">Desplegar</span>
+                    </button>
+                </div>
+
+                <div id="pas0-content" style="display: none; padding: 16px 20px; border-top: 1px solid #dbeafe; background: #fafcff;">
+                    <p style="margin: 0 0 12px 0; font-size: 0.88rem; color: #334155; line-height: 1.5;">
+                        Abans d'escriure les instruccions a l'ordinador, recordeu com resolíem aquest problema a 4t d'ESO o a l'inici de curs mitjançant l'àlgebra clàssica a la llibreta:
+                    </p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 14px;">
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px;">
+                            <div style="font-weight: 700; color: #1e40af; font-size: 0.85rem; margin-bottom: 4px;">1. Equacions Horitzontal i Vertical</div>
+                            <div style="font-size: 0.82rem; color: #475569; margin-bottom: 4px;">En no haver-hi forces en \(x\) (\(a_x=0\)) i actuar només el pes (\(a_y=-g\)):</div>
+                            <div style="font-size: 0.92rem; color: #0f172a; text-align: center; padding: 4px 0;">
+                                \[ x(t) = v_0 \cos(\alpha) \cdot t \]
+                                \[ y(t) = v_0 \sin(\alpha) \cdot t - \frac{1}{2} g t^2 \]
+                            </div>
+                        </div>
+
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px;">
+                            <div style="font-weight: 700; color: #1e40af; font-size: 0.85rem; margin-bottom: 4px;">2. Aïllem el temps \(t(x)\)</div>
+                            <div style="font-size: 0.82rem; color: #475569; margin-bottom: 4px;">Aïllem \(t\) de l'equació del moviment uniforme horitzontal:</div>
+                            <div style="font-size: 0.95rem; color: #0f172a; text-align: center; padding: 8px 0;">
+                                \[ t = \frac{x}{v_0 \cos(\alpha)} \]
+                            </div>
+                        </div>
+
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px;">
+                            <div style="font-weight: 700; color: #1e40af; font-size: 0.85rem; margin-bottom: 4px;">3. Substituïm \(t\) a \(y(t)\)</div>
+                            <div style="font-size: 0.82rem; color: #475569; margin-bottom: 4px;">Substituïm l'expressió del temps directament a la vertical:</div>
+                            <div style="font-size: 0.90rem; color: #0f172a; text-align: center; padding: 4px 0;">
+                                \[ y(x) = v_0 \sin\alpha \left(\frac{x}{v_0 \cos\alpha}\right) - \frac{g}{2}\left(\frac{x}{v_0 \cos\alpha}\right)^2 \]
+                            </div>
+                        </div>
+
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px;">
+                            <div style="font-weight: 700; color: #1e40af; font-size: 0.85rem; margin-bottom: 4px;">4. Simplifiquem la Paràbola</div>
+                            <div style="font-size: 0.82rem; color: #475569; margin-bottom: 4px;">Com que \(\frac{\sin\alpha}{\cos\alpha} = \tan\alpha\), obtenim l'equació de Galileu:</div>
+                            <div style="font-size: 0.95rem; color: #16a34a; font-weight: 600; text-align: center; padding: 4px 0;">
+                                \[ y(x) = x \tan(\alpha) - \frac{g x^2}{2 v_0^2 \cos^2(\alpha)} \]
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px 14px; font-size: 0.84rem; color: #166534; display: flex; align-items: center; gap: 8px;">
+                        <span>💡</span>
+                        <span><b>Pont Computacional (Wing, 2006):</b> Observeu que les <b>4 línies de codi SageMath</b> de sota tradueixen fidelment aquests mateixos 4 passos lògics: <code>var</code>, plantejar relacions, <code>solve</code> i <code>subs</code>. L'ordinador assumeix el càlcul mecànic; l'equip humà dirigeix el pensament!</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="symbolic-grid">
                 <div class="code-container" id="code-container-1" style="display:none;">
                     <div class="code-topbar">
@@ -3275,6 +3339,22 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
                     btn.disabled = false;
                     btn.innerHTML = "<span>▶</span> Executa el codi";
                 }
+            }
+        }
+
+        function togglePas0() {
+            const content = document.getElementById('pas0-content');
+            const icon = document.getElementById('pas0-icon');
+            const text = document.getElementById('pas0-text');
+            const btn = document.getElementById('btn-toggle-pas0');
+            if (!content) return;
+            const isHidden = (content.style.display === 'none' || content.style.display === '');
+            content.style.display = isHidden ? 'block' : 'none';
+            if (icon) icon.innerText = isHidden ? '🔼' : '👁️';
+            if (text) text.innerText = isHidden ? 'Amagar' : 'Desplegar';
+            if (btn) btn.classList.toggle('active', isHidden);
+            if (isHidden && window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise([content]).catch(() => {});
             }
         }
 
