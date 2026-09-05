@@ -937,10 +937,9 @@ print(f"Equació y(x) = {y_trajectoria}")</textarea>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; align-items: center;">
                     <select id="select-dataset-tracker" class="select-box" style="flex: 1.5; min-width: 240px; padding: 7px 10px; font-weight: 600; border-color: #f59e0b;" onchange="changeExperimentalDataset()">
-                        <option value="pati">⚾ 1. Llançament Pati Escolar (32 pts, v₀=22.0 m/s, α=55.0°, y₀=0.00m)</option>
-                        <option value="osp_balltoss">🎾 2. OSP Tracker BallToss - D. Brown (11 pts, v₀=3.06 m/s, α=54.0°, y₀=0.00m)</option>
-                        <option value="llancament_esfera">⚽ 3. Llançament d'Esfera Taula 60fps (49 pts, v₀=5.00 m/s, α=58.0°, y₀=0.68m)</option>
-                        <option value="pingpong">🏓 4. Rebot Pilota Ping-Pong OpenCV (26 pts, v₀=3.60 m/s, α=85.5°, y₀=0.00m)</option>
+                        <option value="osp_balltoss" selected>🎾 1. OSP Tracker BallToss - D. Brown (11 pts, v₀=3.06 m/s, α=54.0°, y₀=0.00m)</option>
+                        <option value="llancament_esfera">⚽ 2. Llançament d'Esfera Taula 60fps (49 pts, v₀=5.00 m/s, α=58.0°, y₀=0.68m)</option>
+                        <option value="pingpong">🏓 3. Rebot Pilota Ping-Pong OpenCV (26 pts, v₀=3.60 m/s, α=85.5°, y₀=0.00m)</option>
                     </select>
                     <button class="btn-tracker" style="flex: 1; min-width: 170px;" onclick="loadSelectedDataset()">📥 Carregar Dades</button>
                     <label class="btn-tracker" style="flex: 1; min-width: 140px; background:#0284c7; cursor:pointer; text-align: center;">
@@ -957,7 +956,7 @@ print(f"Equació y(x) = {y_trajectoria}")</textarea>
             <div id="phase2-waiting" class="waiting-tracker-panel">
                 <div style="font-size: 1.5rem; margin-bottom: 6px;">📂</div>
                 <b>Esperant dades experimentals de Physics Tracker</b><br>
-                Premeu <i>«Carregar Mostra Pati»</i> o pengeu un fitxer <code>.csv</code> per visualitzar la discrepància experimental i obrir el debat científic.
+                Trieu un dels experiments calibrats (com <i>«OSP Tracker BallToss»</i>) o pengeu el vostre fitxer <code>.csv</code> enregistrat al mòbil per activar el contrast empíric.
             </div>
 
             <!-- Contingut revelat NOMÉS després de carregar les dades de Tracker -->
@@ -1005,8 +1004,8 @@ print(f"Equació y(x) = {y_trajectoria}")</textarea>
                         <span class="coop-badge">🤝 Estructura «Llapissos al centre»</span>
                     </div>
 
-                    <div style="font-size:0.92rem; line-height:1.5; margin: 6px 0 12px 0;">
-                        Amb la mateixa velocitat (\(v_0 = 22.0\text{ m/s}\)) i angle (\(\alpha = 55^\circ\)), <b>la fórmula ideal diu que arriba a 46.4 m, però la pilota cau als 23.9 m!</b>
+                    <div id="debate-conflict-intro" style="font-size:0.92rem; line-height:1.5; margin: 6px 0 12px 0;">
+                        Amb les mateixes condicions inicials de llançament (\(v_0, \alpha, y_0\)), <b>la fórmula ideal de Galileu preveu un abast superior al de la trajectòria real mesurada amb Tracker!</b>
                     </div>
 
                     <div style="background:#fef2f2; border:1px dashed #f87171; border-radius:8px; padding:8px 12px; font-size:0.84rem; color:#991b1b; font-weight:600; margin-bottom:12px;">
@@ -1016,7 +1015,7 @@ print(f"Equació y(x) = {y_trajectoria}")</textarea>
                     <!-- PREGUNTA 1 -->
                     <div class="debate-step-card" id="debate-card-1">
                         <div class="debate-step-header">
-                            <span>❓ Pregunta 1:</span> Falla la ciència? No se suposa que la física és la millor eina que tenim per descriure la realitat? Com s'explica aquest abisme entre la fórmula i la mesura al pati?
+                            <span>❓ Pregunta 1:</span> Falla la ciència? No se suposa que la física és la millor eina que tenim per descriure la realitat? Com s'explica aquest abisme entre la fórmula ideal i la mesura experimental real?
                         </div>
                         <div id="debate-input-container-1">
                             <textarea id="debate-ans-1" class="debate-textarea" placeholder="Debateu en equip: Per què una llei científica vàlida no encerta el llançament real?"></textarea>
@@ -1037,7 +1036,7 @@ print(f"Equació y(x) = {y_trajectoria}")</textarea>
                             <span>❓ Pregunta 2:</span> Quina hipòtesi simplificadora fonamental hem assumit en el model de Galileu que no es compleix a l'atmosfera de la Terra?
                         </div>
                         <div id="debate-input-container-2">
-                            <textarea id="debate-ans-2" class="debate-textarea" placeholder="Què hem ignorat a les equacions de la Fase 1 que sí que està present a l'aire del pati?"></textarea>
+                            <textarea id="debate-ans-2" class="debate-textarea" placeholder="Què hem ignorat a les equacions de la Fase 1 que sí que està present a l'atmosfera de la Terra?"></textarea>
                             <button class="btn-debate-send" onclick="submitDebateAnswer(2)">
                                 <span>📤</span> Enviar Resposta a la Pregunta 2
                             </button>
@@ -1048,7 +1047,7 @@ print(f"Equació y(x) = {y_trajectoria}")</textarea>
                     <!-- PREGUNTA 3 (Oculta d'inici) -->
                     <div class="debate-step-card" id="debate-card-3" style="display:none;">
                         <div style="background:#f0fdf4; border-left:4px solid #16a34a; padding:12px 14px; border-radius:0 8px 8px 0; margin-bottom:12px; font-size:0.86rem; color:#14532d; line-height:1.55;">
-                            🪐 <b>El Triomf de Newton al Buit de l'Espai vs el Pati Escolar:</b><br>
+                            🪐 <b>El Triomf de Newton al Buit de l'Espai vs l'Atmosfera Terrestre:</b><br>
                             Les equacions pures de Newton i Galileu (sense fregament) <b>són increïblement exactes quan hi ha buit!</b> Descriuen amb una precisió mil·limètrica (error &lt; 0.001%) l'òrbita de la Lluna al voltant de la Terra, la trajectòria dels planetes al voltant del Sol o les sondes enviades a Mart. A més, a la Lluna, una ploma i un martell cauen alhora (missió Apol·lo 15, 1971).<br>
                             <b>La diferència fonamental:</b> A la Terra vivim submergits en un «oceà d'aire» dens (\(\rho_{\text{aire}} \approx 1.2\text{ kg/m}^3\)), de manera que el fregament frena dràsticament la pilota.
                         </div>
@@ -1253,7 +1252,7 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
                             ⚙️ Optimització Computacional No Lineal (Levenberg-Marquardt):
                         </div>
                         <div style="font-size:0.84rem; color:#374151; margin-bottom:10px;">
-                            SciPy calcula automàticament el coeficient de fregament real que fa coincidir el model amb les dades del pati:
+                            SciPy calcula automàticament el coeficient de fregament real que fa coincidir el model amb les dades experimentals reals:
                         </div>
                         <button class="btn-fit" id="btn-run-fit" onclick="runCurveFitWasm()">
                             <span>🎯</span> Executar Ajust Òptim amb Curve_fit (SciPy WASM)
@@ -1293,49 +1292,6 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
         let fittedResult = null;
 
         const EXPERIMENTAL_DATASETS = {
-            'pati': {
-                id: 'pati',
-                name: 'Llançament Pati Escolar',
-                description: 'Pilota de cautxú (m=0.145 kg) al pati exterior amb resistència aerodinàmica',
-                csv: `t,x,y
-0.000,0.00,0.00
-0.097,1.19,1.66
-0.194,2.33,3.15
-0.292,3.44,4.51
-0.389,4.48,5.70
-0.487,5.50,6.78
-0.584,6.48,7.71
-0.681,7.43,8.53
-0.779,8.36,9.23
-0.876,9.25,9.82
-0.974,10.13,10.31
-1.071,10.99,10.69
-1.169,11.83,10.98
-1.266,12.65,11.16
-1.363,13.45,11.25
-1.461,14.24,11.24
-1.558,15.01,11.15
-1.656,15.78,10.96
-1.753,16.52,10.68
-1.850,17.25,10.32
-1.948,17.97,9.87
-2.045,18.67,9.34
-2.143,19.36,8.73
-2.240,20.03,8.04
-2.338,20.69,7.27
-2.435,21.33,6.43
-2.532,21.95,5.53
-2.630,22.56,4.54
-2.727,23.15,3.50
-2.825,23.73,2.39
-2.922,24.28,1.24
-3.020,24.82,0.01`,
-                v0_initial: 22.0,
-                alpha_initial: 55.0,
-                y0_initial: 0.0,
-                p0_fit: [22.0, 0.02],
-                bounds_fit: [[10.0, 0.0], [40.0, 0.2]]
-            },
             'osp_balltoss': {
                 id: 'osp_balltoss',
                 name: 'OSP Tracker BallToss (Douglas Brown)',
@@ -1471,12 +1427,12 @@ t,x,y,vx,vy
             }
         };
 
-        let currentDatasetKey = 'pati';
+        let currentDatasetKey = 'osp_balltoss';
         let datasetRevisionToken = 0;
 
         function loadSelectedDataset() {
             const sel = document.getElementById('select-dataset-tracker');
-            const key = sel ? sel.value : 'pati';
+            const key = sel ? sel.value : 'osp_balltoss';
             currentDatasetKey = key;
             const ds = EXPERIMENTAL_DATASETS[key];
             if (!ds) return;
@@ -2293,7 +2249,7 @@ sys.stdout = io.StringIO()
         }
 
         function updatePhase2Plots() {
-            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['pati'];
+            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['osp_balltoss'];
             const alphaDeg = ds.alpha_initial;
             const v0 = ds.v0_initial;
             const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
@@ -2357,6 +2313,16 @@ sys.stdout = io.StringIO()
             const lblReal = document.getElementById('lbl-xreal-2');
             if (lblReal) lblReal.innerHTML = `Abast Mesurat (${ds.name})`;
 
+            const conflictIntroEl = document.getElementById('debate-conflict-intro');
+            if (conflictIntroEl && trackerData && trackerData.x.length > 0) {
+                const xExpMax = trackerData.x[trackerData.x.length - 1];
+                const y0Txt = y0 > 0 ? `, y_0 = ${y0.toFixed(2)}\\text{ m}` : '';
+                conflictIntroEl.innerHTML = `Amb les mateixes condicions inicials (\\(v_0 = ${v0.toFixed(2)}\\text{ m/s},\\ \\alpha = ${alphaDeg.toFixed(1)}^\\circ${y0Txt}\\)), <b>el model ideal de Galileu preveu un abast de ${xMaxIdeal.toFixed(2)} m, però la mesura real amb Tracker s'atura als ${xExpMax.toFixed(2)} m!</b>`;
+                if (window.MathJax && MathJax.typesetPromise) {
+                    MathJax.typesetPromise([conflictIntroEl]);
+                }
+            }
+
             // Gràfica 2 de Conflicte Pur
             const tracesConflict = [];
             tracesConflict.push({
@@ -2397,7 +2363,7 @@ sys.stdout = io.StringIO()
         }
 
         function updatePhase3Plots() {
-            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['pati'];
+            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['osp_balltoss'];
             const alphaDeg = ds.alpha_initial;
             const v0 = ds.v0_initial;
             const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
@@ -2516,7 +2482,7 @@ sys.stdout = io.StringIO()
             btn.innerHTML = "<span>⏳</span> SciPy Optimitzant...";
 
             try {
-                const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['pati'];
+                const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['osp_balltoss'];
                 const alphaDeg = ds.alpha_initial;
                 const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData.y[0] || 0.0);
                 const g = 9.81;
@@ -2619,7 +2585,7 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
         }
 
         function updatePhase3Plot() {
-            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['pati'];
+            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['osp_balltoss'];
             const alphaDeg = ds.alpha_initial;
             const v0Ideal = ds.v0_initial;
             const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
