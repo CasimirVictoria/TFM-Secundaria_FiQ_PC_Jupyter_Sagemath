@@ -2621,18 +2621,6 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
                     name: hasEvaluatedWithPyodide ? '🟢 Model teòric ideal (SageMath)' : 'Model teòric ideal (Galileu)',
                     line: { color: hasEvaluatedWithPyodide ? '#16a34a' : '#2563eb', width: 3.5 },
                     hovertemplate: 'x: %{x:.2f} m<br>y: %{y:.2f} m<extra></extra>'
-                },
-                {
-                    x: [0, displayXMax / 2, displayXMax],
-                    y: [0, displayYMax, 0],
-                    mode: 'markers+text',
-                    name: 'Punts Claus',
-                    text: ['(0, 0)', `h_màx = ${displayYMax.toFixed(1)} m`, `Abast = ${displayXMax.toFixed(1)} m`],
-                    textposition: ['bottom right', 'top center', 'bottom left'],
-                    textfont: { size: 11, color: '#1e293b' },
-                    marker: { size: [7, 11, 9], color: ['#1e293b', '#dc2626', '#16a34a'] },
-                    hoverinfo: 'skip',
-                    showlegend: false
                 }
             ];
 
