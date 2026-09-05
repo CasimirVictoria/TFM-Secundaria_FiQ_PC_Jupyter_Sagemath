@@ -2636,13 +2636,26 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
                 }
             ];
 
-            const span1X = Math.max(displayXMax, 0.5);
-            const span1Y = Math.max(displayYMax, 0.5);
+            // Marc de referència estable i didàctic per a percebre clarament l'evolució de la paràbola en variar v0 i alpha
+            const xLimit = Math.max(60, Math.ceil((displayXMax + 5) / 20) * 20);
+            const yLimit = Math.max(25, Math.ceil((displayYMax + 3) / 10) * 10);
             const layout = {
                 margin: { l: 50, r: 20, t: 20, b: 40 },
-                uirevision: 'phase1_' + phase1RevisionToken,
-                xaxis: { title: '<b>x (m)</b>', range: [-0.05 * span1X, displayXMax + 0.10 * span1X], autorange: false, gridcolor: '#f1f5f9' },
-                yaxis: { title: '<b>y (m)</b>', range: [-0.08 * span1Y, displayYMax + 0.18 * span1Y], autorange: false, gridcolor: '#f1f5f9' },
+                uirevision: 'phase1_axes',
+                xaxis: { 
+                    title: '<b>x (m)</b>', 
+                    range: [-2, xLimit], 
+                    autorange: false, 
+                    gridcolor: '#f1f5f9',
+                    zerolinecolor: '#cbd5e1'
+                },
+                yaxis: { 
+                    title: '<b>y (m)</b>', 
+                    range: [-1, yLimit], 
+                    autorange: false, 
+                    gridcolor: '#f1f5f9',
+                    zerolinecolor: '#cbd5e1'
+                },
                 plot_bgcolor: '#ffffff',
                 paper_bgcolor: '#ffffff',
                 showlegend: true,
