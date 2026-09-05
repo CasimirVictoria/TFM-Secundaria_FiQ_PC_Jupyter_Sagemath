@@ -791,6 +791,167 @@
             line-height: 1.6;
             margin-top: 10px;
         }
+
+        /* ==================================================================== */
+        /* NAVEGACIÓ PER FASES / STEPPER DIDÀCTIC (MODALITAT DIAPOSITIVA)       */
+        /* ==================================================================== */
+        .phase-stepper-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 8px 18px;
+            margin-bottom: 22px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            gap: 12px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+
+        .step-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .step-btn:hover {
+            background: #f1f5f9;
+        }
+
+        .step-btn.active {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            box-shadow: 0 1px 4px rgba(37, 99, 235, 0.12);
+        }
+
+        .step-btn .step-num {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+        }
+
+        .step-btn.active .step-num {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .step-btn.unlocked .step-num {
+            background: #8b5cf6;
+            color: #ffffff;
+        }
+
+        .step-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .step-badge {
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: #64748b;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .step-btn.active .step-badge {
+            color: var(--primary);
+        }
+
+        .step-label {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .step-btn.active .step-label {
+            color: var(--primary-dark);
+        }
+
+        .step-connector {
+            flex: 0 1 40px;
+            height: 2px;
+            background: #e2e8f0;
+            transition: background 0.3s;
+        }
+
+        .step-connector.active {
+            background: var(--primary);
+        }
+
+        .btn-next-phase {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #ffffff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .btn-next-phase:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-prev-phase {
+            background: #f8fafc;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-prev-phase:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        @media (max-width: 768px) {
+            .phase-stepper-nav {
+                flex-direction: column;
+                gap: 6px;
+                padding: 10px;
+            }
+            .step-connector {
+                display: none;
+            }
+            .step-btn {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
     </style>
 </head>
 <body>
@@ -818,9 +979,38 @@
         </header>
 
         <!-- ==================================================================== -->
+        <!-- NAVEGACIÓ PER FASES / STEPPER DIDÀCTIC (MODALITAT DIAPOSITIVA)       -->
+        <!-- ==================================================================== -->
+        <nav class="phase-stepper-nav" aria-label="Navegació per fases de la situació d'aprenentatge">
+            <button class="step-btn active" id="step-btn-1" onclick="switchPhase(1)">
+                <span class="step-num" id="step-num-1">1</span>
+                <span class="step-info">
+                    <span class="step-badge">Fase 1 · Use</span>
+                    <span class="step-label">Model Ideal (Galileu)</span>
+                </span>
+            </button>
+            <div class="step-connector" id="step-conn-1"></div>
+            <button class="step-btn" id="step-btn-2" onclick="switchPhase(2)">
+                <span class="step-num" id="step-num-2">2</span>
+                <span class="step-info">
+                    <span class="step-badge">Fase 2 · Modify</span>
+                    <span class="step-label">Conflicte Experimental</span>
+                </span>
+            </button>
+            <div class="step-connector" id="step-conn-2"></div>
+            <button class="step-btn" id="step-btn-3" onclick="switchPhase(3)">
+                <span class="step-num" id="step-num-3">3</span>
+                <span class="step-info">
+                    <span class="step-badge">Fase 3 · Create</span>
+                    <span class="step-label">Model Dinàmic de Newton</span>
+                </span>
+            </button>
+        </nav>
+
+        <!-- ==================================================================== -->
         <!-- FASE 1: DEDUCCIÓ SIMBÒLICA I EXPLORACIÓ TEÒRICA                       -->
         <!-- ==================================================================== -->
-        <div class="phase-card">
+        <div class="phase-card" id="phase1-card">
             <div class="section-title">
                 <span>🐍 Fase 1: Deducció Simbòlica i Exploració del Model Teòric Ideal (Galileu)</span>
             </div>
@@ -968,12 +1158,19 @@ y_trajectoria = y_t.subs(sol_t)</textarea>
                     <div id="plot-phase-1" class="plot-box" style="height: 400px;"></div>
                 </div>
             </div>
+
+            <!-- Botó de transició a la Fase 2 -->
+            <div style="display: flex; justify-content: flex-end; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+                <button class="btn-next-phase" onclick="switchPhase(2)">
+                    <span>Comprova el model amb dades reals (Fase 2)</span> <span>➔</span>
+                </button>
+            </div>
         </div>
 
         <!-- ==================================================================== -->
         <!-- FASE 2: CONTRAST EXPERIMENTAL I CONFLICTE COGNITIU                   -->
         <!-- ==================================================================== -->
-        <div class="phase-card">
+        <div class="phase-card" id="phase2-card" style="display:none;">
             <div class="section-title">
                 <span>📹 Fase 2: Contrast Experimental amb Tracker i Conflicte Cognitiu</span>
             </div>
@@ -1152,6 +1349,16 @@ y_trajectoria = y_t.subs(sol_t)</textarea>
                     </div>
                 </div>
             </div>
+
+            <!-- Botons de navegació de la Fase 2 -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 12px;">
+                <button class="btn-prev-phase" onclick="switchPhase(1)">
+                    <span>◀</span> <span>Tornar a la Fase 1 (Model Ideal)</span>
+                </button>
+                <button class="btn-next-phase" onclick="switchPhase(3)" id="btn-goto-phase3" style="display: none;">
+                    <span>Avançar a la Fase 3 (Model Dinàmic)</span> <span>➔</span>
+                </button>
+            </div>
         </div>
 
         <!-- ==================================================================== -->
@@ -1329,6 +1536,13 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
                     </div>
                 </div>
             </div>
+
+            <!-- Botó de retorn a la Fase 2 -->
+            <div style="display: flex; justify-content: flex-start; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e9d5ff;">
+                <button class="btn-prev-phase" onclick="switchPhase(2)">
+                    <span>◀</span> <span>Tornar a la Fase 2 (Contrast Experimental)</span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1339,6 +1553,69 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
         let currentLatexSimbolica = "x \\tan\\alpha - \\frac{g x^2}{2 v_0^2 \\cos^2\\alpha}";
         let trackerData = null;
         let fittedResult = null;
+        let currentPhase = 1;
+        let phase3Unlocked = false;
+
+        function switchPhase(phaseNum) {
+            if (phaseNum === 3 && !phase3Unlocked) {
+                alert("Per accedir a la Fase 3, primer heu de completar el contrast experimental i el Debat Cooperatiu de la Fase 2 (Pregunta 3).");
+                return;
+            }
+
+            currentPhase = phaseNum;
+
+            // Mostrar / Ocultar targetes de fase (modalitat diapositiva)
+            const p1 = document.getElementById('phase1-card');
+            const p2 = document.getElementById('phase2-card');
+            const p3 = document.getElementById('phase3-card');
+
+            if (p1) p1.style.display = (phaseNum === 1) ? 'block' : 'none';
+            if (p2) p2.style.display = (phaseNum === 2) ? 'block' : 'none';
+            if (p3) p3.style.display = (phaseNum === 3) ? 'block' : 'none';
+
+            // Actualitzar estat visual dels botons del stepper
+            for (let i = 1; i <= 3; i++) {
+                const btn = document.getElementById(`step-btn-${i}`);
+                if (btn) {
+                    if (i === phaseNum) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                }
+            }
+            const conn1 = document.getElementById('step-conn-1');
+            const conn2 = document.getElementById('step-conn-2');
+            if (conn1) conn1.classList.toggle('active', phaseNum >= 2);
+            if (conn2) conn2.classList.toggle('active', phaseNum >= 3);
+
+            // Desplaçar al principi del document de manera suau
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Refrescar gràfics Plotly i editors CodeMirror que estaven en contenidors ocults
+            setTimeout(() => {
+                if (phaseNum === 1) {
+                    if (editor1) editor1.refresh();
+                    if (document.getElementById('plot-phase-1')) Plotly.Plots.resize('plot-phase-1');
+                    if (document.getElementById('canvas-static-plot')) Plotly.Plots.resize('canvas-static-plot');
+                } else if (phaseNum === 2) {
+                    if (!trackerData) {
+                        loadSelectedDataset();
+                    } else {
+                        updatePhase2Plots();
+                    }
+                    if (document.getElementById('plot-phase-2-conflict')) Plotly.Plots.resize('plot-phase-2-conflict');
+                    if (document.getElementById('plot-phase-2-vx')) Plotly.Plots.resize('plot-phase-2-vx');
+                    if (document.getElementById('plot-phase-2-vy')) Plotly.Plots.resize('plot-phase-2-vy');
+                } else if (phaseNum === 3) {
+                    if (!editor2) initCodeMirrorEditor2();
+                    if (editor2) editor2.refresh();
+                    updatePhase3Plots();
+                    if (document.getElementById('plot-phase-3-dynamic')) Plotly.Plots.resize('plot-phase-3-dynamic');
+                    if (document.getElementById('plot-phase-3')) Plotly.Plots.resize('plot-phase-3');
+                }
+            }, 60);
+        }
 
         const EXPERIMENTAL_DATASETS = {
             'osp_balltoss': {
@@ -1669,11 +1946,12 @@ t,x,y,vx,vy
                 document.getElementById('debate-card-3').style.display = 'block';
             } else if (stepNum === 3) {
                 // Després de la Pregunta 3, desbloquejar directament la Fase 3!
-                const p3 = document.getElementById('phase3-card');
-                p3.style.display = 'block';
-                initCodeMirrorEditor2();
-                updatePhase3Plots();
-                p3.scrollIntoView({ behavior: 'smooth' });
+                phase3Unlocked = true;
+                const stepBtn3 = document.getElementById('step-btn-3');
+                if (stepBtn3) stepBtn3.classList.add('unlocked');
+                const btnGoto = document.getElementById('btn-goto-phase3');
+                if (btnGoto) btnGoto.style.display = 'inline-flex';
+                switchPhase(3);
             }
         }
 
@@ -3185,6 +3463,7 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
         window.addEventListener('DOMContentLoaded', () => {
             initCodeMirrorEditor1();
             initCodeMirrorEditor2();
+            loadSelectedDataset(); // Prepara les dades experimentals per defecte (osp_balltoss)
             updatePhase1Plot(); // Dibuixa immediatament el gràfic base amb JS des del primer mil·lisegon
             initWasmPyodide();
         });
