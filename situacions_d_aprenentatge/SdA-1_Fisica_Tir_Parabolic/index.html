@@ -933,7 +933,7 @@ y_trajectoria = y_t.subs(t, sol_t)</textarea>
                     <select id="select-dataset-tracker" class="select-box" style="flex: 1.5; min-width: 240px; padding: 7px 10px; font-weight: 600; border-color: #f59e0b;" onchange="changeExperimentalDataset()">
                         <option value="osp_balltoss" selected>🎾 1. OSP Tracker BallToss - D. Brown (11 pts, v₀=3.06 m/s, α=54.0°, y₀=0.00m)</option>
                         <option value="llancament_esfera">⚽ 2. Llançament d'Esfera Taula 60fps (49 pts, v₀=5.00 m/s, α=58.0°, y₀=0.68m)</option>
-                        <option value="pingpong">🏓 3. Rebot Pilota Ping-Pong OpenCV (26 pts, v₀=3.60 m/s, α=85.5°, y₀=0.00m)</option>
+                        <option value="pingpong">🏓 3. Rebot Pilota Ping-Pong OpenCV (25 pts, v₀=3.52 m/s, α=85.6°, y₀=0.00m)</option>
                     </select>
                     <button class="btn-tracker" style="flex: 1; min-width: 170px;" onclick="loadSelectedDataset()">📥 Carregar Dades</button>
                     <label class="btn-tracker" style="flex: 1; min-width: 140px; background:#0284c7; cursor:pointer; text-align: center;">
@@ -1378,40 +1378,39 @@ t,x,y,vx,vy
                 description: 'Pilota m=0.0027 kg molt lleugera (alta resistència aerodinàmica)',
                 csv: `# Dataset: Rebot experimental de pilota de ping-pong (OpenCV Computer Vision Tracking)
 # Parametres fisics: Pilota de tennis de taula m = 0.0027 kg, D = 0.040 m
-# Condicions inicials: v0 ~ 3.60 m/s, alpha ~ 85.5 deg (rebot vertical-inclinat), y0 = 0.0 m
+# Condicions inicials al rebot: v0 ~ 3.52 m/s, alpha ~ 85.6 deg (rebot vertical-inclinat), y0 = 0.0 m
 # Frequencia temporal: 60 fps (dt = 0.0168 s)
 t,x,y,vx,vy
-0.0,0.0,0.0,0.348,0.037
-0.1172,0.0408,0.0044,0.317,0.386
-0.134,0.0425,0.0518,0.121,3.34
-0.1507,0.0449,0.1162,0.143,3.758
-0.1674,0.0473,0.1776,0.148,3.58
-0.1842,0.0498,0.2361,0.165,3.415
-0.2009,0.0528,0.292,0.184,3.203
-0.2177,0.056,0.3434,0.203,2.959
-0.2344,0.0596,0.3911,0.222,2.76
-0.2512,0.0634,0.4358,0.24,2.531
-0.2679,0.0676,0.4758,0.258,2.271
-0.2847,0.0721,0.5119,0.28,2.013
-0.3014,0.077,0.5432,0.288,1.747
-0.3181,0.0817,0.5704,0.29,1.48
-0.3349,0.0867,0.5928,0.295,1.195
-0.3516,0.0916,0.6104,0.316,0.92
-0.3684,0.0973,0.6236,0.336,0.627
-0.3851,0.1029,0.6314,0.333,0.312
-0.4019,0.1085,0.6341,0.335,0.01
-0.4186,0.1141,0.6317,0.347,-0.291
-0.4354,0.1201,0.6243,0.349,-0.593
-0.4521,0.1258,0.6119,0.346,-0.897
-0.4688,0.1317,0.5943,0.342,-1.205
-0.4856,0.1372,0.5715,0.347,-1.498
-0.5023,0.1433,0.5441,0.357,-1.789
-0.5191,0.1492,0.5116,0.352,-1.941`,
-                v0_initial: 3.6,
-                alpha_initial: 85.5,
+0.0,0.0,0.0,0.317,0.386
+0.0168,0.0017,0.0474,0.121,3.34
+0.0335,0.0041,0.1118,0.143,3.758
+0.0502,0.0065,0.1732,0.148,3.58
+0.067,0.009,0.2317,0.165,3.415
+0.0837,0.012,0.2876,0.184,3.203
+0.1005,0.0152,0.339,0.203,2.959
+0.1172,0.0188,0.3867,0.222,2.76
+0.134,0.0226,0.4314,0.24,2.531
+0.1507,0.0268,0.4714,0.258,2.271
+0.1675,0.0313,0.5075,0.28,2.013
+0.1842,0.0362,0.5388,0.288,1.747
+0.2009,0.0409,0.566,0.29,1.48
+0.2177,0.0459,0.5884,0.295,1.195
+0.2344,0.0508,0.606,0.316,0.92
+0.2512,0.0565,0.6192,0.336,0.627
+0.2679,0.0621,0.627,0.333,0.312
+0.2847,0.0677,0.6297,0.335,0.01
+0.3014,0.0733,0.6273,0.347,-0.291
+0.3182,0.0793,0.6199,0.349,-0.593
+0.3349,0.085,0.6075,0.346,-0.897
+0.3516,0.0909,0.5899,0.342,-1.205
+0.3684,0.0964,0.5671,0.347,-1.498
+0.3851,0.1025,0.5397,0.357,-1.789
+0.4019,0.1084,0.5072,0.352,-1.941`,
+                v0_initial: 3.52,
+                alpha_initial: 85.6,
                 y0_initial: 0.0,
-                p0_fit: [3.6, 0.05],
-                bounds_fit: [[1.0, 0.0], [10.0, 1.0]]
+                p0_fit: [3.5, 0.08],
+                bounds_fit: [[1.0, 0.0], [10.0, 2.0]]
             }
         };
 
