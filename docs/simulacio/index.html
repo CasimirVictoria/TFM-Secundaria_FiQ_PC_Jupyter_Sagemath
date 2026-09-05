@@ -829,7 +829,7 @@
                             <span>▶</span> Executa el codi
                         </button>
                     </div>
-                    <textarea id="python-editor"># Modelització Simbòlica de Tir Parabòlic Ideal (Sintaxi SageMath / Python)
+                    <textarea id="python-editor"># Modelització Simbòlica de Tir Parabòlic Ideal (Sintaxi SageMath)
 # 1. Definir variables simbòliques (sintaxi directa SageMath)
 var('t x v_0 alpha g')
 
@@ -837,14 +837,8 @@ var('t x v_0 alpha g')
 eq_x = Eq(x, v_0 * cos(alpha) * t)
 sol_t = solve(eq_x, t)[0]
 
-# 3. Equació vertical de la trajectòria y(x) ideal
-y_trajectoria = v_0 * sin(alpha) * sol_t - Rational(1, 2) * g * sol_t**2
-
-# 4. Funció compilada al vol per a avaluar numèricament la corba
-f_num = lambdify((x, v_0, alpha, g), y_trajectoria, modules=['numpy'])
-
-# Exportar expressió LaTeX simbòlica pura per a MathJax
-latex_eq_simbolica = latex(y_trajectoria)
+# 3. Equació vertical de la trajectòria y(x) ideal (Preparser SageMath: 1/2 i ^ directes)
+y_trajectoria = v_0 * sin(alpha) * sol_t - 1/2 * g * sol_t^2
 
 print("✅ Model ideal de Galileu deduït amb èxit!")
 print(f"Equació y(x) = {y_trajectoria}")</textarea>
@@ -1127,7 +1121,7 @@ print(f"Equació y(x) = {y_trajectoria}")</textarea>
                                 <span>▶</span> Executa el codi
                             </button>
                         </div>
-                        <textarea id="python-editor-phase2"># Model Dinàmic de Newton amb Fregament Aerodinàmic (Sintaxi SageMath / Python)
+                        <textarea id="python-editor-phase2"># Model Dinàmic de Newton amb Fregament Aerodinàmic (Sintaxi SageMath)
 # 1. Definir variables i paràmetres simbòlics (sintaxi directa SageMath)
 var('t x v_0 alpha g k_drag', positive=True)
 
@@ -1135,11 +1129,11 @@ var('t x v_0 alpha g k_drag', positive=True)
 v_0x = v_0 * cos(alpha)
 v_0y = v_0 * sin(alpha)
 
-# 3. Proposta de moviment frenat en l'eix X per l'aire
+# 3. Proposta de moviment frenat en l'eix X per l'aire (Preparser: 1/2 i ^ directes)
 # Hipòtesi d'ordre 1: La frenada horitzontal és la responsable principal de la pèrdua d'abast.
 # (A l'eix Y el fregament canvia de signe en l'apogeu; a la Fase 3 s'integrarà el model 2D complet!).
-x_t = v_0x * t * (1 - Rational(1, 2) * k_drag * t)
-y_t = v_0y * t - Rational(1, 2) * g * t**2
+x_t = v_0x * t * (1 - 1/2 * k_drag * t)
+y_t = v_0y * t - 1/2 * g * t^2
 
 # 4. Derivades simbòliques temporals (Càlcul Diferencial Curricular):
 # Velocitat: v(t) = dr/dt  i  Acceleració: a(t) = dv/dt (2a Llei de Newton)
@@ -1151,13 +1145,7 @@ a_y = diff(v_y, t)
 
 # 5. Model aproximat de la trajectòria y(x) amb el terme corrector de l'aire:
 # Quan x augmenta, la frenada acumulada fa que la paràbola caiga abans
-y_freg = x * tan(alpha) - (g * x**2) / (2 * v_0**2 * cos(alpha)**2) * (1 + k_drag * x)
-
-# Exportació simbòlica a LaTeX per a visualització
-latex_vx = latex(v_x)
-latex_ax = latex(a_x)
-latex_ay = latex(a_y)
-latex_corregit = latex(y_freg)
+y_freg = x * tan(alpha) - (g * x^2) / (2 * v_0^2 * cos(alpha)^2) * (1 + k_drag * x)
 
 print("✅ Càlcul diferencial completat amb èxit!")
 print(f"Velocitat horitzontal:  v_x(t) = {v_x}")
@@ -1702,8 +1690,25 @@ t,x,y,vx,vy
             }
 
             try {
-                pyodideInstance.runPython(code);
-                
+                let preparsedCode = code;
+                try {
+                    const prepFn = pyodideInstance.globals.get('sage_preparse');
+                    if (prepFn) preparsedCode = prepFn(code);
+                } catch (e) {}
+
+                pyodideInstance.runPython(preparsedCode);
+
+                // Auto-exportació LaTeX en segon pla
+                pyodideInstance.runPython(`
+if 'v_x' in globals() and 'latex_vx' not in globals():
+    globals()['latex_vx'] = sp.latex(globals()['v_x'])
+if 'a_x' in globals() and 'latex_ax' not in globals():
+    globals()['latex_ax'] = sp.latex(globals()['a_x'])
+if 'a_y' in globals() and 'latex_ay' not in globals():
+    globals()['latex_ay'] = sp.latex(globals()['a_y'])
+if 'y_freg' in globals() and 'latex_corregit' not in globals():
+    globals()['latex_corregit'] = sp.latex(globals()['y_freg'])
+`);
                 const axFromPy = pyodideInstance.globals.get('latex_ax') || '- k_{drag} v_{0} \\cos(\\alpha)';
                 const ayFromPy = pyodideInstance.globals.get('latex_ay') || '- g';
                 const yfregFromPy = pyodideInstance.globals.get('latex_corregit') || '';
@@ -1944,6 +1949,75 @@ def var(names, **kwargs):
         globals()[str(s)] = s
     return syms[0] if len(syms) == 1 else syms
 
+import tokenize, io
+
+def sage_preparse(code_str):
+    """Preparser transparent de SageMath: tradueix ^ a ** i fraccions a/b a Rational(a,b) respectant cadenes i comentaris."""
+    try:
+        tokens = list(tokenize.tokenize(io.BytesIO(code_str.encode('utf-8')).readline))
+        new_tokens = []
+        i = 0
+        while i < len(tokens):
+            tok = tokens[i]
+            if (tok.type == tokenize.NUMBER and tok.string.isdigit() and
+                i + 2 < len(tokens) and
+                tokens[i+1].type == tokenize.OP and tokens[i+1].string == '/' and
+                tokens[i+2].type == tokenize.NUMBER and tokens[i+2].string.isdigit()):
+                new_tokens.append((tokenize.NAME, f'Rational({tok.string}, {tokens[i+2].string})'))
+                i += 3
+                continue
+            if tok.type == tokenize.OP and tok.string == '^':
+                new_tokens.append((tokenize.OP, '**'))
+                i += 1
+                continue
+            new_tokens.append((tok.type, tok.string))
+            i += 1
+        return tokenize.untokenize(new_tokens).decode('utf-8')
+    except Exception:
+        return code_str
+
+def eval_model_phase1(v0_val, alpha_rad, g_val):
+    """Avalua densament el model f_num de l'alumne fins a la caiguda y(x) = 0."""
+    if 'f_num' not in globals() or globals()['f_num'] is None:
+        return None
+    f = globals()['f_num']
+    v0_f = float(v0_val)
+    a_f = float(alpha_rad)
+    g_f = float(g_val)
+    
+    v0x = max(v0_f * np.cos(a_f), 0.01)
+    v0y = v0_f * np.sin(a_f)
+    t_est = max(2.0 * v0y / g_f, 0.5) if v0y > 0 else 1.0
+    x_est = max(v0x * t_est, 1.0)
+    
+    x_dense = np.linspace(0.0, x_est * 2.5, 300)
+    try:
+        y_dense = f(x_dense, v0_f, a_f, g_f)
+        if np.isscalar(y_dense):
+            y_dense = np.full_like(x_dense, float(y_dense))
+        else:
+            y_dense = np.array(y_dense, dtype=float)
+    except Exception:
+        return None
+        
+    valid_idx = [0]
+    for i in range(1, len(x_dense)):
+        if y_dense[i] < -0.001 and x_dense[i] > 0.02:
+            valid_idx.append(i)
+            break
+        valid_idx.append(i)
+        
+    xs_res = x_dense[valid_idx].tolist()
+    ys_res = [max(0.0, float(y)) for y in y_dense[valid_idx]]
+    max_y = float(np.max(ys_res)) if len(ys_res) else 1.0
+    max_x = float(xs_res[-1]) if len(xs_res) else 1.0
+    return {
+        'xs': xs_res,
+        'ys': ys_res,
+        'xMax': max_x,
+        'yMax': max_y
+    }
+
 mod = sys.modules['__main__']
 _sagemath_builtins = {
     'var': var,
@@ -1963,6 +2037,8 @@ _sagemath_builtins = {
     'Rational': sp.Rational,
     'latex': sp.latex,
     'lambdify': sp.lambdify,
+    'sage_preparse': sage_preparse,
+    'eval_model_phase1': eval_model_phase1,
     'sp': sp,
     'np': np
 }
@@ -1993,9 +2069,11 @@ for _k, _v in _sagemath_builtins.items():
             }
         }
 
+        let phase1RevisionToken = 0;
+
         async function executeUserCode() {
             if (!pyodideInstance) return;
-            const code = editor1 ? editor1.getValue() : (document.getElementById('python-editor') ? document.getElementById('python-editor').value : '');
+            const rawCode = editor1 ? editor1.getValue() : (document.getElementById('python-editor') ? document.getElementById('python-editor').value : '');
             const btn = document.getElementById('btn-run');
             const resDiv = document.getElementById('sym-result-latex');
             const titleDiv = document.getElementById('theory-step-title');
@@ -2012,17 +2090,40 @@ import sys
 import io
 sys.stdout = io.StringIO()
 `);
-                await pyodideInstance.runPythonAsync(code);
+                // 1. Preparsing transparent estil SageMath (^ i 1/2)
+                let preparsedCode = rawCode;
+                try {
+                    const prepFn = pyodideInstance.globals.get('sage_preparse');
+                    if (prepFn) preparsedCode = prepFn(rawCode);
+                } catch (e) {
+                    console.warn("Avís preparser:", e);
+                }
+
+                await pyodideInstance.runPythonAsync(preparsedCode);
+
+                // 2. Auto-compilació en segon pla (sense carregar l'estudiant de feina tècnica)
+                pyodideInstance.runPython(`
+if 'y_trajectoria' in globals():
+    _expr = globals()['y_trajectoria']
+    globals()['latex_eq_simbolica'] = sp.latex(_expr)
+    _sym_x = sp.Symbol('x')
+    _sym_v0 = sp.Symbol('v_0')
+    _sym_alpha = sp.Symbol('alpha')
+    _sym_g = sp.Symbol('g')
+    try:
+        globals()['f_num'] = sp.lambdify((_sym_x, _sym_v0, _sym_alpha, _sym_g), _expr, modules=['numpy'])
+    except Exception:
+        globals()['f_num'] = sp.lambdify((_sym_x, _sym_v0, _sym_alpha, _sym_g), _expr, modules=['math'])
+`);
 
                 const latexFromPy = pyodideInstance.globals.get('latex_eq_simbolica');
                 if (latexFromPy) currentLatexSimbolica = latexFromPy;
 
-                // Execució amb èxit: Mostrem l'Equació de la trajectòria calculada en LaTeX
                 if (titleDiv) titleDiv.innerText = "Equació de la trajectòria calculada";
                 if (resDiv) {
                     resDiv.style.fontStyle = "normal";
                     resDiv.style.color = "var(--text)";
-                    resDiv.innerHTML = `\\[ y(x) = ${currentLatexSimbolica} \\]`;
+                    resDiv.innerHTML = `\[ y(x) = ${currentLatexSimbolica} \]`;
                 }
 
                 if (capSpan) capSpan.style.display = "inline";
@@ -2031,12 +2132,12 @@ sys.stdout = io.StringIO()
                     MathJax.typesetPromise([resDiv]);
                 }
 
+                phase1RevisionToken++;
                 updatePhase1Plot();
                 if (trackerData) {
                     updatePhase2Plots();
                 }
             } catch (err) {
-                // En cas d'error en el codi de l'alumne: Mostrem la Targeta de Depuració Formativa
                 if (titleDiv) titleDiv.innerText = "🛠️ Assistència de Depuració (DUA)";
                 if (capSpan) capSpan.style.display = "none";
                 if (resDiv) {
@@ -2061,72 +2162,53 @@ sys.stdout = io.StringIO()
             document.getElementById('val-g-1').innerText = g + " m/s²";
 
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
-            const tVol = (2 * v0 * Math.sin(alphaRad)) / g;
-            const xMax = (Math.pow(v0, 2) * Math.sin(2 * alphaRad)) / g;
-            const yMax = (Math.pow(v0, 2) * Math.pow(Math.sin(alphaRad), 2)) / (2 * g);
-
-            const xs = [];
-            const N = 120;
-            for (let i = 0; i <= N; i++) {
-                const t = (i / N) * tVol;
-                xs.push(v0 * Math.cos(alphaRad) * t);
-            }
-
+            let xs = [];
             let ys = [];
+            let displayXMax = 0;
+            let displayYMax = 0;
             let hasEvaluatedWithPyodide = false;
 
             // Avaluació directa del model deduït per l'alumne a Pyodide (f_num)
-            if (window.pyodideInstance && pyodideInstance.globals && pyodideInstance.globals.get('f_num')) {
+            if (window.pyodideInstance && pyodideInstance.globals && pyodideInstance.globals.get('eval_model_phase1')) {
                 try {
-                    pyodideInstance.globals.set('_eval_xs', xs);
-                    pyodideInstance.globals.set('_eval_v0', v0);
-                    pyodideInstance.globals.set('_eval_alpha', alphaRad);
-                    pyodideInstance.globals.set('_eval_g', g);
-                    const pyRes = pyodideInstance.runPython(`
-                        import numpy as _np
-                        try:
-                            _arr_x = _np.array(list(_eval_xs), dtype=float)
-                            _calc_y = f_num(_arr_x, float(_eval_v0), float(_eval_alpha), float(_eval_g))
-                            if _np.isscalar(_calc_y):
-                                _out_ys = [float(_calc_y)] * len(_eval_xs)
-                            else:
-                                _out_ys = [float(val) if not _np.isnan(val) and not _np.isinf(val) else 0.0 for val in _calc_y]
-                        except Exception as _e:
-                            import traceback
-                            traceback.print_exc()
-                            _out_ys = None
-                        _out_ys
-                    `);
+                    pyodideInstance.globals.set('_p1_v0', v0);
+                    pyodideInstance.globals.set('_p1_alpha', alphaRad);
+                    pyodideInstance.globals.set('_p1_g', g);
+                    const pyRes = pyodideInstance.runPython(`eval_model_phase1(_p1_v0, _p1_alpha, _p1_g)`);
                     if (pyRes) {
-                        ys = pyRes.toJs();
+                        const resJs = pyRes.toJs();
                         pyRes.destroy();
-                        hasEvaluatedWithPyodide = true;
+                        if (resJs) {
+                            const rawXs = resJs.get ? resJs.get('xs') : resJs.xs;
+                            const rawYs = resJs.get ? resJs.get('ys') : resJs.ys;
+                            const rawXMax = resJs.get ? resJs.get('xMax') : resJs.xMax;
+                            const rawYMax = resJs.get ? resJs.get('yMax') : resJs.yMax;
+                            if (rawXs && rawXs.length > 1) {
+                                xs = Array.from(rawXs);
+                                ys = Array.from(rawYs);
+                                displayXMax = rawXMax;
+                                displayYMax = rawYMax;
+                                hasEvaluatedWithPyodide = true;
+                            }
+                        }
                     }
-                } catch (err) {
-                    console.warn("Avís en avaluar f_num a Pyodide:", err);
+                } catch (e) {
+                    console.warn("Avís en avaluar model Phase 1 a Pyodide:", e);
                 }
             }
 
-            if (!hasEvaluatedWithPyodide || ys.length === 0) {
+            // Fallback analític base en JS (mentre Pyodide arrenca o si falla)
+            if (!hasEvaluatedWithPyodide || xs.length === 0) {
+                const tVol = (2 * v0 * Math.sin(alphaRad)) / g;
+                displayXMax = (Math.pow(v0, 2) * Math.sin(2 * alphaRad)) / g;
+                displayYMax = (Math.pow(v0, 2) * Math.pow(Math.sin(alphaRad), 2)) / (2 * g);
+                xs = [];
                 ys = [];
+                const N = 120;
                 for (let i = 0; i <= N; i++) {
                     const t = (i / N) * tVol;
+                    xs.push(v0 * Math.cos(alphaRad) * t);
                     ys.push(Math.max(0, v0 * Math.sin(alphaRad) * t - 0.5 * g * Math.pow(t, 2)));
-                }
-            }
-
-            let displayYMax = yMax;
-            let displayXMax = xMax;
-            if (hasEvaluatedWithPyodide && ys.length > 0) {
-                const computedMax = Math.max(...ys);
-                if (Number.isFinite(computedMax) && computedMax > 0) {
-                    displayYMax = computedMax;
-                }
-                for (let i = 1; i < ys.length; i++) {
-                    if (ys[i] <= 0 && ys[i - 1] > 0) {
-                        displayXMax = xs[i];
-                        break;
-                    }
                 }
             }
 
@@ -2136,7 +2218,7 @@ sys.stdout = io.StringIO()
             const badgeEl = document.getElementById('badge-engine-phase1');
             if (badgeEl) {
                 if (hasEvaluatedWithPyodide) {
-                    badgeEl.innerHTML = "🟢 Càlcul en viu: f_num (SageMath WASM)";
+                    badgeEl.innerHTML = "🟢 Càlcul en viu: SageMath WASM";
                     badgeEl.style.background = "#dcfce7";
                     badgeEl.style.color = "#166534";
                     badgeEl.style.border = "1px solid #86efac";
@@ -2153,7 +2235,7 @@ sys.stdout = io.StringIO()
                     x: xs,
                     y: ys,
                     mode: 'lines',
-                    name: hasEvaluatedWithPyodide ? '🟢 Model deduït: f_num (SageMath)' : 'Model base (Galileu)',
+                    name: hasEvaluatedWithPyodide ? '🟢 Model deduït (SageMath)' : 'Model base (Galileu)',
                     line: { color: hasEvaluatedWithPyodide ? '#16a34a' : '#2563eb', width: 3.5 },
                     hovertemplate: 'x: %{x:.2f} m<br>y: %{y:.2f} m<extra></extra>'
                 },
@@ -2171,12 +2253,13 @@ sys.stdout = io.StringIO()
                 }
             ];
 
-            const span1X = Math.max(displayXMax, 1.0);
+            const span1X = Math.max(displayXMax, 0.5);
             const span1Y = Math.max(displayYMax, 0.5);
             const layout = {
                 margin: { l: 50, r: 20, t: 20, b: 40 },
-                xaxis: { title: '<b>x (m)</b>', range: [-0.05 * span1X, displayXMax + 0.10 * span1X], gridcolor: '#f1f5f9' },
-                yaxis: { title: '<b>y (m)</b>', range: [-0.08 * span1Y, displayYMax + 0.18 * span1Y], gridcolor: '#f1f5f9' },
+                uirevision: 'phase1_' + phase1RevisionToken,
+                xaxis: { title: '<b>x (m)</b>', range: [-0.05 * span1X, displayXMax + 0.10 * span1X], autorange: false, gridcolor: '#f1f5f9' },
+                yaxis: { title: '<b>y (m)</b>', range: [-0.08 * span1Y, displayYMax + 0.18 * span1Y], autorange: false, gridcolor: '#f1f5f9' },
                 plot_bgcolor: '#ffffff',
                 paper_bgcolor: '#ffffff',
                 showlegend: true,
