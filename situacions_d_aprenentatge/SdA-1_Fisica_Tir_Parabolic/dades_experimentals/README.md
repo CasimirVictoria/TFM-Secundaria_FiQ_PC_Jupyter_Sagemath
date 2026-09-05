@@ -22,19 +22,19 @@ Els tres conjunts estan seqüenciats didàcticament per guiar l'alumnat de 1r de
 
 ---
 
-## 2. `exp_02_nba_sportvu_shot.csv`: Tir de 3 Punts NBA (Seguiment Òptic Multicàmera SportVU)
-* **Descripció:** Tir de 3 punts real d'un partit oficial de l'NBA (*Chicago Bulls vs Cleveland Cavaliers*, partit inaugural de temporada, 27 d'octubre de 2015 al United Center de Chicago).
-* **Aparell experimental:** Sistema oficial multicàmera estereoscòpica **SportVU** instal·lat a la coberta del pavelló (6 càmeres d'alta definició a $25\text{ fps}$, $\Delta t = 0{,}040\text{ s}$, calibrades a les dimensions de la pista).
-* **Mòbil:** Pilota reglamentària de l'NBA Spalding mida 7: massa $m = 0{,}624\text{ kg}$, diàmetre $D = 0{,}240\text{ m}$.
+## 2. `exp_02_pingpong_tt3d.csv`: Pilota de Tennis de Taula (Univ. Tübingen TT3D)
+* **Descripció:** Llançament parabòlic net d'una pilota reglamentària de tennis de taula (ping-pong) amb seguiment òptic tridimensional multi-càmera d'alta precisió (sense gir / *no-spin*, evitant forces de sustentació de Magnus).
+* **Aparell experimental:** Sistema de calibratge de càmeres sincronitzades a $60\text{ fps}$ ($\Delta t = 0{,}0167\text{ s}$) desenvolupat pel Laboratori de Sistemes Cognitius de la Universitat de Tubinga (*Cognitive Systems Lab*, Alemanya).
+* **Mòbil:** Pilota oficial de tennis de taula ITTF: massa $m = 0{,}0027\text{ kg}$ ($2{,}7\text{ g}$), diàmetre $D = 0{,}040\text{ m}$ ($40\text{ mm}$), relació superfície/massa molt elevada.
 * **Condicions inicials reals:**
-  * Alçada d'eixida: $y_0 = 2{,}57\text{ m}$ (llançament en suspensió sobre el cap d'un jugador professional).
-  * Velocitat inicial: $v_0 = 8{,}72\text{ m/s}$, $\alpha = 54{,}5^\circ$.
-  * Àpex màxim assolit: $y_{\text{màx}} = 4{,}80\text{ m}$.
-  * Abast real mesurat fins a l'anella: $x_{\text{final}} = 7{,}20\text{ m}$ (a l'alçada reglamentària de cistella $y = 3{,}10\text{ m} \approx 10\text{ ft}$).
-* **Funció didàctica:** Mostra a gran escala esportiva la desviació real provocada per l'aire en una pilota gran i veloç, explicant per què els jugadors apliquen paràmetres diferents dels teòrics de buit.
+  * Alçada d'eixida: $y_0 = 0{,}269\text{ m}$.
+  * Velocitat inicial: $v_0 = 3{,}75\text{ m/s}$, $\alpha = 34{,}7^\circ$.
+  * Abast real mesurat fins al contacte amb la taula ($y_{\text{contacte}} = 0{,}020\text{ m}$ pel radi de $2\text{ cm}$): $x_{\text{final}} = 1{,}490\text{ m}$ ($t_{\text{vol}} = 0{,}584\text{ s}$).
+  * Abast ideal previst per Galileu (buit): $x_{\text{ideal}} = 1{,}639\text{ m}$ (pèrdua del $9{,}1\%$ de l'abast per pura resistència quadràtica de l'aire).
+* **Funció didàctica:** Constitueix el règim intermedi perfecte de fregament quadràtic pur: en ser un llançament pla sense gir manual, la trajectòria segueix al $100\%$ el sistema diferencial de Newton-Rayleigh ($F_d = -c v^2 \hat{v}$) amb un coeficient $k_{\text{drag}} \approx 0{,}11\text{--}0{,}13\text{ m}^{-1}$, verificant la llei física sense les complicacions de gir esportiu.
 * **Font i descàrrega directa per a comprovació:**
-  * Publicació científica: Rob Romijnders (2016), *Applying Deep Learning to Basketball Trajectories*, Large-Scale Sports Analytics / [arXiv:1608.03793](https://arxiv.org/abs/1608.03793).
-  * Repositori GitHub oficial amb les dades brutes (`seq_all.csv.tar.gz`): [https://github.com/RobRomijnders/RNN_basketball/blob/master/data/seq_all.csv.tar.gz](https://github.com/RobRomijnders/RNN_basketball/blob/master/data/seq_all.csv.tar.gz)
+  * Publicació científica: University of Tübingen, *TT3D: Table Tennis Match 3D Reconstruction* ([arXiv:2504.10035](https://arxiv.org/abs/2504.10035)).
+  * Repositori oficial GitHub amb el conjunt *ground truth* (`023.csv`): [https://github.com/cogsys-tuebingen/tt3d/blob/main/data/evaluation/3D_gt/023.csv](https://github.com/cogsys-tuebingen/tt3d/blob/main/data/evaluation/3D_gt/023.csv)
 
 ---
 

@@ -932,7 +932,7 @@ y_trajectoria = y_t.subs(t, sol_t)</textarea>
                 <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; align-items: center;">
                     <select id="select-dataset-tracker" class="select-box" style="flex: 1.5; min-width: 240px; padding: 7px 10px; font-weight: 600; border-color: #f59e0b;" onchange="changeExperimentalDataset()">
                         <option value="osp_balltoss" selected>🎾 1. Pilota de Cautxú - Laboratori OSP (11 pts, v₀=3.06 m/s, α=54.0°, y₀=0.00m)</option>
-                        <option value="nba_sportvu">🏀 2. Tir de 3 Punts NBA - SportVU (32 pts, v₀=8.72 m/s, α=54.5°, y₀=2.57m)</option>
+                        <option value="pingpong_tt3d">🏓 2. Pilota de Ping-Pong - Univ. Tübingen TT3D (36 pts, v₀=3.75 m/s, α=34.7°, y₀=0.27m)</option>
                         <option value="badminton_tracker">🏸 3. Volant de Bàdminton - Tracker OSP (43 pts, v₀=17.83 m/s, α=56.9°, y₀=0.65m)</option>
                     </select>
                     <button class="btn-tracker" style="flex: 1; min-width: 170px;" onclick="loadSelectedDataset()">📥 Carregar Dades</button>
@@ -1314,61 +1314,67 @@ t,x,y,vx,vy
                 v0_initial: 3.06,
                 alpha_initial: 54.0,
                 y0_initial: 0.00,
+                y_floor: 0.00,
                 p0_fit: [3.0, 0.01],
                 bounds_fit: [[1.0, 0.0], [10.0, 0.10]]
             },
-            'nba_sportvu': {
-                id: 'nba_sportvu',
-                name: 'Tir de 3 Punts NBA (SportVU)',
-                description: 'Tir real NBA 2015 Bulls vs Cavaliers mesurat amb 6 càmeres a 25 fps (m=0.624 kg, y₀=2.57m)',
-                source_info: '🏛️ <b>Font científica:</b> Sistema oficial SportVU NBA (Partit Bulls vs Cavaliers 2015). 6 càmeres de pavelló a 25 fps (Rob Romijnders, arXiv:1608.03793).',
-                source_url: 'https://github.com/RobRomijnders/RNN_basketball/blob/master/data/seq_all.csv.tar.gz',
-                source_link_text: '🔗 Repositori oficial dades NBA (GitHub)',
-                csv: `# Dataset: Tir de 3 Punts NBA (Seguiment Optic Multicamera SportVU)
-# Partit: Chicago Bulls vs Cleveland Cavaliers (27-10-2015, United Center, Chicago)
-# Font cientifica: Rob Romijnders (2016), "Applying Deep Learning to Basketball Trajectories", arXiv:1608.03793
-# Repositori original de descarrega: https://github.com/RobRomijnders/RNN_basketball/blob/master/data/seq_all.csv.tar.gz
-# Mobil: Pilota oficial NBA Spalding (m = 0.624 kg, D = 0.240 m)
-# Condicions inicials: v0 = 8.72 m/s, alpha = 54.5 deg, y0 = 2.57 m
-# Frequencia temporal: 25 fps (dt = 0.040 s)
+            'pingpong_tt3d': {
+                id: 'pingpong_tt3d',
+                name: 'Pilota de Ping-Pong (Univ. Tübingen TT3D)',
+                description: 'Pilota m=2.7g enregistrada a 60 fps amb càmeres calibrades (Univ. Tübingen, arXiv:2504.10035)',
+                source_info: '🏛️ <b>Font científica:</b> Universitat de Tubinga (Cognitive Systems Lab / TT3D, arXiv:2504.10035). Reconstrucció òptica 3D multi-càmera d\'una pilota reglamentària ITTF (m = 2,7 g, D = 40 mm) a 60 fps.',
+                source_url: 'https://github.com/cogsys-tuebingen/tt3d',
+                source_link_text: '🔗 Repositori oficial dades 3D (GitHub TT3D)',
+                csv: `# Dataset: Pilota de Tennis de Taula (Ping-Pong) - Seguiment Optic 3D Multi-Camera
+# Projecte: "TT3D: Table Tennis Match 3D Reconstruction" (arXiv:2504.10035)
+# Institucio: Universitat de Tubinga (Cognitive Systems Lab, Alemanya)
+# Repositori oficial: https://github.com/cogsys-tuebingen/tt3d (data/evaluation/3D_gt/023.csv)
+# Mobil: Pilota oficial ITTF m = 0.0027 kg, diametre D = 0.040 m
+# Condicions inicials reals: v0 = 3.75 m/s, alpha = 34.7 deg, y0 = 0.269 m
+# Frequencia temporal: 60 fps (dt = 0.0167 s), cota de contacte: y_min = 0.020 m (radi r=2 cm)
 t,x,y,vx,vy
-0.000,0.000,2.571,5.059,7.097
-0.080,0.405,3.139,5.409,6.144
-0.120,0.649,3.308,6.029,6.199
-0.160,0.887,3.635,6.052,6.443
-0.200,1.133,3.824,6.033,4.316
-0.240,1.370,3.980,6.039,4.245
-0.280,1.616,4.163,6.187,4.305
-0.320,1.865,4.325,6.077,3.387
-0.360,2.102,4.434,6.138,1.852
-0.400,2.356,4.473,5.776,2.020
-0.440,2.565,4.596,6.299,2.134
-0.480,2.860,4.643,6.357,1.742
-0.520,3.073,4.735,5.781,1.461
-0.560,3.322,4.760,6.053,0.316
-0.600,3.557,4.761,5.699,0.458
-0.640,3.778,4.797,6.030,-0.086
-0.680,4.040,4.754,5.960,-0.689
-0.720,4.255,4.742,6.275,-0.971
-0.760,4.542,4.676,6.373,-1.725
-0.800,4.765,4.604,5.836,-1.961
-0.840,5.009,4.519,5.235,-0.879
-0.880,5.183,4.534,5.194,-0.666
-0.920,5.424,4.466,5.845,-2.607
-0.960,5.651,4.325,5.501,-3.407
-1.000,5.864,4.193,5.738,-3.218
-1.040,6.110,4.068,5.835,-3.579
-1.080,6.331,3.907,5.557,-4.037
-1.120,6.555,3.745,5.712,-4.405
-1.160,6.788,3.555,4.676,-4.391
-1.200,6.929,3.393,4.465,-4.004
-1.240,7.145,3.234,3.393,-3.626
-1.280,7.200,3.103,1.372,-3.277`,
-                v0_initial: 8.72,
-                alpha_initial: 54.5,
-                y0_initial: 2.57,
-                p0_fit: [8.7, 0.015],
-                bounds_fit: [[4.0, 0.0], [16.0, 0.06]]
+0.000,0.000,0.269,3.085,2.137
+0.017,0.053,0.306,2.837,1.990
+0.034,0.101,0.339,3.056,1.972
+0.050,0.150,0.371,3.003,1.714
+0.067,0.199,0.399,2.758,1.493
+0.083,0.246,0.424,2.849,1.408
+0.100,0.293,0.448,2.890,1.257
+0.117,0.341,0.468,2.643,0.985
+0.134,0.386,0.485,2.584,0.922
+0.151,0.430,0.501,2.769,0.741
+0.167,0.476,0.513,2.707,0.570
+0.184,0.520,0.523,2.507,0.505
+0.200,0.562,0.531,2.763,0.233
+0.217,0.607,0.535,2.581,0.146
+0.233,0.650,0.537,2.484,-0.006
+0.250,0.692,0.537,2.614,-0.074
+0.267,0.735,0.536,2.525,-0.374
+0.283,0.777,0.530,2.434,-0.417
+0.300,0.818,0.523,2.453,-0.581
+0.317,0.860,0.513,2.527,-0.772
+0.333,0.901,0.500,2.404,-0.911
+0.350,0.942,0.485,2.528,-0.965
+0.367,0.983,0.469,2.323,-1.168
+0.383,1.022,0.449,2.287,-1.372
+0.400,1.060,0.427,2.517,-1.422
+0.417,1.102,0.403,2.311,-1.557
+0.433,1.141,0.377,2.250,-1.637
+0.451,1.180,0.349,2.475,-2.086
+0.467,1.219,0.316,2.266,-1.952
+0.483,1.256,0.283,2.190,-2.057
+0.501,1.295,0.247,2.834,-2.483
+0.517,1.340,0.207,2.324,-2.475
+0.534,1.379,0.166,2.346,-2.481
+0.550,1.418,0.125,1.987,-2.565
+0.567,1.452,0.081,2.316,-2.821
+0.584,1.490,0.034,2.316,-2.821`,
+                v0_initial: 3.75,
+                alpha_initial: 34.7,
+                y0_initial: 0.269,
+                y_floor: 0.020,
+                p0_fit: [3.7, 0.10],
+                bounds_fit: [[1.0, 0.0], [10.0, 1.0]]
             },
             'badminton_tracker': {
                 id: 'badminton_tracker',
@@ -2436,8 +2442,8 @@ if 'y_trajectoria' in globals():
             const alphaDeg = ds.alpha_initial;
             const v0 = ds.v0_initial;
             const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
-            const yFinalExp = (trackerData && trackerData.y.length > 0) ? trackerData.y[trackerData.y.length - 1] : 0.0;
-            const yFloor = Math.min(0.0, yFinalExp);
+            const yMinExp = (trackerData && trackerData.y.length > 0) ? Math.min(...trackerData.y) : 0.0;
+            const yFloor = (ds.y_floor !== undefined) ? ds.y_floor : yMinExp;
             const g = 9.81;
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
 
@@ -2559,8 +2565,8 @@ if 'y_trajectoria' in globals():
             const alphaDeg = ds.alpha_initial;
             const v0 = ds.v0_initial;
             const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
-            const yFinalExp = (trackerData && trackerData.y.length > 0) ? trackerData.y[trackerData.y.length - 1] : 0.0;
-            const yFloor = Math.min(0.0, yFinalExp);
+            const yMinExp = (trackerData && trackerData.y.length > 0) ? Math.min(...trackerData.y) : 0.0;
+            const yFloor = (ds.y_floor !== undefined) ? ds.y_floor : yMinExp;
             const g = 9.81;
 
             // 1. Gràfica Dinàmica de Fricció de Rayleigh (Pas 3.1)
@@ -2690,8 +2696,8 @@ if 'y_trajectoria' in globals():
                 pyodideInstance.globals.set("fit_p0", pyodideInstance.toPy(p0));
                 pyodideInstance.globals.set("fit_bounds_low", pyodideInstance.toPy(bounds[0]));
                 pyodideInstance.globals.set("fit_bounds_high", pyodideInstance.toPy(bounds[1]));
-                const yFinalExp = (trackerData && trackerData.y.length > 0) ? trackerData.y[trackerData.y.length - 1] : 0.0;
-                const yFloor = Math.min(0.0, yFinalExp);
+                const yMinExp = (trackerData && trackerData.y.length > 0) ? Math.min(...trackerData.y) : 0.0;
+                const yFloor = (ds.y_floor !== undefined) ? ds.y_floor : yMinExp;
                 pyodideInstance.globals.set("fit_y0", y0);
                 pyodideInstance.globals.set("fit_yfloor", yFloor);
 
@@ -2788,8 +2794,8 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
             const alphaDeg = ds.alpha_initial;
             const v0Ideal = ds.v0_initial;
             const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
-            const yFinalExp = (trackerData && trackerData.y.length > 0) ? trackerData.y[trackerData.y.length - 1] : 0.0;
-            const yFloor = Math.min(0.0, yFinalExp);
+            const yMinExp = (trackerData && trackerData.y.length > 0) ? Math.min(...trackerData.y) : 0.0;
+            const yFloor = (ds.y_floor !== undefined) ? ds.y_floor : yMinExp;
             const g = 9.81;
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
 
