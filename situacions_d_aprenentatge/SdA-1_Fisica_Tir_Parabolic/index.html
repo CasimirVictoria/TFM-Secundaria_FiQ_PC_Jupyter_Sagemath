@@ -967,11 +967,11 @@ print(f"Equació y(x) = {y_trajectoria}")</textarea>
                     <div class="controls-panel">
                         <div class="metric-cards">
                             <div class="metric-card">
-                                <div class="metric-title">Abast Previst Ideal (\(v_0=22\text{m/s}\))</div>
+                                <div class="metric-title" id="lbl-xmax-ideal-2">Abast Previst Ideal</div>
                                 <div class="metric-value" id="res-xmax-ideal-2" style="color: var(--primary);">46.38 m</div>
                             </div>
                             <div class="metric-card">
-                                <div class="metric-title">Abast Mesurat al Pati</div>
+                                <div class="metric-title" id="lbl-xreal-2">Abast Mesurat Real</div>
                                 <div class="metric-value" id="res-xreal-2" style="color: var(--tracker);">23.93 m</div>
                             </div>
                             <div class="metric-card" style="grid-column: span 2;">
@@ -1332,6 +1332,7 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
 3.020,24.82,0.01`,
                 v0_initial: 22.0,
                 alpha_initial: 55.0,
+                y0_initial: 0.0,
                 p0_fit: [22.0, 0.02],
                 bounds_fit: [[10.0, 0.0], [40.0, 0.2]]
             },
@@ -1359,13 +1360,14 @@ t,x,y,vx,vy
 0.66,1.1897,-0.6057,2.043,-4.022`,
                 v0_initial: 3.06,
                 alpha_initial: 54.0,
+                y0_initial: 0.0,
                 p0_fit: [3.0, 0.01],
                 bounds_fit: [[1.0, 0.0], [10.0, 0.5]]
             },
             'llancament_esfera': {
                 id: 'llancament_esfera',
                 name: "Llançament d'Esfera 60fps (Tracker)",
-                description: 'Esfera m=0.0698 kg, r=0.0275 m a 60 fps amb alçada inicial',
+                description: 'Esfera m=0.0698 kg, r=0.0275 m a 60 fps des d\'una taula (y₀=0.68m)',
                 csv: `# Dataset: Video-tracking experimental amb Tracker (Chalk-Snacker Project)
 # Parametres fisics: Pilota m = 0.0698 kg, r = 0.0275 m (D = 0.055 m)
 # Condicions inicials: v0 ~ 5.00 m/s, alpha ~ 58.0 deg, y0 = 0.680 m
@@ -1422,6 +1424,7 @@ t,x,y,vx,vy
 0.802,2.113,0.038,1.941,-5.588`,
                 v0_initial: 5.0,
                 alpha_initial: 58.0,
+                y0_initial: 0.68,
                 p0_fit: [5.0, 0.02],
                 bounds_fit: [[2.0, 0.0], [15.0, 0.5]]
             },
@@ -1462,6 +1465,7 @@ t,x,y,vx,vy
 0.5191,0.1492,0.5116,0.352,-1.941`,
                 v0_initial: 3.6,
                 alpha_initial: 85.5,
+                y0_initial: 0.0,
                 p0_fit: [3.6, 0.05],
                 bounds_fit: [[1.0, 0.0], [10.0, 1.0]]
             }
@@ -2151,17 +2155,17 @@ sys.stdout = io.StringIO()
             Plotly.react('plot-phase-1', traces, layout, { responsive: true, displayModeBar: false });
         }
 
-        function simulateRayleigh(v0, alphaDeg, g, kDrag) {
+        function simulateRayleigh(v0, alphaDeg, g, kDrag, y0 = 0.0) {
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
             let vx = v0 * Math.cos(alphaRad);
             let vy = v0 * Math.sin(alphaRad);
             let x = 0.0;
-            let y = 0.0;
-            const dt = 0.005;
+            let y = y0;
+            const dt = 0.002;
             const xs = [0.0];
-            const ys = [0.0];
+            const ys = [y0];
 
-            while (y >= 0.0 && x < 100.0 && xs.length < 3000) {
+            while (y >= 0.0 && x < 150.0 && xs.length < 4000) {
                 const v = Math.sqrt(vx * vx + vy * vy);
                 const ax = -kDrag * v * vx;
                 const ay = -g - kDrag * v * vy;
@@ -2183,18 +2187,23 @@ sys.stdout = io.StringIO()
             const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['pati'];
             const alphaDeg = ds.alpha_initial;
             const v0 = ds.v0_initial;
+            const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
             const g = 9.81;
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
 
-            const tVolIdeal = (2 * v0 * Math.sin(alphaRad)) / g;
-            const xMaxIdeal = (Math.pow(v0, 2) * Math.sin(2 * alphaRad)) / g;
+            // Temps de vol ideal amb alçada inicial y0
+            const v0y = v0 * Math.sin(alphaRad);
+            const v0x = v0 * Math.cos(alphaRad);
+            const tVolIdeal = (v0y + Math.sqrt(Math.pow(v0y, 2) + 2 * g * y0)) / g;
+            const xMaxIdeal = v0x * tVolIdeal;
+
             const xsIdeal = [];
+            let ysIdeal = [];
             for (let i = 0; i <= 100; i++) {
                 const t = (i / 100) * tVolIdeal;
-                xsIdeal.push(v0 * Math.cos(alphaRad) * t);
+                xsIdeal.push(v0x * t);
             }
 
-            let ysIdeal = [];
             let phase2PyEvaluated = false;
             if (window.pyodideInstance && pyodideInstance.globals && pyodideInstance.globals.get('f_num')) {
                 try {
@@ -2202,11 +2211,13 @@ sys.stdout = io.StringIO()
                     pyodideInstance.globals.set('_eval_v0_2', v0);
                     pyodideInstance.globals.set('_eval_alpha_2', alphaRad);
                     pyodideInstance.globals.set('_eval_g_2', g);
+                    pyodideInstance.globals.set('_eval_y0_2', y0);
                     const pyRes2 = pyodideInstance.runPython(`
                         import numpy as _np
                         try:
                             _arr_x2 = _np.array(_eval_xs2, dtype=float)
                             _calc_y2 = f_num(_arr_x2, float(_eval_v0_2), float(_eval_alpha_2), float(_eval_g_2))
+                            _calc_y2 = _calc_y2 + float(_eval_y0_2)
                             if _np.isscalar(_calc_y2):
                                 _out_ys2 = [float(_calc_y2)] * len(_eval_xs2)
                             else:
@@ -2226,11 +2237,16 @@ sys.stdout = io.StringIO()
                 ysIdeal = [];
                 for (let i = 0; i <= 100; i++) {
                     const t = (i / 100) * tVolIdeal;
-                    ysIdeal.push(Math.max(0, v0 * Math.sin(alphaRad) * t - 0.5 * g * Math.pow(t, 2)));
+                    ysIdeal.push(Math.max(0, y0 + v0y * t - 0.5 * g * Math.pow(t, 2)));
                 }
             }
 
-            document.getElementById('res-xmax-ideal-2').innerText = xMaxIdeal.toFixed(2) + " m";
+            const cardIdeal = document.getElementById('res-xmax-ideal-2');
+            if (cardIdeal) cardIdeal.innerText = xMaxIdeal.toFixed(2) + " m";
+            const lblIdeal = document.getElementById('lbl-xmax-ideal-2');
+            if (lblIdeal) lblIdeal.innerHTML = `Abast Previst Ideal (v₀=${v0.toFixed(1)} m/s, α=${alphaDeg}°, y₀=${y0.toFixed(2)}m)`;
+            const lblReal = document.getElementById('lbl-xreal-2');
+            if (lblReal) lblReal.innerHTML = `Abast Mesurat (${ds.name})`;
 
             // Gràfica 2 de Conflicte Pur
             const tracesConflict = [];
@@ -2238,12 +2254,12 @@ sys.stdout = io.StringIO()
                 x: xsIdeal,
                 y: ysIdeal,
                 mode: 'lines',
-                name: `Model Ideal Galileu (v₀=${v0.toFixed(1)} m/s, α=${alphaDeg}°)`,
+                name: `Model Ideal Galileu (v₀=${v0.toFixed(1)} m/s, α=${alphaDeg}°, y₀=${y0.toFixed(2)}m)`,
                 line: { color: '#2563eb', width: 3.5, dash: 'dash' }
             });
 
             let maxXSpan = Math.max(xMaxIdeal, 5);
-            let maxYSpan = Math.max((Math.pow(v0 * Math.sin(alphaRad), 2)) / (2 * g), 2);
+            let maxYSpan = Math.max(y0 + Math.pow(v0y, 2) / (2 * g), 2);
 
             if (trackerData && trackerData.x.length > 0) {
                 const xExpMax = trackerData.x[trackerData.x.length - 1];
@@ -2280,13 +2296,14 @@ sys.stdout = io.StringIO()
             const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['pati'];
             const alphaDeg = ds.alpha_initial;
             const v0 = ds.v0_initial;
+            const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
             const g = 9.81;
 
             // 1. Gràfica Dinàmica de Fricció de Rayleigh (Pas 3.1)
             const kDrag = parseFloat(document.getElementById('slider-drag-3').value);
             document.getElementById('val-drag-3').innerText = kDrag.toFixed(3);
 
-            const sim = simulateRayleigh(v0, alphaDeg, g, kDrag);
+            const sim = simulateRayleigh(v0, alphaDeg, g, kDrag, y0);
             document.getElementById('res-xmax-friction-3').innerText = sim.xMax.toFixed(2) + " m";
 
             if (trackerData && trackerData.x.length > 0) {
@@ -2297,12 +2314,14 @@ sys.stdout = io.StringIO()
             }
 
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
-            const tVolIdeal = (2 * v0 * Math.sin(alphaRad)) / g;
+            const v0y = v0 * Math.sin(alphaRad);
+            const v0x = v0 * Math.cos(alphaRad);
+            const tVolIdeal = (v0y + Math.sqrt(Math.pow(v0y, 2) + 2 * g * y0)) / g;
             const xsIdeal = [];
             let ysIdeal = [];
             for (let i = 0; i <= 100; i++) {
                 const t = (i / 100) * tVolIdeal;
-                xsIdeal.push(v0 * Math.cos(alphaRad) * t);
+                xsIdeal.push(v0x * t);
             }
 
             let phase3PyEvaluated = false;
@@ -2312,11 +2331,13 @@ sys.stdout = io.StringIO()
                     pyodideInstance.globals.set('_eval_v0_3', v0);
                     pyodideInstance.globals.set('_eval_alpha_3', alphaRad);
                     pyodideInstance.globals.set('_eval_g_3', g);
+                    pyodideInstance.globals.set('_eval_y0_3', y0);
                     const pyRes3 = pyodideInstance.runPython(`
                         import numpy as _np
                         try:
                             _arr_x3 = _np.array(_eval_xs3, dtype=float)
                             _calc_y3 = f_num(_arr_x3, float(_eval_v0_3), float(_eval_alpha_3), float(_eval_g_3))
+                            _calc_y3 = _calc_y3 + float(_eval_y0_3)
                             if _np.isscalar(_calc_y3):
                                 _out_ys3 = [float(_calc_y3)] * len(_eval_xs3)
                             else:
@@ -2336,7 +2357,7 @@ sys.stdout = io.StringIO()
                 ysIdeal = [];
                 for (let i = 0; i <= 100; i++) {
                     const t = (i / 100) * tVolIdeal;
-                    ysIdeal.push(Math.max(0, v0 * Math.sin(alphaRad) * t - 0.5 * g * Math.pow(t, 2)));
+                    ysIdeal.push(Math.max(0, y0 + v0y * t - 0.5 * g * Math.pow(t, 2)));
                 }
             }
 
@@ -2345,7 +2366,7 @@ sys.stdout = io.StringIO()
                     x: xsIdeal,
                     y: ysIdeal,
                     mode: 'lines',
-                    name: `Model Ideal (v₀=${v0.toFixed(1)} m/s, α=${alphaDeg}°)`,
+                    name: `Model Ideal (v₀=${v0.toFixed(1)} m/s, α=${alphaDeg}°, y₀=${y0.toFixed(2)}m)`,
                     line: { color: '#2563eb', width: 2.5, dash: 'dash' }
                 },
                 {
@@ -2357,8 +2378,9 @@ sys.stdout = io.StringIO()
                 }
             ];
 
-            let maxXSpan = Math.max((Math.pow(v0, 2) * Math.sin(2 * alphaRad)) / g, 5);
-            let maxYSpan = Math.max((Math.pow(v0 * Math.sin(alphaRad), 2)) / (2 * g), 2);
+            const xMaxIdeal = v0x * tVolIdeal;
+            let maxXSpan = Math.max(xMaxIdeal, 5);
+            let maxYSpan = Math.max(y0 + Math.pow(v0y, 2) / (2 * g), 2);
 
             if (trackerData && trackerData.x.length > 0) {
                 const maxExpX = Math.max(...trackerData.x);
@@ -2398,6 +2420,7 @@ sys.stdout = io.StringIO()
             try {
                 const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['pati'];
                 const alphaDeg = ds.alpha_initial;
+                const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData.y[0] || 0.0);
                 const g = 9.81;
                 const alphaRad = (alphaDeg * Math.PI) / 180.0;
                 const p0 = ds.p0_fit;
@@ -2408,6 +2431,7 @@ sys.stdout = io.StringIO()
                 pyodideInstance.globals.set("fit_p0", pyodideInstance.toPy(p0));
                 pyodideInstance.globals.set("fit_bounds_low", pyodideInstance.toPy(bounds[0]));
                 pyodideInstance.globals.set("fit_bounds_high", pyodideInstance.toPy(bounds[1]));
+                pyodideInstance.globals.set("fit_y0", y0);
 
                 const fitPyCode = `
 import numpy as np
@@ -2415,9 +2439,10 @@ from scipy.optimize import curve_fit
 
 x_data = np.array(exp_x)
 y_data = np.array(exp_y)
+y0_val = float(fit_y0)
 
 def model_fit(x, v0_val, k_val):
-    return x * np.tan(${alphaRad}) - (${g} * x**2) / (2 * v0_val**2 * np.cos(${alphaRad})**2) * (1.0 + k_val * x)
+    return y0_val + x * np.tan(${alphaRad}) - (${g} * x**2) / (2 * v0_val**2 * np.cos(${alphaRad})**2) * (1.0 + k_val * x)
 
 try:
     popt, pcov = curve_fit(
@@ -2457,7 +2482,8 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
                     x: xFit,
                     y: yFit,
                     v0: v0Opt,
-                    k: kOpt
+                    k: kOpt,
+                    y0: y0
                 };
 
                 const slider3 = document.getElementById('slider-drag-3');
@@ -2471,14 +2497,15 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
                 const errResidual = Math.abs((xFitMax - xExpMax) / xExpMax) * 100;
 
                 document.getElementById('fit-summary-text').innerHTML = `
-                    • Dataset analitzat: <b>${ds.name}</b><br>
+                    • Dataset analitzat: <b>${ds.name}</b> (y₀ = ${y0.toFixed(2)} m)<br>
                     • Velocitat real d'eixida: <b>v_0 = ${v0Opt.toFixed(2)} ± ${incV0.toFixed(2)} m/s</b><br>
                     • Coeficient de fricció òptim: <b>k_drag = ${kOpt.toFixed(4)} ± ${incK.toFixed(4)}</b><br>
                     • Discrepància residual minimitzada: <b style="color:var(--success); font-size:1.05rem;">${errResidual.toFixed(1)}%</b> (Ajust mil·limètric!)
                 `;
 
                 const fitEqDiv = document.getElementById('fit-dynamic-eq');
-                fitEqDiv.innerHTML = `\[ y(x) = x \tan(${alphaDeg}^\circ) - \frac{9.81 x^2}{2 \cdot (${v0Opt.toFixed(1)})^2 \cos^2(${alphaDeg}^\circ)} \cdot (1 + ${kOpt.toFixed(4)} x) \]`;
+                const y0Prefix = y0 > 0 ? `${y0.toFixed(2)} + ` : "";
+                fitEqDiv.innerHTML = `\\[ y(x) = ${y0Prefix}x \\tan(${alphaDeg}^\\circ) - \\frac{9.81 x^2}{2 \\cdot (${v0Opt.toFixed(1)})^2 \\cos^2(${alphaDeg}^\\circ)} \\cdot (1 + ${kOpt.toFixed(4)} x) \\]`;
                 if (window.MathJax && MathJax.typesetPromise) {
                     MathJax.typesetPromise([fitEqDiv]);
                 }
@@ -2497,16 +2524,19 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
             const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['pati'];
             const alphaDeg = ds.alpha_initial;
             const v0Ideal = ds.v0_initial;
+            const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
             const g = 9.81;
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
 
-            const tVolIdeal = (2 * v0Ideal * Math.sin(alphaRad)) / g;
+            const v0y = v0Ideal * Math.sin(alphaRad);
+            const v0x = v0Ideal * Math.cos(alphaRad);
+            const tVolIdeal = (v0y + Math.sqrt(Math.pow(v0y, 2) + 2 * g * y0)) / g;
             const xsIdeal = [];
             const ysIdeal = [];
             for (let i = 0; i <= 100; i++) {
                 const t = (i / 100) * tVolIdeal;
-                xsIdeal.push(v0Ideal * Math.cos(alphaRad) * t);
-                ysIdeal.push(Math.max(0, v0Ideal * Math.sin(alphaRad) * t - 0.5 * g * Math.pow(t, 2)));
+                xsIdeal.push(v0x * t);
+                ysIdeal.push(Math.max(0, y0 + v0y * t - 0.5 * g * Math.pow(t, 2)));
             }
 
             const traces = [];
@@ -2515,12 +2545,13 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
                 x: xsIdeal,
                 y: ysIdeal,
                 mode: 'lines',
-                name: `1. Model Ideal (v₀=${v0Ideal.toFixed(1)} m/s, α=${alphaDeg}°)`,
+                name: `1. Model Ideal (v₀=${v0Ideal.toFixed(1)} m/s, α=${alphaDeg}°, y₀=${y0.toFixed(2)}m)`,
                 line: { color: '#2563eb', width: 3, dash: 'dash' }
             });
 
-            let maxXSpan = Math.max((Math.pow(v0Ideal, 2) * Math.sin(2 * alphaRad)) / g, 5);
-            let maxYSpan = Math.max((Math.pow(v0Ideal * Math.sin(alphaRad), 2)) / (2 * g), 2);
+            const xMaxIdeal = v0x * tVolIdeal;
+            let maxXSpan = Math.max(xMaxIdeal, 5);
+            let maxYSpan = Math.max(y0 + Math.pow(v0y, 2) / (2 * g), 2);
 
             if (trackerData && trackerData.x.length > 0) {
                 const maxExpX = Math.max(...trackerData.x);
