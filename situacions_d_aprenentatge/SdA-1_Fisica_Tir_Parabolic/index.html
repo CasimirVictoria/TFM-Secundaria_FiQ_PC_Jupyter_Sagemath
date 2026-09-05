@@ -937,10 +937,10 @@ print(f"Equació y(x) = {y_trajectoria}")</textarea>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; align-items: center;">
                     <select id="select-dataset-tracker" class="select-box" style="flex: 1.5; min-width: 240px; padding: 7px 10px; font-weight: 600; border-color: #f59e0b;" onchange="changeExperimentalDataset()">
-                        <option value="pati">⚾ 1. Llançament Pati Escolar (32 pts, v₀=22 m/s, α=55°)</option>
-                        <option value="osp_balltoss">🎾 2. OSP Tracker BallToss - D. Brown (11 pts, v₀=3.06 m/s, α=54°)</option>
-                        <option value="llancament_esfera">⚽ 3. Llançament d'Esfera 60fps (49 pts, v₀=5.00 m/s, α=58°)</option>
-                        <option value="pingpong">🏓 4. Rebot Pilota Ping-Pong OpenCV (26 pts, v₀=3.60 m/s, α=85.5°)</option>
+                        <option value="pati">⚾ 1. Llançament Pati Escolar (32 pts, v₀=22.0 m/s, α=55.0°, y₀=0.00m)</option>
+                        <option value="osp_balltoss">🎾 2. OSP Tracker BallToss - D. Brown (11 pts, v₀=3.06 m/s, α=54.0°, y₀=0.00m)</option>
+                        <option value="llancament_esfera">⚽ 3. Llançament d'Esfera Taula 60fps (49 pts, v₀=5.00 m/s, α=58.0°, y₀=0.68m)</option>
+                        <option value="pingpong">🏓 4. Rebot Pilota Ping-Pong OpenCV (26 pts, v₀=3.60 m/s, α=85.5°, y₀=0.00m)</option>
                     </select>
                     <button class="btn-tracker" style="flex: 1; min-width: 170px;" onclick="loadSelectedDataset()">📥 Carregar Dades</button>
                     <label class="btn-tracker" style="flex: 1; min-width: 140px; background:#0284c7; cursor:pointer; text-align: center;">
@@ -1472,6 +1472,7 @@ t,x,y,vx,vy
         };
 
         let currentDatasetKey = 'pati';
+        let datasetRevisionToken = 0;
 
         function loadSelectedDataset() {
             const sel = document.getElementById('select-dataset-tracker');
@@ -1480,10 +1481,35 @@ t,x,y,vx,vy
             const ds = EXPERIMENTAL_DATASETS[key];
             if (!ds) return;
             parseCSV(ds.csv);
+            datasetRevisionToken++;
+            fittedResult = null; // Reiniciar l'ajust previ en carregar nou dataset
+
+            // Adaptar dinàmicament el rang del slider de fregament k segons l'objecte
+            const slider3 = document.getElementById('slider-drag-3');
+            if (slider3 && ds.bounds_fit && ds.bounds_fit[1]) {
+                const maxK = ds.bounds_fit[1][1];
+                slider3.max = maxK;
+                slider3.step = (maxK / 100).toFixed(4);
+                slider3.value = ds.p0_fit ? ds.p0_fit[1] : 0.04;
+                const valDragSpan = document.getElementById('val-drag-3');
+                if (valDragSpan) valDragSpan.innerText = parseFloat(slider3.value).toFixed(3);
+            }
+
+            const fitSummaryEl = document.getElementById('fit-summary-text');
+            if (fitSummaryEl) {
+                fitSummaryEl.innerHTML = `• Dataset preparat: <b>${ds.name}</b> (v₀ = ${ds.v0_initial.toFixed(2)} m/s, α = ${ds.alpha_initial}°, y₀ = ${ds.y0_initial.toFixed(2)} m). Premeu el botó per calcular l'ajust d'optimització automàtica sobre aquest experiment.`;
+            }
+
             document.getElementById('tracker-status').innerHTML = `✅ Carregat: <b>${ds.name}</b> (${trackerData.x.length} punts). <span style="font-size:0.75rem; color:#475569;">${ds.description}</span>`;
             document.getElementById('phase2-waiting').style.display = 'none';
             document.getElementById('phase2-content').style.display = 'block';
+
+            // Redibuixar corbes i recalcular el zoom òptim automàticament
             updatePhase2Plots();
+            if (document.getElementById('phase3-card') && document.getElementById('phase3-card').style.display !== 'none') {
+                updatePhase3Plots();
+            }
+            window.dispatchEvent(new Event('resize'));
         }
 
         function changeExperimentalDataset() {
@@ -1500,10 +1526,55 @@ t,x,y,vx,vy
             const reader = new FileReader();
             reader.onload = function(e) {
                 parseCSV(e.target.result);
-                document.getElementById('tracker-status').innerText = `✅ Carregat: ${file.name} (${trackerData.x.length} punts).`;
+                datasetRevisionToken++;
+                fittedResult = null;
+
+                // Estimar automàticament condicions inicials (v0, alpha, y0) del fitxer pujat
+                let v0_est = 10.0;
+                let alpha_est = 45.0;
+                let y0_est = (trackerData.y && trackerData.y.length > 0) ? trackerData.y[0] : 0.0;
+
+                if (trackerData.t && trackerData.t.length >= 2 && trackerData.x.length >= 2 && trackerData.y.length >= 2) {
+                    const dt = trackerData.t[1] - trackerData.t[0];
+                    if (dt > 0.0001) {
+                        const vx0 = (trackerData.x[1] - trackerData.x[0]) / dt;
+                        const vy0 = (trackerData.y[1] - trackerData.y[0]) / dt + 0.5 * 9.81 * dt;
+                        const calcV0 = Math.sqrt(vx0 * vx0 + vy0 * vy0);
+                        const calcAlpha = (Math.atan2(vy0, vx0) * 180) / Math.PI;
+                        if (calcV0 > 0.1 && calcAlpha > 0 && calcAlpha < 90) {
+                            v0_est = calcV0;
+                            alpha_est = calcAlpha;
+                        }
+                    }
+                } else if (trackerData.x.length >= 3 && trackerData.y.length >= 3) {
+                    const dx = trackerData.x[2] - trackerData.x[0];
+                    const dy = trackerData.y[2] - trackerData.y[0];
+                    if (dx > 0.001) {
+                        alpha_est = Math.max(10, Math.min(85, (Math.atan(dy / dx) * 180) / Math.PI));
+                    }
+                }
+
+                EXPERIMENTAL_DATASETS['custom_upload'] = {
+                    id: 'custom_upload',
+                    name: file.name,
+                    description: `Pujat per l'estudiant (${trackerData.x.length} punts calibrats)`,
+                    v0_initial: Math.round(v0_est * 100) / 100,
+                    alpha_initial: Math.round(alpha_est * 10) / 10,
+                    y0_initial: Math.round(y0_est * 100) / 100,
+                    p0_fit: [v0_est, 0.03],
+                    bounds_fit: [[v0_est * 0.4, 0.0], [v0_est * 2.5, 0.8]]
+                };
+                currentDatasetKey = 'custom_upload';
+
+                document.getElementById('tracker-status').innerHTML = `✅ Carregat: <b>${file.name}</b> (${trackerData.x.length} punts) | v₀≈${v0_est.toFixed(2)} m/s, α≈${alpha_est.toFixed(1)}°, y₀≈${y0_est.toFixed(2)} m`;
                 document.getElementById('phase2-waiting').style.display = 'none';
                 document.getElementById('phase2-content').style.display = 'block';
+
                 updatePhase2Plots();
+                if (document.getElementById('phase3-card') && document.getElementById('phase3-card').style.display !== 'none') {
+                    updatePhase3Plots();
+                }
+                window.dispatchEvent(new Event('resize'));
             };
             reader.readAsText(file);
         }
@@ -1512,12 +1583,14 @@ t,x,y,vx,vy
             const lines = text.trim().split('\n');
             const xs = [];
             const ys = [];
+            const ts = [];
             for (let line of lines) {
                 line = line.trim();
                 if (line.startsWith('#') || line.startsWith('t') || line.startsWith('x') || !line) continue;
                 const parts = line.split(/[,;\t]+/);
                 if (parts.length >= 2) {
                     if (parts.length >= 3) {
+                        ts.push(parseFloat(parts[0]));
                         xs.push(parseFloat(parts[1]));
                         ys.push(parseFloat(parts[2]));
                     } else {
@@ -1526,7 +1599,7 @@ t,x,y,vx,vy
                     }
                 }
             }
-            trackerData = { x: xs, y: ys };
+            trackerData = { x: xs, y: ys, t: ts };
         }
 
         // Gestió del Debat Seqüencial Cooperatiu
@@ -2142,10 +2215,12 @@ sys.stdout = io.StringIO()
                 }
             ];
 
+            const span1X = Math.max(displayXMax, 1.0);
+            const span1Y = Math.max(displayYMax, 0.5);
             const layout = {
                 margin: { l: 50, r: 20, t: 20, b: 40 },
-                xaxis: { title: '<b>x (m)</b>', range: [-2, Math.max(displayXMax * 1.08, 10)], gridcolor: '#f1f5f9' },
-                yaxis: { title: '<b>y (m)</b>', range: [-1, Math.max(displayYMax * 1.25, 5)], gridcolor: '#f1f5f9' },
+                xaxis: { title: '<b>x (m)</b>', range: [-0.05 * span1X, displayXMax + 0.10 * span1X], gridcolor: '#f1f5f9' },
+                yaxis: { title: '<b>y (m)</b>', range: [-0.08 * span1Y, displayYMax + 0.18 * span1Y], gridcolor: '#f1f5f9' },
                 plot_bgcolor: '#ffffff',
                 paper_bgcolor: '#ffffff',
                 showlegend: true,
@@ -2181,6 +2256,40 @@ sys.stdout = io.StringIO()
                 }
             }
             return { xs, ys, xMax: xs[xs.length - 1] };
+        }
+
+        function computeTrajectoryZoom(xArrays, yArrays, y0 = 0.0) {
+            let allX = [0];
+            let allY = [0, y0];
+            xArrays.forEach(arr => {
+                if (arr && arr.length) {
+                    for (let i = 0; i < arr.length; i++) {
+                        const val = arr[i];
+                        if (Number.isFinite(val)) allX.push(val);
+                    }
+                }
+            });
+            yArrays.forEach(arr => {
+                if (arr && arr.length) {
+                    for (let i = 0; i < arr.length; i++) {
+                        const val = arr[i];
+                        if (Number.isFinite(val)) allY.push(val);
+                    }
+                }
+            });
+
+            const minX = Math.min(...allX);
+            const maxX = Math.max(...allX);
+            const spanX = Math.max(maxX - Math.min(0, minX), 0.1);
+
+            const minY = Math.min(...allY);
+            const maxY = Math.max(...allY);
+            const spanY = Math.max(maxY - Math.min(0, minY), 0.1);
+
+            return {
+                xRange: [Math.min(0, minX) - 0.05 * spanX, maxX + 0.08 * spanX],
+                yRange: [Math.min(0, minY) - 0.06 * spanY, maxY + 0.14 * spanY]
+            };
         }
 
         function updatePhase2Plots() {
@@ -2258,19 +2367,11 @@ sys.stdout = io.StringIO()
                 line: { color: '#2563eb', width: 3.5, dash: 'dash' }
             });
 
-            let maxXSpan = Math.max(xMaxIdeal, 5);
-            let maxYSpan = Math.max(y0 + Math.pow(v0y, 2) / (2 * g), 2);
-
             if (trackerData && trackerData.x.length > 0) {
                 const xExpMax = trackerData.x[trackerData.x.length - 1];
                 document.getElementById('res-xreal-2').innerText = xExpMax.toFixed(2) + " m";
                 const errRel = Math.abs((xMaxIdeal - xExpMax) / xExpMax) * 100;
                 document.getElementById('res-error-2').innerText = `${errRel.toFixed(1)}% (Discrepància!)`;
-
-                const maxExpX = Math.max(...trackerData.x);
-                const maxExpY = Math.max(...trackerData.y);
-                maxXSpan = Math.max(maxXSpan, maxExpX * 1.15);
-                maxYSpan = Math.max(maxYSpan, maxExpY * 1.25);
 
                 tracesConflict.push({
                     x: trackerData.x,
@@ -2281,10 +2382,13 @@ sys.stdout = io.StringIO()
                 });
             }
 
+            const zoom2 = computeTrajectoryZoom([xsIdeal, trackerData ? trackerData.x : []], [ysIdeal, trackerData ? trackerData.y : []], y0);
+
             const layout2A = {
                 margin: { l: 50, r: 20, t: 20, b: 40 },
-                xaxis: { title: '<b>x (m)</b>', range: [-0.05 * maxXSpan, maxXSpan * 1.05], gridcolor: '#f1f5f9' },
-                yaxis: { title: '<b>y (m)</b>', range: [-0.1 * maxYSpan, maxYSpan * 1.15], gridcolor: '#f1f5f9' },
+                uirevision: datasetRevisionToken,
+                xaxis: { title: '<b>Abast horitzontal x (m)</b>', range: zoom2.xRange, autorange: false, gridcolor: '#f1f5f9' },
+                yaxis: { title: '<b>Altura vertical y (m)</b>', range: zoom2.yRange, autorange: false, gridcolor: '#f1f5f9' },
                 legend: { x: 0.02, y: 0.98, bgcolor: 'rgba(255,255,255,0.85)' },
                 plot_bgcolor: '#ffffff',
                 paper_bgcolor: '#ffffff'
@@ -2378,16 +2482,7 @@ sys.stdout = io.StringIO()
                 }
             ];
 
-            const xMaxIdeal = v0x * tVolIdeal;
-            let maxXSpan = Math.max(xMaxIdeal, 5);
-            let maxYSpan = Math.max(y0 + Math.pow(v0y, 2) / (2 * g), 2);
-
             if (trackerData && trackerData.x.length > 0) {
-                const maxExpX = Math.max(...trackerData.x);
-                const maxExpY = Math.max(...trackerData.y);
-                maxXSpan = Math.max(maxXSpan, maxExpX * 1.15);
-                maxYSpan = Math.max(maxYSpan, maxExpY * 1.25);
-
                 tracesDynamic.push({
                     x: trackerData.x,
                     y: trackerData.y,
@@ -2397,10 +2492,13 @@ sys.stdout = io.StringIO()
                 });
             }
 
+            const zoom3A = computeTrajectoryZoom([xsIdeal, sim.xs, trackerData ? trackerData.x : []], [ysIdeal, sim.ys, trackerData ? trackerData.y : []], y0);
+
             const layout3A = {
                 margin: { l: 50, r: 20, t: 20, b: 40 },
-                xaxis: { title: '<b>x (m)</b>', range: [-0.05 * maxXSpan, maxXSpan * 1.05], gridcolor: '#f1f5f9' },
-                yaxis: { title: '<b>y (m)</b>', range: [-0.1 * maxYSpan, maxYSpan * 1.15], gridcolor: '#f1f5f9' },
+                uirevision: datasetRevisionToken,
+                xaxis: { title: '<b>Abast horitzontal x (m)</b>', range: zoom3A.xRange, autorange: false, gridcolor: '#f1f5f9' },
+                yaxis: { title: '<b>Altura vertical y (m)</b>', range: zoom3A.yRange, autorange: false, gridcolor: '#f1f5f9' },
                 legend: { x: 0.02, y: 0.98, bgcolor: 'rgba(255,255,255,0.85)' },
                 plot_bgcolor: '#ffffff',
                 paper_bgcolor: '#ffffff'
@@ -2549,16 +2647,7 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
                 line: { color: '#2563eb', width: 3, dash: 'dash' }
             });
 
-            const xMaxIdeal = v0x * tVolIdeal;
-            let maxXSpan = Math.max(xMaxIdeal, 5);
-            let maxYSpan = Math.max(y0 + Math.pow(v0y, 2) / (2 * g), 2);
-
             if (trackerData && trackerData.x.length > 0) {
-                const maxExpX = Math.max(...trackerData.x);
-                const maxExpY = Math.max(...trackerData.y);
-                maxXSpan = Math.max(maxXSpan, maxExpX * 1.15);
-                maxYSpan = Math.max(maxYSpan, maxExpY * 1.25);
-
                 traces.push({
                     x: trackerData.x,
                     y: trackerData.y,
@@ -2578,15 +2667,28 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
                 });
             }
 
+            const xArrays3 = [xsIdeal];
+            const yArrays3 = [ysIdeal];
+            if (trackerData && trackerData.x.length > 0) {
+                xArrays3.push(trackerData.x);
+                yArrays3.push(trackerData.y);
+            }
+            if (fittedResult && fittedResult.x.length > 0) {
+                xArrays3.push(fittedResult.x);
+                yArrays3.push(fittedResult.y);
+            }
+
+            const zoom3 = computeTrajectoryZoom(xArrays3, yArrays3, y0);
+
             const layout = {
                 margin: { l: 55, r: 25, t: 25, b: 45 },
-                xaxis: { title: '<b>Abast horitzontal x (m)</b>', range: [-0.05 * maxXSpan, maxXSpan * 1.05], gridcolor: '#f1f5f9' },
-                yaxis: { title: '<b>Altura vertical y (m)</b>', range: [-0.1 * maxYSpan, maxYSpan * 1.15], gridcolor: '#f1f5f9' },
+                uirevision: datasetRevisionToken,
+                xaxis: { title: '<b>Abast horitzontal x (m)</b>', range: zoom3.xRange, autorange: false, gridcolor: '#f1f5f9' },
+                yaxis: { title: '<b>Altura vertical y (m)</b>', range: zoom3.yRange, autorange: false, gridcolor: '#f1f5f9' },
                 legend: { x: 0.02, y: 0.98, bgcolor: 'rgba(255,255,255,0.9)', bordercolor: '#e2e8f0', borderwidth: 1 },
                 plot_bgcolor: '#ffffff',
                 paper_bgcolor: '#ffffff'
             };
-
             Plotly.react('plot-phase-3', traces, layout, { responsive: true, staticPlot: false, displayModeBar: true });
         }
 
