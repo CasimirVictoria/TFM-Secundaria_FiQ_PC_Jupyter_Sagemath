@@ -1,8 +1,9 @@
 # Dataset: OSP Tracker BallToss (Open Source Physics)
 # Autor: Douglas Brown (Cabrillo College)
 # Font: https://physlets.org/tracker/ / https://github.com/OpenSourcePhysics/tracker
-# Mobil: Pilota de cautxu m = 0.200 kg
-# Condicions inicials: v0 ~ 3.06 m/s, alpha ~ 54.0 deg, y0 = 0.0 m
+# Descarrega directa del paquet .TRZ: https://github.com/OpenSourcePhysics/tracker/raw/master/examples/BallToss.trz
+# Mobil: Pilota de cautxu massis m = 0.200 kg
+# Condicions inicials reals: v0 = 3.06 m/s, alpha = 54.0 deg, y0 = 0.00 m
 # Frequencia temporal: 15.15 fps (dt = 0.066 s)
 t,x,y,vx,vy
 0.0,0.0,0.0,1.613,2.095
