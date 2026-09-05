@@ -183,6 +183,17 @@
             border-color: #94a3b8;
         }
 
+        .btn-code-toggle.active {
+            background: var(--primary) !important;
+            color: #ffffff !important;
+            border-color: var(--primary) !important;
+        }
+
+        #card-plot-trajectoria:hover {
+            border-color: #93c5fd !important;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08) !important;
+        }
+
         .code-container {
             border-radius: 12px;
             overflow: hidden;
@@ -868,11 +879,46 @@ y_trajectoria = y_t.subs(sol_t)</textarea>
                         <div id="console-output" style="display:none;"></div>
                     </div>
 
-                    <div class="theory-step" style="background:#f1f5f9;">
-                        <div class="theory-step-num" style="color:#475569;">💡 Objectiu Pedagògic (Fase 1 - USE)</div>
-                        <span style="font-size:0.82rem; color:#334155; line-height:1.4;">
-                            Observeu el vincle directe: si el codi és correcte, es renderitza la fórmula analítica en LaTeX; si hi ha alguna errada, rebreu una pista formativa de depuració per a guiar l'equip.
-                        </span>
+                    <!-- NOTA DIDÀCTICA / MEMÒRIA TFM (Fase 1 - USE):
+                         Objectiu Pedagògic: Observeu el vincle directe: si el codi és correcte, es renderitza la fórmula analítica en LaTeX; si hi ha alguna errada, rebreu una pista formativa de depuració per a guiar l'equip.
+                    -->
+                    <div class="theory-step" id="card-plot-trajectoria" style="background:#ffffff; border:1px solid var(--border); border-radius:8px; padding:12px 14px; margin-top:12px; box-shadow:0 1px 3px rgba(0,0,0,0.05); transition:all 0.2s ease;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="togglePlotTrajectoria()">
+                            <div class="theory-step-num" style="margin-bottom:0; color:var(--primary-dark); font-weight:700; display:flex; align-items:center; gap:8px;">
+                                <span style="font-size:1.15rem;">📈</span> Dibuixem la gràfica de la trajectòria
+                            </div>
+                            <button class="btn-code-toggle" id="btn-toggle-plot-code" title="Mostra o amaga el codi per a graficar" style="pointer-events:none;">
+                                <span>💻</span> Codi
+                            </button>
+                        </div>
+                        
+                        <div id="plot-code-wrapper" style="margin-top:10px; display:none;">
+                            <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+                                Funció SageMath per a representar la gràfica de l'equació obtinguda:
+                            </div>
+                            <div style="position:relative;">
+                                <textarea id="python-editor-plot" style="width:100%; height:46px; font-family:'Fira Code', 'Consolas', monospace; font-size:0.83rem; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; background:#f8fafc; color:#0f172a; resize:none; box-sizing:border-box;">plot(y_trajectoria.subs(v_0=10, alpha=pi/4, g=9.8), (x, 0, 10))</textarea>
+                            </div>
+                            <div style="display:flex; justify-content:flex-end; margin-top:8px;">
+                                <button class="btn-exec" id="btn-run-plot" onclick="executePlotCode()" style="padding:5px 14px; font-size:0.82rem;">
+                                    <span>▶</span> Executa el gràfic
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="plot-canvas-container" style="margin-top:12px; display:none;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                                <span style="font-size:0.8rem; font-weight:600; color:var(--text-muted);" id="plot-math-caption">
+                                    Gràfic de la trajectòria obtinguda
+                                </span>
+                                <span style="font-size:0.72rem; background:#e0f2fe; color:#0369a1; padding:2px 6px; border-radius:4px; font-weight:600;">
+                                    plot() SageMath
+                                </span>
+                            </div>
+                            <div style="height:200px; width:100%; position:relative;">
+                                <canvas id="canvas-static-plot"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2173,12 +2219,73 @@ def eval_model_phase1(v0_val, alpha_rad, g_val):
         'yMax': max_y
     }
 
+_last_plot_data = None
+
+def sage_plot(expr, *args, **kwargs):
+    global _last_plot_data
+    if hasattr(expr, 'rhs'):
+        expr = expr.rhs
+    var = None
+    xmin = 0.0
+    xmax = 10.0
+    
+    if len(args) > 0 and isinstance(args[0], (tuple, list)):
+        r = args[0]
+        if len(r) == 3:
+            var = r[0]
+            xmin = float(r[1])
+            xmax = float(r[2])
+        elif len(r) == 2:
+            xmin = float(r[0])
+            xmax = float(r[1])
+            
+    if var is None:
+        syms = list(expr.free_symbols) if hasattr(expr, 'free_symbols') else []
+        x_sym = sp.Symbol('x')
+        if x_sym in syms:
+            var = x_sym
+        elif len(syms) >= 1:
+            var = syms[0]
+        else:
+            var = x_sym
+            
+    try:
+        f = sp.lambdify(var, expr, modules=['numpy', 'math'])
+    except Exception:
+        f = lambda val: float(expr.subs(var, val))
+        
+    xs = np.linspace(xmin, xmax, 150)
+    try:
+        ys = f(xs)
+        if np.isscalar(ys):
+            ys = np.full_like(xs, float(ys))
+        else:
+            ys = np.array(ys, dtype=float)
+    except Exception:
+        ys = np.array([float(f(x_val)) for x_val in xs])
+        
+    points = []
+    for x_val, y_val in zip(xs, ys):
+        if y_val < 0.0 and x_val > xmin + 0.1:
+            points.append({'x': round(float(x_val), 3), 'y': 0.0})
+            break
+        points.append({'x': round(float(x_val), 3), 'y': max(0.0, round(float(y_val), 3))})
+        
+    _last_plot_data = {
+        'points': points,
+        'xmin': float(xmin),
+        'xmax': float(xmax),
+        'expr_latex': sp.latex(expr)
+    }
+    return _last_plot_data
+
 mod = sys.modules['__main__']
 _sagemath_builtins = {
     'var': var,
     'diff': sp.diff,
     'derivative': sp.diff,
     'solve': sage_solve,
+    'plot': sage_plot,
     'integrate': sp.integrate,
     'integral': sp.integrate,
     'sin': sp.sin,
@@ -2297,6 +2404,15 @@ if 'y_trajectoria' in globals():
                 if (trackerData) {
                     updatePhase2Plots();
                 }
+
+                try {
+                    const plotCheckStr = pyodideInstance.runPython(`
+import json
+json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_data is not None else "null"
+`);
+                    const pData = JSON.parse(plotCheckStr);
+                    if (pData) renderStaticPlot(pData);
+                } catch (e) {}
             } catch (err) {
                 if (titleDiv) titleDiv.innerText = "🛠️ Assistència de Depuració (DUA)";
                 if (capSpan) capSpan.style.display = "none";
@@ -2310,6 +2426,131 @@ if 'y_trajectoria' in globals():
                     btn.innerHTML = "<span>▶</span> Executa el codi";
                 }
             }
+        }
+
+        let chartStaticPlot = null;
+
+        function togglePlotTrajectoria() {
+            const wrapper = document.getElementById('plot-code-wrapper');
+            const btnToggle = document.getElementById('btn-toggle-plot-code');
+            if (!wrapper) return;
+            const isHidden = (wrapper.style.display === 'none' || wrapper.style.display === '');
+            wrapper.style.display = isHidden ? 'block' : 'none';
+            if (btnToggle) {
+                btnToggle.classList.toggle('active', isHidden);
+            }
+        }
+
+        async function executePlotCode() {
+            if (!window.pyodideInstance) {
+                alert("El motor de càlcul Python WASM s'està inicialitzant. Espereu uns segons.");
+                return;
+            }
+            const btn = document.getElementById('btn-run-plot');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<span>⏳</span> Dibuixant...';
+            }
+            const textarea = document.getElementById('python-editor-plot');
+            const rawCode = textarea ? textarea.value : 'plot(y_trajectoria.subs(v_0=10, alpha=pi/4, g=9.8), (x, 0, 10))';
+
+            try {
+                let preparsedCode = rawCode;
+                try {
+                    const prepFn = pyodideInstance.globals.get('sage_preparse');
+                    if (prepFn) preparsedCode = prepFn(rawCode);
+                } catch (e) {}
+
+                await pyodideInstance.runPythonAsync(preparsedCode);
+
+                const jsonStr = pyodideInstance.runPython(`
+import json
+json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_data is not None else "null"
+`);
+                const plotData = JSON.parse(jsonStr);
+                if (plotData) {
+                    renderStaticPlot(plotData);
+                }
+            } catch (err) {
+                console.error("Error executant plot:", err);
+                const container = document.getElementById('plot-canvas-container');
+                if (container) {
+                    container.style.display = 'block';
+                    container.innerHTML = `<div style="color:var(--danger); font-size:0.82rem; padding:8px; background:#fef2f2; border-radius:6px;">Error al graficar: ${err.message || err}</div>`;
+                }
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>▶</span> Executa el gràfic';
+                }
+            }
+        }
+
+        function renderStaticPlot(plotData) {
+            const container = document.getElementById('plot-canvas-container');
+            if (container) container.style.display = 'block';
+            const canvas = document.getElementById('canvas-static-plot');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            if (chartStaticPlot) {
+                chartStaticPlot.destroy();
+            }
+
+            const captionEl = document.getElementById('plot-math-caption');
+            if (captionEl && plotData.expr_latex) {
+                captionEl.innerHTML = `Trajectòria: \\( y(x) = ${plotData.expr_latex} \\)`;
+                if (window.MathJax && MathJax.typesetPromise) {
+                    MathJax.typesetPromise([captionEl]).catch(() => {});
+                }
+            }
+
+            chartStaticPlot = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Trajectòria y(x)',
+                        data: plotData.points,
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.08)',
+                        borderWidth: 2.5,
+                        fill: true,
+                        pointRadius: 0,
+                        pointHoverRadius: 5,
+                        tension: 0.15
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: { duration: 350 },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `x: ${context.parsed.x.toFixed(2)} m, y: ${context.parsed.y.toFixed(2)} m`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            title: { display: true, text: 'Distància horitzontal x (m)', font: { size: 11, weight: 'bold' } },
+                            grid: { color: 'rgba(0,0,0,0.06)' },
+                            min: plotData.xmin,
+                            max: plotData.xmax
+                        },
+                        y: {
+                            type: 'linear',
+                            title: { display: true, text: 'Altura y (m)', font: { size: 11, weight: 'bold' } },
+                            grid: { color: 'rgba(0,0,0,0.06)' },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         }
 
         function updatePhase1Plot() {
