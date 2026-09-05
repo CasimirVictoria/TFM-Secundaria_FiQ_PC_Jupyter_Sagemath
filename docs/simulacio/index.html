@@ -1286,9 +1286,13 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
                         </div>
                     </div>
 
-                    <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px 14px; font-size: 0.84rem; color: #166534; display: flex; align-items: center; gap: 8px;">
-                        <span>💡</span>
-                        <span><b>Pont Computacional (Wing, 2006):</b> Observeu que les <b>4 línies de codi SageMath</b> de sota tradueixen fidelment aquests mateixos 4 passos lògics: <code>var</code>, plantejar relacions, <code>solve</code> i <code>subs</code>. L'ordinador assumeix el càlcul mecànic; l'equip humà dirigeix el pensament!</span>
+                    <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px 14px; font-size: 0.85rem; color: #166534; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;">
+                        <span style="font-size: 1.2rem; line-height: 1;">💡</span>
+                        <div>
+                            <b>El Pont del Pensament Computacional (Wing, 2006):</b><br>
+                            Quan calculem a mà a la llibreta, el nostre cervell assumeix de manera implícita quines magnituds són variables. Un computador, en canvi, requereix un <b>Pas 0 previ i explícit</b> per a saber quines lletres són símbols algebraics (<code>var('t x v_0 alpha g')</code>).<br>
+                            A continuació, els <b>Passos 1, 2 i 3 del codi</b> (definir <code>x_t, y_t</code>, aïllar amb <code>solve</code> i substituir amb <code>subs</code>) reprodueixen amb rigor absolut el mateix camí lògic que heu fet amb llapis i paper!
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1306,21 +1310,21 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
                             <span>▶</span> Executa el codi
                         </button>
                     </div>
-                    <textarea id="python-editor"># 1. Definim variables simbòliques
+                    <textarea id="python-editor"># 0. Definim variables simbòliques
 var('t x v_0 alpha g')
 
 ## Hi ha que tindre en compte que g és físicament una constant
 ## sols la definim com variable simbòlica per a que aparega
 ## com a "g" en l'equació
 
-# 2. Equacions paramètriques en x i y
+# 1. Equacions paramètriques en x i y
 x_t = v_0 * cos(alpha) * t
 y_t = v_0 * sin(alpha) * t - 1/2 * g * t^2
 
-# 3. Aïllem t en funció de x
+# 2. Aïllem t en funció de x
 sol_t, = solve(x == x_t, t)
 
-# 4. Substituïm directament t en funció de x a y(t)
+# 3. Substituïm directament t en funció de x a y(t)
 y_trajectoria = y_t.subs(sol_t)</textarea>
                 </div>
 
