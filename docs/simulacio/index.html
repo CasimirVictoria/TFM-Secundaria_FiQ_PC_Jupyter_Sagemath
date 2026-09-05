@@ -290,8 +290,8 @@
         /* Editor CodeMirror: Tema Clar (JupyterLab clàssic per defecte) */
         .CodeMirror {
             height: auto !important;
-            min-height: 330px !important;
-            max-height: 420px;
+            min-height: 365px !important;
+            max-height: 460px;
             font-size: 0.875rem;
             font-family: 'Fira Code', 'Consolas', monospace;
             line-height: 1.5;
@@ -300,8 +300,8 @@
         }
 
         .CodeMirror-scroll {
-            min-height: 330px !important;
-            max-height: 420px;
+            min-height: 365px !important;
+            max-height: 460px;
         }
 
         .CodeMirror-gutters {
@@ -836,20 +836,22 @@
                             <span>▶</span> Executa el codi
                         </button>
                     </div>
-                    <textarea id="python-editor"># Modelització Simbòlica de Tir Parabòlic Ideal (Sintaxi SageMath)
-
-# 1. Definir variables simbòliques
+                    <textarea id="python-editor"># 1. Definim variables simbòliques
 var('t x v_0 alpha g')
 
-# 2. Equacions paramètriques del moviment
+## Hi ha que tindre en compte que g és físicament una constant
+## sols la definim com variable simbòlica per a que aparega
+## com a "g" en l'equació
+
+# 2. Equacions paramètriques en x i y
 x_t = v_0 * cos(alpha) * t
 y_t = v_0 * sin(alpha) * t - 1/2 * g * t^2
 
-# 3. Aïllem el temps t de l'eix horitzontal: t(x)
-sol_t = solve(x == x_t, t)[0]
+# 3. Aïllem t en funció de x
+sol_t, = solve(x == x_t, t)
 
-# 4. Substituïm t a l'equació vertical per obtenir y(x)
-y_trajectoria = y_t.subs(t, sol_t)</textarea>
+# 4. Substituïm directament t en funció de x a y(t)
+y_trajectoria = y_t.subs(sol_t)</textarea>
                 </div>
 
                 <div class="theory-card">
@@ -2066,25 +2068,55 @@ def sage_preparse(code_str):
     except Exception:
         return code_str
 
-# Suport natiu de sintaxi SageMath per a substitucions en expressions: .subs(t, sol_t), .subs(t=sol_t), (t=sol_t), .substitute() i .rhs()
+# Suport natiu de sintaxi SageMath per a equacions simbòliques i substitucions
+def sage_solve(eq, var=None, *args, **kwargs):
+    res = sp.solve(eq, var, *args, **kwargs)
+    if var is not None and isinstance(res, list):
+        return [sp.Eq(var, r) for r in res]
+    elif var is not None and not isinstance(res, list):
+        return [sp.Eq(var, res)]
+    return res
+
 def _expr_call(self, *args, **kwargs):
+    if not args and not kwargs:
+        return self
     if kwargs:
-        subs_dict = {sp.Symbol(k) if isinstance(k, str) else k: v for k, v in kwargs.items()}
+        subs_dict = {}
+        for k, v in kwargs.items():
+            sym = sp.Symbol(k) if isinstance(k, str) else k
+            val = v.rhs if (isinstance(v, sp.Equality) or hasattr(v, 'rhs')) else v
+            subs_dict[sym] = val
         return self.subs(subs_dict)
     return self.subs(*args)
 
 def _expr_subs(orig_subs):
     def wrapper(self, *args, **kwargs):
         if kwargs:
-            subs_dict = {sp.Symbol(k) if isinstance(k, str) else k: v for k, v in kwargs.items()}
+            subs_dict = {}
+            for k, v in kwargs.items():
+                sym = sp.Symbol(k) if isinstance(k, str) else k
+                val = v.rhs if (isinstance(v, sp.Equality) or hasattr(v, 'rhs')) else v
+                subs_dict[sym] = val
             return orig_subs(self, subs_dict)
+        if len(args) == 1:
+            arg = args[0]
+            if isinstance(arg, sp.Equality) or (hasattr(arg, 'lhs') and hasattr(arg, 'rhs')):
+                return orig_subs(self, {arg.lhs: arg.rhs})
+            if isinstance(arg, (list, tuple)) and len(arg) > 0 and (isinstance(arg[0], sp.Equality) or hasattr(arg[0], 'lhs')):
+                return orig_subs(self, {a.lhs: a.rhs for a in arg})
+        elif len(args) == 2:
+            sym, val = args
+            if isinstance(val, sp.Equality) or hasattr(val, 'rhs'):
+                val = val.rhs
+            return orig_subs(self, sym, val)
         return orig_subs(self, *args)
     return wrapper
 
 sp.Expr.__call__ = _expr_call
 sp.Expr.substitute = sp.Expr.subs
 sp.Expr.subs = _expr_subs(sp.Expr.subs)
-sp.Expr.rhs = lambda self: self
+sp.Expr.rhs = property(lambda self: self)
+sp.Expr.lhs = property(lambda self: self)
 
 def eval_model_phase1(v0_val, alpha_rad, g_val):
     """Avalua directament l'equacio de la trajectoria y(x) calculada per l'alumnat a SageMath."""
@@ -2146,7 +2178,7 @@ _sagemath_builtins = {
     'var': var,
     'diff': sp.diff,
     'derivative': sp.diff,
-    'solve': sp.solve,
+    'solve': sage_solve,
     'integrate': sp.integrate,
     'integral': sp.integrate,
     'sin': sp.sin,
@@ -2228,6 +2260,8 @@ sys.stdout = io.StringIO()
                 pyodideInstance.runPython(`
 if 'y_trajectoria' in globals():
     _expr = globals()['y_trajectoria']
+    if hasattr(_expr, 'rhs'):
+        _expr = _expr.rhs
     globals()['latex_eq_simbolica'] = sp.latex(_expr)
     _sym_x = sp.Symbol('x')
     _sym_v0 = sp.Symbol('v_0')
