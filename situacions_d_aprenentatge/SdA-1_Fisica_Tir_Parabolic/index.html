@@ -2029,6 +2029,7 @@ if 'y_freg' in globals() and 'latex_corregit' not in globals():
 
                 consoleDiv.innerText = "⏳ Descarregant entorn WebAssembly Pyodide...";
                 pyodideInstance = await loadPyodide();
+                window.pyodideInstance = pyodideInstance;
 
                 consoleDiv.innerText += "\n📦 Carregant paquets científics SymPy, NumPy i SciPy...";
                 await pyodideInstance.loadPackage(['sympy', 'numpy', 'scipy']);
@@ -2442,8 +2443,9 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
         }
 
         async function executePlotCode() {
-            if (!window.pyodideInstance) {
-                alert("El motor de càlcul Python WASM s'està inicialitzant. Espereu uns segons.");
+            const pyInst = window.pyodideInstance || pyodideInstance;
+            if (!pyInst) {
+                alert("El motor de càlcul Python WASM s'està inicialitzant. Espereu que el punt indicador estiga verd.");
                 return;
             }
             const btn = document.getElementById('btn-run-plot');
@@ -2455,15 +2457,23 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
             const rawCode = textarea ? textarea.value : 'plot(y_trajectoria.subs(v_0=10, alpha=pi/4, g=9.8), (x, 0, 10))';
 
             try {
+                // Si y_trajectoria no està encara calculada a globals(), executem el codi principal primer
+                try {
+                    const hasTraj = pyInst.runPython(`'y_trajectoria' in globals()`);
+                    if (!hasTraj) {
+                        await executeUserCode();
+                    }
+                } catch (e) {}
+
                 let preparsedCode = rawCode;
                 try {
-                    const prepFn = pyodideInstance.globals.get('sage_preparse');
+                    const prepFn = pyInst.globals.get('sage_preparse');
                     if (prepFn) preparsedCode = prepFn(rawCode);
                 } catch (e) {}
 
-                await pyodideInstance.runPythonAsync(preparsedCode);
+                await pyInst.runPythonAsync(preparsedCode);
 
-                const jsonStr = pyodideInstance.runPython(`
+                const jsonStr = pyInst.runPython(`
 import json
 json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_data is not None else "null"
 `);
