@@ -1435,7 +1435,8 @@ t,x,y,vx,vy
 1.602,4.484,0.826,0.656,-6.124`,
                 v0_initial: 17.83,
                 alpha_initial: 56.9,
-                y0_initial: 0.65,
+                y0_initial: 0.651,
+                y_floor: 0.651,
                 p0_fit: [17.8, 0.28],
                 bounds_fit: [[8.0, 0.0], [30.0, 0.60]]
             }
@@ -2383,7 +2384,9 @@ if 'y_trajectoria' in globals():
             const xs = [0.0];
             const ys = [y0];
 
-            while (y >= yFloor && x < 150.0 && xs.length < 5000) {
+            const floor = (yFloor !== undefined && Number.isFinite(yFloor)) ? yFloor : 0.0;
+
+            while (x < 150.0 && xs.length < 10000) {
                 const v = Math.sqrt(vx * vx + vy * vy);
                 const ax = -kDrag * v * vx;
                 const ay = -g - kDrag * v * vy;
@@ -2393,10 +2396,19 @@ if 'y_trajectoria' in globals():
                 vx += ax * dt;
                 vy += ay * dt;
 
-                if (y >= yFloor) {
-                    xs.push(x);
-                    ys.push(y);
+                // Aturada en fase descendent (vy < 0) en tocar o creuar la cota de retorn
+                if (vy < 0 && y <= floor && xs.length > 1) {
+                    const prevX = xs[xs.length - 1];
+                    const prevY = ys[ys.length - 1];
+                    const frac = (prevY > y) ? (prevY - floor) / (prevY - y) : 0.0;
+                    const xLanding = prevX + Math.max(0, Math.min(1, frac)) * (x - prevX);
+                    xs.push(xLanding);
+                    ys.push(floor);
+                    break;
                 }
+
+                xs.push(x);
+                ys.push(y);
             }
             return { xs, ys, xMax: xs[xs.length - 1] };
         }
