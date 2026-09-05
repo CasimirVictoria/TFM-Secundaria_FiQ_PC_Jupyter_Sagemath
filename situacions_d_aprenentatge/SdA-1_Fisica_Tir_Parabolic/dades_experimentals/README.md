@@ -13,8 +13,8 @@ Els tres conjunts estan seqüenciats didàcticament per guiar l'alumnat de 1r de
 * **Condicions inicials reals:**
   * Alçada inicial: $y_0 = 0{,}00\text{ m}$.
   * Velocitat inicial: $v_0 = 3{,}06\text{ m/s}$, $\alpha = 54{,}0^\circ$.
-  * Abast real mesurat: $x_{\text{final}} = 1{,}190\text{ m}$ (a $y_{\text{final}} = -0{,}606\text{ m}$).
-  * Abast previst per Galileu: $x_{\text{ideal}} = 1{,}234\text{ m}$ (discrepància mínima de només el $3{,}6\%$).
+  * Abast real mesurat (retorn al pla $y = 0{,}00\text{ m}$): $x_{\text{final}} = 0{,}836\text{ m}$ ($t_{\text{vol}} = 0{,}481\text{ s}$).
+  * Abast ideal previst per Galileu (buit): $x_{\text{ideal}} = 0{,}908\text{ m}$ (discrepància mínima de només $+0{,}072\text{ m}$, $7{,}9\%$).
 * **Funció didàctica:** Demostra que a xicoteta escala de laboratori ($x \sim 1\text{ m}$) i baixes velocitats, el model ideal de buit de Galileu és una excel·lent primera aproximació.
 * **Font i descàrrega directa per a comprovació:**
   * Projecte oficial Open Source Physics (OSP): [https://physlets.org/tracker/](https://physlets.org/tracker/)

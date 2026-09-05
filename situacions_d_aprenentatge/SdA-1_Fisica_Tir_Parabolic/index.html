@@ -931,7 +931,7 @@ y_trajectoria = y_t.subs(t, sol_t)</textarea>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; align-items: center;">
                     <select id="select-dataset-tracker" class="select-box" style="flex: 1.5; min-width: 240px; padding: 7px 10px; font-weight: 600; border-color: #f59e0b;" onchange="changeExperimentalDataset()">
-                        <option value="osp_balltoss" selected>🎾 1. Pilota de Cautxú - Laboratori OSP (11 pts, v₀=3.06 m/s, α=54.0°, y₀=0.00m)</option>
+                        <option value="osp_balltoss" selected>🎾 1. Pilota de Cautxú - Laboratori OSP (9 pts, v₀=3.06 m/s, α=54.0°, y₀=0.00m)</option>
                         <option value="pingpong_tt3d">🏓 2. Pilota de Ping-Pong - Univ. Tübingen TT3D (36 pts, v₀=3.75 m/s, α=34.7°, y₀=0.27m)</option>
                         <option value="badminton_tracker">🏸 3. Volant de Bàdminton - Tracker OSP (43 pts, v₀=17.83 m/s, α=56.9°, y₀=0.65m)</option>
                     </select>
@@ -1298,19 +1298,17 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
 # Descarrega directa del paquet .TRZ: https://github.com/OpenSourcePhysics/tracker/raw/master/examples/BallToss.trz
 # Mobil: Pilota de cautxu massis m = 0.200 kg
 # Condicions inicials reals: v0 = 3.06 m/s, alpha = 54.0 deg, y0 = 0.00 m
-# Frequencia temporal: 15.15 fps (dt = 0.066 s)
+# Frequencia temporal: 15.15 fps (dt = 0.066 s), cota de retorn: y_min = 0.00 m
 t,x,y,vx,vy
-0.0,0.0,0.0,1.613,2.095
-0.066,0.1064,0.1382,1.641,1.769
-0.132,0.2166,0.2336,1.684,1.102
-0.198,0.3287,0.2837,1.713,0.447
-0.264,0.4427,0.2925,1.742,-0.218
-0.33,0.5587,0.2549,1.791,-0.892
-0.396,0.6791,0.1748,1.83,-1.566
-0.462,0.8003,0.0482,1.87,-2.25
-0.528,0.9259,-0.1222,1.929,-2.942
-0.594,1.0549,-0.3402,1.999,-3.663
-0.66,1.1897,-0.6057,2.043,-4.022`,
+0.000,0.000,0.000,1.613,2.095
+0.066,0.106,0.138,1.641,1.769
+0.132,0.217,0.234,1.684,1.102
+0.198,0.329,0.284,1.713,0.447
+0.264,0.443,0.293,1.742,-0.218
+0.330,0.559,0.255,1.791,-0.892
+0.396,0.679,0.175,1.830,-1.566
+0.462,0.800,0.048,1.870,-2.250
+0.481,0.836,0.000,1.887,-2.446`,
                 v0_initial: 3.06,
                 alpha_initial: 54.0,
                 y0_initial: 0.00,
