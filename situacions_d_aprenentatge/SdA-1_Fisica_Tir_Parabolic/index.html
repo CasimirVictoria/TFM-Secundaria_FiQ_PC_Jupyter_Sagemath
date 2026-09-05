@@ -896,11 +896,11 @@ y_trajectoria = y_t.subs(t, sol_t)</textarea>
 
                     <div class="metric-cards">
                         <div class="metric-card">
-                            <div class="metric-title">Abast Ideal (\(X_{\text{màx}}\))</div>
+                            <div class="metric-title">Abast Calculat (\(X_{\text{màx}}\))</div>
                             <div class="metric-value" id="res-xmax-1" style="color: var(--primary);">46.38 m</div>
                         </div>
                         <div class="metric-card">
-                            <div class="metric-title">Altura Màx (\(h_{\text{màx}}\))</div>
+                            <div class="metric-title">Altura Màx Calculada (\(h_{\text{màx}}\))</div>
                             <div class="metric-value" id="res-ymax-1" style="color: var(--danger);">16.53 m</div>
                         </div>
                     </div>
@@ -908,7 +908,7 @@ y_trajectoria = y_t.subs(t, sol_t)</textarea>
 
                 <div>
                     <div style="font-weight:600; font-size:0.9rem; margin-bottom:6px; color:#1e293b; text-align:center; display:flex; justify-content:center; align-items:center; gap:8px;">
-                        <span>Gràfica 1: Model calculat (interactiu)</span>
+                        <span>Gràfica 1: Equació de la Trajectòria Calculada \(y(x)\)</span>
                         <span id="badge-engine-phase1" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; background:#e2e8f0; color:#475569; font-weight:500;">⚡ Model base (JS)</span>
                     </div>
                     <div id="plot-phase-1" class="plot-box" style="height: 400px;"></div>
@@ -2081,7 +2081,7 @@ sp.Expr.subs = _expr_subs(sp.Expr.subs)
 sp.Expr.rhs = lambda self: self
 
 def eval_model_phase1(v0_val, alpha_rad, g_val):
-    """Avalua densament el model f_num de l'alumne fins a la caiguda y(x) = 0."""
+    """Avalua directament l'equacio de la trajectoria y(x) calculada per l'alumnat a SageMath."""
     if 'f_num' not in globals() or globals()['f_num'] is None:
         return None
     f = globals()['f_num']
@@ -2094,7 +2094,7 @@ def eval_model_phase1(v0_val, alpha_rad, g_val):
     t_est = max(2.0 * v0y / g_f, 0.5) if v0y > 0 else 1.0
     x_est = max(v0x * t_est, 1.0)
     
-    x_dense = np.linspace(0.0, x_est * 2.5, 300)
+    x_dense = np.linspace(0.0, x_est * 2.0, 400)
     try:
         y_dense = f(x_dense, v0_f, a_f, g_f)
         if np.isscalar(y_dense):
@@ -2106,19 +2106,32 @@ def eval_model_phase1(v0_val, alpha_rad, g_val):
         
     valid_idx = [0]
     for i in range(1, len(x_dense)):
-        if y_dense[i] < -0.001 and x_dense[i] > 0.02:
-            valid_idx.append(i)
-            break
+        if y_dense[i] < 0.0 and x_dense[i] > 0.02:
+            x_prev = x_dense[i-1]
+            y_prev = y_dense[i-1]
+            if y_prev > y_dense[i]:
+                frac = y_prev / (y_prev - y_dense[i])
+                x_zero = float(x_prev + frac * (x_dense[i] - x_prev))
+            else:
+                x_zero = float(x_dense[i])
+            xs_res = x_dense[valid_idx].tolist() + [x_zero]
+            ys_res = [max(0.0, float(y)) for y in y_dense[valid_idx]] + [0.0]
+            max_y = float(np.max(ys_res)) if len(ys_res) else 1.0
+            return {
+                'xs': xs_res,
+                'ys': ys_res,
+                'xMax': x_zero,
+                'yMax': max_y
+            }
         valid_idx.append(i)
         
     xs_res = x_dense[valid_idx].tolist()
     ys_res = [max(0.0, float(y)) for y in y_dense[valid_idx]]
     max_y = float(np.max(ys_res)) if len(ys_res) else 1.0
-    max_x = float(xs_res[-1]) if len(xs_res) else 1.0
     return {
         'xs': xs_res,
         'ys': ys_res,
-        'xMax': max_x,
+        'xMax': float(xs_res[-1]),
         'yMax': max_y
     }
 
@@ -2303,18 +2316,21 @@ if 'y_trajectoria' in globals():
                 }
             }
 
-            // Fallback analític base en JS (mentre Pyodide arrenca o si falla)
+            // Fallback analític base en JS (avalua directament y(x) = x·tan(α) - g·x² / (2·v₀²·cos²(α)))
             if (!hasEvaluatedWithPyodide || xs.length === 0) {
-                const tVol = (2 * v0 * Math.sin(alphaRad)) / g;
                 displayXMax = (Math.pow(v0, 2) * Math.sin(2 * alphaRad)) / g;
                 displayYMax = (Math.pow(v0, 2) * Math.pow(Math.sin(alphaRad), 2)) / (2 * g);
                 xs = [];
                 ys = [];
                 const N = 120;
+                const cosA = Math.cos(alphaRad);
+                const tanA = Math.tan(alphaRad);
+                const denom = 2 * Math.pow(v0, 2) * Math.pow(cosA, 2);
                 for (let i = 0; i <= N; i++) {
-                    const t = (i / N) * tVol;
-                    xs.push(v0 * Math.cos(alphaRad) * t);
-                    ys.push(Math.max(0, v0 * Math.sin(alphaRad) * t - 0.5 * g * Math.pow(t, 2)));
+                    const x = (i / N) * displayXMax;
+                    const y = x * tanA - (g * Math.pow(x, 2)) / denom;
+                    xs.push(x);
+                    ys.push(Math.max(0, y));
                 }
             }
 
@@ -2324,12 +2340,12 @@ if 'y_trajectoria' in globals():
             const badgeEl = document.getElementById('badge-engine-phase1');
             if (badgeEl) {
                 if (hasEvaluatedWithPyodide) {
-                    badgeEl.innerHTML = "🟢 Càlcul en viu: SageMath WASM";
+                    badgeEl.innerHTML = "🟢 Equació calculada y(x): SageMath WASM";
                     badgeEl.style.background = "#dcfce7";
                     badgeEl.style.color = "#166534";
                     badgeEl.style.border = "1px solid #86efac";
                 } else {
-                    badgeEl.innerHTML = "⚡ Model base (JS)";
+                    badgeEl.innerHTML = "⚡ Equació calculada y(x): JS Base";
                     badgeEl.style.background = "#e2e8f0";
                     badgeEl.style.color = "#475569";
                     badgeEl.style.border = "1px solid #cbd5e1";
@@ -2341,7 +2357,7 @@ if 'y_trajectoria' in globals():
                     x: xs,
                     y: ys,
                     mode: 'lines',
-                    name: hasEvaluatedWithPyodide ? '🟢 Model deduït (SageMath)' : 'Model base (Galileu)',
+                    name: hasEvaluatedWithPyodide ? '🟢 Trajectòria calculada y(x) [SageMath]' : 'Trajectòria calculada y(x) [Galileu]',
                     line: { color: hasEvaluatedWithPyodide ? '#16a34a' : '#2563eb', width: 3.5 },
                     hovertemplate: 'x: %{x:.2f} m<br>y: %{y:.2f} m<extra></extra>'
                 },
