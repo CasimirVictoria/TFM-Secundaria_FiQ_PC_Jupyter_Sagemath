@@ -931,8 +931,8 @@ y_trajectoria = y_t.subs(t, sol_t)</textarea>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; align-items: center;">
                     <select id="select-dataset-tracker" class="select-box" style="flex: 1.5; min-width: 240px; padding: 7px 10px; font-weight: 600; border-color: #f59e0b;" onchange="changeExperimentalDataset()">
-                        <option value="tir_basquet" selected>🏀 1. Tir de Bàsquet al Pati 30fps (44 pts, v₀=7.60 m/s, α=50.0°, y₀=2.00m)</option>
-                        <option value="osp_balltoss">🎾 2. Pilota de Cautxú - OSP BallToss (11 pts, v₀=3.06 m/s, α=54.0°, y₀=0.00m)</option>
+                        <option value="osp_balltoss" selected>🎾 1. Pilota de Cautxú - Laboratori OSP (11 pts, v₀=3.06 m/s, α=54.0°, y₀=0.00m)</option>
+                        <option value="tir_basquet">🏀 2. Tir de Bàsquet al Pati 30fps (44 pts, v₀=7.60 m/s, α=50.0°, y₀=2.00m)</option>
                     </select>
                     <button class="btn-tracker" style="flex: 1; min-width: 170px;" onclick="loadSelectedDataset()">📥 Carregar Dades</button>
                     <label class="btn-tracker" style="flex: 1; min-width: 140px; background:#0284c7; cursor:pointer; text-align: center;">
@@ -949,7 +949,7 @@ y_trajectoria = y_t.subs(t, sol_t)</textarea>
             <div id="phase2-waiting" class="waiting-tracker-panel">
                 <div style="font-size: 1.5rem; margin-bottom: 6px;">📂</div>
                 <b>Esperant dades experimentals de Physics Tracker</b><br>
-                Trieu un dels experiments calibrats (com <i>«Tir de Bàsquet al Pati»</i>) o pengeu el vostre fitxer <code>.csv</code> enregistrat al mòbil per activar el contrast empíric.
+                Trieu un dels experiments calibrats (com <i>«Pilota de Cautxú»</i>) o pengeu el vostre fitxer <code>.csv</code> enregistrat al mòbil per activar el contrast empíric.
             </div>
 
             <!-- Contingut revelat NOMÉS després de carregar les dades de Tracker -->
@@ -1368,12 +1368,12 @@ t,x,y,vx,vy
             }
         };
 
-        let currentDatasetKey = 'tir_basquet';
+        let currentDatasetKey = 'osp_balltoss';
         let datasetRevisionToken = 0;
 
         function loadSelectedDataset() {
             const sel = document.getElementById('select-dataset-tracker');
-            const key = sel ? sel.value : 'tir_basquet';
+            const key = sel ? sel.value : 'osp_balltoss';
             currentDatasetKey = key;
             const ds = EXPERIMENTAL_DATASETS[key];
             if (!ds) return;
@@ -2344,7 +2344,7 @@ if 'y_trajectoria' in globals():
         }
 
         function updatePhase2Plots() {
-            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['tir_basquet'];
+            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['osp_balltoss'];
             const alphaDeg = ds.alpha_initial;
             const v0 = ds.v0_initial;
             const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
@@ -2467,7 +2467,7 @@ if 'y_trajectoria' in globals():
         }
 
         function updatePhase3Plots() {
-            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['tir_basquet'];
+            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['osp_balltoss'];
             const alphaDeg = ds.alpha_initial;
             const v0 = ds.v0_initial;
             const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
@@ -2589,7 +2589,7 @@ if 'y_trajectoria' in globals():
             btn.innerHTML = "<span>⏳</span> SciPy Optimitzant...";
 
             try {
-                const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['tir_basquet'];
+                const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['osp_balltoss'];
                 const alphaDeg = ds.alpha_initial;
                 const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData.y[0] || 0.0);
                 const g = 9.81;
@@ -2696,7 +2696,7 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
         }
 
         function updatePhase3Plot() {
-            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['tir_basquet'];
+            const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['osp_balltoss'];
             const alphaDeg = ds.alpha_initial;
             const v0Ideal = ds.v0_initial;
             const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
