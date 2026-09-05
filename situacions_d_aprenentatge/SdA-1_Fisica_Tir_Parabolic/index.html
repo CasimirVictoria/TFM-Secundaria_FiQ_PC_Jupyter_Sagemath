@@ -835,11 +835,11 @@
 var('t x v_0 alpha g')
 
 # 2. Equacions paramètriques del moviment
-eq_x = Eq(x, v_0 * cos(alpha) * t)
+x_t = v_0 * cos(alpha) * t
 y_t = v_0 * sin(alpha) * t - 1/2 * g * t^2
 
 # 3. Aïllem el temps t de l'eix horitzontal: t(x)
-sol_t = solve(eq_x, t)[0]
+sol_t = solve(x == x_t, t)[0]
 
 # 4. Substituïm t a l'equació vertical per obtenir y(x)
 y_trajectoria = y_t.subs(t, sol_t)</textarea>
@@ -1953,31 +1953,67 @@ def var(names, **kwargs):
 import tokenize, io
 
 def sage_preparse(code_str):
-    """Preparser transparent de SageMath: tradueix ^ a ** i fraccions a/b a Rational(a,b) respectant cadenes i comentaris."""
+    """Preparser transparent de SageMath: tradueix ^ a **, a == b dins de solve a Eq(a, b) i fraccions a/b a Rational."""
     try:
         tokens = list(tokenize.tokenize(io.BytesIO(code_str.encode('utf-8')).readline))
         new_tokens = []
         i = 0
         while i < len(tokens):
-            tok = tokens[i]
-            if (tok.type == tokenize.NUMBER and tok.string.isdigit() and
+            # 1. Check for solve( ... == ... , ... )
+            if (tokens[i].type == tokenize.NAME and tokens[i].string == 'solve' and
+                i + 1 < len(tokens) and tokens[i+1].string == '('):
+                depth = 1
+                j = i + 2
+                eq_idx = -1
+                comma_idx = -1
+                while j < len(tokens):
+                    if tokens[j].string in '([':
+                        depth += 1
+                    elif tokens[j].string in ')]':
+                        depth -= 1
+                        if depth == 0:
+                            break
+                    elif depth == 1:
+                        if tokens[j].string == '==' and eq_idx == -1:
+                            eq_idx = j
+                        elif tokens[j].string == ',' and comma_idx == -1:
+                            comma_idx = j
+                            break
+                    j += 1
+                if eq_idx != -1 and comma_idx != -1:
+                    new_tokens.append((tokenize.NAME, 'solve'))
+                    new_tokens.append((tokenize.OP, '('))
+                    new_tokens.append((tokenize.NAME, 'Eq'))
+                    new_tokens.append((tokenize.OP, '('))
+                    new_tokens.extend((tok.type, tok.string) for tok in tokens[i+2:eq_idx])
+                    new_tokens.append((tokenize.OP, ','))
+                    new_tokens.extend((tok.type, tok.string) for tok in tokens[eq_idx+1:comma_idx])
+                    new_tokens.append((tokenize.OP, ')'))
+                    i = comma_idx
+                    continue
+
+            # 2. Check for integer / integer: tok, tok+1, tok+2
+            if (tokens[i].type == tokenize.NUMBER and tokens[i].string.isdigit() and
                 i + 2 < len(tokens) and
                 tokens[i+1].type == tokenize.OP and tokens[i+1].string == '/' and
                 tokens[i+2].type == tokenize.NUMBER and tokens[i+2].string.isdigit()):
-                new_tokens.append((tokenize.NAME, f'Rational({tok.string}, {tokens[i+2].string})'))
+                new_tokens.append((tokenize.NAME, f'Rational({tokens[i].string}, {tokens[i+2].string})'))
                 i += 3
                 continue
-            if tok.type == tokenize.OP and tok.string == '^':
+
+            # 3. Check for caret ^
+            if tokens[i].type == tokenize.OP and tokens[i].string == '^':
                 new_tokens.append((tokenize.OP, '**'))
                 i += 1
                 continue
-            new_tokens.append((tok.type, tok.string))
+
+            new_tokens.append((tokens[i].type, tokens[i].string))
             i += 1
         return tokenize.untokenize(new_tokens).decode('utf-8')
     except Exception:
         return code_str
 
-# Suport natiu de sintaxi SageMath per a substitucions en expressions: .subs(t, sol_t), .subs(t=sol_t), (t=sol_t) i .substitute()
+# Suport natiu de sintaxi SageMath per a substitucions en expressions: .subs(t, sol_t), .subs(t=sol_t), (t=sol_t), .substitute() i .rhs()
 def _expr_call(self, *args, **kwargs):
     if kwargs:
         subs_dict = {sp.Symbol(k) if isinstance(k, str) else k: v for k, v in kwargs.items()}
@@ -1995,6 +2031,7 @@ def _expr_subs(orig_subs):
 sp.Expr.__call__ = _expr_call
 sp.Expr.substitute = sp.Expr.subs
 sp.Expr.subs = _expr_subs(sp.Expr.subs)
+sp.Expr.rhs = lambda self: self
 
 def eval_model_phase1(v0_val, alpha_rad, g_val):
     """Avalua densament el model f_num de l'alumne fins a la caiguda y(x) = 0."""
