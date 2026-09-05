@@ -829,19 +829,20 @@
                             <span>▶</span> Executa el codi
                         </button>
                     </div>
-                    <textarea id="python-editor"># Modelització Simbòlica de Tir Parabòlic Ideal
+                    <textarea id="python-editor"># Modelització Simbòlica de Tir Parabòlic Ideal (Sintaxi SageMath)
 
 # 1. Definir variables simbòliques
 var('t x v_0 alpha g')
 
-# 2. Equació horitzontal
+# 2. Equacions paramètriques del moviment
 eq_x = Eq(x, v_0 * cos(alpha) * t)
+y_t = v_0 * sin(alpha) * t - 1/2 * g * t^2
 
-# 3. Aïllem el temps t(x)
+# 3. Aïllem el temps t de l'eix horitzontal: t(x)
 sol_t = solve(eq_x, t)[0]
 
-# 4. Equació vertical de la trajectòria y(x)
-y_trajectoria = v_0 * sin(alpha) * sol_t - 1/2 * g * sol_t^2</textarea>
+# 4. Substituïm t a l'equació vertical per obtenir y(x)
+y_trajectoria = y_t.subs(t, sol_t)</textarea>
                 </div>
 
                 <div class="theory-card">
@@ -1975,6 +1976,25 @@ def sage_preparse(code_str):
         return tokenize.untokenize(new_tokens).decode('utf-8')
     except Exception:
         return code_str
+
+# Suport natiu de sintaxi SageMath per a substitucions en expressions: .subs(t, sol_t), .subs(t=sol_t), (t=sol_t) i .substitute()
+def _expr_call(self, *args, **kwargs):
+    if kwargs:
+        subs_dict = {sp.Symbol(k) if isinstance(k, str) else k: v for k, v in kwargs.items()}
+        return self.subs(subs_dict)
+    return self.subs(*args)
+
+def _expr_subs(orig_subs):
+    def wrapper(self, *args, **kwargs):
+        if kwargs:
+            subs_dict = {sp.Symbol(k) if isinstance(k, str) else k: v for k, v in kwargs.items()}
+            return orig_subs(self, subs_dict)
+        return orig_subs(self, *args)
+    return wrapper
+
+sp.Expr.__call__ = _expr_call
+sp.Expr.substitute = sp.Expr.subs
+sp.Expr.subs = _expr_subs(sp.Expr.subs)
 
 def eval_model_phase1(v0_val, alpha_rad, g_val):
     """Avalua densament el model f_num de l'alumne fins a la caiguda y(x) = 0."""
