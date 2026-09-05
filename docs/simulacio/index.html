@@ -914,9 +914,8 @@ y_trajectoria = y_t.subs(t, sol_t)</textarea>
                 </div>
 
                 <div>
-                    <div style="font-weight:600; font-size:0.9rem; margin-bottom:6px; color:#1e293b; text-align:center; display:flex; justify-content:center; align-items:center; gap:8px;">
-                        <span>Gràfica 1: Model teòric ideal (Galileu)</span>
-                        <span id="badge-engine-phase1" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; background:#e2e8f0; color:#475569; font-weight:500;">⚡ Model base (JS)</span>
+                    <div style="font-weight:600; font-size:0.9rem; margin-bottom:6px; color:#1e293b; text-align:center;">
+                        Gràfica 1: Model teòric ideal (Galileu)
                     </div>
                     <div id="plot-phase-1" class="plot-box" style="height: 400px;"></div>
                 </div>
@@ -2343,21 +2342,6 @@ if 'y_trajectoria' in globals():
 
             document.getElementById('res-xmax-1').innerText = displayXMax.toFixed(2) + " m";
             document.getElementById('res-ymax-1').innerText = displayYMax.toFixed(2) + " m";
-
-            const badgeEl = document.getElementById('badge-engine-phase1');
-            if (badgeEl) {
-                if (hasEvaluatedWithPyodide) {
-                    badgeEl.innerHTML = "🟢 Model deduït: SageMath WASM";
-                    badgeEl.style.background = "#dcfce7";
-                    badgeEl.style.color = "#166534";
-                    badgeEl.style.border = "1px solid #86efac";
-                } else {
-                    badgeEl.innerHTML = "⚡ Model base (JS)";
-                    badgeEl.style.background = "#e2e8f0";
-                    badgeEl.style.color = "#475569";
-                    badgeEl.style.border = "1px solid #cbd5e1";
-                }
-            }
 
             const traces = [
                 {
