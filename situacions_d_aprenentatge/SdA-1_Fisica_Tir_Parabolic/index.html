@@ -2166,7 +2166,7 @@ sp.Expr.rhs = property(lambda self: self)
 sp.Expr.lhs = property(lambda self: self)
 
 def eval_model_phase1(v0_val, alpha_rad, g_val):
-    """Avalua directament l'equacio de la trajectoria y(x) calculada per l'alumnat a SageMath."""
+    """Avalua directament l'equacio de la trajectoria y(x) calculada per l'alumnat a SageMath de forma totalment robusta."""
     if 'f_num' not in globals() or globals()['f_num'] is None:
         return None
     f = globals()['f_num']
@@ -2177,9 +2177,9 @@ def eval_model_phase1(v0_val, alpha_rad, g_val):
     v0x = max(v0_f * np.cos(a_f), 0.01)
     v0y = v0_f * np.sin(a_f)
     t_est = max(2.0 * v0y / g_f, 0.5) if v0y > 0 else 1.0
-    x_est = max(v0x * t_est, 1.0)
+    x_domain_max = max(v0x * t_est * 1.5, 60.0)
     
-    x_dense = np.linspace(0.0, x_est * 2.0, 400)
+    x_dense = np.linspace(0.0, x_domain_max, 500)
     try:
         y_dense = f(x_dense, v0_f, a_f, g_f)
         if np.isscalar(y_dense):
@@ -2187,37 +2187,47 @@ def eval_model_phase1(v0_val, alpha_rad, g_val):
         else:
             y_dense = np.array(y_dense, dtype=float)
     except Exception:
-        return None
+        try:
+            y_dense = np.array([float(f(float(xv), v0_f, a_f, g_f)) for xv in x_dense], dtype=float)
+        except Exception:
+            return None
         
-    valid_idx = [0]
+    # Detectem si la trajectoria pren vol (y > 0.05) i aterra posteriorment a terra
+    has_risen = False
+    landed_idx = -1
     for i in range(1, len(x_dense)):
-        if y_dense[i] < 0.0 and x_dense[i] > 0.02:
-            x_prev = x_dense[i-1]
-            y_prev = y_dense[i-1]
-            if y_prev > y_dense[i]:
-                frac = y_prev / (y_prev - y_dense[i])
-                x_zero = float(x_prev + frac * (x_dense[i] - x_prev))
-            else:
-                x_zero = float(x_dense[i])
-            xs_res = x_dense[valid_idx].tolist() + [x_zero]
-            ys_res = [max(0.0, float(y)) for y in y_dense[valid_idx]] + [0.0]
-            max_y = float(np.max(ys_res)) if len(ys_res) else 1.0
-            return {
-                'xs': xs_res,
-                'ys': ys_res,
-                'xMax': x_zero,
-                'yMax': max_y
-            }
-        valid_idx.append(i)
+        if y_dense[i] > 0.05:
+            has_risen = True
+        elif has_risen and y_dense[i] <= 0.0:
+            landed_idx = i
+            break
+            
+    if landed_idx != -1:
+        x_prev = x_dense[landed_idx - 1]
+        y_prev = y_dense[landed_idx - 1]
+        y_curr = y_dense[landed_idx]
+        x_curr = x_dense[landed_idx]
+        frac = y_prev / (y_prev - y_curr) if (y_prev != y_curr) else 0.0
+        x_zero = float(x_prev + frac * (x_curr - x_prev))
+        xs_res = x_dense[:landed_idx].tolist() + [x_zero]
+        ys_res = [max(0.0, float(y)) for y in y_dense[:landed_idx]] + [0.0]
+        x_max = x_zero
+        y_max = float(np.max(ys_res)) if len(ys_res) else 1.0
+        has_landed = True
+    else:
+        # Si la formula no aterra (creixement indefinit, etc.), es dibuixa pel domini per donar retroaccio didactica
+        xs_res = x_dense.tolist()
+        ys_res = y_dense.tolist()
+        x_max = float(xs_res[-1])
+        y_max = float(np.max(ys_res)) if len(ys_res) else 1.0
+        has_landed = False
         
-    xs_res = x_dense[valid_idx].tolist()
-    ys_res = [max(0.0, float(y)) for y in y_dense[valid_idx]]
-    max_y = float(np.max(ys_res)) if len(ys_res) else 1.0
     return {
         'xs': xs_res,
         'ys': ys_res,
-        'xMax': float(xs_res[-1]),
-        'yMax': max_y
+        'xMax': x_max,
+        'yMax': y_max,
+        'hasLanded': has_landed
     }
 
 _last_plot_data = None
@@ -2263,14 +2273,13 @@ def sage_plot(expr, *args, **kwargs):
         else:
             ys = np.array(ys, dtype=float)
     except Exception:
-        ys = np.array([float(f(x_val)) for x_val in xs])
+        ys = np.array([float(f(float(x_val))) for x_val in xs])
         
+    # Representacio grafica matematica fidel al llarg de tot l'interval [xmin, xmax]
     points = []
     for x_val, y_val in zip(xs, ys):
-        if y_val < 0.0 and x_val > xmin + 0.1:
-            points.append({'x': round(float(x_val), 3), 'y': 0.0})
-            break
-        points.append({'x': round(float(x_val), 3), 'y': max(0.0, round(float(y_val), 3))})
+        if np.isfinite(y_val):
+            points.append({'x': round(float(x_val), 3), 'y': round(float(y_val), 3)})
         
     _last_plot_data = {
         'points': points,
@@ -2510,8 +2519,12 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
 
             const xs = plotData.points.map(p => p.x);
             const ys = plotData.points.map(p => p.y);
-            const maxY = Math.max(...ys, 0.5);
-            const maxX = Math.max(...xs, plotData.xmax, 1.0);
+            const minY = ys.length ? Math.min(...ys, 0.0) : 0.0;
+            const maxY = ys.length ? Math.max(...ys, 0.5) : 0.5;
+            const ySpan = Math.max(maxY - minY, 0.5);
+            const minX = xs.length ? Math.min(...xs, plotData.xmin, 0.0) : 0.0;
+            const maxX = xs.length ? Math.max(...xs, plotData.xmax, 1.0) : 1.0;
+            const xSpan = Math.max(maxX - minX, 1.0);
 
             const traces = [
                 {
@@ -2520,7 +2533,7 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
                     mode: 'lines',
                     name: 'y(x) teòrica',
                     line: { color: '#2563eb', width: 3 },
-                    fill: 'tozeroy',
+                    fill: minY >= 0 ? 'tozeroy' : 'none',
                     fillcolor: 'rgba(37, 99, 235, 0.08)',
                     hovertemplate: 'x: %{x:.2f} m<br>y: %{y:.2f} m<extra></extra>'
                 }
@@ -2530,13 +2543,13 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
                 margin: { l: 45, r: 15, t: 15, b: 35 },
                 xaxis: {
                     title: '<b>x (m)</b>',
-                    range: [-0.02 * maxX, maxX * 1.05],
+                    range: [minX - 0.04 * xSpan, maxX + 0.04 * xSpan],
                     gridcolor: '#f1f5f9',
                     zerolinecolor: '#cbd5e1'
                 },
                 yaxis: {
                     title: '<b>y (m)</b>',
-                    range: [-0.05 * maxY, maxY * 1.15],
+                    range: [minY - 0.08 * ySpan, maxY + 0.12 * ySpan],
                     gridcolor: '#f1f5f9',
                     zerolinecolor: '#cbd5e1'
                 },
@@ -2562,6 +2575,7 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
             let displayXMax = 0;
             let displayYMax = 0;
             let hasEvaluatedWithPyodide = false;
+            let hasLanded = true;
 
             // Avaluació directa del model deduït per l'alumne a Pyodide (f_num)
             if (window.pyodideInstance && pyodideInstance.globals && pyodideInstance.globals.get('eval_model_phase1')) {
@@ -2578,11 +2592,13 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
                             const rawYs = resJs.get ? resJs.get('ys') : resJs.ys;
                             const rawXMax = resJs.get ? resJs.get('xMax') : resJs.xMax;
                             const rawYMax = resJs.get ? resJs.get('yMax') : resJs.yMax;
+                            const rawHasLanded = resJs.get ? resJs.get('hasLanded') : resJs.hasLanded;
                             if (rawXs && rawXs.length > 1) {
                                 xs = Array.from(rawXs);
                                 ys = Array.from(rawYs);
                                 displayXMax = rawXMax;
                                 displayYMax = rawYMax;
+                                hasLanded = (rawHasLanded !== false);
                                 hasEvaluatedWithPyodide = true;
                             }
                         }
@@ -2608,9 +2624,14 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
                     xs.push(x);
                     ys.push(Math.max(0, y));
                 }
+                hasLanded = true;
             }
 
-            document.getElementById('res-xmax-1').innerText = displayXMax.toFixed(2) + " m";
+            if (hasEvaluatedWithPyodide && !hasLanded) {
+                document.getElementById('res-xmax-1').innerText = "Sense retorn (creixent)";
+            } else {
+                document.getElementById('res-xmax-1').innerText = displayXMax.toFixed(2) + " m";
+            }
             document.getElementById('res-ymax-1').innerText = displayYMax.toFixed(2) + " m";
 
             const traces = [
@@ -2618,13 +2639,15 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
                     x: xs,
                     y: ys,
                     mode: 'lines',
-                    name: hasEvaluatedWithPyodide ? '🟢 Model teòric ideal (SageMath)' : 'Model teòric ideal (Galileu)',
+                    name: hasEvaluatedWithPyodide ? '🟢 Model teòric calculat (SageMath)' : 'Model teòric ideal (Galileu)',
                     line: { color: hasEvaluatedWithPyodide ? '#16a34a' : '#2563eb', width: 3.5 },
                     hovertemplate: 'x: %{x:.2f} m<br>y: %{y:.2f} m<extra></extra>'
                 }
             ];
 
             // Marc de referència estable i didàctic per a percebre clarament l'evolució de la paràbola en variar v0 i alpha
+            const minY = ys.length ? Math.min(...ys, 0.0) : 0.0;
+            const yBottom = minY < -1.0 ? Math.floor(minY * 1.1) : -1.0;
             const xLimit = Math.max(60, Math.ceil((displayXMax + 5) / 20) * 20);
             const yLimit = Math.max(25, Math.ceil((displayYMax + 3) / 10) * 10);
             const layout = {
@@ -2639,7 +2662,7 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
                 },
                 yaxis: { 
                     title: '<b>y (m)</b>', 
-                    range: [-1, yLimit], 
+                    range: [yBottom, yLimit], 
                     autorange: false, 
                     gridcolor: '#f1f5f9',
                     zerolinecolor: '#cbd5e1'
