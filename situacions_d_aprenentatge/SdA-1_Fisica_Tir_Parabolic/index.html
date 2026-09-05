@@ -974,9 +974,9 @@ y_trajectoria = y_t.subs(t, sol_t)</textarea>
                         </div>
 
                         <div class="formula-box">
-                            <div style="font-weight: 600; margin-bottom: 2px; color: var(--danger);">⚠️ Discrepància Crítica:</div>
-                            <div style="font-size:0.82rem; color:#334155;">
-                                El model de Galileu preveu més del doble de la distància real mesurada!
+                            <div style="font-weight: 600; margin-bottom: 2px; color: var(--danger);">⚠️ Discrepància Experimental Detectada:</div>
+                            <div style="font-size:0.82rem; color:#334155;" id="conflict-discrepancy-desc">
+                                El model de Galileu preveu un abast superior al mesurat a la realitat!
                             </div>
                         </div>
                     </div>
@@ -2328,7 +2328,7 @@ if 'y_trajectoria' in globals():
             Plotly.react('plot-phase-1', traces, layout, { responsive: true, displayModeBar: false });
         }
 
-        function simulateRayleigh(v0, alphaDeg, g, kDrag, y0 = 0.0) {
+        function simulateRayleigh(v0, alphaDeg, g, kDrag, y0 = 0.0, yFloor = 0.0) {
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
             let vx = v0 * Math.cos(alphaRad);
             let vy = v0 * Math.sin(alphaRad);
@@ -2338,7 +2338,7 @@ if 'y_trajectoria' in globals():
             const xs = [0.0];
             const ys = [y0];
 
-            while (y >= 0.0 && x < 150.0 && xs.length < 4000) {
+            while (y >= yFloor && x < 150.0 && xs.length < 5000) {
                 const v = Math.sqrt(vx * vx + vy * vy);
                 const ax = -kDrag * v * vx;
                 const ay = -g - kDrag * v * vy;
@@ -2348,7 +2348,7 @@ if 'y_trajectoria' in globals():
                 vx += ax * dt;
                 vy += ay * dt;
 
-                if (y >= 0.0) {
+                if (y >= yFloor) {
                     xs.push(x);
                     ys.push(y);
                 }
@@ -2395,13 +2395,16 @@ if 'y_trajectoria' in globals():
             const alphaDeg = ds.alpha_initial;
             const v0 = ds.v0_initial;
             const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
+            const yFinalExp = (trackerData && trackerData.y.length > 0) ? trackerData.y[trackerData.y.length - 1] : 0.0;
+            const yFloor = Math.min(0.0, yFinalExp);
             const g = 9.81;
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
 
-            // Temps de vol ideal amb alçada inicial y0
+            // Temps de vol ideal estès fins a la cota final de les dades reals
             const v0y = v0 * Math.sin(alphaRad);
             const v0x = v0 * Math.cos(alphaRad);
-            const tVolIdeal = (v0y + Math.sqrt(Math.pow(v0y, 2) + 2 * g * y0)) / g;
+            const disc = Math.pow(v0y, 2) + 2 * g * (y0 - yFloor);
+            const tVolIdeal = (v0y + Math.sqrt(Math.max(0, disc))) / g;
             const xMaxIdeal = v0x * tVolIdeal;
 
             const xsIdeal = [];
@@ -2444,7 +2447,7 @@ if 'y_trajectoria' in globals():
                 ysIdeal = [];
                 for (let i = 0; i <= 100; i++) {
                     const t = (i / 100) * tVolIdeal;
-                    ysIdeal.push(Math.max(0, y0 + v0y * t - 0.5 * g * Math.pow(t, 2)));
+                    ysIdeal.push(y0 + v0y * t - 0.5 * g * Math.pow(t, 2));
                 }
             }
 
@@ -2481,6 +2484,12 @@ if 'y_trajectoria' in globals():
                 const errRel = Math.abs((xMaxIdeal - xExpMax) / xExpMax) * 100;
                 document.getElementById('res-error-2').innerText = `${errRel.toFixed(1)}% (Discrepància!)`;
 
+                const descEl = document.getElementById('conflict-discrepancy-desc');
+                if (descEl) {
+                    const diffDist = (xMaxIdeal - xExpMax).toFixed(2);
+                    descEl.innerHTML = `El model de Galileu preveu un abast de <b>${xMaxIdeal.toFixed(2)} m</b> (${diffDist > 0 ? '+' : ''}${diffDist} m respecte a la realitat mesurada)!`;
+                }
+
                 tracesConflict.push({
                     x: trackerData.x,
                     y: trackerData.y,
@@ -2509,13 +2518,15 @@ if 'y_trajectoria' in globals():
             const alphaDeg = ds.alpha_initial;
             const v0 = ds.v0_initial;
             const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
+            const yFinalExp = (trackerData && trackerData.y.length > 0) ? trackerData.y[trackerData.y.length - 1] : 0.0;
+            const yFloor = Math.min(0.0, yFinalExp);
             const g = 9.81;
 
             // 1. Gràfica Dinàmica de Fricció de Rayleigh (Pas 3.1)
             const kDrag = parseFloat(document.getElementById('slider-drag-3').value);
             document.getElementById('val-drag-3').innerText = kDrag.toFixed(3);
 
-            const sim = simulateRayleigh(v0, alphaDeg, g, kDrag, y0);
+            const sim = simulateRayleigh(v0, alphaDeg, g, kDrag, y0, yFloor);
             document.getElementById('res-xmax-friction-3').innerText = sim.xMax.toFixed(2) + " m";
 
             if (trackerData && trackerData.x.length > 0) {
@@ -2528,7 +2539,8 @@ if 'y_trajectoria' in globals():
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
             const v0y = v0 * Math.sin(alphaRad);
             const v0x = v0 * Math.cos(alphaRad);
-            const tVolIdeal = (v0y + Math.sqrt(Math.pow(v0y, 2) + 2 * g * y0)) / g;
+            const disc = Math.pow(v0y, 2) + 2 * g * (y0 - yFloor);
+            const tVolIdeal = (v0y + Math.sqrt(Math.max(0, disc))) / g;
             const xsIdeal = [];
             let ysIdeal = [];
             for (let i = 0; i <= 100; i++) {
@@ -2569,7 +2581,7 @@ if 'y_trajectoria' in globals():
                 ysIdeal = [];
                 for (let i = 0; i <= 100; i++) {
                     const t = (i / 100) * tVolIdeal;
-                    ysIdeal.push(Math.max(0, y0 + v0y * t - 0.5 * g * Math.pow(t, 2)));
+                    ysIdeal.push(y0 + v0y * t - 0.5 * g * Math.pow(t, 2));
                 }
             }
 
@@ -2637,7 +2649,10 @@ if 'y_trajectoria' in globals():
                 pyodideInstance.globals.set("fit_p0", pyodideInstance.toPy(p0));
                 pyodideInstance.globals.set("fit_bounds_low", pyodideInstance.toPy(bounds[0]));
                 pyodideInstance.globals.set("fit_bounds_high", pyodideInstance.toPy(bounds[1]));
+                const yFinalExp = (trackerData && trackerData.y.length > 0) ? trackerData.y[trackerData.y.length - 1] : 0.0;
+                const yFloor = Math.min(0.0, yFinalExp);
                 pyodideInstance.globals.set("fit_y0", y0);
+                pyodideInstance.globals.set("fit_yfloor", yFloor);
 
                 const fitPyCode = `
 import numpy as np
@@ -2646,6 +2661,7 @@ from scipy.optimize import curve_fit
 x_data = np.array(exp_x)
 y_data = np.array(exp_y)
 y0_val = float(fit_y0)
+y_floor_val = float(fit_yfloor)
 
 def model_fit(x, v0_val, k_val):
     return y0_val + x * np.tan(${alphaRad}) - (${g} * x**2) / (2 * v0_val**2 * np.cos(${alphaRad})**2) * (1.0 + k_val * x)
@@ -2670,7 +2686,7 @@ except Exception as fe:
 max_x_fit = float(np.max(x_data) * 1.25)
 x_dense = np.linspace(0, max_x_fit, 300)
 y_dense = model_fit(x_dense, v0_opt, k_opt)
-val = y_dense >= -0.05
+val = y_dense >= (y_floor_val - 0.05)
 x_fit_res = x_dense[val].tolist()
 y_fit_res = y_dense[val].tolist()
 
@@ -2731,18 +2747,21 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
             const alphaDeg = ds.alpha_initial;
             const v0Ideal = ds.v0_initial;
             const y0 = (ds.y0_initial !== undefined) ? ds.y0_initial : (trackerData && trackerData.y.length > 0 ? trackerData.y[0] : 0.0);
+            const yFinalExp = (trackerData && trackerData.y.length > 0) ? trackerData.y[trackerData.y.length - 1] : 0.0;
+            const yFloor = Math.min(0.0, yFinalExp);
             const g = 9.81;
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
 
             const v0y = v0Ideal * Math.sin(alphaRad);
             const v0x = v0Ideal * Math.cos(alphaRad);
-            const tVolIdeal = (v0y + Math.sqrt(Math.pow(v0y, 2) + 2 * g * y0)) / g;
+            const disc = Math.pow(v0y, 2) + 2 * g * (y0 - yFloor);
+            const tVolIdeal = (v0y + Math.sqrt(Math.max(0, disc))) / g;
             const xsIdeal = [];
             const ysIdeal = [];
             for (let i = 0; i <= 100; i++) {
                 const t = (i / 100) * tVolIdeal;
                 xsIdeal.push(v0x * t);
-                ysIdeal.push(Math.max(0, y0 + v0y * t - 0.5 * g * Math.pow(t, 2)));
+                ysIdeal.push(y0 + v0y * t - 0.5 * g * Math.pow(t, 2));
             }
 
             const traces = [];
