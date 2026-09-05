@@ -2123,13 +2123,16 @@ if 'y_trajectoria' in globals():
                 if (resDiv) {
                     resDiv.style.fontStyle = "normal";
                     resDiv.style.color = "var(--text)";
-                    resDiv.innerHTML = `\[ y(x) = ${currentLatexSimbolica} \]`;
+                    if (window.MathJax && MathJax.typesetClear) {
+                        try { MathJax.typesetClear([resDiv]); } catch (e) {}
+                    }
+                    resDiv.innerHTML = `\\[ y(x) = ${currentLatexSimbolica} \\]`;
                 }
 
                 if (capSpan) capSpan.style.display = "inline";
 
                 if (window.MathJax && MathJax.typesetPromise && resDiv) {
-                    MathJax.typesetPromise([resDiv]);
+                    MathJax.typesetPromise([resDiv]).catch(err => console.warn("MathJax error:", err));
                 }
 
                 phase1RevisionToken++;
