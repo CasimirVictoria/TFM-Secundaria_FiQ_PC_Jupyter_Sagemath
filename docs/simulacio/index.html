@@ -289,12 +289,19 @@
 
         /* Editor CodeMirror: Tema Clar (JupyterLab clàssic per defecte) */
         .CodeMirror {
-            height: 275px !important;
+            height: auto !important;
+            min-height: 330px !important;
+            max-height: 420px;
             font-size: 0.875rem;
             font-family: 'Fira Code', 'Consolas', monospace;
             line-height: 1.5;
             background: #ffffff !important;
             color: #0f172a !important;
+        }
+
+        .CodeMirror-scroll {
+            min-height: 330px !important;
+            max-height: 420px;
         }
 
         .CodeMirror-gutters {
@@ -896,11 +903,11 @@ y_trajectoria = y_t.subs(t, sol_t)</textarea>
 
                     <div class="metric-cards">
                         <div class="metric-card">
-                            <div class="metric-title">Abast Calculat (\(X_{\text{màx}}\))</div>
+                            <div class="metric-title">Abast Ideal (\(X_{\text{màx}}\))</div>
                             <div class="metric-value" id="res-xmax-1" style="color: var(--primary);">46.38 m</div>
                         </div>
                         <div class="metric-card">
-                            <div class="metric-title">Altura Màx Calculada (\(h_{\text{màx}}\))</div>
+                            <div class="metric-title">Altura Màx (\(h_{\text{màx}}\))</div>
                             <div class="metric-value" id="res-ymax-1" style="color: var(--danger);">16.53 m</div>
                         </div>
                     </div>
@@ -908,7 +915,7 @@ y_trajectoria = y_t.subs(t, sol_t)</textarea>
 
                 <div>
                     <div style="font-weight:600; font-size:0.9rem; margin-bottom:6px; color:#1e293b; text-align:center; display:flex; justify-content:center; align-items:center; gap:8px;">
-                        <span>Gràfica 1: Equació de la Trajectòria Calculada \(y(x)\)</span>
+                        <span>Gràfica 1: Model teòric ideal (Galileu)</span>
                         <span id="badge-engine-phase1" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; background:#e2e8f0; color:#475569; font-weight:500;">⚡ Model base (JS)</span>
                     </div>
                     <div id="plot-phase-1" class="plot-box" style="height: 400px;"></div>
@@ -2340,12 +2347,12 @@ if 'y_trajectoria' in globals():
             const badgeEl = document.getElementById('badge-engine-phase1');
             if (badgeEl) {
                 if (hasEvaluatedWithPyodide) {
-                    badgeEl.innerHTML = "🟢 Equació calculada y(x): SageMath WASM";
+                    badgeEl.innerHTML = "🟢 Model deduït: SageMath WASM";
                     badgeEl.style.background = "#dcfce7";
                     badgeEl.style.color = "#166534";
                     badgeEl.style.border = "1px solid #86efac";
                 } else {
-                    badgeEl.innerHTML = "⚡ Equació calculada y(x): JS Base";
+                    badgeEl.innerHTML = "⚡ Model base (JS)";
                     badgeEl.style.background = "#e2e8f0";
                     badgeEl.style.color = "#475569";
                     badgeEl.style.border = "1px solid #cbd5e1";
@@ -2357,7 +2364,7 @@ if 'y_trajectoria' in globals():
                     x: xs,
                     y: ys,
                     mode: 'lines',
-                    name: hasEvaluatedWithPyodide ? '🟢 Trajectòria calculada y(x) [SageMath]' : 'Trajectòria calculada y(x) [Galileu]',
+                    name: hasEvaluatedWithPyodide ? '🟢 Model teòric ideal (SageMath)' : 'Model teòric ideal (Galileu)',
                     line: { color: hasEvaluatedWithPyodide ? '#16a34a' : '#2563eb', width: 3.5 },
                     hovertemplate: 'x: %{x:.2f} m<br>y: %{y:.2f} m<extra></extra>'
                 },
