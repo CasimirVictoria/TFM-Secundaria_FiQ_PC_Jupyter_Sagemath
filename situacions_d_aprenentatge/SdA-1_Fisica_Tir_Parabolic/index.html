@@ -19,6 +19,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+    <!-- QRCode.js per a generació de codis QR d'avaluació en client -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
             --primary: #2563eb;
@@ -952,6 +954,182 @@
                 justify-content: flex-start;
             }
         }
+
+        /* ==================================================================== */
+        /* SELECTOR D'EQUIP I CAIXES DE LLIURAMENT AMB CODI QR                 */
+        /* ==================================================================== */
+        .team-selector-card {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 6px 12px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .team-select {
+            padding: 6px 10px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 6px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .phase-delivery-box {
+            margin-top: 24px;
+            padding: 16px 20px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .delivery-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .delivery-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn-qr-delivery {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #ffffff;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .btn-qr-delivery:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.3);
+        }
+
+        .btn-download-delivery {
+            background: #ffffff;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+            padding: 9px 16px;
+            border-radius: 8px;
+            font-size: 0.86rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-download-delivery:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        /* Modal de Codi QR */
+        .qr-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+
+        .qr-modal-content {
+            background: #ffffff;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 680px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            animation: qrModalIn 0.25s ease-out;
+        }
+
+        @keyframes qrModalIn {
+            from { opacity: 0; transform: scale(0.96) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .qr-modal-header {
+            padding: 18px 22px;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .qr-modal-close {
+            background: transparent;
+            border: none;
+            font-size: 1.6rem;
+            line-height: 1;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 0 6px;
+            border-radius: 6px;
+        }
+
+        .qr-modal-close:hover {
+            color: #0f172a;
+            background: #e2e8f0;
+        }
+
+        .qr-modal-body {
+            padding: 22px;
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 22px;
+            align-items: start;
+        }
+
+        @media (max-width: 640px) {
+            .qr-modal-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .qr-modal-footer {
+            padding: 14px 22px;
+            background: #f8fafc;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
     </style>
 </head>
 <body>
@@ -972,9 +1150,29 @@
                 <h1>⚡ Modelització Computacional i Dinàmica de Newton</h1>
                 <p class="subtitle">Situació d'Aprenentatge: <b>Del Model Ideal al Conflicte Experimental i l'Elaboració d'un Millor Model</b>.</p>
             </div>
-            <div class="wasm-status-card" id="wasm-status">
-                <span class="status-dot" id="status-dot"></span>
-                <span id="status-text">Iniciant motor Python WASM...</span>
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                <div class="team-selector-card" title="Identificador de l'equip per al registre de l'informe">
+                    <span style="font-weight: 700; font-size: 0.82rem; color: #1e293b;">👥 Equip:</span>
+                    <select id="team-number-select" class="team-select" onchange="onTeamSelectChange(this.value)">
+                        <option value="">-- Tria Equip --</option>
+                        <option value="Equip 1">Equip 1</option>
+                        <option value="Equip 2">Equip 2</option>
+                        <option value="Equip 3">Equip 3</option>
+                        <option value="Equip 4">Equip 4</option>
+                        <option value="Equip 5">Equip 5</option>
+                        <option value="Equip 6">Equip 6</option>
+                        <option value="Equip 7">Equip 7</option>
+                        <option value="Equip 8">Equip 8</option>
+                        <option value="Equip 9">Equip 9</option>
+                        <option value="Equip 10">Equip 10</option>
+                        <option value="Equip 11">Equip 11</option>
+                        <option value="Equip 12">Equip 12</option>
+                    </select>
+                </div>
+                <div class="wasm-status-card" id="wasm-status">
+                    <span class="status-dot" id="status-dot"></span>
+                    <span id="status-text">Iniciant motor Python WASM...</span>
+                </div>
             </div>
         </header>
 
@@ -1156,6 +1354,22 @@ y_trajectoria = y_t.subs(sol_t)</textarea>
                         Gràfica 1: Model teòric ideal (Galileu)
                     </div>
                     <div id="plot-phase-1" class="plot-box" style="height: 400px;"></div>
+                </div>
+            </div>
+
+            <!-- Caixa de lliurament / Codi QR de la Fase 1 (Sessió 1) -->
+            <div class="phase-delivery-box">
+                <div class="delivery-info">
+                    <div style="font-weight: 700; font-size: 0.95rem; color: #1e293b;">📦 Lliurament de la Sessió 1: Model Ideal de Galileu</div>
+                    <div style="font-size: 0.84rem; color: #64748b;">Genereu el codi QR o descarregueu l'informe per al registre docent d'aquesta primera sessió.</div>
+                </div>
+                <div class="delivery-actions">
+                    <button class="btn-qr-delivery" onclick="openQrModal(1)">
+                        <span>📲</span> Generar Codi QR (Fase 1)
+                    </button>
+                    <button class="btn-download-delivery" onclick="downloadPhaseReport(1)">
+                        <span>📥</span> Descarregar Informe (.txt)
+                    </button>
                 </div>
             </div>
 
@@ -1348,6 +1562,20 @@ y_trajectoria = y_t.subs(sol_t)</textarea>
                         <div id="debate-submitted-3" style="display:none;" class="submitted-response-box"></div>
                     </div>
                 </div>
+            <!-- Caixa de lliurament / Codi QR de la Fase 2 (Sessió 2) -->
+            <div class="phase-delivery-box" id="delivery-box-phase-2" style="border-color: #fde68a; background: #fffbeb;">
+                <div class="delivery-info">
+                    <div style="font-weight: 700; font-size: 0.95rem; color: #92400e;">📦 Lliurament de la Sessió 2: Conflicte Experimental i Debat</div>
+                    <div style="font-size: 0.84rem; color: #78350f;">Genereu el codi QR o descarregueu l'informe amb les dades de Tracker i les conclusions del debat en equip.</div>
+                </div>
+                <div class="delivery-actions">
+                    <button class="btn-qr-delivery" style="background: linear-gradient(135deg, #b45309, #78350f);" onclick="openQrModal(2)">
+                        <span>📲</span> Generar Codi QR (Fase 2)
+                    </button>
+                    <button class="btn-download-delivery" onclick="downloadPhaseReport(2)">
+                        <span>📥</span> Descarregar Informe (.txt)
+                    </button>
+                </div>
             </div>
 
             <!-- Botons de navegació de la Fase 2 -->
@@ -1537,11 +1765,64 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
                 </div>
             </div>
 
+            <!-- Caixa de lliurament / Codi QR de la Fase 3 (Sessió 3) -->
+            <div class="phase-delivery-box" style="border-color: #ddd6fe; background: #faf5ff;">
+                <div class="delivery-info">
+                    <div style="font-weight: 700; font-size: 0.95rem; color: #6d28d9;">📦 Lliurament Final de la Sessió 3: Model Dinàmic de Newton</div>
+                    <div style="font-size: 0.84rem; color: #5b21b6;">Genereu el codi QR final o descarregueu l'informe complet per a avaluar el model millorat de l'equip.</div>
+                </div>
+                <div class="delivery-actions">
+                    <button class="btn-qr-delivery" style="background: linear-gradient(135deg, #7c3aed, #5b21b6);" onclick="openQrModal(3)">
+                        <span>📲</span> Generar Codi QR (Fase 3)
+                    </button>
+                    <button class="btn-download-delivery" onclick="downloadPhaseReport(3)">
+                        <span>📥</span> Descarregar Informe (.txt)
+                    </button>
+                </div>
+            </div>
+
             <!-- Botó de retorn a la Fase 2 -->
             <div style="display: flex; justify-content: flex-start; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e9d5ff;">
                 <button class="btn-prev-phase" onclick="switchPhase(2)">
                     <span>◀</span> <span>Tornar a la Fase 2 (Contrast Experimental)</span>
                 </button>
+        </div>
+    </div>
+
+    <!-- MODAL DE CODI QR I INFORME D'AVALUACIÓ -->
+    <div id="qr-modal" class="qr-modal-overlay" style="display: none;" onclick="closeQrModalOnBackdrop(event)">
+        <div class="qr-modal-content" onclick="event.stopPropagation()">
+            <div class="qr-modal-header">
+                <div>
+                    <h3 id="qr-modal-title" style="margin: 0; font-size: 1.15rem; color: #1e293b;">📱 Codi QR d'Avaluació</h3>
+                    <div id="qr-modal-subtitle" style="font-size: 0.82rem; color: #64748b; margin-top: 2px;"></div>
+                </div>
+                <button class="qr-modal-close" onclick="closeQrModal()">&times;</button>
+            </div>
+            
+            <div class="qr-modal-body">
+                <div class="qr-display-container">
+                    <div id="qrcode-canvas-target" style="display: flex; justify-content: center; align-items: center; padding: 12px; background: #ffffff; border: 2px solid #e2e8f0; border-radius: 12px; min-height: 230px;"></div>
+                    <div style="font-size: 0.78rem; color: #64748b; text-align: center; margin-top: 8px;">
+                        📷 Apunteu la càmera del mòbil docent per escanejar el resum de la tasca.
+                    </div>
+                </div>
+
+                <div class="qr-text-container">
+                    <div style="font-size: 0.82rem; font-weight: 700; color: #475569; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+                        <span>📄 Contingut de l'Informe:</span>
+                        <span id="qr-team-badge" style="background: #eff6ff; color: #2563eb; padding: 2px 8px; border-radius: 6px; font-size: 0.78rem; font-weight: 700;"></span>
+                    </div>
+                    <pre id="qr-report-pre" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; font-size: 0.76rem; line-height: 1.45; max-height: 190px; overflow-y: auto; white-space: pre-wrap; font-family: monospace; color: #1e293b; margin: 0;"></pre>
+                    <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+                        <button class="btn-download-delivery" style="padding: 7px 12px; font-size: 0.8rem;" onclick="copyReportText()" id="btn-copy-report">📋 Copiar Text</button>
+                        <button class="btn-download-delivery" style="padding: 7px 12px; font-size: 0.8rem;" onclick="downloadCurrentModalReport()">📥 Descarregar (.txt)</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qr-modal-footer">
+                <button class="btn-prev-phase" onclick="closeQrModal()">Tancar</button>
             </div>
         </div>
     </div>
@@ -1555,6 +1836,269 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
         let fittedResult = null;
         let currentPhase = 1;
         let phase3Unlocked = false;
+        let currentModalPhase = 1;
+        let currentModalReportText = "";
+
+        function getTeamNumber() {
+            const sel = document.getElementById('team-number-select');
+            return sel ? sel.value.trim() : "";
+        }
+
+        function onTeamSelectChange(val) {
+            try {
+                localStorage.setItem('sda_team_number', val);
+            } catch (e) {}
+        }
+
+        function ensureTeamNumber() {
+            let team = getTeamNumber();
+            if (!team) {
+                const promptVal = prompt("Per favor, indiqueu el número o nom del vostre equip (Ex: Equip 4):", "Equip 1");
+                if (promptVal && promptVal.trim()) {
+                    team = promptVal.trim();
+                    const sel = document.getElementById('team-number-select');
+                    if (sel) {
+                        let found = false;
+                        for (let opt of sel.options) {
+                            if (opt.value === team) { found = true; break; }
+                        }
+                        if (!found) {
+                            const newOpt = new Option(team, team, true, true);
+                            sel.add(newOpt);
+                        }
+                        sel.value = team;
+                    }
+                    onTeamSelectChange(team);
+                }
+            }
+            return team;
+        }
+
+        function buildPhaseReport(phaseNum) {
+            const team = getTeamNumber() || "Equip sense assignar";
+            const now = new Date().toLocaleString('ca-ES', { dateStyle: 'short', timeStyle: 'medium' });
+            let fullReport = "";
+            let compactQr = "";
+
+            if (phaseNum === 1) {
+                const v0 = document.getElementById('slider-v0-1') ? document.getElementById('slider-v0-1').value : "22.0";
+                const alpha = document.getElementById('slider-alpha-1') ? document.getElementById('slider-alpha-1').value : "55";
+                const xmax = document.getElementById('res-xmax-1') ? document.getElementById('res-xmax-1').innerText : "--";
+                const ymax = document.getElementById('res-ymax-1') ? document.getElementById('res-ymax-1').innerText : "--";
+                const code = editor1 ? editor1.getValue().trim() : "";
+
+                fullReport = `=====================================================
+SdA FÍSICA 1r BATXILLERAT · INFORME DE LABORATORI
+FASE 1: MODEL TEÒRIC IDEAL DE GALILEU
+=====================================================
+EQUIP DE TREBALL: ${team}
+DATA I HORA: ${now}
+
+1. VARIABLES I CONDICIONS INICIALS EXPLORADES:
+- Angle de tir (α): ${alpha}°
+- Velocitat inicial (v₀): ${v0} m/s
+- Acceleració de la gravetat (g): 9.81 m/s²
+
+2. RESULTATS TEÒRICS DEL MODEL IDEAL:
+- Abast horitzontal màxim (X_màx): ${xmax}
+- Altura màxima assolida (h_màx): ${ymax}
+
+3. EQUACIÓ DE LA TRAJECTÒRIA y(x) DEDUÏDA SIMBÒLICAMENT:
+y(x) = ${currentLatexSimbolica}
+
+4. CODI COMPUTACIONAL EXECUTAT (SageMath / Python):
+${code}
+=====================================================`;
+
+                compactQr = `[SdA FiQ · FASE 1] ${team}
+Data: ${now}
+Model: Galileu Ideal
+v0=${v0}m/s, alfa=${alpha}deg
+X_max=${xmax}, Y_max=${ymax}
+Eq: y = x*tan(a) - g*x^2/(2*v0^2*cos^2(a))
+Estat Codi: Executat correctament`;
+
+            } else if (phaseNum === 2) {
+                const sel = document.getElementById('select-dataset-tracker');
+                const dsName = sel ? sel.options[sel.selectedIndex].text : "Dataset Tracker";
+                const ans1 = document.getElementById('debate-ans-1') ? document.getElementById('debate-ans-1').value.trim() : "(Pendent de respondre)";
+                const ans2 = document.getElementById('debate-ans-2') ? document.getElementById('debate-ans-2').value.trim() : "(Pendent de respondre)";
+                const ans3 = document.getElementById('debate-ans-3') ? document.getElementById('debate-ans-3').value.trim() : "(Pendent de respondre)";
+
+                fullReport = `=====================================================
+SdA FÍSICA 1r BATXILLERAT · INFORME DE LABORATORI
+FASE 2: CONTRAST EXPERIMENTAL I CONFLICTE COGNITIU
+=====================================================
+EQUIP DE TREBALL: ${team}
+DATA I HORA: ${now}
+
+1. EXPERIMENT I VÍDEO-ANÀLISI (Physics Tracker):
+- Conjunt experimental analitzat: ${dsName}
+- Conflicte detectat: Les dades reals queden per davall de la paràbola de Galileu i vx decau en el temps.
+
+2. CONCLUSIONS DEL DEBAT COOPERATIU DE L'EQUIP:
+[Pregunta 1 · Direcció i sentit de la força]:
+«${ans1}»
+
+[Pregunta 2 · Dependència amb la velocitat]:
+«${ans2}»
+
+[Pregunta 3 · Proposta de nova Segona Llei de Newton]:
+«${ans3}»
+=====================================================`;
+
+                compactQr = `[SdA FiQ · FASE 2] ${team}
+Data: ${now}
+Dataset: ${currentDatasetKey || "Tracker"}
+Conflicte: Trajectoria real < Parabola ideal
+P1 (Sentit): ${ans1.substring(0, 60)}
+P2 (Velocitat): ${ans2.substring(0, 60)}
+P3 (Fregament): ${ans3.substring(0, 60)}`;
+
+            } else if (phaseNum === 3) {
+                const kVal = document.getElementById('slider-drag-3') ? document.getElementById('slider-drag-3').value : "0.040";
+                const code3 = editor2 ? editor2.getValue().trim() : "";
+
+                fullReport = `=====================================================
+SdA FÍSICA 1r BATXILLERAT · INFORME DE LABORATORI
+FASE 3: MODEL DINÀMIC DE NEWTON I SÍNTESI
+=====================================================
+EQUIP DE TREBALL: ${team}
+DATA I HORA: ${now}
+
+1. MODEL DINÀMIC FONAMENTAL AMB FRICCIÓ AERODINÀMICA:
+- Força de fregament: F_freg = -c·|v|·v
+- Equacions diferencials (EDO):
+  dvx/dt = -k_drag · |v| · vx
+  dvy/dt = -g - k_drag · |v| · vy
+
+2. PARÀMETRES CALIBRATS DE L'EXPERIMENT:
+- Coeficient de fregament aerodinàmic (k_drag): ${kVal} (1/m)
+
+3. CODI COMPUTACIONAL EXECUTAT (SageMath / Python):
+${code3}
+=====================================================`;
+
+                compactQr = `[SdA FiQ · FASE 3] ${team}
+Data: ${now}
+Model Dinamic: Newton amb friccio
+k_drag = ${kVal}
+EDO: dvx/dt=-k*v*vx, dvy/dt=-g-k*v*vy
+Estat Codi: Modificat i executat correctament`;
+            }
+
+            return { fullReport, compactQr, team };
+        }
+
+        function openQrModal(phaseNum) {
+            const team = ensureTeamNumber();
+            currentModalPhase = phaseNum;
+            const data = buildPhaseReport(phaseNum);
+            currentModalReportText = data.fullReport;
+
+            const modal = document.getElementById('qr-modal');
+            const titleEl = document.getElementById('qr-modal-title');
+            const subEl = document.getElementById('qr-modal-subtitle');
+            const badgeEl = document.getElementById('qr-team-badge');
+            const preEl = document.getElementById('qr-report-pre');
+            const qrTarget = document.getElementById('qrcode-canvas-target');
+
+            const phaseNames = {
+                1: "Fase 1: Model Ideal de Galileu",
+                2: "Fase 2: Contrast Experimental i Debat",
+                3: "Fase 3: Model Dinàmic de Newton"
+            };
+
+            if (titleEl) titleEl.innerHTML = `📱 Codi QR d'Avaluació · ${phaseNames[phaseNum] || "Fase " + phaseNum}`;
+            if (subEl) subEl.innerHTML = `Registre d'activitat per a l'avaluació formativa · Sessió ${phaseNum}`;
+            if (badgeEl) badgeEl.innerText = team ? `👥 ${team}` : "Sense equip";
+            if (preEl) preEl.innerText = data.fullReport;
+
+            if (qrTarget) {
+                qrTarget.innerHTML = '';
+                if (typeof QRCode !== 'undefined') {
+                    try {
+                        new QRCode(qrTarget, {
+                            text: data.compactQr,
+                            width: 210,
+                            height: 210,
+                            colorDark: "#0f172a",
+                            colorLight: "#ffffff",
+                            correctLevel: QRCode.CorrectLevel.M
+                        });
+                    } catch (e) {
+                        try {
+                            new QRCode(qrTarget, {
+                                text: data.compactQr,
+                                width: 210,
+                                height: 210,
+                                colorDark: "#0f172a",
+                                colorLight: "#ffffff",
+                                correctLevel: QRCode.CorrectLevel.L
+                            });
+                        } catch (e2) {
+                            qrTarget.innerHTML = `<div style="padding:15px; color:#ef4444; font-size:0.8rem; text-align:center;">No s'ha pogut generar el QR per grandària. Empreu el botó «Descarregar (.txt)».</div>`;
+                        }
+                    }
+                } else {
+                    qrTarget.innerHTML = `<div style="padding:15px; color:#64748b; font-size:0.8rem; text-align:center;">Llibreria QR no disponible sense connexió. Podeu descarregar o copiar el text.</div>`;
+                }
+            }
+
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeQrModal() {
+            const modal = document.getElementById('qr-modal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function closeQrModalOnBackdrop(e) {
+            if (e.target && e.target.id === 'qr-modal') {
+                closeQrModal();
+            }
+        }
+
+        function copyReportText() {
+            if (!currentModalReportText) return;
+            navigator.clipboard.writeText(currentModalReportText).then(() => {
+                const btn = document.getElementById('btn-copy-report');
+                if (btn) {
+                    const orig = btn.innerHTML;
+                    btn.innerHTML = "✅ Copiat!";
+                    setTimeout(() => { btn.innerHTML = orig; }, 2000);
+                }
+            }).catch(err => {
+                alert("Seleccioneu el text de la casella i copieu-lo manualment.");
+            });
+        }
+
+        function downloadReportFile(filename, content) {
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadPhaseReport(phaseNum) {
+            const team = ensureTeamNumber();
+            const data = buildPhaseReport(phaseNum);
+            const safeTeam = (data.team || "Equip").replace(/[^a-zA-Z0-9_-]/g, "_");
+            const filename = `Informe_SdA_Fase${phaseNum}_${safeTeam}.txt`;
+            downloadReportFile(filename, data.fullReport);
+        }
+
+        function downloadCurrentModalReport() {
+            const team = getTeamNumber() || "Equip";
+            const safeTeam = team.replace(/[^a-zA-Z0-9_-]/g, "_");
+            const filename = `Informe_SdA_Fase${currentModalPhase}_${safeTeam}.txt`;
+            downloadReportFile(filename, currentModalReportText);
+        }
 
         function switchPhase(phaseNum) {
             if (phaseNum === 3 && !phase3Unlocked) {
@@ -3461,6 +4005,25 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
         document.getElementById('slider-drag-3').addEventListener('input', updatePhase3Plots);
 
         window.addEventListener('DOMContentLoaded', () => {
+            // Restaurar número d'equip si s'havia seleccionat prèviament
+            try {
+                const savedTeam = localStorage.getItem('sda_team_number');
+                if (savedTeam) {
+                    const sel = document.getElementById('team-number-select');
+                    if (sel) {
+                        let found = false;
+                        for (let opt of sel.options) {
+                            if (opt.value === savedTeam) { found = true; break; }
+                        }
+                        if (!found) {
+                            const newOpt = new Option(savedTeam, savedTeam, true, true);
+                            sel.add(newOpt);
+                        }
+                        sel.value = savedTeam;
+                    }
+                }
+            } catch (e) {}
+
             initCodeMirrorEditor1();
             initCodeMirrorEditor2();
             loadSelectedDataset(); // Prepara les dades experimentals per defecte (osp_balltoss)
