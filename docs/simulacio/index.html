@@ -931,8 +931,8 @@ y_trajectoria = y_t.subs(t, sol_t)</textarea>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; align-items: center;">
                     <select id="select-dataset-tracker" class="select-box" style="flex: 1.5; min-width: 240px; padding: 7px 10px; font-weight: 600; border-color: #f59e0b;" onchange="changeExperimentalDataset()">
-                        <option value="osp_balltoss" selected>🎾 1. Pilota de Cautxú - Laboratori OSP (9 pts, v₀=3.06 m/s, α=54.0°, y₀=0.00m)</option>
-                        <option value="pingpong_tt3d">🏓 2. Pilota de Ping-Pong - Univ. Tübingen TT3D (36 pts, v₀=3.75 m/s, α=34.7°, y₀=0.27m)</option>
+                        <option value="osp_balltoss" selected>🎾 1. Pilota de Cautxú - Laboratori OSP (9 pts, v₀=2.98 m/s, α=53.8°, y₀=0.00m)</option>
+                        <option value="pingpong_tt3d">🏓 2. Pilota de Ping-Pong - Univ. Tübingen TT3D (36 pts, v₀=3.85 m/s, α=35.9°, y₀=0.27m)</option>
                         <option value="badminton_tracker">🏸 3. Volant de Bàdminton - Tracker OSP (43 pts, v₀=17.83 m/s, α=56.9°, y₀=0.65m)</option>
                     </select>
                     <button class="btn-tracker" style="flex: 1; min-width: 170px;" onclick="loadSelectedDataset()">📥 Carregar Dades</button>
@@ -1297,7 +1297,7 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
 # Font: https://physlets.org/tracker/ / https://github.com/OpenSourcePhysics/tracker
 # Descarrega directa del paquet .TRZ: https://github.com/OpenSourcePhysics/tracker/raw/master/examples/BallToss.trz
 # Mobil: Pilota de cautxu massis m = 0.200 kg
-# Condicions inicials reals: v0 = 3.06 m/s, alpha = 54.0 deg, y0 = 0.00 m
+# Condicions inicials reals: v0 = 2.98 m/s, alpha = 53.8 deg, y0 = 0.00 m
 # Frequencia temporal: 15.15 fps (dt = 0.066 s), cota de retorn: y_min = 0.00 m
 t,x,y,vx,vy
 0.000,0.000,0.000,1.613,2.095
@@ -1309,8 +1309,8 @@ t,x,y,vx,vy
 0.396,0.679,0.175,1.830,-1.566
 0.462,0.800,0.048,1.870,-2.250
 0.481,0.836,0.000,1.887,-2.446`,
-                v0_initial: 3.06,
-                alpha_initial: 54.0,
+                v0_initial: 2.98,
+                alpha_initial: 53.8,
                 y0_initial: 0.00,
                 y_floor: 0.00,
                 p0_fit: [3.0, 0.01],
@@ -1328,7 +1328,7 @@ t,x,y,vx,vy
 # Institucio: Universitat de Tubinga (Cognitive Systems Lab, Alemanya)
 # Repositori oficial: https://github.com/cogsys-tuebingen/tt3d (data/evaluation/3D_gt/023.csv)
 # Mobil: Pilota oficial ITTF m = 0.0027 kg, diametre D = 0.040 m
-# Condicions inicials reals: v0 = 3.75 m/s, alpha = 34.7 deg, y0 = 0.269 m
+# Condicions inicials reals: v0 = 3.85 m/s, alpha = 35.9 deg, y0 = 0.269 m
 # Frequencia temporal: 60 fps (dt = 0.0167 s), cota de contacte: y_min = 0.020 m (radi r=2 cm)
 t,x,y,vx,vy
 0.000,0.000,0.269,3.085,2.137
@@ -1367,11 +1367,11 @@ t,x,y,vx,vy
 0.550,1.418,0.125,1.987,-2.565
 0.567,1.452,0.081,2.316,-2.821
 0.584,1.490,0.034,2.316,-2.821`,
-                v0_initial: 3.75,
-                alpha_initial: 34.7,
+                v0_initial: 3.85,
+                alpha_initial: 35.9,
                 y0_initial: 0.269,
                 y_floor: 0.020,
-                p0_fit: [3.7, 0.10],
+                p0_fit: [3.8, 0.10],
                 bounds_fit: [[1.0, 0.0], [10.0, 1.0]]
             },
             'badminton_tracker': {
