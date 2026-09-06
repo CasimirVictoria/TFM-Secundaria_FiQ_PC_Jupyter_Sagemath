@@ -315,8 +315,6 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
         /* Editor CodeMirror: Tema Clar (JupyterLab clàssic per defecte) */
         .CodeMirror {
             height: auto !important;
-            min-height: 365px !important;
-            max-height: 460px;
             font-size: 0.875rem;
             font-family: 'Fira Code', 'Consolas', monospace;
             line-height: 1.5;
@@ -325,8 +323,9 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
         }
 
         .CodeMirror-scroll {
-            min-height: 365px !important;
-            max-height: 460px;
+            height: auto !important;
+            overflow-y: hidden !important;
+            overflow-x: auto !important;
         }
 
         .CodeMirror-gutters {
@@ -1703,15 +1702,7 @@ y_t = integral(v_y_tau, tau, 0, t)
 # 7. Trajectòria paramètrica r(t) = (x(t), y(t)):
 # En física computacional (Tracker, GeoGebra, SageMath), no cal aïllar t!
 # Es traça la corba directament a partir del vector de posició paramètric:
-r_t = (x_t, y_t)
-
-print("✅ Model dinàmic de Newton deduït amb èxit!")
-print(f"1) Acceleració a_x:              {a_x}")
-print(f"2) Velocitat horitzontal v_x(t): {v_x}")
-print(f"3) Velocitat vertical v_y(t):   {v_y}")
-print(f"4) Posició horitzontal x(t):     {x_t}")
-print(f"5) Posició vertical y(t):        {y_t}  <-- Recuperem el y(t) memoritzat!")
-print(f"6) Vector paramètric r(t):       r(t) = (x(t), y(t))")</textarea>
+r_t = (x_t, y_t)</textarea>
                     </div>
 
                     <div class="theory-card">
@@ -3052,6 +3043,7 @@ json.dumps(_export_dict)
                 tabSize: 4,
                 indentWithTabs: false,
                 matchBrackets: true,
+                viewportMargin: Infinity,
                 extraKeys: {
                     "Tab": handleJupyterTab,
                     "Shift-Tab": function(cm) { cm.indentSelection("subtract"); },
@@ -3076,6 +3068,7 @@ json.dumps(_export_dict)
                 tabSize: 4,
                 indentWithTabs: false,
                 matchBrackets: true,
+                viewportMargin: Infinity,
                 extraKeys: {
                     "Tab": handleJupyterTab,
                     "Shift-Tab": function(cm) { cm.indentSelection("subtract"); },
