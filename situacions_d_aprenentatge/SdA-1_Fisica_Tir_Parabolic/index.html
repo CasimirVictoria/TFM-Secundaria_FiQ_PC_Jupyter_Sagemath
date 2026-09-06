@@ -2172,6 +2172,11 @@ Estat Codi: Modificat i executat correctament`;
                     updatePhase3Plots();
                     if (document.getElementById('plot-phase-3-dynamic')) Plotly.Plots.resize('plot-phase-3-dynamic');
                     if (document.getElementById('plot-phase-3')) Plotly.Plots.resize('plot-phase-3');
+                    try {
+                        executeModelFriccioCode();
+                    } catch (e) {
+                        console.warn("Avís executant model fricció:", e);
+                    }
                 }
             }, 60);
         }
@@ -2637,23 +2642,35 @@ t,x,y,vx,vy
 
                 pyodideInstance.runPython(preparsedCode);
 
-                // Auto-exportació LaTeX en segon pla
-                pyodideInstance.runPython(`
-if 'v_x' in globals() and 'latex_vx' not in globals():
-    globals()['latex_vx'] = sp.latex(globals()['v_x'])
-if 'a_x' in globals() and 'latex_ax' not in globals():
-    globals()['latex_ax'] = sp.latex(globals()['a_x'])
-if 'x_t' in globals() and 'latex_xt' not in globals():
-    globals()['latex_xt'] = sp.latex(globals()['x_t'])
-if 'a_y' in globals() and 'latex_ay' not in globals():
-    globals()['latex_ay'] = sp.latex(globals()['a_y'])
-if 'y_freg' in globals() and 'latex_corregit' not in globals():
-    globals()['latex_corregit'] = sp.latex(globals()['y_freg'])
+                // Auto-exportació LaTeX dinàmica en segon pla (es recalcula sempre si l'estudiant fa canvis)
+                const latexJsonStr = pyodideInstance.runPython(`
+import json
+_export_dict = {}
+if 'a_x' in globals():
+    _ax_val = globals()['a_x']
+    _export_dict['latex_ax'] = sp.latex(_ax_val.rhs if hasattr(_ax_val, 'rhs') else _ax_val)
+if 'x_t' in globals():
+    _xt_val = globals()['x_t']
+    _export_dict['latex_xt'] = sp.latex(_xt_val.rhs if hasattr(_xt_val, 'rhs') else _xt_val)
+if 'a_y' in globals():
+    _ay_val = globals()['a_y']
+    _export_dict['latex_ay'] = sp.latex(_ay_val.rhs if hasattr(_ay_val, 'rhs') else _ay_val)
+if 'y_freg' in globals():
+    _yf_val = globals()['y_freg']
+    _export_dict['latex_corregit'] = sp.latex(_yf_val.rhs if hasattr(_yf_val, 'rhs') else _yf_val)
+json.dumps(_export_dict)
 `);
-                const axFromPy = pyodideInstance.globals.get('latex_ax') || '- k_{drag} v_{0} \\cos(\\alpha)';
-                const xtFromPy = pyodideInstance.globals.get('latex_xt') || 'v_{0}\\cos(\\alpha) t - \\frac{1}{2} k_{drag} v_{0}\\cos(\\alpha) t^2';
-                const ayFromPy = pyodideInstance.globals.get('latex_ay') || '- g';
-                const yfregFromPy = pyodideInstance.globals.get('latex_corregit') || '';
+                let latexDict = {};
+                try {
+                    latexDict = JSON.parse(latexJsonStr);
+                } catch (e) {
+                    console.warn("Avís deserialitzant LaTeX de Fase 3:", e);
+                }
+
+                const axFromPy = latexDict['latex_ax'] || '- k_{drag} v_{0} \\cos(\\alpha)';
+                const xtFromPy = latexDict['latex_xt'] || 'v_{0}\\cos(\\alpha) t - \\frac{1}{2} k_{drag} v_{0}\\cos(\\alpha) t^2';
+                const ayFromPy = latexDict['latex_ay'] || '- g';
+                const yfregFromPy = latexDict['latex_corregit'] || '';
 
                 if (titleDiv2) titleDiv2.innerText = "Model Dinàmic de Newton Deduït (SageMath/SymPy)";
                 if (capSpan2) capSpan2.style.display = "inline";
@@ -2661,6 +2678,9 @@ if 'y_freg' in globals() and 'latex_corregit' not in globals():
                 if (resDiv2) {
                     resDiv2.style.fontStyle = "normal";
                     resDiv2.style.color = "var(--text)";
+                    if (window.MathJax && MathJax.typesetClear) {
+                        try { MathJax.typesetClear([resDiv2]); } catch (e) {}
+                    }
                     resDiv2.innerHTML = `
                         <div style="font-size:0.88rem; line-height:1.5;">
                             <div style="margin-bottom:8px;">
@@ -2678,7 +2698,7 @@ if 'y_freg' in globals() and 'latex_corregit' not in globals():
                     `;
 
                     if (window.MathJax && MathJax.typesetPromise) {
-                        MathJax.typesetPromise([resDiv2]);
+                        MathJax.typesetPromise([resDiv2]).catch(err => console.warn("MathJax error:", err));
                     }
                 }
             } catch (err) {
