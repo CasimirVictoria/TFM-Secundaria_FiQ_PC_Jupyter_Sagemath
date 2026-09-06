@@ -2955,7 +2955,18 @@ def sage_preparse(code_str):
     except Exception:
         return code_str
 
-# Suport natiu de sintaxi SageMath per a equacions simbòliques i substitucions
+# Suport natiu de sintaxi SageMath per a equacions simbòliques, integrals i substitucions
+def sage_integrate(expr, *args, **kwargs):
+    """Suport dual per a integral(): admet tant la sintaxi SageMath (f, var, a, b) com la de SymPy (f, (var, a, b))."""
+    if len(args) == 3:
+        var, a, b = args
+        return sp.integrate(expr, (var, a, b), **kwargs)
+    elif len(args) == 1 and isinstance(args[0], (tuple, list)):
+        return sp.integrate(expr, *args, **kwargs)
+    elif len(args) == 1:
+        return sp.integrate(expr, args[0], **kwargs)
+    return sp.integrate(expr, *args, **kwargs)
+
 def sage_solve(eq, var=None, *args, **kwargs):
     res = sp.solve(eq, var, *args, **kwargs)
     if var is not None and isinstance(res, list):
@@ -3136,8 +3147,8 @@ _sagemath_builtins = {
     'derivative': sp.diff,
     'solve': sage_solve,
     'plot': sage_plot,
-    'integrate': sp.integrate,
-    'integral': sp.integrate,
+    'integrate': sage_integrate,
+    'integral': sage_integrate,
     'sin': sp.sin,
     'cos': sp.cos,
     'tan': sp.tan,
