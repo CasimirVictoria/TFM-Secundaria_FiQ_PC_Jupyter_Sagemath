@@ -1178,7 +1178,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
                 </div>
                 <div class="wasm-status-card" id="wasm-status">
                     <span class="status-dot" id="status-dot"></span>
-                    <span id="status-text">Iniciant motor Python WASM...</span>
+                    <span id="status-text">Carregant entorn de programació...</span>
                 </div>
             </div>
         </header>
@@ -3229,7 +3229,7 @@ for _k, _v in _sagemath_builtins.items():
 `);
 
                 statusDot.classList.add('ready');
-                statusText.innerText = "Python (WASM) Actiu i Llest";
+                statusText.innerText = "Entorn de programació Actiu i Llest";
                 const btnRun = document.getElementById('btn-run');
                 if (btnRun) btnRun.disabled = false;
 
@@ -3243,9 +3243,9 @@ for _k, _v in _sagemath_builtins.items():
                     console.warn("Auto-execució model fricció inicial:", e);
                 }
             } catch (err) {
-                document.getElementById('status-text').innerText = "Error en carregar Pyodide";
+                document.getElementById('status-text').innerText = "Error en carregar l'entorn de programació";
                 const resDiv = document.getElementById('sym-result-latex');
-                if (resDiv) resDiv.innerHTML = `<div style="color:var(--danger); font-size:0.85rem;">Error en inicialitzar Pyodide: ${err}</div>`;
+                if (resDiv) resDiv.innerHTML = `<div style="color:var(--danger); font-size:0.85rem;">Error en inicialitzar l'entorn de programació: ${err}</div>`;
             }
         }
 
@@ -3376,7 +3376,7 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
         async function executePlotCode() {
             const pyInst = window.pyodideInstance || pyodideInstance;
             if (!pyInst) {
-                alert("El motor de càlcul Python WASM s'està inicialitzant. Espereu que el punt indicador estiga verd.");
+                alert("L'entorn de programació s'està inicialitzant. Espereu que el punt indicador estiga verd.");
                 return;
             }
             const btn = document.getElementById('btn-run-plot');
