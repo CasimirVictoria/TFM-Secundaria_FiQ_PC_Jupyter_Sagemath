@@ -1413,8 +1413,8 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                 <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; align-items: center;">
                     <select id="select-dataset-tracker" class="select-box" style="flex: 1.5; min-width: 240px; padding: 7px 10px; font-weight: 600; border-color: #f59e0b;" onchange="changeExperimentalDataset()">
                         <option value="osp_balltoss" selected>🎾 1. Pilota de Cautxú (9 pts, v₀=2.98 m/s, α=53.8°, y₀=0.00m)</option>
-                        <option value="pingpong_tt3d">🏓 2. Pilota de Ping-Pong - Univ. Tübingen TT3D (36 pts, v₀=3.85 m/s, α=35.9°, y₀=0.27m)</option>
-                        <option value="badminton_tracker">🏸 3. Volant de Bàdminton - Tracker OSP (43 pts, v₀=17.83 m/s, α=56.9°, y₀=0.65m)</option>
+                        <option value="pingpong_tt3d">🏓 2. Pilota de Ping-Pong (36 pts, v₀=3.85 m/s, α=35.9°, y₀=0.27m)</option>
+                        <option value="badminton_tracker">🏸 3. Volant de Bàdminton (43 pts, v₀=17.83 m/s, α=56.9°, y₀=0.65m)</option>
                     </select>
                     <button class="btn-tracker" style="flex: 1; min-width: 170px;" onclick="loadSelectedDataset()">📥 Carregar Dades</button>
                     <label class="btn-tracker" style="flex: 1; min-width: 140px; background:#0284c7; cursor:pointer; text-align: center;">
@@ -2220,9 +2220,9 @@ t,x,y,vx,vy
             },
             'pingpong_tt3d': {
                 id: 'pingpong_tt3d',
-                name: 'Pilota de Ping-Pong (Univ. Tübingen TT3D)',
+                name: 'Pilota de Ping-Pong',
                 description: 'Pilota m=2.7g enregistrada a 60 fps amb càmeres calibrades (Univ. Tübingen, arXiv:2504.10035)',
-                source_info: '🏛️ <b>Font científica:</b> Universitat de Tubinga (Cognitive Systems Lab / TT3D, arXiv:2504.10035). Reconstrucció òptica 3D multi-càmera d\'una pilota reglamentària ITTF (m = 2,7 g, D = 40 mm) a 60 fps.',
+                source_info: '🏛️ <b>Font científica:</b> Universitat de Tubinga (Cognitive Systems Lab / TT3D).<!-- Reconstrucció òptica 3D multi-càmera d\'una pilota reglamentària ITTF (m = 2,7 g, D = 40 mm) a 60 fps, arXiv:2504.10035. -->',
                 source_url: 'https://github.com/cogsys-tuebingen/tt3d',
                 source_link_text: '🔗 Repositori oficial dades 3D (GitHub TT3D)',
                 csv: `# Dataset: Pilota de Tennis de Taula (Ping-Pong) - Seguiment Optic 3D Multi-Camera
@@ -2278,9 +2278,9 @@ t,x,y,vx,vy
             },
             'badminton_tracker': {
                 id: 'badminton_tracker',
-                name: 'Volant de Bàdminton (Tracker OSP)',
+                name: 'Volant de Bàdminton',
                 description: 'Volant m=5g gravat a 29.97 fps amb cinta calibratge 1.80m (ComPADRE AAPT ID 12086)',
-                source_info: '🏛️ <b>Font científica:</b> ComPADRE / AAPT (Projecte ID 12086: <i>Modeling Air Resistance</i>). Vídeo real a 29,97 fps amb cinta calibrada de 1,80 m picat amb Tracker.',
+                source_info: '🏛️ <b>Font científica:</b> ComPADRE / AAPT (Open Source Physics).<!-- Vídeo real a 29,97 fps amb cinta calibrada de 1,80 m picat amb Tracker, Projecte ID 12086. -->',
                 source_url: 'https://www.compadre.org/osp/items/detail.cfm?ID=12086',
                 source_link_text: '🔗 Fitxa i descàrrega .TRZ a ComPADRE OSP',
                 csv: `# Dataset: Volant de Badmington (Tracker Video Analysis - ComPADRE OSP ID: 12086)
