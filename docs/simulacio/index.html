@@ -1602,6 +1602,59 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                 <span>🎯 Elaboració d'un model més realista</span>
             </div>
 
+            <!-- PAS 3.0: FONAMENTACIÓ FÍSICA I ELECCIÓ DEL MODEL DE FREGAMENT -->
+            <div id="section-pas-3-0" style="margin-bottom:24px; background:white; border:1px solid #ddd6fe; border-radius:12px; padding:18px;">
+                <div style="font-weight:700; color:#5b21b6; font-size:1.02rem; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                    <span>🧭</span> <span>Pas 3.0: Fonamentació Física: Introducció del Fregament i Elecció del Model (Eix \(X\))</span>
+                </div>
+
+                <div style="font-size:0.88rem; color:#334155; line-height:1.55; margin-bottom:14px;">
+                    A la <b>Fase 2</b> hem comprovat empíricament que el model parabòlic de Galileu sobreestima l'abast horitzontal (amb desviacions que van des de l'1% en una bola de cautxú pesant fins a més del 20% en la pilota de ping-pong i més del 500% en el volant de bàdminton). La causa física és que el model ideal omet completament la <b>resistència de l'aire (\(\vec{F}_{\text{freg}}\))</b>. Per construir un model més realista i científicament fidel, cal introduir aquesta força, però triant una formulació matemàticament tractable a 1r de Batxillerat.
+                </div>
+
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-bottom:14px;">
+                    <!-- Targeta 1: El Repte del Fregament Real -->
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px;">
+                        <div style="font-weight:700; font-size:0.86rem; color:#1e293b; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                            <span>⚠️</span> <span>El dilema físic: Resistència real en 2D (\(v^2\))</span>
+                        </div>
+                        <div style="font-size:0.82rem; color:#475569; line-height:1.45;">
+                            En la realitat aerodinàmica, la força de fregament actua en oposició directa al vector velocitat instantània (\(\vec{F}_{\text{freg}} = -\frac{1}{2} C_d \rho A |\vec{v}|\vec{v}\)). Com que \(|\vec{v}| = \sqrt{v_x^2 + v_y^2}\), les components horitzontal i vertical queden fortament acoblades en un sistema d'equacions diferencials no lineals que <b>no té solució analítica exacta</b> amb funcions elementals (és impossible resoldre'l amb llapis i paper a 1r de Batxillerat).
+                        </div>
+                    </div>
+
+                    <!-- Targeta 2: La Hipòtesi del Model Escollit -->
+                    <div style="background:#faf5ff; border:1px solid #ddd6fe; border-radius:10px; padding:14px;">
+                        <div style="font-weight:700; font-size:0.86rem; color:#6d28d9; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                            <span>💡</span> <span>La nostra hipòtesi: Frenada predominant en l'eix \(X\)</span>
+                        </div>
+                        <div style="font-size:0.82rem; color:#475569; line-height:1.45;">
+                            Seguint el mètode científic d'<b>aproximació de primer ordre</b>, identifiquem que l'efecte més visible i decisiu per corregir la discrepància d'abast és la <b>frenada aerodinàmica en l'eix \(X\)</b>. Suposem una desacceleració horitzontal d'oposició proporcional a la velocitat d'avanç (\(a_x = -k_{\text{drag}} \cdot v_{0x}\)), mentre que en l'eix vertical (\(Y\)) mantenim l'acció dominant del camp gravitatori terrestre (\(a_y = -g\)).
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Caixa de Formalització Dinàmica -->
+                <div style="background:#f5f3ff; border:1px solid #c4b5fd; border-radius:10px; padding:14px; margin-bottom:12px;">
+                    <div style="font-weight:700; font-size:0.88rem; color:#5b21b6; margin-bottom:8px; text-align:center;">
+                        📐 Sistema Dinàmic Proposat (Base per a la Deducció del Pas 3.1):
+                    </div>
+                    <div style="font-size:0.95rem; text-align:center; color:#1e1b4b; overflow-x:auto;">
+                        \[ \begin{cases} 
+                        \sum F_x = -m \cdot k_{\text{drag}} \cdot v_{0x} \implies a_x(t) = \dfrac{F_x}{m} = -k_{\text{drag}} \cdot v_{0x} & \text{(Frenada aerodinàmica oposada a l'avanç)} \\[10pt]
+                        \sum F_y = -m \cdot g \implies a_y(t) = \dfrac{F_y}{m} = -g & \text{(Moviment vertical sota acceleració gravitatòria)}
+                        \end{cases} \]
+                    </div>
+                    <div style="font-size:0.8rem; color:#6b21a8; margin-top:8px; line-height:1.4; text-align:center;">
+                        On \(k_{\text{drag}}\) (\(\text{s}^{-1}\)) és el paràmetre de fricció efectiva que ajustarem empíricament segons el mòbil.
+                    </div>
+                </div>
+
+                <div style="background:#fffbeb; border:1px solid #fef3c7; border-left:4px solid #f59e0b; border-radius:6px; padding:10px 14px; font-size:0.82rem; color:#92400e; line-height:1.45;">
+                    <b>🎯 Com connecta amb el Pas 3.1:</b> Gràcies a aquest model simplificat en l'eix \(X\), podreu aplicar el <b>càlcul integral elemental</b> (\(a_x \xrightarrow{\int} v_x(t) \xrightarrow{\int} x(t)\)) amb la bastida computacional de SageMath per a deduir la nova equació de la trajectòria paramètrica \(\vec{r}(t) = (x(t), y(t))\) de manera perfectament comprensible i analítica!
+                </div>
+            </div>
+
             <!-- PAS 3.1: MODIFICACIÓ COMPUTACIONAL DEL MODEL DINÀMIC (SageMath) - MATEIXA ESTRUCTURA QUE FASE 1 -->
             <div style="margin-bottom:24px; background:white; border:1px solid #e2e8f0; border-radius:12px; padding:18px;">
                 <div style="font-weight:700; color:#1e293b; font-size:1.02rem; margin-bottom:12px;">
@@ -2251,6 +2304,9 @@ Estat Codi: Modificat i executat correctament`;
                     updatePhase3Plots();
                     if (document.getElementById('plot-phase-3-dynamic')) Plotly.Plots.resize('plot-phase-3-dynamic');
                     if (document.getElementById('plot-phase-3')) Plotly.Plots.resize('plot-phase-3');
+                    if (window.MathJax && MathJax.typesetPromise) {
+                        MathJax.typesetPromise([document.getElementById('phase3-card')]);
+                    }
                     try {
                         executeModelFriccioCode();
                     } catch (e) {
