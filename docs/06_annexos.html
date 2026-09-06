@@ -265,7 +265,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_annexos.html">Apèndixs</a></li><li class="breadcrumb-item"><a href="./06_annexos.html">Annexos</a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-annexos" class="quarto-section-identifier">Annexos</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Codi</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Mostra tot el codi</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Amaga tot el codi</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">Visualitza el codi</a></li></ul></div></div>
+<h1 class="title"><span id="sec-annexos" class="quarto-section-identifier">Annexos</span></h1>
 </div>
 
 
@@ -285,7 +285,7 @@ div.csl-indent {
 <section id="sec-annex-fisica" class="level2">
 <h2 class="anchored" data-anchor-id="sec-annex-fisica">Annex I: Quadern Jupyter de física — cinemàtica i dinàmica amb SageMath</h2>
 <p>Aquest annex reprodueix el codi font complet i comentat del quadern de treball desenvolupat per a la <strong>Situació d’Aprenentatge 1 (1r de Batxillerat)</strong>.</p>
-<div id="cf47d392" class="cell" data-execution_count="1">
+<div id="e0929204" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Codi</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sage code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
@@ -551,8 +551,6 @@ div.csl-indent {
 </ul>
 
 
-<!-- -->
-
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
 <div id="ref-Charles_2023" class="csl-entry" role="listitem">
 Charles, T., &amp; Gwilliam, C. (2023). The Effect of Automated Error Message Feedback on Undergraduate Physics Students Learning Python: Reducing Anxiety and Building Confidence. <em>Journal for STEM Education Research</em>, <em>6</em>(3), 326-357. <a href="https://doi.org/10.1007/s41979-022-00084-4">https://doi.org/10.1007/s41979-022-00084-4</a>
@@ -637,57 +635,6 @@ Mellado, V., Borrachero, A. B., Brígido, M., Melo, L. V., Dávila, M. A., Caña
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1026,255 +973,7 @@ Mellado, V., Borrachero, A. B., Brígido, M., Melo, L. V., Dávila, M. A., Caña
   </div>
   <div class="nav-page nav-page-next">
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Codi font</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Annexos {#sec-annexos .unnumbered}</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Annex I: Quadern Jupyter de física — cinemàtica i dinàmica amb SageMath {#sec-annex-fisica}</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>Aquest annex reprodueix el codi font complet i comentat del quadern de treball desenvolupat per a la **Situació d'Aprenentatge 1 (1r de Batxillerat)**.</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{sage}</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="in"># ==============================================================================</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="in"># PROJECTE COMPUTACIONAL DE FÍSICA: MODELITZACIÓ DE TIR PARABÒLIC REAL</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="in"># Curs acadèmic: 2025-2026 | Recursos Educatius Oberts (REA CC0)</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="in"># ==============================================================================</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="in"># ------------------------------------------------------------------------------</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="in"># 1. Fase d'USE i Descripció: Constants i Variables simbòliques</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="in"># ------------------------------------------------------------------------------</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="in">from scipy.constants import g as g_real</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="in">import numpy as np</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="in"># Declaració de variables simbòliques d'Hestenes (var())</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="in">t = var('t')          # Variable independent de temps (s)</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="in">v_0 = var('v_0')      # Velocitat de llançament inicial (m/s)</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="in">alpha = var('alpha')  # Angle d'elevació inicial (rad)</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="in">m = var('m')          # Massa de l'objecte (kg)</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="in">g = var('g')          # Acceleració de la gravetat (m/s^2)</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="in">b = var('b')          # Coeficient de fricció lineal de Stokes (kg/s)</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="in">c = var('c')          # Coeficient de fricció quadràtic de Rayleigh (kg/m)</span></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="in"># Assignació de constants oficials del NIST via scipy.constants</span></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="in">g_NIST = g_real       # 9.80665 m/s^2</span></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="in">show(f"Acceleració de la gravetat oficial (NIST): {g_NIST} m/s^2")</span></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="in"># ------------------------------------------------------------------------------</span></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="in"># 2. Fase de MODIFY: Resolució Simbòlica del Model Ideal (desolve())</span></span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="in"># ------------------------------------------------------------------------------</span></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="in"># Model Ideal cinemàtic clàssic (sense fricció aerodinàmica)</span></span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="in">vx_ideal = v_0 * cos(alpha)</span></span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="in">vy_ideal = v_0 * sin(alpha) - g * t</span></span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="in"># Integració simbòlica de posicions</span></span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="in">x_ideal = integral(vx_ideal, t)</span></span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="in">y_ideal = integral(vy_ideal, t)</span></span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="in">print("Equacions de posició del model ideal de llibre de text:")</span></span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="in">show(f"x(t) = {x_ideal}")</span></span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="in">show(f"y(t) = {y_ideal}")</span></span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="in"># Càlcul analític de l'abast mitjançant solve()</span></span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="in">temps_vol = solve(y_ideal == 0, t)</span></span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="in">show(f"Temps de vol teòric resolt simbòlicament:")</span></span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="in">show(temps_vol)</span></span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="in"># ------------------------------------------------------------------------------</span></span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="in"># 3. Fase de CREATE: Integració Numèrica del Model de Rayleigh (desolve_odeint)</span></span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="in"># ------------------------------------------------------------------------------</span></span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="in"># Model quadràtic de fricció aerodinàmica realista per a pilotes reals</span></span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="in">def model_rayleigh(freg_c, massa, v0_val, alpha_val, t_array):</span></span>
-<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a><span class="in">    # Simula la trajectòria real d'un llançament amb fricció aerodinàmica quadràtica</span></span>
-<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="in">    # integrant numèricament les equacions diferencials mitjançant desolve_odeint.</span></span>
-<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="in">    g_val = 9.80665</span></span>
-<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="in">    k_drag = freg_c / massa</span></span>
-<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a><span class="in">    # Condicions inicials vectorials</span></span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a><span class="in">    x0 = 0.0</span></span>
-<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a><span class="in">    y0 = 0.0</span></span>
-<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a><span class="in">    vx0 = v0_val * np.cos(alpha_val)</span></span>
-<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a><span class="in">    vy0 = v0_val * np.sin(alpha_val)</span></span>
-<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="in">    # Equacions de canvi d'estat</span></span>
-<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a><span class="in">    def derivades(variables, temps):</span></span>
-<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a><span class="in">        rx, ry, vx, vy = variables</span></span>
-<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a><span class="in">        v_instantania = np.sqrt(vx**2 + vy**2)</span></span>
-<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="in">        # Forces de canvi de Newton</span></span>
-<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a><span class="in">        d_rx = vx</span></span>
-<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="in">        d_ry = vy</span></span>
-<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a><span class="in">        d_vx = -k_drag * v_instantania * vx</span></span>
-<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a><span class="in">        d_vy = -g_val - k_drag * v_instantania * vy</span></span>
-<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a><span class="in">        return [d_rx, d_ry, d_vx, d_vy]</span></span>
-<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a><span class="in">    # Integració ultra-ràpida del sistema de Rayleigh</span></span>
-<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a><span class="in">    solucio = desolve_odeint(derivades, [x0, y0, vx0, vy0], t_array, </span></span>
-<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="in">                            ivar=t, dvars=[var('rx'), var('ry'), var('vx'), var('vy')])</span></span>
-<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a><span class="in">    return solucio</span></span>
-<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a><span class="in">print("Modelització real de Rayleigh completada.")</span></span>
-<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>--------------------------------------------------------------------------------</span>
-<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a><span class="fu">## Annex II: Guia tècnica docent d'instal·lació i desplegament {#sec-annex-guia-docent}</span></span>
-<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>Aquesta guia ofereix les pautes pràctiques per al professorat de Física interessat a desplegar la proposta d'assaigs computacionals cinemàtics a les seues aules.</span>
-<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a><span class="fu">### Opció 1: Desplegament al núvol amb CoCalc (Recomanada) {.unnumbered}</span></span>
-<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Creació del projecte docent:**</span>
-<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>Accedir a <span class="co">[</span><span class="ot">cocalc.com</span><span class="co">](https://cocalc.com)</span> i crear un compte gratuït de professor.</span>
-<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>Crear un nou projecte anomenat <span class="in">`Fisica_TFM_SageMath`</span>.</span>
-<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Creació del curs i gestió d'alumnes:**</span>
-<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>Dins del projecte, crear un fitxer amb extensió <span class="in">`.course`</span> (Gestor de Curs).</span>
-<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>Afegir les adreces de correu electrònic de l'alumnat de la classe. CoCalc crearà automàticament un projecte individual per a cada estudiant o equip cooperatiu.</span>
-<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Distribució i recollida automatitzada de quaderns:**</span>
-<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>Pujar els fitxers <span class="in">`.ipynb`</span> de les SdA a la carpeta de tasques del professor.</span>
-<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>Prémer el botó *«Distribute to Students»*. En segons, tots els equips rebran la seua còpia editable.</span>
-<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>En finalitzar la sessió, prémer *«Collect from Students»* per tancar la recepció de l'assaig computacional de l'alumnat i procedir a l'avaluació formativa.</span>
-<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a><span class="fu">### Opció 2: Desplegament local portable (sense connexió a internet) {.unnumbered}</span></span>
-<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>Per a centres amb restriccions d'ample de banda o aules sense accés estable a la xarxa:</span>
-<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Descarregar la distribució lliure portable **WinPython** o la imatge Docker de **SageMath / JupyterLab**.</span>
-<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Copiar la carpeta de l'aplicació en memòries USB (un llapis per cada equip de 4 alumnes).</span>
-<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Executar directament l'arxiu <span class="in">`JupyterLab.exe`</span> des del dispositiu USB sense requerir drets d'administrador ni instal·lació al disc dur de l'institut.</span>
-<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a><span class="fu">## Anex III: Bastida socioemocional i targetes de depuració d'errors a SageMath/Jupyter {#sec-annex-targetes}</span></span>
-<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a>Aquest annex presenta el disseny, el codi d'implementació i la metodologia d'integració de les targetes de depuració d'errors per a l'entorn de treball de l'alumnat. Aquesta eina, inspirada de forma directa en el programari experimental Error Explainer de Charles i Gwilliam (2023) <span class="co">[</span><span class="ot">@Charles_2023</span><span class="co">]</span>, actua com una mediació de «caixa blanca» cognitiva i regulació de la dimensió afectiva <span class="co">[</span><span class="ot">@Mellado_2014; @Hanc_2020</span><span class="co">]</span>.</span>
-<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Metodologia d'Implementació i Integració Tecnològica</span>
-<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a>Perquè les targetes es mostren de forma completament dinàmica i automatitzada en el propi intèrpret de Python/SageMath sobre el qual treballa l'alumnat, s'evita modificar el nucli de Python i es recorre a un ganxo (hook) o controlador d'excepcions personalitzat de Jupyter (set_custom_exc). Això permet interceptar qualsevol error que es produïsca durant l'execució de les cel·les de codi, mostrant primer el traceback original del sistema i, immediatament després, renderitzant una targeta didàctica en format HTML amb un disseny amable, empàtic i explicat en valencià.</span>
-<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a>Per a la seua integració a l'aula, es desa el següent script sota el nom de suport_errors.py en el directori de treball dels equips. Per a activar-lo, l'alumnat només ha d'executar aquesta única línia en la primera cel·la de configuració del seu quadern de Jupyter:</span>
-<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
-<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> suport_errors</span>
-<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Codi Font del Controlador de Suport (suport_errors.py)</span>
-<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a>A continuació, es recull el codi font complet dissenyat en Python per a la bastida de l'alumnat:</span>
-<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
-<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a><span class="co"># suport_errors.py</span></span>
-<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython <span class="im">import</span> get_ipython</span>
-<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, HTML</span>
-<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> custom_exception_handler(shell, etype, value, tb, tb_offset<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1. Ensenya el traceback d'error original de Python/SageMath</span></span>
-<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a>    shell.showtraceback((etype, value, tb), tb_offset<span class="op">=</span>tb_offset)</span>
-<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2. Diccionari d'explicacions i bastides formatius en valencià</span></span>
-<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a>    targetes <span class="op">=</span> {</span>
-<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SyntaxError"</span>: <span class="st">"""</span></span>
-<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;div style="border: 2px solid #2b5c8f; background-color: #f0f7fc; padding: 15px; border-radius: 8px; margin-top: 15px; font-family: sans-serif;"&gt;</span></span>
-<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;h4 style="color: #2b5c8f; margin-top: 0; font-size: 1.1em;"&gt;🌟 TARGETA DE DEPURACIÓ: SyntaxError (Error d'ortografia del codi)&lt;/h4&gt;</span></span>
-<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;p style="color: #333; line-height: 1.5; margin-bottom: 8px;"&gt;</span></span>
-<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;b&gt;💡 Què ens diu l'ordinador?:&lt;/b&gt; Que no s'ha pogut llegir aquesta línia de codi perquè hi ha alguna errada en la seua "escriptura" o estructura gramatical.</span></span>
-<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;/p&gt;</span></span>
-<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;ul style="color: #333; line-height: 1.4; padding-left: 20px;"&gt;</span></span>
-<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;li&gt;&lt;b&gt;Has oblidat posar el símbol de multiplicació (*)?&lt;/b&gt; En física escrivim &lt;i&gt;2t&lt;/i&gt;, però en programació cal escriure sempre &lt;code&gt;2 * t&lt;/code&gt;.&lt;/li&gt;</span></span>
-<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;li&gt;&lt;b&gt;Tens algun parèntesi, clau o cometa obert sense tancar?&lt;/b&gt; Recompte'ls detingudament un per un.&lt;/li&gt;</span></span>
-<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;li&gt;Mira cap on apunta la xicoteta fletxa taronja (&lt;code&gt;^&lt;/code&gt;) de l'error de Python; normalment la falta d'ortografia està just en eixe punt o en la línia immediatament anterior.&lt;/li&gt;</span></span>
-<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;/ul&gt;</span></span>
-<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;p style="font-size: 0.9em; color: #555; margin-top: 10px; font-style: italic;"&gt;"L'error és la millor pista per a comprendre la lògica del programa. Discuteix amb el teu equip abans de tocar el teclat!"&lt;/p&gt;</span></span>
-<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;/div&gt;</span></span>
-<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a><span class="st">        """</span>,</span>
-<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a>        <span class="st">"NameError"</span>: <span class="st">"""</span></span>
-<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;div style="border: 2px solid #2b5c8f; background-color: #f0f7fc; padding: 15px; border-radius: 8px; margin-top: 15px; font-family: sans-serif;"&gt;</span></span>
-<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;h4 style="color: #2b5c8f; margin-top: 0; font-size: 1.1em;"&gt;🌟 TARGETA DE DEPURACIÓ: NameError (La variable invisible o no declarada)&lt;/h4&gt;</span></span>
-<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;p style="color: #333; line-height: 1.5; margin-bottom: 8px;"&gt;</span></span>
-<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;b&gt;💡 Què ens diu l'ordinador?:&lt;/b&gt; Que s'està intentant fer servir una variable o funció amb un nom que el motor de SageMath no coneix en absolut.</span></span>
-<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;/p&gt;</span></span>
-<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;ul style="color: #333; line-height: 1.4; padding-left: 20px;"&gt;</span></span>
-<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;li&gt;&lt;b&gt;Has presentat la variable a SageMath primer?&lt;/b&gt; Recorda que per a usar una lletra en el càlcul simbòlic de forces (com &lt;i&gt;t&lt;/i&gt;, &lt;i&gt;g&lt;/i&gt; o &lt;i&gt;y&lt;/i&gt;) has d'haver executat abans la declaració simbòlica: &lt;code&gt;var('t')&lt;/code&gt;.&lt;/li&gt;</span></span>
-<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;li&gt;&lt;b&gt;Comprova les majúscules i minúscules:&lt;/b&gt; Python és molt sensible a les diferències (&lt;i&gt;Case-sensitive&lt;/i&gt;). No és el metro utilitzar la variable de massa &lt;code&gt;m&lt;/code&gt; que &lt;code&gt;M&lt;/code&gt;.&lt;/li&gt;</span></span>
-<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;li&gt;&lt;b&gt;Revisa errors de picatge (typos):&lt;/b&gt; Comprova que hagis escrit perfectament el nom de la funció (per exemple, &lt;code&gt;desolve&lt;/code&gt; en lloc de &lt;code&gt;dsolve&lt;/code&gt;).&lt;/li&gt;</span></span>
-<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;/ul&gt;</span></span>
-<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;p style="font-size: 0.9em; color: #555; margin-top: 10px; font-style: italic;"&gt;"Preneu-vos un segon: les mans fora del teclat i repasseu de manera col·laborativa la declaració d'equacions!"&lt;/p&gt;</span></span>
-<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;/div&gt;</span></span>
-<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a><span class="st">        """</span>,</span>
-<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a>        <span class="st">"TypeError"</span>: <span class="st">"""</span></span>
-<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;div style="border: 2px solid #2b5c8f; background-color: #f0f7fc; padding: 15px; border-radius: 8px; margin-top: 15px; font-family: sans-serif;"&gt;</span></span>
-<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;h4 style="color: #2b5c8f; margin-top: 0; font-size: 1.1em;"&gt;🌟 TARGETA DE DEPURACIÓ: TypeError (Conflicte de tipus d'objectes)&lt;/h4&gt;</span></span>
-<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;p style="color: #333; line-height: 1.5; margin-bottom: 8px;"&gt;</span></span>
-<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;b&gt;💡 Què ens diu l'ordinador?:&lt;/b&gt; Que s'estan intentant combinar o comparar estructures que són totalment incompatibles entre si (com sumar pomes amb taronges).</span></span>
-<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;/p&gt;</span></span>
-<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;ul style="color: #333; line-height: 1.4; padding-left: 20px;"&gt;</span></span>
-<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;li&gt;&lt;b&gt;Estàs barrejant càlcul simbòlic amb ajust numèric?&lt;/b&gt; Recorda que funcions d'ajust com &lt;code&gt;curve_fit&lt;/code&gt; necessiten llistes de dades numèriques reals (vectors de dades extrets de Tracker) i no equacions abstractes o variables simbòliques de SageMath.&lt;/li&gt;</span></span>
-<span id="cb7-181"><a href="#cb7-181" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;li&gt;&lt;b&gt;Has intentat sumar un text "literal" (com una etiqueta d'eix) amb un nombre?&lt;/b&gt; Comprova els paràmetres de graficació de &lt;code&gt;matplotlib&lt;/code&gt;.&lt;/li&gt;</span></span>
-<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;/ul&gt;</span></span>
-<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;p style="font-size: 0.9em; color: #555; margin-top: 10px; font-style: italic;"&gt;"L'ordinador processa dades lògiques molt diferents. Comproveu com a equip quin format de dades correspon a cada fase."&lt;/p&gt;</span></span>
-<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;/div&gt;</span></span>
-<span id="cb7-185"><a href="#cb7-185" aria-hidden="true" tabindex="-1"></a><span class="st">        """</span>,</span>
-<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ZeroDivisionError"</span>: <span class="st">"""</span></span>
-<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;div style="border: 2px solid #2b5c8f; background-color: #f0f7fc; padding: 15px; border-radius: 8px; margin-top: 15px; font-family: sans-serif;"&gt;</span></span>
-<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;h4 style="color: #2b5c8f; margin-top: 0; font-size: 1.1em;"&gt;🌟 TARGETA DE DEPURACIÓ: ZeroDivisionError (Divisió per zero o límit físic impossible)&lt;/h4&gt;</span></span>
-<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;p style="color: #333; line-height: 1.5; margin-bottom: 8px;"&gt;</span></span>
-<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;b&gt;💡 Què ens diu l'ordinador?:&lt;/b&gt; Que s'ha intentat realitzar una divisió matemàtica per zero durant l'avaluació numèrica de les equacions de l'estat del moviment.</span></span>
-<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;/p&gt;</span></span>
-<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;ul style="color: #333; line-height: 1.4; padding-left: 20px;"&gt;</span></span>
-<span id="cb7-193"><a href="#cb7-193" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;li&gt;&lt;b&gt;Heu assignat massa zero a la partícula?&lt;/b&gt; En la física real amb fricció, la massa &lt;code&gt;m&lt;/code&gt; apareix al denominador. Si &lt;code&gt;m = 0&lt;/code&gt;, l'equació perd el sentit físic i l'intèrpret d'ordinador es bloqueja.&lt;/li&gt;</span></span>
-<span id="cb7-194"><a href="#cb7-194" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;li&gt;&lt;b&gt;El coeficient de fregament té valors inadequats?&lt;/b&gt; Comproveu si teniu valors nuls o impossibles que generen divergències en el vostre bucle d'integració temporal d'Euler.&lt;/li&gt;</span></span>
-<span id="cb7-195"><a href="#cb7-195" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;/ul&gt;</span></span>
-<span id="cb7-196"><a href="#cb7-196" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;p style="font-size: 0.9em; color: #555; margin-top: 10px; font-style: italic;"&gt;"Comproveu les unitats i els valors dels vostres paràmetres físics!"&lt;/p&gt;</span></span>
-<span id="cb7-197"><a href="#cb7-197" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;/div&gt;</span></span>
-<span id="cb7-198"><a href="#cb7-198" aria-hidden="true" tabindex="-1"></a><span class="st">        """</span>,</span>
-<span id="cb7-199"><a href="#cb7-199" aria-hidden="true" tabindex="-1"></a>        <span class="st">"IndexError"</span>: <span class="st">"""</span></span>
-<span id="cb7-200"><a href="#cb7-200" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;div style="border: 2px solid #2b5c8f; background-color: #f0f7fc; padding: 15px; border-radius: 8px; margin-top: 15px; font-family: sans-serif;"&gt;</span></span>
-<span id="cb7-201"><a href="#cb7-201" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;h4 style="color: #2b5c8f; margin-top: 0; font-size: 1.1em;"&gt;🌟 TARGETA DE DEPURACIÓ: IndexError (Les coordenades inexistents)&lt;/h4&gt;</span></span>
-<span id="cb7-202"><a href="#cb7-202" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;p style="color: #333; line-height: 1.5; margin-bottom: 8px;"&gt;</span></span>
-<span id="cb7-203"><a href="#cb7-203" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;b&gt;💡 Què ens diu l'ordinador?:&lt;/b&gt; Que s'està intentant accedir a una posició d'una llista de dades que està fora de rang (no existeix).</span></span>
-<span id="cb7-204"><a href="#cb7-204" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;/p&gt;</span></span>
-<span id="cb7-205"><a href="#cb7-205" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;ul style="color: #333; line-height: 1.4; padding-left: 20px;"&gt;</span></span>
-<span id="cb7-206"><a href="#cb7-206" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;li&gt;&lt;b&gt;Heu demanat una posició que supera la llargada de les vostres mesures?&lt;/b&gt; Recordeu que en Python els índexs de les llistes comencen en &lt;code&gt;0&lt;/code&gt;. Si una llista té 10 mesures obtingudes amb Tracker, els índexs vàlids van del &lt;code&gt;0&lt;/code&gt; al &lt;code&gt;9&lt;/code&gt;.&lt;/li&gt;</span></span>
-<span id="cb7-207"><a href="#cb7-207" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;li&gt;&lt;b&gt;Heu fet un bucle de recorregut massa llarg?&lt;/b&gt; Recompileu el rang del vostre bucle utilitzant &lt;code&gt;for i in range(len(dades))&lt;/code&gt; en lloc de valors fixos que puguen excedir el límit.&lt;/li&gt;</span></span>
-<span id="cb7-208"><a href="#cb7-208" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;/ul&gt;</span></span>
-<span id="cb7-209"><a href="#cb7-209" aria-hidden="true" tabindex="-1"></a><span class="st">                &lt;p style="font-size: 0.9em; color: #555; margin-top: 10px; font-style: italic;"&gt;"Alineeu les dades de l'escombrat de l'abast; la cohesió en l'anàlisi de dades és clau!"&lt;/p&gt;</span></span>
-<span id="cb7-210"><a href="#cb7-210" aria-hidden="true" tabindex="-1"></a><span class="st">            &lt;/div&gt;</span></span>
-<span id="cb7-211"><a href="#cb7-211" aria-hidden="true" tabindex="-1"></a><span class="st">        """</span></span>
-<span id="cb7-212"><a href="#cb7-212" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-213"><a href="#cb7-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-214"><a href="#cb7-214" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3. Detectem el tipus d'error ocorregut i renderitzem l'HTML si existeix la targeta adaptada</span></span>
-<span id="cb7-215"><a href="#cb7-215" aria-hidden="true" tabindex="-1"></a>    error_nom <span class="op">=</span> etype.<span class="va">__name__</span></span>
-<span id="cb7-216"><a href="#cb7-216" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> error_nom <span class="kw">in</span> targetes:</span>
-<span id="cb7-217"><a href="#cb7-217" aria-hidden="true" tabindex="-1"></a>        display(HTML(targetes[error_nom]))</span>
-<span id="cb7-218"><a href="#cb7-218" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb7-219"><a href="#cb7-219" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Pista genèrica de suport</span></span>
-<span id="cb7-220"><a href="#cb7-220" aria-hidden="true" tabindex="-1"></a>        display(HTML(<span class="ss">f"""</span></span>
-<span id="cb7-221"><a href="#cb7-221" aria-hidden="true" tabindex="-1"></a><span class="ss">            &lt;div style="border: 2px solid #777; background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin-top: 15px; font-family: sans-serif;"&gt;</span></span>
-<span id="cb7-222"><a href="#cb7-222" aria-hidden="true" tabindex="-1"></a><span class="ss">                &lt;h4 style="color: #555; margin-top: 0;"&gt;🌟 PISTA FORMATIVA: Error tipus </span><span class="sc">{</span>error_nom<span class="sc">}</span><span class="ss">&lt;/h4&gt;</span></span>
-<span id="cb7-223"><a href="#cb7-223" aria-hidden="true" tabindex="-1"></a><span class="ss">                &lt;p style="color: #333;"&gt;L'ordinador ha trobat un repte poc habitual durant l'execució de la física del moviment. No us en preocupeu:&lt;/p&gt;</span></span>
-<span id="cb7-224"><a href="#cb7-224" aria-hidden="true" tabindex="-1"></a><span class="ss">                &lt;ul style="color: #333;"&gt;</span></span>
-<span id="cb7-225"><a href="#cb7-225" aria-hidden="true" tabindex="-1"></a><span class="ss">                    &lt;li&gt;Consulteu el diari d'equip o recordeu la darrera targeta d'errors del laboratori.&lt;/li&gt;</span></span>
-<span id="cb7-226"><a href="#cb7-226" aria-hidden="true" tabindex="-1"></a><span class="ss">                    &lt;li&gt;Si us sentiu encallats, activeu el diàleg cooperatiu «Llapissos al centre» i demaneu la bastida del professor.&lt;/li&gt;</span></span>
-<span id="cb7-227"><a href="#cb7-227" aria-hidden="true" tabindex="-1"></a><span class="ss">                &lt;/ul&gt;</span></span>
-<span id="cb7-228"><a href="#cb7-228" aria-hidden="true" tabindex="-1"></a><span class="ss">            &lt;/div&gt;</span></span>
-<span id="cb7-229"><a href="#cb7-229" aria-hidden="true" tabindex="-1"></a><span class="ss">        """</span>))</span>
-<span id="cb7-230"><a href="#cb7-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-231"><a href="#cb7-231" aria-hidden="true" tabindex="-1"></a><span class="co"># Registrem el controlador en l'entorn actiu de Jupyter/SageMath</span></span>
-<span id="cb7-232"><a href="#cb7-232" aria-hidden="true" tabindex="-1"></a>ip <span class="op">=</span> get_ipython()</span>
-<span id="cb7-233"><a href="#cb7-233" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> ip <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb7-234"><a href="#cb7-234" aria-hidden="true" tabindex="-1"></a>    ip.set_custom_exc((<span class="pp">Exception</span>,), custom_exception_handler)</span>
-<span id="cb7-235"><a href="#cb7-235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-236"><a href="#cb7-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-237"><a href="#cb7-237" aria-hidden="true" tabindex="-1"></a><span class="fu">## Annex IV: Repositori de Codi Obert i Recursos Educatius Oberts (REA) {#sec-annex-github}</span></span>
-<span id="cb7-238"><a href="#cb7-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-239"><a href="#cb7-239" aria-hidden="true" tabindex="-1"></a>Tots els materials docents, quaderns interactius de Jupyter (<span class="in">`.ipynb`</span>), scripts de simulació en SageMath, dades de vídeo-anàlisi de Physics Tracker i el codi font complet d'aquesta memòria en format Quarto Markdown (<span class="in">`.qmd`</span>) estan disponibles lliurement per a tota la comunitat educativa:</span>
-<span id="cb7-240"><a href="#cb7-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-241"><a href="#cb7-241" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Repositori oficial a GitHub:** <span class="co">[</span><span class="ot">https://github.com/CasimirVictoria/TFM-Secundaria_FiQ_PC_Jupyter_Sagemath</span><span class="co">](https://github.com/CasimirVictoria/TFM-Secundaria_FiQ_PC_Jupyter_Sagemath)</span></span>
-<span id="cb7-242"><a href="#cb7-242" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Comandes de clonació directa:**</span>
-<span id="cb7-243"><a href="#cb7-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-246"><a href="#cb7-246" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
-<span id="cb7-247"><a href="#cb7-247" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/CasimirVictoria/TFM-Secundaria_FiQ_PC_Jupyter_Sagemath.git</span>
-<span id="cb7-248"><a href="#cb7-248" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-249"><a href="#cb7-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-250"><a href="#cb7-250" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Llicència de distribució:** <span class="co">[</span><span class="ot">Creative Commons Zero 1.0 (CC0 1.0 - Domini Públic)</span><span class="co">](https://creativecommons.org/publicdomain/zero/1.0/)</span>, en compliment de les directrius internacionals de la UNESCO sobre Ciència Oberta (*Open Science*) i Recursos Educatius Oberts (*REA*).</span>
-</code></pre></div><button title="Copia al porta-retalls" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 
 

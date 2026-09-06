@@ -49,7 +49,7 @@ format:
     toc-title: "Índex"
     number-sections: true
     code-fold: show
-    code-tools: true
+    code-tools: false
     smooth-scroll: true
     fig-align: center
   pdf:

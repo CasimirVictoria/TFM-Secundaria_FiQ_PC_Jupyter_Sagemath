@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -288,7 +253,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-metodologia" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Metodologia de disseny i context</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Codi</button></div></div>
+<h1 class="title"><span id="sec-metodologia" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Metodologia de disseny i context</span></span></h1>
 </div>
 
 
@@ -361,8 +326,6 @@ Figura&nbsp;3.1: Editor Kate i menú d’accions contextuals programat
 <li><strong>Compromís amb l’Accés Obert i Recursos Educatius Oberts (REA):</strong> Per a garantir la repetibilitat i democratització de la innovació, tots els quaderns Jupyter es publiquen de forma completament lliure i sota llicència oberta (Creative Commons CC0) al repositori oficial de GitHub del projecte <span class="citation" data-cites="victoria2026tfm">(<a href="references.html#ref-victoria2026tfm" role="doc-biblioref">Victoria Castillo, 2026b</a>)</span>.</li>
 </ol>
 
-
-<!-- -->
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
 <div id="ref-Borovsky_2023" class="csl-entry" role="listitem">
@@ -496,57 +459,6 @@ Vieyra, R., &amp; Himmelsbach, J. (2021). Teachers’ Disciplinary Boundedness i
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -888,57 +800,7 @@ Vieyra, R., &amp; Himmelsbach, J. (2021). Teachers’ Disciplinary Boundedness i
         <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Proposta d’innovació didàctica: disseny i desplegament</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Codi font</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Metodologia de disseny i context {#sec-metodologia}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Caràcter de la investigació i fases del disseny {#sec-metodologia-disseny}</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>La present proposta d'innovació s'inscriu en la **fase inicial de disseny instruccional i desenvolupament de prototips** dins del marc de la **recerca basada en el disseny** (*Educational Design Research* o EDR) <span class="co">[</span><span class="ot">@Hanc_2020</span><span class="co">]</span>. L'EDR es defineix com un enfocament metodològic que busca dissenyar, desenvolupar i avaluar de forma cíclica solucions educatives innovadores per a problemes d'aula reals, recolzant-se en la recerca prèvia i en una estreta col·laboració amb els entorns reals d'aprenentatge <span class="co">[</span><span class="ot">@Hanc_2020; @Subramaniam_2025</span><span class="co">]</span>.</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>Atès el caràcter de disseny i innovació teòricament fonamentat d'aquest Treball de Fi de Màster, i d'acord amb les directrius i indicacions d'avaluació de la Universitat de València <span class="co">[</span><span class="ot">@indicacions_tfm_maes_fq2026; @normes_tfm_uv2026</span><span class="co">]</span>, el disseny de la intervenció didàctica s'estructura en tres fases consecutives de caràcter dissenyador:</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Fase de diagnòstic i anàlisi:** Revisió exhaustiva de la literatura de didàctica de les ciències de la Universitat de València i anàlisi de la desafecció i l'absència de vocacions científiques cap a les branques STEM en l'alumnat d'educació secundària postobligatòria <span class="co">[</span><span class="ot">@Solbes_2007; @Solbes_2018</span><span class="co">]</span>, així com l'anàlisi de concepcions alternatives resistents en el camp de la mecànica clàssica <span class="co">[</span><span class="ot">@Solbes_2011; @Mellado_2014</span><span class="co">]</span>.</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Fase de disseny i desenvolupament:** Elaboració de la Situació d'Aprenentatge (SdA) centrada en la modelització física real (tir parabòlic aerodinàmic) <span class="co">[</span><span class="ot">@Hestenes_1987</span><span class="co">]</span>, creació de les llibretes científiques interactives (.ipynb) en SageMath basades en la seqüència *Use-Modify-Create* <span class="co">[</span><span class="ot">@Grover_2013</span><span class="co">]</span>, elaboració de les targetes de depuració d'errors sintàctics en valencià i redacció de la guia docent d'implementació.</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Fase d'avaluació del disseny (avaluació prospectiva i viabilitat teòrica):** Articulació i estructuració del marc d'avaluació competencial analítica (rúbriques LOMLOE) i anàlisi teòrica de la seua viabilitat, repetibilitat i encaix formal amb les competències del perfil d'eixida del Batxillerat conformat pel Decret 108/2022 de la Comunitat Valenciana <span class="co">[</span><span class="ot">@decret108_2022</span><span class="co">]</span>.</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>*Nota de rigor metodològic:* Un cicle complet d'EDR requereix d'una implementació empírica directa a l'aula, l'anàlisi d'impacte i recollida de dades en l'alumnat, i un posterior refinament o redisseny del prototip didàctic [@Hanc_2020]. Com que la present innovació no ha pogut ser aplicada empíricament en l'aula en aquesta instància (veure limitacions al @sec-limitacions-prospectiva), el treball es tanca formalment en aquesta **primera fase de model de disseny teòric i avaluació prospectiva de viabilitat**, plantejant l'aplicació física i el segon bucle d'EDR com a línia de prospectiva de recerca derivada d'aquest treball.</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>**Decisions de Disseny Tecnològic i Control de Versions (Quarto i Git):** Com a decisió de disseny tecnològic i metodològic orientada a garantir la reproductibilitat de la recerca i la transparència del codi, tant la memòria d'aquest treball com els quaderns interactius s'han desenvolupat utilitzant Quarto. A diferència dels processadors de text tradicionals, Quarto empra un format de text pla (quarto Markdown) que permet integrar de manera nativa la prosa científica, la renderització tipogràfica (\LaTeX{}) i l'execució de codi de programació (Python/SageMath/*R*/...). Aquesta naturalesa de text pla facilita el control de versions i la col·laboració mitjançant Git, assegurant la traçabilitat absoluta de cada esmena i facilitant la difusió pública de la proposta com a recurs educatiu obert de «caixa blanca» a GitHub <span class="co">[</span><span class="ot">@indicacions_tfm_maes_fq2026; @normes_tfm_uv2026</span><span class="co">]</span>.</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Context Educatiu i Característiques de la Mostra {#sec-metodologia-mostra}</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>La proposta d'innovació didàctica s'ha dissenyat per a ser aplicada en el context de centres públics d'Educació Secundària de la Comunitat Valenciana, prenent com a mostra diana:</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Població d'Estudi:** Alumnat de **1r de Batxillerat** matriculat a la matèria troncal de modalitat de **Física i Química**, desenvolupada sota les directrius del **Decret 108/2022**, de 5 d'agost, del Consell <span class="co">[</span><span class="ot">@decret108_2022</span><span class="co">]</span>.</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Justificació de la Mostra:** Aquest curs d'especialització de caràcter postobligatori representa el primer contacte formal, vectorial i analític de l'alumnat amb la física de la mecànica clàssica de projectils. La introducció d'un model de cinemàtica realista (tir parabòlic amb forces de fregament de Rayleigh i Stokes) requereix, a causa de la seua complexitat matemàtica (equacions diferencials no lineals acoblades), la bastida d'algorismes computacionals, establint-se com una oportunitat didàctica per introduir el càlcul computacional amb SageMath, trencant la limitació del càlcul manual de llapis i paper <span class="co">[</span><span class="ot">@Borovsky_2023; @Vieyra_2021</span><span class="co">]</span>.</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Bastida Computacional per a la Viabilitat Cognitiva:** Per tal d'evitar el risc de col·lapse cognitiu i frustració que comportaria pretendre que un alumnat sense base prèvia de programació construïra algorismes d'ajust paramètric no lineal des de zero en un interval reduït de 6 sessions, s'adopta de manera molt estricta la taxonomia **Use-Modify-Create** de bastida de programació [@Grover_2013]. L'alumnat no redactarà el codi de forma autònoma en el buit; al contrari, treballarà sobre quaderns de JupyterLab preconfigurats que contenen el codi esquelet (*Skeleton Code*) elaborat pel docent. Els estudiants es limitaran a **usar** (visualitzar paràmetres), **modificar** (canviar coeficients, redefinir equacions diferencials d'Stokes o Rayleigh) i, finalment, **crear** les seues pròpies narratives científiques i gràfiques de contrast. Així mateix, per tal d'assegurar la viabilitat didàctica, s'exclouen de forma expressa procediments de càlcul propis d'estadística o de càlcul numèric universitari (com l'error quadràtic mitjà, MSE, o l'anàlisi de covariança). En el seu lloc, de manera coherent amb el currículum de 1r de Batxillerat i el bloc de continguts «Sentit de la mesura i de l'estimació» del Decret 108/2022 [@decret108_2022], es demana el càlcul de l'error relatiu percentual sobre l'abast horitzontal de la trajectòria (comparant el valor real de Tracker amb el valor simulat), la qual cosa constitueix un contingut prescriptiu d'aquest curs. A més, es reconeix que, per a una aplicació real a l'aula, és recomanable oferir una flexibilitat temporal que permeta expandir la SdA d'un bloc de 6 sessions a un cronograma d'entre **10 i 12 sessions**, donant temps suficients de pràctica i assimilació conceptual <span class="co">[</span><span class="ot">@Hanc_2020</span><span class="co">]</span>.</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">## Instruments de Disseny i Avaluació del Treball {#sec-metodologia-instruments}</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>S'estableixen tres grans instruments d'avaluació complementaris dissenyats ad hoc:</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Les targetes de depuració i graella d'autoavaluació de l'error (debugging):** Dissenyades com a instruments d'avaluació formativa i reguladora en la línia del marc teòric de Neus Sanmartí <span class="co">[</span><span class="ot">@Sanmarti_2007</span><span class="co">]</span>. En lloc de configurar-se com un element punitiu o de qualificació tradicional, actuen com una eina d'autoavaluació i coavaluació que l'alumnat empra de manera activa per a autoregular el seu aprenentatge. El protocol es concreta en dos components operatius:</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**L'instrument d'autoavaluació (Targetes de depuració):** Quan el motor de SageMath retorna un error, l'equip cooperatiu utilitza la targeta corresponent (com un instrument de verificació de «caixa blanca») per a diagnosticar de manera autònoma la naturalesa de la barrera (p. ex., <span class="in">`SyntaxError`</span>, <span class="in">`NameError`</span>, o <span class="in">`IndexError)`</span>. Això transforma l'error de «barrera bloquejant» (*stopper*) a «oportunitat de regulació activa» (*mover*), obligant l'equip a revisar el seu propi procés d'escriptura abans de demanar la intervenció docent <span class="co">[</span><span class="ot">@Sanmarti_2007; @Charles_2023</span><span class="co">]</span>.</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Fonamentació científica de l'impacte d'aquest instrument:** Tot i que en aquesta proposta és un disseny teòric pendent d'implementació empírica, la viabilitat d'aquest instrument d'autoavaluació es recolza en l'estudi de control de Charles i Gwilliam <span class="co">[</span><span class="ot">@Charles_2023</span><span class="co">]</span>. En la seua investigació (desenvolupada en l'assignatura de Física computacional de primer curs a la Universitat de Liverpool), la introducció d'bastides d'autoregulació afectiva molt similars davant dels missatges d'error de programació va reduir l'ansietat tecnològica de l'alumnat novell en un $(55 \pm 18)\%$ (test de Wilcoxon, $p = 0.008, Z = -2.64$) i la frustració general en un $(73 \pm 12)\%$ ($p = 0.007, Z = -2.72$), consolidant aquest instrument de depuració com un motor clau per a la inclusió i equitat a l'aula <span class="co">[</span><span class="ot">@Charles_2023; @CAST_2024</span><span class="co">]</span>.</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**La rúbrica analítica competencial LOMLOE:** Un instrument d'avaluació formativa que vincula directament els quatre nivells d'assoliment de les sis Competències Específiques reals de Batxillerat del Decret 108/2022 amb les tasques pràctiques realitzades a JupyterLab <span class="co">[</span><span class="ot">@decret108_2022; @Sanmarti_2007</span><span class="co">]</span>.</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**El full de seguiment de rols cooperatius (Programa CA/AC):** Instrument observacional que registra la participació igualitària i la resiliència socioemocional dels equips heterogenis durant el treball col·laboratiu sota la tècnica «Llapissos al centre / Mans fora del teclat» <span class="co">[</span><span class="ot">@Pujolas_2009; @Charles_2023</span><span class="co">]</span>.</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="fu">## Consideracions Ètiques de la Recerca {#sec-metodologia-etica}</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>Atès que la present investigació es configura com una proposta de disseny d'innovació didàctica que no s'ha implementat empíricament amb recollida de dades personals de menors d'edat, les consideracions ètiques se centren en dos grans àmbits d'actuació acadèmica:</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Integritat acadèmica, propietat intel·lectual i declaració d'ús d'eines d'intel·ligència artificial:** Es respecta de forma escrupolosa la propietat intel·lectual de les fonts consultades, evitant el plagi i identificant correctament l'autoria de cada idea o referència, així com l'ús ètic i declarat d'eines digitals i computacionals <span class="co">[</span><span class="ot">@normes_tfm_uv2026</span><span class="co">]</span>. S'ha fet un ús actiu de la intel·ligència artificial (IA) com a eina instrumental de recerca. Concretament, l'autor ha dissenyat i programat, amb el suport d'eines d'IA generativa, un servidor de codi obert basat en el Model Context Protocol (MCP): el <span class="in">`mcp-server-academic-spain`</span>. Aquesta eina permet interconnectar de manera directa agents de processament de llenguatge natural amb els cercadors i bases de dades acadèmiques nacionals, optimitzant la fase de cerca i de revisió bibliogràfica d'aquesta memòria (on la IA ha facilitat la compilació de metadades i resums per a generar un repositori inicial de notes de lectura, el qual ha servit de base documental per a la posterior redacció duta a terme de forma exclusiva per l'autor) <span class="co">[</span><span class="ot">@victoria2026mcp</span><span class="co">]</span>. També s'han programat scripts i eines, emprant la IA, per a facilitar l'accés a la informació recopilada (en particular les referències descarregades i les notes associades), en l'entorn de redacció del propi TFM:</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-format="html"}</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="al">![Editor Kate i menú d'accions contextuals programat](./imatges/captures_de_pantalla/Screenshot_20260901_100047.png)</span>{#fig-entorn-treball width=75% fig-align="center"}</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Compromís amb l'Accés Obert i Recursos Educatius Oberts (REA):** Per a garantir la repetibilitat i democratització de la innovació, tots els quaderns Jupyter es publiquen de forma completament lliure i sota llicència oberta (Creative Commons CC0) al repositori oficial de GitHub del projecte <span class="co">[</span><span class="ot">@victoria2026tfm</span><span class="co">]</span>.</span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 
 

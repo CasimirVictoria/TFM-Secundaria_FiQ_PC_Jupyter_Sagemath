@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -289,7 +254,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-conclusions" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conclusions, limitacions i prospectiva</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Codi</button></div></div>
+<h1 class="title"><span id="sec-conclusions" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conclusions, limitacions i prospectiva</span></span></h1>
 </div>
 
 
@@ -406,8 +371,6 @@ Figura&nbsp;5.1: Prototip de l’entorn computacional
 </figure>
 </div>
 
-
-<!-- -->
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
 <div id="ref-Belu_2009" class="csl-entry" role="listitem">
@@ -538,57 +501,6 @@ Weintrop, D., Beheshti, E., Horn, M., Orton, K., Jona, K., Trouille, L., &amp; W
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -930,64 +842,7 @@ Weintrop, D., Beheshti, E., Horn, M., Orton, K., Jona, K., Trouille, L., &amp; W
         <span class="nav-page-text">Referències Bibliogràfiques</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Codi font</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusions, limitacions i prospectiva {#sec-conclusions}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Assoliment dels Objectius i Contrast d'Hipòtesis {#sec-assoliment-objectius}</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>El present Treball de Fi de Màster ha tingut com a propòsit central dissenyar, fonamentar i avaluar una proposta d'innovació didàctica (Modalitat A) basada en la integració del Pensament Computacional i el Càlcul Simbòlic (CAS) amb SageMath per a l'ensenyament de la Física a 1r de Batxillerat, alineada amb el marc competencial de la LOMLOE <span class="co">[</span><span class="ot">@lomloe2020</span><span class="co">]</span> i el Decret 108/2022 de la Comunitat Valenciana <span class="co">[</span><span class="ot">@decret108_2022</span><span class="co">]</span>.</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>A la vista del desenvolupament teòric, metodològic i curricular exposat al llarg de la memòria, es constata la consecució dels cinc Objectius Específics (OE1 a OE5) formulats a la introducció, d'acord amb el caràcter de disseny i planificació d'aquesta proposta:</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Objectiu Específic <span class="pp">|</span> Descripció de l'Objectiu <span class="pp">|</span> Grau d'Assoliment i Evidències Documentals <span class="pp">|</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="pp">| ------</span> <span class="pp">| ------</span> <span class="pp">| ------</span> <span class="pp">|</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **OE1** | Fonamentació Teòrica Multidisciplinària | **Assolit en l'àmbit de fonamentació teòrica:** Articulació de la taxonomia de Weintrop et al. <span class="co">[</span><span class="ot">@Weintrop_2016</span><span class="co">]</span>, el cicle de modelització d'Hestenes <span class="co">[</span><span class="ot">@Hestenes_1987</span><span class="co">]</span>, el CAS de Belu <span class="co">[</span><span class="ot">@Belu_2009</span><span class="co">]</span> i la tradició de recerca didàctica de la Universitat de València <span class="co">[</span><span class="ot">@Solbes_2007; @Solbes_2018</span><span class="co">]</span>. <span class="pp">|</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **OE2** | Disseny de la Situació d'Aprenentatge LOMLOE | **Dissenyat i preparat per a la seua implementació:** SdA de Física de 1r de Batxillerat sobre cinemàtica i dinàmica amb resistència aerodinàmica realista per a aconseguir un bon detall pedagògic. <span class="pp">|</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **OE3** | Creació de Materials i Quaderns Jupyter / SageMath | **Assolit amb la creació de recursos de codi obert:** Quaderns interactius de treball Jupyter/SageMath estructurats sobre la bastida *Use-Modify-Create* de Grover i Pea <span class="co">[</span><span class="ot">@Grover_2013</span><span class="co">]</span> en 6 sessions d'aula de Física completament pautades. <span class="pp">|</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **OE4** | Inclusió DUA, Cooperació CA/AC i Gestió de l'Error | **Estructurat i planificat per a treballar cooperativament a l'aula:** Desplegament de pautes DUA <span class="co">[</span><span class="ot">@CAST_2024</span><span class="co">]</span>, equips heterogenis de 4 sota el model CA/AC <span class="co">[</span><span class="ot">@Pujolas_2009</span><span class="co">]</span>, estructura «Mans fora del teclat» i targetes de depuració en valencià. <span class="pp">|</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **OE5** | Avaluació Competencial Formativa i Formadora | **Avaluació i connexió curricular estructurades:** Rúbrica analítica competencial de 4 nivells creuada amb les Competències Específiques i criteris d'avaluació del Decret 108/2022 de la Comunitat Valenciana <span class="co">[</span><span class="ot">-@decret108_2022</span><span class="co">]</span>. <span class="pp">|</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>: Balanç sintètic del grau d'assoliment dels cinc Objectius Específics formulats al TFM. {#tbl-assoliment-objectius tbl-colwidths="<span class="co">[</span><span class="ot">10,35,55</span><span class="co">]</span>"}</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>Aquest balanç permet sustentar la coherència teòrica i la viabilitat de les dues **hipòtesis de treball pedagògiques** que han guiat la investigació:</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Sustentació i Viabilitat Teòrica de la Hipòtesi 1 (H1 — Dimensió Cognitiva i de Modelització):** *L'ús d'un entorn de computació simbòlica obert i integrat (SageMath) ha demostrat ser una eina epistèmica clau («caixa blanca») que allibera l'alumnat de la fatiga i la sobrecàrrega cognitiva derivada de les demanadores manipulacions algebraiques rutinàries de llapis i paper [@Belu_2009]. L'exigència de declarar variables simbòliques (`var()`) actua com un potent catalitzador metacognitiu [@Borovsky_2023], que força l'alumnat a ser conscient del paper de cada constant i paràmetre físic d'acord amb el cicle de modelització d'Hestenes [@Hestenes_1987]. Això permet a l'estudiantat de 1r de Batxillerat reorientar completament el seu temps i esforç cap a la interpretació conceptual dels fenòmens físics (la discrepància entre el model ideal i la trajectòria de la pilota real amb fregament), l'anàlisi de casos límit i la superació de les concepcions alternatives cinemàtiques resistents [@Solbes_2007; @Borovsky_2023]. Aquesta descàrrega cognitiva es consolida en substituir de forma explícita procediments de regressió o càlcul numèric de rang universitari (com l'error quadràtic mitjà, MSE) per una eina de validació més propera i intuïtiva per a l'etapa: el càlcul de l'error relatiu percentual de l'abast horitzontal, que enllaça directament la física d'indagació amb els continguts prescriptius de Batxillerat.*</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Sustentació i Viabilitat Teòrica de la Hipòtesi 2 (H2 — Dimensió Afectiva, Inclusiva i Motivacional):** *L'articulació dels quaderns Jupyter mitjançant estructures formals d'aprenentatge cooperatiu (Programa CA/AC de Pere Pujolàs) i la tècnica «Llapissos al centre / Mans fora del teclat» garanteix la participació igualitària de l'alumnat i n'evita l'aïllament davant de la pantalla [@Pujolas_2009; @Lou_2001]. Així mateix, el protocol de suport socioemocional i les targetes de depuració d’errors en valencià estan dissenyats per a transformar l’estudiantat de «stoppers» bloquejats a «movers» autònoms [@Charles_2023]. Tot i que la present proposta d'innovació no ha estat implementada empíricament, aquest disseny metodològic es recolza de manera sòlida en els resultats de la investigació de referència de Charles i Gwilliam (2023) [@Charles_2023]. En el seu estudi experimental amb estudiants principiants de ciències, l'ús d'andamis didàctics de caràcter afectiu similars va aconseguir reduir l’ansietat tecnològica davant l'error de codi en un **(55 ± 18)%** (test de Wilcoxon, $p = 0.008, Z = -2.64$) i la frustració en un **(73 ± 12)%** ($p = 0.007, Z = -2.72$), demostrant la viabilitat potencial de l'acompanyament programat per a l'accessibilitat universal i el compliment del DUA <span class="co">[</span><span class="ot">@Charles_2023; @CAST_2024</span><span class="co">]</span>.*</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Contribució a la Didàctica de les Ciències i a la Tradició de la UV {#sec-contribucio-didactica}</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>Aquest treball intenta aportar solucions didàctiques concretes als problemes endèmics diagnosticats històricament pel Departament de Didàctica de les Ciències Experimentals i Socials de la Universitat de València:</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Resposta acotada al desinterès escolar diagnosticat (Solbes, Montserrat i Furió, 2007):** Davant la dada d'estudi pilot que un **85,5%** de l'alumnat de secundària —en una mostra exploratòria limitada de $N = 91$ estudiants d'ESO a la província de València— atribueix el seu rebuig cap a la Física i Química a «l'excés de fórmules abstractes i la manca de pràctiques reals de laboratori» <span class="co">[</span><span class="ot">@Solbes_2007</span><span class="co">]</span>, la nostra proposta d'innovació didàctica en cinemàtica i dinàmica reals transforma l'aula de Física en una comunitat d'investigació activa. L'ús combinat de vídeos enregistrats al pati pels propis alumnes, el vídeo-anàlisi amb Physics Tracker i la modelització interactiva amb SageMath (mitjançant funcions interactives <span class="in">`@interact`</span>) retorna a l'assignatura el seu caràcter experimental, dialògic i connectat amb els reptes del món real, obrint noves portes cap a la indagació de fenòmens complexos <span class="co">[</span><span class="ot">@Solbes_2018</span><span class="co">]</span>.</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Superació de la «Caixa Negra» computacional:** Mentre que moltes propostes TIC utilitzen simuladors comercials tancats que es comporten com a caixes negres opaques (on l'alumnat es limita a prémer botons sense comprendre les relacions causals subjacents) [@Vieyra_2021], la nostra intervenció utilitza SageMath com una **«caixa blanca» de codi obert**, on cada línia de codi i equació diferencial és transparent, editable, inspeccionable i auditable per l'estudiantat, forçant-los a entendre realment les relacions causals de la Física <span class="co">[</span><span class="ot">@Hanc_2020</span><span class="co">]</span>.</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Limitacions del Treball i Prospectiva de Recerca Docent {#sec-limitacions-prospectiva}</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>Com en tota proposta d'innovació educativa de caràcter dissenyador (*Educational Design Research*), cal reconèixer amb honestedat científica les **limitacions metodològiques** que condicionen la seua generalització:</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**La necessitat d'estudis longitudinals (El repte de Charles &amp; Gwilliam, 2023):** Com adverteixen Charles i Gwilliam <span class="co">[</span><span class="ot">@Charles_2023</span><span class="co">]</span>, tot i que la millora afectiva (descens dràstic de l'ansietat i de la frustració davant dels errors sintàctics de Python) és immediata després de l'ús de guies amigables de codi, cal desenvolupar investigacions longitudinals de llarga durada (d'almenys un curs acadèmic complet) per avaluar amb dades empíriques robustes si aquest alleujament emocional es tradueix directament en una millora de la transferència i retenció dels conceptes físics a llarg termini.</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Limitacions de context i mostra pilot:** La proposta s'ha dissenyat de manera teòrica com una intervenció compacta i estructurada de 6 sessions per a 1r de Batxillerat. La seua implementació efectiva a gran escala requerirà la realització de proves pilot en una mostra de centres de secundària de la Comunitat Valenciana per calibrar millor els temps d'execució i comprovar el seu impacte real en la bretxa digital de l'alumnat.</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**El cicle de recerca truncat (EDR) i l'absència d'implementació empírica:** S'ha d'assumir amb honestedat científica que la present recerca es tanca en la seua **fase inicial de disseny i desenvolupament de prototips teòrics** dins d'un marc d'EDR <span class="co">[</span><span class="ot">@Hanc_2020</span><span class="co">]</span>. El cicle complet de la recerca basada en el disseny exigeix un contrast empíric real de caràcter mixt a l'aula, recollint dades de rendiment i actitud de l'alumnat, per a procedir a un posterior redisseny del prototip didàctic <span class="co">[</span><span class="ot">@Hanc_2020; @Subramaniam_2025</span><span class="co">]</span>. Per tant, la implementació física d'aquesta SdA en una mostra de centres públics de la Comunitat Valenciana i l'anàlisi de dades mitjançant proves estadístiques inferencials de contrast (com el test de Wilcoxon per a parelles de dades) es plantegen com una possible línia de treball i el segon bucle iteratiu de recerca per a futurs investigadors.</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**La prevenció de la «utopia cognitiva» de programació:** Una limitació intrínseca de disseny és la hipòtesi de partida de compressió de la SdA en sis sessions. Per tal d'evitar bloquejos, ansietat i col·lapse cognitiu en un alumnat de Batxillerat sense base computacional, es requereix un compromís ferm de bastida de codi (*Skeleton Code*) i es prospecta expandir de forma flexible la seqüència didàctica a un total d'entre **10 i 12 sessions** en aquells contexts educatius on es preveja una major bretxa digital o manca d'experiència computacional de partida en l'alumnat <span class="co">[</span><span class="ot">@Grover_2013; @Hanc_2020</span><span class="co">]</span>. Així mateix, és clau excloure l'exigència de dures mètriques estadístiques de caràcter universitari (com el Mean Squared Error, MSE), limitant l'anàlisi de residuals a comparacions visuals de residuals o de l'error relatiu percentual de l'abast, protegint així la viabilitat didàctica del disseny.</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## Integració del Pràcticum i la Proposta d'Innovació {#sec-integracio-practicum}</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>L'estada de **Pràcticum en el centre d'Educació Secundària** va representar el bany de realitat imprescindible que va donar sentit a aquesta proposta de TFM. Durant la meua immersió a les aules de 1r de Batxillerat, vaig poder constatar en primera persona els símptomes descrits per la recerca de la Universitat de València <span class="co">[</span><span class="ot">@Solbes_2007; @Solbes_2018</span><span class="co">]</span>: l'apatia crònica dels estudiants quan s'enfronten a la Física d'MRU i MRUA com un llistat de problemes de càlcul manual rutinari que no respon a cap fenomen de la seua vida quotidiana.</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>Aquest diagnòstic directe d'aula va ser el detonant per dissenyar una proposta que superara el càlcul manual de llapis i paper. Durant les tutories al centre, vaig debatre amb els docents de Física i Química de secundària (i també de Matemàtiques, on ja empravem GeoGebra en primer de Batxillerat) sobre la viabilitat de Sagemath i els quaderns Jupyter. Les seues reaccions van confirmar la necessitat d'ofreir materials completament pautats i de «caixa blanca» de fàcil desplegament per tal de reduir l'ansietat tecnològica tant de l'alumnat com dels propis docents <span class="co">[</span><span class="ot">@Charles_2023; @Vieyra_2021</span><span class="co">]</span>.</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="fu">## Epíleg de Prospectiva Tecnològica: L'Horitzó de Càlcul Simbòlic i la Intel·ligència Artificial {#sec-epileg-agybridge}</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>Com a tancament d'aquest treball, es planteja una línia d'actuació de futur encaminada a reduir la barrera sintàctica de la programació a l'aula de secundària.</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>Si bé la idea d'emprar SageMath naix de l'experiència prèvia d'haver-lo utilitzat al meu Treball de Fi de Grau (TFG), conjuntament amb el sistema de control de versions Git, s'ha de reconéixer que l'escriptura de codi i la rigidesa de la sintaxi de Python poden actuar com a reductors de la motivació o inductors d'ansietat tecnològica en l'alumnat novell. Amb l'objectiu d'atenuar aquestes limitacions, s'està desenvolupant un entorn de treball que integra la IA, conjuntament amb la recerca bibliogràfica, JupyterLab: <span class="in">`agy-bridge`</span> <span class="co">[</span><span class="ot">@victoria2026agybridge</span><span class="co">]</span>.</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>Aquest entorn de mediació digital actua com un pont intel·ligent que permet al professorat i alumnat (a tothom, perquè és codi obert) interactuar amb el motor de càlcul simbòlic i de simulació de SageMath mitjançant l'ús del llenguatge natural gràcies a la integració de la intel·ligència artificial (IA). En lloc de comportar-se com una «caixa negra» on la IA resol automàticament el problema sense espai per a la reflexió, <span class="in">`agy-bridge`</span> es dissenya com una bastida de «caixa blanca» interactiva: tradueix les consultes en llenguatge natural en operacions de modelització i resolució d'equacions. El sistema és capaç de mostrar a la pantalla del navegador o del dispositiu mòbil tant les equacions físiques en \LaTeX{} perfectament renderitzades, com de generar gràfiques 2D o 3D dinàmiques i interactives que l'alumnat pot rotar, desplaçar o ampliar fent zoom de manera tàctil o amb el ratolí. També li podem demanar que ens genere una web amb càlculs (realitzats amb sagemath), gràfics (amb Sagemath, Plotly, etc.) Amb això, es consolida un horitzó de recerca on la tecnologia emergent s'utilitza no com a substitut del pensament científic, sinó com un catalitzador metacognitiu que elimina les limitacions sintàctiques d'escriptura per a permetre que l'estudiant es concentre de manera prioritària en la indagació, la discussió de conceptes i la interpretació de la física clàssica real.</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>S'aconsegueix aquest entorn, altament integrat i personalitzable habilitant diversos servidors MCP (*Model Context Protocol*), desenvolupats per l'autor <span class="co">[</span><span class="ot">@victoria2026mcp</span><span class="co">]</span>, convertint-la en una eina amb el potencial de minimitzar de manera efectiva les barreres d'accés a la ciència, alineant-se amb els principis d'ús de les tecnologies emergents que recull el currículum autonòmic <span class="co">[</span><span class="ot">@decret108_2022</span><span class="co">]</span>.</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="al">![Prototip de l'entorn computacional ](./imatges/simulacions/Simulacio.png)</span>{#fig-tir-parabolic width=90% fig-align="center"}</span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 
 

@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -295,7 +260,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Marc teòric i estat de la qüestió</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Codi</button></div></div>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Marc teòric i estat de la qüestió</span></h1>
 </div>
 
 
@@ -459,8 +424,6 @@ Taula&nbsp;2.2: Creuament de nivells d’indagació d’Herron amb la progressi�
 <p>L’aprenentatge en l’àmbit de les ciències experimentals no és una activitat purament cognitiva, sinó que està profundament lligat a la <strong>dimensió afectiva i emocional</strong> de l’alumnat, ja que els estats emocionals negatius constitueixen un limitador de la capacitat d’aprenentatge que genera un rebuig històric especialment marcat cap a la Física i la Química durant l’educació secundària <span class="citation" data-cites="Mellado_2014">(<a href="references.html#ref-Mellado_2014" role="doc-biblioref">Mellado et al., 2014</a>)</span>. En traslladar aquesta realitat a l’aula de ciències des d’un enfocament computacional, l’alumnat novell s’enfronta a un obstacle doblement exigent. Com demostren de forma experimental Charles i Gwilliam <span class="citation" data-cites="Charles_2023">(<a href="references.html#ref-Charles_2023" role="doc-biblioref">Charles &amp; Gwilliam, 2023</a>)</span> en un estudi de control amb estudiants de Física de nivell universitari (primer curs de la Universitat de Liverpool) que s’inicien en la programació amb Python sobre quaderns Jupyter, enfrontar-se per primer cop a la rigidesa de la sintaxi del codi i rebre missatges d’error críptics en anglés sol provocar una severa ansietat tecnològica, frustració i una disminució de la seua autoconfiança. Atès que el programari lliure usat en la present proposta, <code>SageMath</code>, utilitza un intèrpret de programació basat en la sintaxi de Python sota el mateix entorn web de treball de Jupyter, aquestes evidències sobre el bloqueig i el descoratjament de l’alumnat novell davant els errors de codi suggereixen que aquests patrons podrien ser raonablement extrapolables al nostre disseny d’innovació a 1r de Batxillerat, justificant la necessitat de planificar un protocol d’acompanyament i suport afectiu programat davant dels missatges d’error de programació (Pauta 8.3 i 7.4 del DUA) <span class="citation" data-cites="CAST_2024 Charles_2023">(<a href="references.html#ref-CAST_2024" role="doc-biblioref">CAST, 2024</a>; <a href="references.html#ref-Charles_2023" role="doc-biblioref">Charles &amp; Gwilliam, 2023</a>)</span>. S’elaboren targetes de depuració d’errors en valencià que tradueixen els missatges tècnics de Python en pistes explicatives de «caixa blanca», indicant de manera empàtica de quin tipus d’error es tracta (p.&nbsp;ex., un <code>SyntaxError</code> per oblidar un parèntesi, o un <code>NameError</code> per declarar malament una variable simbòlica <code>var()</code>) i guiant l’estudiant cap a la resolució activa de la barrera de programació (el disseny complet de les targetes adaptades i el codi natiu per a la seua integració automàtica en el nucli de Jupyter es detallen en <a href="06_annexos.html#sec-annex-targetes">l’Annex III</a>).</p>
 
 
-<!-- -->
-
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
 <div id="ref-Belu_2009" class="csl-entry" role="listitem">
 Belu, R. (2009). Teaching Physics with Computer Algebra Systems. <em>American Society for Engineering Education (ASEE)</em>, 1-21. <a href="https://peer.asee.org/teaching-physics-with-computer-algebra-systems">https://peer.asee.org/teaching-physics-with-computer-algebra-systems</a>
@@ -599,57 +562,6 @@ Wing, J. M. (2006). Computational thinking. <em>Communications of the ACM</em>, 
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -991,77 +903,7 @@ Wing, J. M. (2006). Computational thinking. <em>Communications of the ACM</em>, 
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Metodologia de disseny i context</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Codi font</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Marc teòric i estat de la qüestió</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## El desinterès per l'aprenentatge científic i les concepcions alternatives {#sec-desinteres-concepcions}</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">### Desinterès i desafecció cap a les STEM {.unnumbered}</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>La pèrdua d'interès dels joves per l'estudi de les ciències experimentals és un fenomen àmpliament diagnosticat per la recerca didàctica internacional <span class="co">[</span><span class="ot">@Rocard_2007</span><span class="co">]</span>. Els treballs de referència de Solbes et al. <span class="co">[</span><span class="ot">@Solbes_2007; @Solbes_2011; @Solbes_2018</span><span class="co">]</span> i de Gil-Pérez <span class="co">[</span><span class="ot">@Gil_Perez_1999</span><span class="co">]</span> revelen que més del 70% de l'alumnat de secundària considera la Física i Química una assignatura poc motivadora, memorística i excessivament formalitzada. Aquesta desafecció s'explica principalment per tres motius didàctics:</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>L'abús d'exercicis algorítmics mecànics de «llapis i paper» que es limiten a la substitució numèrica en fórmules aïllades, sense comprensió de la física subjacent <span class="co">[</span><span class="ot">@Solbes_2007</span><span class="co">]</span>.</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>La descontextualització dels problemes proposats, que es presenten com a situacions tancades i simplificades allunyades del món real i quotidià de l'estudiant <span class="co">[</span><span class="ot">@Solbes_2018</span><span class="co">]</span>.</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>La manca de pràctiques experimentals o d'indagació reals que permeten a l'alumnat actuar com a creador i constructor de coneixement, relegant-lo a un paper de receptor passiu de teories tancades <span class="co">[</span><span class="ot">@Gil_Perez_1999; @Rocard_2007</span><span class="co">]</span>.</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">### Superació d'Obstacles Epistemològics i Concepcions Alternatives en Mecànica {.unnumbered}</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>Dins de l'ensenyament de la Física de Batxillerat, la cinemàtica i la dinàmica esdevenen àrees crítiques on l'alumnat arrossega concepcions alternatives extremadament resistents. Les recerques didàctiques <span class="co">[</span><span class="ot">@Solbes_2007; @Hestenes_1987</span><span class="co">]</span> destaquen que els estudiants solen mantenir una «física intuïtiva» de caràcter aristotèlic:</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**La relació força-velocitat:** Es creu que la velocitat d'un objecte és proporcional a la força neta que hi actua i que, en absència d'una força activa en la direcció del moviment, l'objecte s'ha d'aturar de manera immediata <span class="co">[</span><span class="ot">@Hestenes_1987; @Solbes_2007</span><span class="co">]</span>.</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**L'abstracció irreal del buit ideal:** L'estudi tradicional del tir de projectils es restringeix de manera exclusiva a l'ideal del buit (fregament zero). L'alumnat aprèn a usar fórmules tancades d'MRU i MRUA de forma desconnectada del seu entorn real. Quan intenten contrastar aquestes paràboles perfectes amb fenòmens del món real (com el llançament d'una pilota de ping-pong), xoquen amb una discrepància immediata que el llibre tradicional no pot explicar a mà per limitacions d'àlgebra, forçant la memorització acrítica <span class="co">[</span><span class="ot">@Belu_2009; @Vieyra_2021</span><span class="co">]</span>.</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>La integració d'un entorn de computació simbòlica transparent com SageMath actua com una **«caixa blanca» cognitiva** que permet abordar directament aquests obstacles <span class="co">[</span><span class="ot">@Hanc_2020</span><span class="co">]</span>. En obrir el model de l'ordinador i permetre que l'alumnat declare les equacions diferencials vectorials que regeixen el moviment real amb fregament viscós o aerodinàmic (forces que actuen en direcció oposada a la velocitat), es genera un espai d'indagació i de resolució de conflictes conceptuals de gran potència didàctica <span class="co">[</span><span class="ot">@Hestenes_1987; @Borovsky_2023</span><span class="co">]</span>.</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## El pensament computacional com a eina epistèmica en ciències {#sec-pc-epistemic}</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>Des que Jeannette Wing <span class="co">[</span><span class="ot">@Wing_2006</span><span class="co">]</span> va popularitzar el concepte de **pensament computacional (PC)** com una competència fonamental per a tota la ciutadania, la comunitat educativa ha debatut intensament la seua integració curricular. Lluny de reduir-se a la mera instrucció en sintaxi de programació (*coding*) o al desenvolupament de destreses tecnocèntriques orientades exclusivament al mercat laboral, la investigació didàctica moderna concep el PC com una autèntica **eina epistèmica** per a la indagació i la construcció de coneixement científic <span class="co">[</span><span class="ot">@Lodi_2021; @Li_2020</span><span class="co">]</span>.</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>Tal com argumenten Weintrop et al. <span class="co">[</span><span class="ot">@Weintrop_2016</span><span class="co">]</span>, les pràctiques computacionals a les ciències i les matemàtiques s'articulen d'acord amb quatre dimensions clau (vegeu @tbl-weintrop): pràctiques de dades, de modelització i simulació, de resolució computacional de problemes i de pensament sistèmic. Quan l'alumnat utilitza la programació per descriure un fenomen físic, l'ordinador es transforma en el que Seymour Papert va anomenar un *«object to think with»* (un objecte amb el qual pensar) <span class="co">[</span><span class="ot">@Lodi_2021</span><span class="co">]</span>. Escriure un model en codi obliga a explicitar de manera inequívoca les variables rellevants, les relacions causals i les condicions de contorn, fent visibles les inconsistències dels models mentals previs de l'estudiant i afavorint la bastida de destreses metacognitives <span class="co">[</span><span class="ot">@Borovsky_2023; @Hanc_2020</span><span class="co">]</span>.</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Dimensió de la Taxonomia <span class="pp">|</span> Pràctiques Computacionals Específiques STEM <span class="co">[</span><span class="ot">@Weintrop_2016</span><span class="co">]</span> <span class="pp">|</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="pp">| ------</span> <span class="pp">| ------</span> <span class="pp">|</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **1. Pràctiques de Dades** <span class="pp">|</span> Recollir dades reals de l'entorn, manipular i netejar conjunts de dades, visualitzar estructures de dades gràficament i analitzar patrons i residuals de models. <span class="pp">|</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **2. Pràctiques de Modelització i Simulació** <span class="pp">|</span> Utilitzar models computacionals ja dissenyats pel docent, modificar codi de simulació existent per explorar noves condicions físiques, i dissenyar i validar nous models de simulació d'acord amb lleis físiques reals. <span class="pp">|</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **3. Pràctiques de Resolució de Problemes** <span class="pp">|</span> Preparar problemes per a la resolució d'exigents càlculs numèrics o simbòlics, programar estructures lògiques i de control, depurar (*debugging*) errors sintàctics de codi i utilitzar constants de bases de dades científiques oficials. <span class="pp">|</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **4. Pràctiques de Pensament Sistèmic** <span class="pp">|</span> Investigar les interaccions dins de sistemes complexos reals, analitzar el paper del nombre d'interaccions simultànies, i avaluar les limitacions de simplificació de cada model. <span class="pp">|</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>: Taxonomia de Pràctiques de Pensament Computacional en Ciències i Matemàtiques <span class="co">[</span><span class="ot">@Weintrop_2016</span><span class="co">]</span>. {#tbl-weintrop tbl-colwidths="<span class="co">[</span><span class="ot">30,70</span><span class="co">]</span>"}</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>En aquest context, l'elecció del programari educatiu és determinant. Molts entorns digitals utilitzats a secundària funcionen com a caixes negres opaques o com a sistemes de càlcul purament numèric que sovint enfosqueixen el sentit de les relacions físiques en reduir els resultats a taules de dígits aïllats o a ajustaments de corbes completament automatitzats on l'alumnat no comprèn el paper de l'equació <span class="co">[</span><span class="ot">@Belu_2009; @Vieyra_2021</span><span class="co">]</span>. Per contra, el programari lliure de càlcul simbòlic *SageMath* [@Borovsky_2023; @Hanc_2020] ofereix un entorn de **«caixa blanca»** de gran potència pedagògica:</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Manipulació simbòlica exacta:** Permet definir magnituds com a variables algebraiques ($t$, $v_0$, $\alpha$, $k$) i operar analíticament amb equacions abans de substituir valors numèrics, preservant el significat físic global de les fórmules i evitant la pèrdua de sentit físic que indueixen les aproximacions purament numèriques o els càlculs manuals rutinaris <span class="co">[</span><span class="ot">@Belu_2009; @Borovsky_2023</span><span class="co">]</span>.</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Integració tipogràfica amb LaTeX:** Mitjançant la instrucció <span class="in">`show()`</span>, les expressions matemàtiques i les lleis físiques es renderitzen amb la notació formal estàndard dels llibres de text, facilitant l'associació conceptual i eliminant barreres de comprensió visual <span class="co">[</span><span class="ot">@Borovsky_2023</span><span class="co">]</span>.</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Interactivitat mitjançant *widgets* (*Interacts*):** Permet que l'alumnat explore de manera dinàmica l'espai de paràmetres mitjançant controls lliscants (*sliders*), observant en temps real com varia una trajectòria o el perfil de velocitats d’un mòbil segons la força de fregament aplicada, la qual cosa promou una comprensió qualitativa i sistèmica dels fenòmens <span class="co">[</span><span class="ot">@Hanc_2020; @Borovsky_2023</span><span class="co">]</span>.</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Bastida pedagògica *Use-Modify-Create*:** L'alumnat no comença mai davant d'una pantalla de codi buida que li puga provocar frustració o ansietat; primer *utilitza* un quadern interactiu dissenyat pel docent (per observar un moviment), després *modifica* petits paràmetres o instruccions de forma guiada, i finalment *crea* o amplia el model per donar resposta a nous reptes d'indagació <span class="co">[</span><span class="ot">@Grover_2013</span><span class="co">]</span>.</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="fu">### Els nivells d'indagació d'Herron (1971) i la bastida *Use-Modify-Create* {.unnumbered}</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>Per graduar la dificultat i l'autonomia de les tasques computacionals, la nostra proposta s'estructura sobre els **nivells d'indagació de Marshall Herron** [@Herron_1971], creuant-los amb la bastida pedagògica **Use-Modify-Create** proposada per Grover i Pea <span class="co">[</span><span class="ot">@Grover_2013</span><span class="co">]</span> (vegeu @tbl-herron-umc):</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Nivell d'indagació (Herron) <span class="pp">|</span> Problema <span class="pp">|</span> Mètode <span class="pp">|</span> Solució <span class="pp">|</span> Bastida didàctica computacional (*Use-Modify-Create*) <span class="pp">|</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="pp">| ------</span> <span class="pp">| ------</span> <span class="pp">| ------</span> <span class="pp">| ------</span> <span class="pp">| ------</span> <span class="pp">|</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Nivell 0** | Donat | Donat | Donat | **Confirmació / Verificació:** L'alumnat comprova resultats coneguts. <span class="pp">|</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Nivell 1** | Donat | Donat | **Obert** | **Fase USE:** L'alumnat executa quaderns preconfigurats i explora paràmetres amb controls visuals i *widgets* interactius. <span class="pp">|</span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Nivell 2** | Donat | **Obert** | **Obert** | **Fase MODIFY:** L'alumnat modifica línies de codi guiades, depura errors sintàctics i afegeix noves condicions físiques. <span class="pp">|</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Nivell 3** | **Obert** | **Obert** | **Obert** | **Fase CREATE:** L'alumnat formula el seu propi model algorítmic autònom per resoldre un repte científic obert. <span class="pp">|</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>: Creuament de nivells d'indagació d'Herron amb la progressió Use-Modify-Create. {#tbl-herron-umc tbl-colwidths="<span class="co">[</span><span class="ot">25,12,12,12,39</span><span class="co">]</span>"}</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="fu">## L'aprenentatge cooperatiu com a motor d'inclusió: el programa CA/AC de Pere Pujolàs {#sec-aprenentatge-cooperatiu}</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>Per garantir que el treball computacional no derive en un aïllament individual davant de la pantalla ni en el monopoli del dispositiu per part de l'estudiant amb més coneixements previs, la nostra proposta s'estructura sobre el programa **Cooperar per a aprendre / Aprendre a cooperar (CA/AC)** desenvolupat pel grup de Pere Pujolàs <span class="co">[</span><span class="ot">@Pujolas_2009</span><span class="co">]</span>.</span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>Dins del context del laboratori de física computacional, l'orquestració del treball en equips reduïts i heterogenis és crucial per a gestionar la diversitat d'habilitats tècniques i d'aprenentatge. L'aprenentatge cooperatiu s'erigeix així en un vehicle metodològic que dona suport a les directrius de l'educació inclusiva i facilita el desplegament de les pautes del **Disseny Universal per a l'Aprenentatge (DUA)** definides per la **CAST** <span class="co">[</span><span class="ot">@CAST_2024</span><span class="co">]</span>. En particular, en lloc de concebre les tecnologies digitals com a elements auto-suficients o assumir de manera general que el programari lliure o l'entorn de codi obert *garanteixen* per se l'accessibilitat universal, s'entén que la bastida didàctica és l'element essencial que activa el caràcter inclusiu del projecte:</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Optimització de la participació igualitària i la interacció simultània:** Basant-nos en el que assenyala Spencer Kagan [@Pujolas_2009], podem extrapolar que el risc en situacions de treball lliure és que el membre de l'equip amb major fluïdesa tecnològica monopolitze l'ús del teclat, relegant els companys a un paper passiu de simples observadors. L'aplicació de l'estructura cooperativa **«Llapis al centre / Mans fora del teclat»** (adaptada al treball computacional) fragmenta de forma explícita les fases de discussió conceptual i d'escriptura de codi. Fins que l'equip no consensua verbalment l'algorisme o la declaració de variables, ningú pot tocar el teclat o el ratolí, assegurant així que la presa de decisions siga col·lectiva <span class="co">[</span><span class="ot">@Pujolas_2009; @Lou_2001</span><span class="co">]</span>.</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Alineament de l'aprenentatge cooperatiu amb les pautes del disseny universal per a l'aprenentatge (DUA):** El treball de Pujolàs <span class="co">[</span><span class="ot">@Pujolas_2009</span><span class="co">]</span> i el marc del disseny universal per a l'aprenentatge (DUA) establert pel CAST <span class="co">[</span><span class="ot">@CAST_2024</span><span class="co">]</span> convergeixen de manera natural en la bastida afectiva i executiva de l'estudiantat. En dissenyar l'activitat de modelització mitjançant rols heterogenis i estructures pautades, s'ofereixen múltiples opcions per a mantenir l'esforç i la persistència, dins del principi de proporcionar múltiples formes de compromís (mitjançant la pauta 8: sostenir l'esforç i la persistència, i la pauta 7: captar l'interés), es fomenta la col·laboració i la comunicació entre iguals (Pauta 8.3) i es minimitzen les amenaces i distraccions frustrants (Pauta 7.4) que la sintaxi rígida del codi sol provocar en l'alumnat novell, especialment en grups amb diversitat de perfils acadèmics <span class="co">[</span><span class="ot">@CAST_2024</span><span class="co">]</span>.</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## La dimensió socioemocional de la programació i el suport davant de l'error {#sec-dimensio-afectiva}</span></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>L'aprenentatge en l'àmbit de les ciències experimentals no és una activitat purament cognitiva, sinó que està profundament lligat a la **dimensió afectiva i emocional** de l'alumnat, ja que els estats emocionals negatius constitueixen un limitador de la capacitat d'aprenentatge que genera un rebuig històric especialment marcat cap a la Física i la Química durant l'educació secundària <span class="co">[</span><span class="ot">@Mellado_2014</span><span class="co">]</span>. En traslladar aquesta realitat a l'aula de ciències des d'un enfocament computacional, l'alumnat novell s'enfronta a un obstacle doblement exigent. Com demostren de forma experimental Charles i Gwilliam <span class="co">[</span><span class="ot">@Charles_2023</span><span class="co">]</span> en un estudi de control amb estudiants de Física de nivell universitari (primer curs de la Universitat de Liverpool) que s'inicien en la programació amb Python sobre quaderns Jupyter, enfrontar-se per primer cop a la rigidesa de la sintaxi del codi i rebre missatges d'error críptics en anglés sol provocar una severa ansietat tecnològica, frustració i una disminució de la seua autoconfiança. Atès que el programari lliure usat en la present proposta, <span class="in">`SageMath`</span>, utilitza un intèrpret de programació basat en la sintaxi de Python sota el mateix entorn web de treball de Jupyter, aquestes evidències sobre el bloqueig i el descoratjament de l'alumnat novell davant els errors de codi suggereixen que aquests patrons podrien ser raonablement extrapolables al nostre disseny d'innovació a 1r de Batxillerat, justificant la necessitat de planificar un protocol d'acompanyament i suport afectiu programat davant dels missatges d'error de programació (Pauta 8.3 i 7.4 del DUA) <span class="co">[</span><span class="ot">@CAST_2024; @Charles_2023</span><span class="co">]</span>. S'elaboren targetes de depuració d'errors en valencià que tradueixen els missatges tècnics de Python en pistes explicatives de «caixa blanca», indicant de manera empàtica de quin tipus d'error es tracta (p. ex., un <span class="in">`SyntaxError`</span> per oblidar un parèntesi, o un <span class="in">`NameError`</span> per declarar malament una variable simbòlica <span class="in">`var()`</span>) i guiant l'estudiant cap a la resolució activa de la barrera de programació (el disseny complet de les targetes adaptades i el codi natiu per a la seua integració automàtica en el nucli de Jupyter es detallen en <span class="co">[</span><span class="ot">l'Annex III</span><span class="co">](#sec-annex-targetes)</span>).</span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 
 
