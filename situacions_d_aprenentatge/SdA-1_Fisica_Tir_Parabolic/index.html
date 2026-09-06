@@ -1473,7 +1473,7 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                 <div class="conflict-box">
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
                         <div class="conflict-title">
-                            <span>🤔 Debat Epistemològic i Avaluació de Models a l'Aula:</span>
+                            <span>🤔 Avaluem el model front les dades experimentals:</span>
                         </div>
                         <span class="coop-badge">🤝 Estructura «Llapissos al centre»</span>
                     </div>
@@ -1482,15 +1482,15 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                         ⚠️ <b>Instrucció Docent:</b> Dialogueu en equip sense tocar el teclat. <u>Només podeu prémer 'Enviar Resposta' quan el professor o professora done el senyal a l'aula!</u>
                     </div>
 
-                    <!-- PAS 1: DIAGNÒSTIC I AVALUACIÓ INICIAL DE L'EQUIP -->
+                    <!-- PREGUNTA 1 -->
                     <div class="debate-step-card" id="debate-card-1">
                         <div class="debate-step-header">
-                            <span>📋 Pas 1 · Avaluació empírica de l'equip:</span> Exploreu al desplegable superior els 3 experiments calibrats (<i>Pilota de cautxú</i>, <i>Pilota de ping-pong</i> i <i>Volant de bàdminton</i>). Compareu com respon la trajectòria ideal de Galileu enfront de les dades reals de Tracker en cadascun dels tres casos. Què observeu? Redacteu una primera avaluació conjunta del vostre equip:
+                            <span>❓ Pregunta 1:</span> El model funciona igual de bé en els 3 casos? Exploreu al desplegable superior els 3 experiments (<i>Pilota de cautxú</i>, <i>Pilota de ping-pong</i> i <i>Volant de bàdminton</i>). Compareu com respon la trajectòria ideal de Galileu enfront de les dades reals de Tracker en cadascun dels tres casos. Què observeu? Redacteu la valoració del vostre equip:
                         </div>
                         <div id="debate-input-container-1">
-                            <textarea id="debate-ans-1" class="debate-textarea" placeholder="Descriviu què li passa al model ideal en cada mòbil: En quins casos ajusta bé? En quins es desvia o falla greument? Quina impressió inicial en trau el vostre equip?"></textarea>
+                            <textarea id="debate-ans-1" class="debate-textarea" placeholder="Descriviu què li passa al model ideal en cada mòbil: En quins casos ajusta bé? En quins es desvia o falla greument?"></textarea>
                             <button class="btn-debate-send" onclick="submitDebateAnswer(1)">
-                                <span>📤</span> Enviar Avaluació Inicial de l'Equip
+                                <span>📤</span> Enviar Resposta a la Pregunta 1
                             </button>
                         </div>
                         <div id="debate-submitted-1" style="display:none;" class="submitted-response-box"></div>
@@ -1503,10 +1503,10 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                             <i>La ciència no divideix els models entre «vertaders» o «falsos» de manera absoluta!</i> Tot model físic es construeix sobre <b>hipòtesis simplificadores</b> i té un <b>domini de validesa limitat</b>. Quan les condicions reals s'allunyen de les hipòtesis de partida, el model comença a desviar-se.
                         </div>
                         <div class="debate-step-header">
-                            <span>❓ Pregunta 2:</span> Quines propietats del mòbil (massa, mida, forma geomètrica) o del moviment (velocitat) fan que la hipòtesi de «menysprear el fregament de l'aire» siga vàlida per a la pilota de laboratori però completament inacceptable per al volant de bàdminton?
+                            <span>❓ Pregunta 2:</span> Quina hipòtesi simplificadora estem assumint en el nostre model de partida?
                         </div>
                         <div id="debate-input-container-2">
-                            <textarea id="debate-ans-2" class="debate-textarea" placeholder="Analitzeu les diferències físiques entre la pilota de cautxú i el volant: quins factors fan que l'aire siga decisiu en un cas i negligible en l'altre?"></textarea>
+                            <textarea id="debate-ans-2" class="debate-textarea" placeholder="Què hem ignorat a les equacions de la Fase 1 que sí que està present a l'atmosfera de la Terra i afecta de manera diferent cadascun dels mòbils?"></textarea>
                             <button class="btn-debate-send" onclick="submitDebateAnswer(2)">
                                 <span>📤</span> Enviar Resposta a la Pregunta 2
                             </button>
@@ -1565,10 +1565,12 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                         <div id="debate-submitted-3" style="display:none;" class="submitted-response-box"></div>
                     </div>
                 </div>
+            </div>
+
             <!-- Caixa de lliurament / Codi QR de la Fase 2 (Sessió 2) -->
             <div class="phase-delivery-box" id="delivery-box-phase-2" style="border-color: #fde68a; background: #fffbeb;">
                 <div class="delivery-info">
-                    <div style="font-weight: 700; font-size: 0.95rem; color: #92400e;">📦 Lliurament de la Sessió 2: Conflicte Experimental i Debat</div>
+                    <div style="font-weight: 700; font-size: 0.95rem; color: #92400e;">📦 Lliurament de la Sessió 2: Contrast Experimental</div>
                     <div style="font-size: 0.84rem; color: #78350f;">Genereu el codi QR o descarregueu l'informe amb les dades de Tracker i les conclusions del debat en equip.</div>
                 </div>
                 <div class="delivery-actions">
@@ -1789,6 +1791,7 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
                 <button class="btn-prev-phase" onclick="switchPhase(2)">
                     <span>◀</span> <span>Tornar a la Fase 2 (Contrast Experimental)</span>
                 </button>
+            </div>
         </div>
     </div>
 
