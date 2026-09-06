@@ -1622,34 +1622,34 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                             </button>
                         </div>
                         <textarea id="python-editor-phase2"># Model Dinàmic de Newton amb Fregament Aerodinàmic (Sintaxi SageMath)
-# 1. Definir variables i paràmetres simbòlics (sintaxi directa SageMath)
-var('t x v_0 alpha g k_drag', positive=True)
+# 1. Definir variables simbòliques
+var('t tau x v_0 alpha g k_drag', positive=True)
 
 # 2. Components de velocitat inicial
 v_0x = v_0 * cos(alpha)
 v_0y = v_0 * sin(alpha)
 
-# 3. Proposta de moviment frenat en l'eix X per l'aire (Preparser: 1/2 i ^ directes)
-# Hipòtesi d'ordre 1: La frenada horitzontal és la responsable principal de la pèrdua d'abast.
-# (A l'eix Y el fregament canvia de signe en l'apogeu; a la Fase 3 s'integrarà el model 2D complet!).
-x_t = v_0x * t * (1 - 1/2 * k_drag * t)
-y_t = v_0y * t - 1/2 * g * t^2
+# 3. Segona Llei de Newton (Força de resistència de l'aire en l'eix X):
+# F_freg_x = -k * v_0x  ==>  a_x = F/m = -k_drag * v_0x  (frenada oposada al moviment!)
+a_x = -k_drag * v_0x
+a_y = -g
 
-# 4. Derivades simbòliques temporals (Càlcul Diferencial Curricular):
-# Velocitat: v(t) = dr/dt  i  Acceleració: a(t) = dv/dt (2a Llei de Newton)
-v_x = diff(x_t, t)
-a_x = diff(v_x, t)
+# 4. Velocitats en funció del temps:
+v_x = v_0x + a_x * t
+v_y = v_0y + a_y * t
 
-v_y = diff(y_t, t)
-a_y = diff(v_y, t)
+# 5. Bastida computacional: SageMath dedueix les posicions integrant les velocitats
+# (Com que a 1r de Batxillerat la integral és futura, l'ordinador fa el càlcul invers!)
+x_t = integral(v_0x + a_x * tau, tau, 0, t)
+y_t = integral(v_0y + a_y * tau, tau, 0, t)
 
-# 5. Model aproximat de la trajectòria y(x) amb el terme corrector de l'aire:
+# 6. Model de la trajectòria y(x) amb el terme corrector de l'aire:
 # Quan x augmenta, la frenada acumulada fa que la paràbola caiga abans
 y_freg = x * tan(alpha) - (g * x^2) / (2 * v_0^2 * cos(alpha)^2) * (1 + k_drag * x)
 
-print("✅ Càlcul diferencial completat amb èxit!")
-print(f"Velocitat horitzontal:  v_x(t) = {v_x}")
-print(f"Acceleració horitzontal: a_x(t) = {a_x}  (Frenada oposada al moviment!)")
+print("✅ Model dinàmic de Newton deduït amb èxit!")
+print(f"Acceleració horitzontal: a_x = {a_x} (Frenada oposada)")
+print(f"Posició x(t) deduïda:    x(t) = {x_t}")
 print(f"Nova equació y(x) = {y_freg}")</textarea>
                     </div>
 
@@ -1670,7 +1670,7 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
                         <div class="theory-step" style="background:#f1f5f9;">
                             <div class="theory-step-num" style="color:#475569;">💡 Objectiu Pedagògic (Fase 3 - CREATE / Refinament)</div>
                             <span style="font-size:0.82rem; color:#334155; line-height:1.4;">
-                                Comproveu com la derivada temporal \(\frac{dv_x}{dt}\) manifesta la frenada oposada al moviment (\(a_x &lt; 0\)). Aquest model analític ens permet comprendre per què la corba cau abans i és el punt de partida per a l'ajust empíric de dades.
+                                Partim de la <b>Segona Llei de Newton</b>: introduïm una força de frenada horitzontal (\(F_x = -k \cdot v_x \implies a_x &lt; 0\)). Com que a 1r de Batxillerat encara no s'han impartit les integrals, fem servir <b>SageMath com a bastida computacional</b> per calcular la posició \(x(t)\) i deduir la nova equació de la trajectòria \(y(x)\) que explica el col·lapse del volant de bàdminton.
                             </span>
                         </div>
                     </div>
@@ -2643,16 +2643,19 @@ if 'v_x' in globals() and 'latex_vx' not in globals():
     globals()['latex_vx'] = sp.latex(globals()['v_x'])
 if 'a_x' in globals() and 'latex_ax' not in globals():
     globals()['latex_ax'] = sp.latex(globals()['a_x'])
+if 'x_t' in globals() and 'latex_xt' not in globals():
+    globals()['latex_xt'] = sp.latex(globals()['x_t'])
 if 'a_y' in globals() and 'latex_ay' not in globals():
     globals()['latex_ay'] = sp.latex(globals()['a_y'])
 if 'y_freg' in globals() and 'latex_corregit' not in globals():
     globals()['latex_corregit'] = sp.latex(globals()['y_freg'])
 `);
                 const axFromPy = pyodideInstance.globals.get('latex_ax') || '- k_{drag} v_{0} \\cos(\\alpha)';
+                const xtFromPy = pyodideInstance.globals.get('latex_xt') || 'v_{0}\\cos(\\alpha) t - \\frac{1}{2} k_{drag} v_{0}\\cos(\\alpha) t^2';
                 const ayFromPy = pyodideInstance.globals.get('latex_ay') || '- g';
                 const yfregFromPy = pyodideInstance.globals.get('latex_corregit') || '';
 
-                if (titleDiv2) titleDiv2.innerText = "Equació i Acceleració Deduïdes (SymPy)";
+                if (titleDiv2) titleDiv2.innerText = "Model Dinàmic de Newton Deduït (SageMath/SymPy)";
                 if (capSpan2) capSpan2.style.display = "inline";
 
                 if (resDiv2) {
@@ -2661,15 +2664,15 @@ if 'y_freg' in globals() and 'latex_corregit' not in globals():
                     resDiv2.innerHTML = `
                         <div style="font-size:0.88rem; line-height:1.5;">
                             <div style="margin-bottom:8px;">
-                                <b>Acceleració horitzontal derivada:</b>\\[ a_x(t) = \\frac{dv_x}{dt} = ${axFromPy} \\]
-                                <span style="color:#d97706; font-size:0.8rem; font-weight:600;">(Frenada efectiva en sentit oposat a la marxa!)</span>
+                                <b>2a Llei de Newton en l'eix X (Frenada):</b>\\[ a_x = \\frac{F_{\\text{freg}, x}}{m} = ${axFromPy} \\]
+                                <span style="color:#d97706; font-size:0.8rem; font-weight:600;">(Acceleració negativa oposada al moviment!)</span>
                             </div>
                             <div style="margin-bottom:8px;">
-                                <b>Acceleració vertical:</b>\\[ a_y(t) = \\frac{dv_y}{dt} = ${ayFromPy} \\]
-                                <span style="color:var(--text-muted); font-size:0.8rem;">(Aproximació d'ordre 1; al Pas 3.2 s'integra el fregament 2D complet)</span>
+                                <b>Posició horitzontal deduïda per integració:</b>\\[ x(t) = ${xtFromPy} \\]
+                                <span style="color:#2563eb; font-size:0.8rem;">(Càlcul computacional efectuat automàticament per SageMath)</span>
                             </div>
                             <div>
-                                <b>Nova equació de la trajectòria:</b>\\[ y(x) = ${yfregFromPy} \\]
+                                <b>Nova equació analítica de la trajectòria:</b>\\[ y(x) = ${yfregFromPy} \\]
                             </div>
                         </div>
                     `;
