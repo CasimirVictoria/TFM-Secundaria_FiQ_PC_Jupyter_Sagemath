@@ -1412,7 +1412,7 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; align-items: center;">
                     <select id="select-dataset-tracker" class="select-box" style="flex: 1.5; min-width: 240px; padding: 7px 10px; font-weight: 600; border-color: #f59e0b;" onchange="changeExperimentalDataset()">
-                        <option value="osp_balltoss" selected>🎾 1. Pilota de Cautxú - Laboratori OSP (9 pts, v₀=2.98 m/s, α=53.8°, y₀=0.00m)</option>
+                        <option value="osp_balltoss" selected>🎾 1. Pilota de Cautxú (9 pts, v₀=2.98 m/s, α=53.8°, y₀=0.00m)</option>
                         <option value="pingpong_tt3d">🏓 2. Pilota de Ping-Pong - Univ. Tübingen TT3D (36 pts, v₀=3.85 m/s, α=35.9°, y₀=0.27m)</option>
                         <option value="badminton_tracker">🏸 3. Volant de Bàdminton - Tracker OSP (43 pts, v₀=17.83 m/s, α=56.9°, y₀=0.65m)</option>
                     </select>
@@ -1424,10 +1424,11 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                 </div>
                                 <!-- Caixa de Proveniència Científica i Enllaç de Comprovació -->
                 <div id="dataset-provenance-box" style="margin-top: 8px; padding: 8px 12px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; font-size: 0.82rem; color: #92400e; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
-                    <span id="dataset-provenance-text">🏛️ <b>Font científica:</b> Open Source Physics (Douglas Brown, Cabrillo College). Vídeo de laboratori a 15,15 fps.</span>
+                    <span id="dataset-provenance-text">🏛️ <b>Font científica:</b> Open Source Physics (Douglas Brown, Cabrillo College).<!-- Enregistrament de laboratori a 15,15 fps amb vara mètrica de calibratge. --></span>
                     <a id="dataset-provenance-link" href="https://github.com/OpenSourcePhysics/tracker/raw/master/examples/BallToss.trz" target="_blank" rel="noopener noreferrer" style="font-weight: 700; color: #b45309; text-decoration: underline;">🔗 Baixar paquet original .TRZ (OSP/GitHub)</a>
                 </div>
-                <div id="tracker-status" style="font-size: 0.8rem; font-weight: 600; color: #b45309; margin-top: 6px;">
+                <!-- Linia d'estat conservada per si de cas, oculta visualment per evitar redundancia amb la targeta de Font Cientifica -->
+                <div id="tracker-status" style="display: none; font-size: 0.8rem; font-weight: 600; color: #b45309; margin-top: 6px;">
                     ⚠️ Sense dades carregades. Trieu un conjunt i premeu «Carregar Dades» per activar el contrast experimental.
                 </div>
             </div>
@@ -2188,9 +2189,9 @@ Estat Codi: Modificat i executat correctament`;
         const EXPERIMENTAL_DATASETS = {
             'osp_balltoss': {
                 id: 'osp_balltoss',
-                name: 'Pilota de Cautxú (Laboratori OSP)',
+                name: 'Pilota de Cautxú',
                 description: 'Pilota m=0.200 kg llançada en laboratori a 15.15 fps (Douglas Brown, Cabrillo College)',
-                source_info: '🏛️ <b>Font científica:</b> Open Source Physics (Douglas Brown, Cabrillo College). Enregistrament de laboratori a 15,15 fps amb vara mètrica de calibratge.',
+                source_info: '🏛️ <b>Font científica:</b> Open Source Physics (Douglas Brown, Cabrillo College).<!-- Enregistrament de laboratori a 15,15 fps amb vara mètrica de calibratge. -->',
                 source_url: 'https://github.com/OpenSourcePhysics/tracker/raw/master/examples/BallToss.trz',
                 source_link_text: '🔗 Baixar paquet original .TRZ (OSP/GitHub)',
                 csv: `# Dataset: OSP Tracker BallToss (Open Source Physics)
