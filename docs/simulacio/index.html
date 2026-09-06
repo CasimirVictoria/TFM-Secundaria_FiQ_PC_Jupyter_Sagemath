@@ -1632,25 +1632,29 @@ v_0y = v_0 * sin(alpha)
 # 3. Segona Llei de Newton (Força de resistència de l'aire en l'eix X):
 # F_freg_x = -k * v_0x  ==>  a_x = F/m = -k_drag * v_0x  (frenada oposada al moviment!)
 a_x = -k_drag * v_0x
-a_y = -g
 
-# 4. Velocitats en funció del temps:
-v_x = v_0x + a_x * t
-v_y = v_0y + a_y * t
+# 4. PRIMERA INTEGRAL: Acceleració -> Velocitat v_x(t)
+# Com que a_x = dv_x/dt, deduïm v_x(t) integrant l'acceleració:
+v_x = v_0x + integral(a_x, tau, 0, t)
 
-# 5. Bastida computacional: SageMath dedueix les posicions integrant les velocitats
-# (Com que a 1r de Batxillerat la integral és futura, l'ordinador fa el càlcul invers!)
-x_t = integral(v_0x + a_x * tau, tau, 0, t)
-y_t = integral(v_0y + a_y * tau, tau, 0, t)
+# 5. SEGONA INTEGRAL: Velocitat -> Posició x(t)
+# Com que v_x = dx/dt, deduïm x(t) integrant la velocitat:
+v_x_tau = v_x.subs(t, tau)
+x_t = integral(v_x_tau, tau, 0, t)
 
-# 6. Model de la trajectòria y(x) amb el terme corrector de l'aire:
-# Quan x augmenta, la frenada acumulada fa que la paràbola caiga abans
-y_freg = x * tan(alpha) - (g * x^2) / (2 * v_0^2 * cos(alpha)^2) * (1 + k_drag * x)
+# 6. Moviment vertical sota la gravetat (com a la Fase 1):
+y_t = v_0y * t - (1/2) * g * t^2
+
+# 7. Procediment idèntic a la Fase 1: aïllem t de x(t) i substituïm en y(t)
+sol_t = solve(x == x_t, t)[0]
+y_trajectoria = y_t.subs(sol_t)
+y_freg = y_trajectoria
 
 print("✅ Model dinàmic de Newton deduït amb èxit!")
-print(f"Acceleració horitzontal: a_x = {a_x} (Frenada oposada)")
-print(f"Posició x(t) deduïda:    x(t) = {x_t}")
-print(f"Nova equació y(x) = {y_freg}")</textarea>
+print(f"1) Acceleració a_x:              {a_x}")
+print(f"2) Velocitat v_x(t) (1a integ.): {v_x}")
+print(f"3) Posició x(t) (2a integ.):     {x_t}")
+print(f"4) Nova equació y(x):            {y_trajectoria}")</textarea>
                     </div>
 
                     <div class="theory-card">
@@ -1670,7 +1674,7 @@ print(f"Nova equació y(x) = {y_freg}")</textarea>
                         <div class="theory-step" style="background:#f1f5f9;">
                             <div class="theory-step-num" style="color:#475569;">💡 Objectiu Pedagògic (Fase 3 - CREATE / Refinament)</div>
                             <span style="font-size:0.82rem; color:#334155; line-height:1.4;">
-                                Partim de la <b>Segona Llei de Newton</b>: introduïm una força de frenada horitzontal (\(F_x = -k \cdot v_x \implies a_x &lt; 0\)). Com que a 1r de Batxillerat encara no s'han impartit les integrals, fem servir <b>SageMath com a bastida computacional</b> per calcular la posició \(x(t)\) i deduir la nova equació de la trajectòria \(y(x)\) que explica el col·lapse del volant de bàdminton.
+                                Partim de la <b>Segona Llei de Newton</b>: introduïm una força de frenada horitzontal (\(F_x = -k \cdot v_x \implies a_x &lt; 0\)). Mitjançant dues integrals successives com a <b>bastida computacional en SageMath</b> (\(a_x \xrightarrow{\int} v_x(t) \xrightarrow{\int} x(t)\)), i aplicant el mateix mètode d'aïllar \(t\) i substituir que a la Fase 1, deduïm l'equació de la trajectòria \(y(x)\) amb fregament aerodinàmic.
                             </span>
                         </div>
                     </div>
@@ -2649,13 +2653,16 @@ _export_dict = {}
 if 'a_x' in globals():
     _ax_val = globals()['a_x']
     _export_dict['latex_ax'] = sp.latex(_ax_val.rhs if hasattr(_ax_val, 'rhs') else _ax_val)
+if 'v_x' in globals():
+    _vx_val = globals()['v_x']
+    _export_dict['latex_vx'] = sp.latex(_vx_val.rhs if hasattr(_vx_val, 'rhs') else _vx_val)
 if 'x_t' in globals():
     _xt_val = globals()['x_t']
     _export_dict['latex_xt'] = sp.latex(_xt_val.rhs if hasattr(_xt_val, 'rhs') else _xt_val)
-if 'a_y' in globals():
-    _ay_val = globals()['a_y']
-    _export_dict['latex_ay'] = sp.latex(_ay_val.rhs if hasattr(_ay_val, 'rhs') else _ay_val)
-if 'y_freg' in globals():
+if 'y_trajectoria' in globals():
+    _yt_val = globals()['y_trajectoria']
+    _export_dict['latex_corregit'] = sp.latex(_yt_val.rhs if hasattr(_yt_val, 'rhs') else _yt_val)
+elif 'y_freg' in globals():
     _yf_val = globals()['y_freg']
     _export_dict['latex_corregit'] = sp.latex(_yf_val.rhs if hasattr(_yf_val, 'rhs') else _yf_val)
 json.dumps(_export_dict)
@@ -2668,8 +2675,8 @@ json.dumps(_export_dict)
                 }
 
                 const axFromPy = latexDict['latex_ax'] || '- k_{drag} v_{0} \\cos(\\alpha)';
+                const vxFromPy = latexDict['latex_vx'] || 'v_{0}\\cos(\\alpha) - k_{drag} v_{0}\\cos(\\alpha) t';
                 const xtFromPy = latexDict['latex_xt'] || 'v_{0}\\cos(\\alpha) t - \\frac{1}{2} k_{drag} v_{0}\\cos(\\alpha) t^2';
-                const ayFromPy = latexDict['latex_ay'] || '- g';
                 const yfregFromPy = latexDict['latex_corregit'] || '';
 
                 if (titleDiv2) titleDiv2.innerText = "Model Dinàmic de Newton Deduït (SageMath/SymPy)";
@@ -2682,17 +2689,18 @@ json.dumps(_export_dict)
                         try { MathJax.typesetClear([resDiv2]); } catch (e) {}
                     }
                     resDiv2.innerHTML = `
-                        <div style="font-size:0.88rem; line-height:1.5;">
+                        <div style="font-size:0.86rem; line-height:1.5;">
                             <div style="margin-bottom:8px;">
-                                <b>2a Llei de Newton en l'eix X (Frenada):</b>\\[ a_x = \\frac{F_{\\text{freg}, x}}{m} = ${axFromPy} \\]
-                                <span style="color:#d97706; font-size:0.8rem; font-weight:600;">(Acceleració negativa oposada al moviment!)</span>
+                                <b>1. 2a Llei de Newton en l'eix X (Frenada):</b>\\[ a_x = \\frac{F_{\\text{freg}, x}}{m} = ${axFromPy} \\]
                             </div>
                             <div style="margin-bottom:8px;">
-                                <b>Posició horitzontal deduïda per integració:</b>\\[ x(t) = ${xtFromPy} \\]
-                                <span style="color:#2563eb; font-size:0.8rem;">(Càlcul computacional efectuat automàticament per SageMath)</span>
+                                <b>2. 1a Integral (Acceleració \\(\\to\\) Velocitat \\(v_x(t)\\)):</b>\\[ v_x(t) = v_{0x} + \\int_0^t a_x \\, d\\tau = ${vxFromPy} \\]
+                            </div>
+                            <div style="margin-bottom:8px;">
+                                <b>3. 2a Integral (Velocitat \\(\\to\\) Posició \\(x(t)\\)):</b>\\[ x(t) = \\int_0^t v_x(\\tau) \\, d\\tau = ${xtFromPy} \\]
                             </div>
                             <div>
-                                <b>Nova equació analítica de la trajectòria:</b>\\[ y(x) = ${yfregFromPy} \\]
+                                <b>4. Nova equació de la trajectòria \\(y(x)\\) (aïllant \\(t\\) de \\(x(t)\\) i substituint en \\(y(t)\\)):</b>\\[ y(x) = ${yfregFromPy} \\]
                             </div>
                         </div>
                     `;
@@ -3001,9 +3009,18 @@ def _expr_call(self, *args, **kwargs):
     if kwargs:
         subs_dict = {}
         for k, v in kwargs.items():
-            sym = sp.Symbol(k) if isinstance(k, str) else k
+            target_sym = None
+            if isinstance(k, str):
+                for fs in self.free_symbols:
+                    if fs.name == k:
+                        target_sym = fs
+                        break
+                if target_sym is None:
+                    target_sym = sp.Symbol(k)
+            else:
+                target_sym = k
             val = v.rhs if (isinstance(v, sp.Equality) or hasattr(v, 'rhs')) else v
-            subs_dict[sym] = val
+            subs_dict[target_sym] = val
         return self.subs(subs_dict)
     return self.subs(*args)
 
@@ -3012,9 +3029,18 @@ def _expr_subs(orig_subs):
         if kwargs:
             subs_dict = {}
             for k, v in kwargs.items():
-                sym = sp.Symbol(k) if isinstance(k, str) else k
+                target_sym = None
+                if isinstance(k, str):
+                    for fs in self.free_symbols:
+                        if fs.name == k:
+                            target_sym = fs
+                            break
+                    if target_sym is None:
+                        target_sym = sp.Symbol(k)
+                else:
+                    target_sym = k
                 val = v.rhs if (isinstance(v, sp.Equality) or hasattr(v, 'rhs')) else v
-                subs_dict[sym] = val
+                subs_dict[target_sym] = val
             return orig_subs(self, subs_dict)
         if len(args) == 1:
             arg = args[0]
