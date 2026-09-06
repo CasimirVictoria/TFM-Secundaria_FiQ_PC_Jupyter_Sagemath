@@ -1455,21 +1455,8 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                                 <div class="metric-value" id="res-xreal-2" style="color: var(--tracker);">0.84 m</div>
                             </div>
                             <div class="metric-card" style="grid-column: span 2;">
-                                <div class="metric-title" id="lbl-error-title-2">Avaluació del Model Ideal</div>
-                                <div class="metric-value" id="res-error-2" style="color: var(--success); font-size: 1.15rem;">3.2% (Ajust excel·lent!)</div>
-                            </div>
-                        </div>
-
-                        <!-- Desplegable d'Avaluació i Diagnòstic del Model -->
-                        <div class="formula-box" style="padding: 0; overflow: hidden; border-radius: 8px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; cursor: pointer; user-select: none; background: #eff6ff;" onclick="toggleAvaluacioModel()">
-                                <div style="font-weight: 700; font-size: 0.86rem; color: #1e40af;" id="conflict-discrepancy-title">🔍 Diagnòstic del Model de Galileu:</div>
-                                <span id="avaluacio-model-icon" style="font-size: 0.8rem; color: #2563eb; font-weight: 600;">👁️ Desplegar</span>
-                            </div>
-                            <div id="avaluacio-model-content" style="display: none; padding: 10px 12px; background: white; border-top: 1px solid var(--border); font-size: 0.82rem; color: #334155;" id="conflict-discrepancy-desc-container">
-                                <div id="conflict-discrepancy-desc">
-                                    Compareu el comportament entre els diferents mòbils al selector superior!
-                                </div>
+                                <div class="metric-title" id="lbl-error-title-2">Discrepància del Model Ideal</div>
+                                <div class="metric-value" id="res-error-2" style="color: var(--success); font-size: 1.15rem;">3.2%</div>
                             </div>
                         </div>
                     </div>
@@ -1486,28 +1473,24 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                 <div class="conflict-box">
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
                         <div class="conflict-title">
-                            <span>🤔 Conflicte Cognitiu i Debat Epistemològic a l'Aula:</span>
+                            <span>🤔 Debat Epistemològic i Avaluació de Models a l'Aula:</span>
                         </div>
                         <span class="coop-badge">🤝 Estructura «Llapissos al centre»</span>
                     </div>
 
-                    <div id="debate-conflict-intro" style="font-size:0.92rem; line-height:1.5; margin: 6px 0 12px 0;">
-                        Observeu la diferència segons el mòbil: <b>amb la pilota de cautxú de laboratori l'ajust és gairebé perfecte (error del ~3%), mentre que amb el volant de bàdminton la paràbola ideal preveu 29 m i el volant cau als 4,5 m (error > 500%)!</b>
-                    </div>
-
-                    <div style="background:#fef2f2; border:1px dashed #f87171; border-radius:8px; padding:8px 12px; font-size:0.84rem; color:#991b1b; font-weight:600; margin-bottom:12px;">
+                    <div style="background:#fef2f2; border:1px dashed #f87171; border-radius:8px; padding:8px 12px; font-size:0.84rem; color:#991b1b; font-weight:600; margin: 10px 0 14px 0;">
                         ⚠️ <b>Instrucció Docent:</b> Dialogueu en equip sense tocar el teclat. <u>Només podeu prémer 'Enviar Resposta' quan el professor o professora done el senyal a l'aula!</u>
                     </div>
 
-                    <!-- PREGUNTA 1 -->
+                    <!-- PAS 1: DIAGNÒSTIC I AVALUACIÓ INICIAL DE L'EQUIP -->
                     <div class="debate-step-card" id="debate-card-1">
                         <div class="debate-step-header">
-                            <span>❓ Pregunta 1:</span> Falla la ciència? Si proveu la pilota de cautxú de laboratori, el model de Galileu encerta gairebé al mil·límetre (error &lt; 4%). En canvi, amb el volant de bàdminton preveu quasi 30 m i a penes arriba a 4,5 m! Com s'explica que la mateixa llei física funcione tan bé en un cas i fracasse estrepitosament en l'altre?
+                            <span>📋 Pas 1 · Avaluació empírica de l'equip:</span> Exploreu al desplegable superior els 3 experiments calibrats (<i>Pilota de cautxú</i>, <i>Pilota de ping-pong</i> i <i>Volant de bàdminton</i>). Compareu com respon la trajectòria ideal de Galileu enfront de les dades reals de Tracker en cadascun dels tres casos. Què observeu? Redacteu una primera avaluació conjunta del vostre equip:
                         </div>
                         <div id="debate-input-container-1">
-                            <textarea id="debate-ans-1" class="debate-textarea" placeholder="Debateu en equip: Per què una llei científica vàlida funciona perfectament en un experiment de laboratori i no encerta en absolut el tir del bàdminton?"></textarea>
+                            <textarea id="debate-ans-1" class="debate-textarea" placeholder="Descriviu què li passa al model ideal en cada mòbil: En quins casos ajusta bé? En quins es desvia o falla greument? Quina impressió inicial en trau el vostre equip?"></textarea>
                             <button class="btn-debate-send" onclick="submitDebateAnswer(1)">
-                                <span>📤</span> Enviar Resposta a la Pregunta 1
+                                <span>📤</span> Enviar Avaluació Inicial de l'Equip
                             </button>
                         </div>
                         <div id="debate-submitted-1" style="display:none;" class="submitted-response-box"></div>
@@ -1957,7 +1940,7 @@ DATA I HORA: ${now}
 - Contrast empíric: S'evidencia la diferència entre mòbils on el model ideal de Galileu és aplicable (laboratori, baix fregament) i mòbils amb gran desviació (bàdminton, aerodinàmica decisiva).
 
 2. CONCLUSIONS DEL DEBAT COOPERATIU DE L'EQUIP:
-[Pregunta 1 · Diferència de comportament entre mòbils i validesa del model]:
+[Pas 1 · Diagnòstic i Avaluació Inicial de l'Equip (els 3 experiments)]:
 «${ans1}»
 
 [Pregunta 2 · Propietats del mòbil i límits de la hipòtesi sense fregament]:
@@ -1970,8 +1953,7 @@ DATA I HORA: ${now}
                 compactQr = `[SdA FiQ · FASE 2] ${team}
 Data: ${now}
 Dataset: ${currentDatasetKey || "Tracker"}
-Contrast: Valid laboratori vs desviacio badminton
-P1 (Validesa): ${ans1.substring(0, 60)}
+Pas 1 (Avaluacio): ${ans1.substring(0, 60)}
 P2 (Propietats): ${ans2.substring(0, 60)}
 P3 (Nova Llei): ${ans3.substring(0, 60)}`;
 
@@ -3743,44 +3725,9 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
                 const errCard = document.getElementById('res-error-2');
                 const titleCard = document.getElementById('conflict-discrepancy-title');
                 const descEl = document.getElementById('conflict-discrepancy-desc');
-                const diffDist = (xMaxIdeal - xExpMax).toFixed(2);
-
-                if (errRel < 6.0) {
-                    if (errCard) {
-                        errCard.innerText = `${errRel.toFixed(1)}% (Ajust excel·lent!)`;
-                        errCard.style.color = "var(--success)";
-                    }
-                    if (titleCard) {
-                        titleCard.innerText = "✅ Ajust Experimental Excel·lent (Laboratori):";
-                        titleCard.style.color = "var(--success)";
-                    }
-                    if (descEl) {
-                        descEl.innerHTML = `El model ideal de Galileu reprodueix fidelment la trajectòria real (${xMaxIdeal.toFixed(2)} m previstos vs ${xExpMax.toFixed(2)} m reals, diferència de només ${diffDist > 0 ? '+' : ''}${diffDist} m).`;
-                    }
-                } else if (errRel < 25.0) {
-                    if (errCard) {
-                        errCard.innerText = `${errRel.toFixed(1)}% (Desviació moderada)`;
-                        errCard.style.color = "#d97706";
-                    }
-                    if (titleCard) {
-                        titleCard.innerText = "⚠️ Desviació Observable per Resistència de l'Aire:";
-                        titleCard.style.color = "#d97706";
-                    }
-                    if (descEl) {
-                        descEl.innerHTML = `La pilota s'escurça lleugerament (${diffDist > 0 ? '+' : ''}${diffDist} m respecte al model ideal). L'aire comença a frenar la trajectòria.`;
-                    }
-                } else {
-                    if (errCard) {
-                        errCard.innerText = `${errRel.toFixed(1)}% (Col·lapse del model ideal!)`;
-                        errCard.style.color = "var(--danger)";
-                    }
-                    if (titleCard) {
-                        titleCard.innerText = "🚨 Col·lapse del Model de Galileu:";
-                        titleCard.style.color = "var(--danger)";
-                    }
-                    if (descEl) {
-                        descEl.innerHTML = `El model ideal sobreestima l'abast en <b>${diffDist} metres</b>! En cossos amb gran aerodinàmica i velocitat alta, ignorar l'aire fa el model inviable.`;
-                    }
+                if (errCard) {
+                    errCard.innerText = `${errRel.toFixed(1)}%`;
+                    errCard.style.color = errRel < 6.0 ? "var(--success)" : (errRel < 25.0 ? "#d97706" : "var(--danger)");
                 }
 
                 tracesConflict.push({
