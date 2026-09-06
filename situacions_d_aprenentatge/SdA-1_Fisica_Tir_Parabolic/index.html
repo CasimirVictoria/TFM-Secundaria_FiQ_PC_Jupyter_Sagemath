@@ -1633,28 +1633,29 @@ v_0y = v_0 * sin(alpha)
 # F_freg_x = -k * v_0x  ==>  a_x = F/m = -k_drag * v_0x  (frenada oposada al moviment!)
 a_x = -k_drag * v_0x
 
-# 4. PRIMERA INTEGRAL: Acceleració -> Velocitat v_x(t)
+# 4. PRIMERA INTEGRAL: Acceleració -> Velocitat horitzontal v_x(t)
 # Com que a_x = dv_x/dt, deduïm v_x(t) integrant l'acceleració:
 v_x = v_0x + integral(a_x, tau, 0, t)
 
-# 5. SEGONA INTEGRAL: Velocitat -> Posició x(t)
+# 5. SEGONA INTEGRAL: Velocitat -> Posició horitzontal x(t)
 # Com que v_x = dx/dt, deduïm x(t) integrant la velocitat:
 v_x_tau = v_x.subs(t, tau)
 x_t = integral(v_x_tau, tau, 0, t)
 
-# 6. Moviment vertical sota la gravetat (com a la Fase 1):
+# 6. Moviment vertical sota la gravetat (MRUA clàssic):
 y_t = v_0y * t - (1/2) * g * t^2
 
-# 7. Procediment idèntic a la Fase 1: aïllem t de x(t) i substituïm en y(t)
-sol_t = solve(x == x_t, t)[0]
-y_trajectoria = y_t.subs(sol_t)
-y_freg = y_trajectoria
+# 7. Trajectòria paramètrica r(t) = (x(t), y(t)):
+# En física computacional (Tracker, GeoGebra, SageMath), no cal aïllar t!
+# Es traça la corba directament a partir del vector de posició paramètric:
+r_t = (x_t, y_t)
 
 print("✅ Model dinàmic de Newton deduït amb èxit!")
 print(f"1) Acceleració a_x:              {a_x}")
 print(f"2) Velocitat v_x(t) (1a integ.): {v_x}")
-print(f"3) Posició x(t) (2a integ.):     {x_t}")
-print(f"4) Nova equació y(x):            {y_trajectoria}")</textarea>
+print(f"3) Posició horitzontal x(t):     {x_t}")
+print(f"4) Posició vertical y(t):        {y_t}")
+print(f"5) Vector paramètric r(t):       r(t) = (x(t), y(t))")</textarea>
                     </div>
 
                     <div class="theory-card">
@@ -1674,7 +1675,7 @@ print(f"4) Nova equació y(x):            {y_trajectoria}")</textarea>
                         <div class="theory-step" style="background:#f1f5f9;">
                             <div class="theory-step-num" style="color:#475569;">💡 Objectiu Pedagògic (Fase 3 - CREATE / Refinament)</div>
                             <span style="font-size:0.82rem; color:#334155; line-height:1.4;">
-                                Partim de la <b>Segona Llei de Newton</b>: introduïm una força de frenada horitzontal (\(F_x = -k \cdot v_x \implies a_x &lt; 0\)). Mitjançant dues integrals successives com a <b>bastida computacional en SageMath</b> (\(a_x \xrightarrow{\int} v_x(t) \xrightarrow{\int} x(t)\)), i aplicant el mateix mètode d'aïllar \(t\) i substituir que a la Fase 1, deduïm l'equació de la trajectòria \(y(x)\) amb fregament aerodinàmic.
+                                Partim de la <b>Segona Llei de Newton</b>: introduïm una força de frenada horitzontal (\(F_x = -k \cdot v_x \implies a_x &lt; 0\)). Mitjançant dues integrals successives com a <b>bastida computacional en SageMath</b> (\(a_x \xrightarrow{\int} v_x(t) \xrightarrow{\int} x(t)\)), obtenim el vector de posició paramètric \(\vec{r}(t) = (x(t), y(t))\) que models com GeoGebra, Tracker o SageMath empren per traçar la trajectòria amb resistència de l'aire d'una manera neta i elegant.
                             </span>
                         </div>
                     </div>
@@ -2659,9 +2660,12 @@ if 'v_x' in globals():
 if 'x_t' in globals():
     _xt_val = globals()['x_t']
     _export_dict['latex_xt'] = sp.latex(_xt_val.rhs if hasattr(_xt_val, 'rhs') else _xt_val)
+if 'y_t' in globals():
+    _yt_val = globals()['y_t']
+    _export_dict['latex_yt'] = sp.latex(_yt_val.rhs if hasattr(_yt_val, 'rhs') else _yt_val)
 if 'y_trajectoria' in globals():
-    _yt_val = globals()['y_trajectoria']
-    _export_dict['latex_corregit'] = sp.latex(_yt_val.rhs if hasattr(_yt_val, 'rhs') else _yt_val)
+    _ytra_val = globals()['y_trajectoria']
+    _export_dict['latex_corregit'] = sp.latex(_ytra_val.rhs if hasattr(_ytra_val, 'rhs') else _ytra_val)
 elif 'y_freg' in globals():
     _yf_val = globals()['y_freg']
     _export_dict['latex_corregit'] = sp.latex(_yf_val.rhs if hasattr(_yf_val, 'rhs') else _yf_val)
@@ -2677,7 +2681,7 @@ json.dumps(_export_dict)
                 const axFromPy = latexDict['latex_ax'] || '- k_{drag} v_{0} \\cos(\\alpha)';
                 const vxFromPy = latexDict['latex_vx'] || 'v_{0}\\cos(\\alpha) - k_{drag} v_{0}\\cos(\\alpha) t';
                 const xtFromPy = latexDict['latex_xt'] || 'v_{0}\\cos(\\alpha) t - \\frac{1}{2} k_{drag} v_{0}\\cos(\\alpha) t^2';
-                const yfregFromPy = latexDict['latex_corregit'] || '';
+                const ytFromPy = latexDict['latex_yt'] || 'v_{0}\\sin(\\alpha) t - \\frac{1}{2} g t^2';
 
                 if (titleDiv2) titleDiv2.innerText = "Model Dinàmic de Newton Deduït (SageMath/SymPy)";
                 if (capSpan2) capSpan2.style.display = "inline";
@@ -2697,10 +2701,13 @@ json.dumps(_export_dict)
                                 <b>2. 1a Integral (Acceleració \\(\\to\\) Velocitat \\(v_x(t)\\)):</b>\\[ v_x(t) = v_{0x} + \\int_0^t a_x \\, d\\tau = ${vxFromPy} \\]
                             </div>
                             <div style="margin-bottom:8px;">
-                                <b>3. 2a Integral (Velocitat \\(\\to\\) Posició \\(x(t)\\)):</b>\\[ x(t) = \\int_0^t v_x(\\tau) \\, d\\tau = ${xtFromPy} \\]
+                                <b>3. 2a Integral (Velocitat \\(\\to\\) Posició horitzontal \\(x(t)\\)):</b>\\[ x(t) = \\int_0^t v_x(\\tau) \\, d\\tau = ${xtFromPy} \\]
                             </div>
                             <div>
-                                <b>4. Nova equació de la trajectòria \\(y(x)\\) (aïllant \\(t\\) de \\(x(t)\\) i substituint en \\(y(t)\\)):</b>\\[ y(x) = ${yfregFromPy} \\]
+                                <b>4. Trajectòria en forma paramètrica \\(\\vec{r}(t) = (x(t), y(t))\\):</b>\\[ \\vec{r}(t) = \\begin{pmatrix} x(t) \\\\[4pt] y(t) \\end{pmatrix} = \\begin{pmatrix} ${xtFromPy} \\\\[6pt] ${ytFromPy} \\end{pmatrix} \\]
+                                <div style="font-size:0.8rem; color:var(--text-muted); margin-top:6px; background:#f8fafc; padding:6px 10px; border-radius:6px; border-left:3px solid #3b82f6;">
+                                    💡 <b>Avantatge del pensament computacional:</b> No cal aïllar analíticament \(t\). Eines com <b>Tracker, GeoGebra i SageMath</b> avaluen directament les dues funcions paramètriques \((x(t), y(t))\) per a cada instant de temps per traçar la trajectòria exacta amb resistència de l'aire.
+                                </div>
                             </div>
                         </div>
                     `;
