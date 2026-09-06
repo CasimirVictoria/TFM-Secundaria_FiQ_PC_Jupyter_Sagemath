@@ -1706,6 +1706,12 @@ print(f"5) Vector paramètric r(t):       r(t) = (x(t), y(t))")</textarea>
                             <input type="file" id="csv-file-input-phase3" accept=".csv,.txt" style="display: none;" onchange="handleFileUpload(event)">
                         </label>
                     </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: #92400e; align-self: center;">Accés ràpid:</span>
+                        <button type="button" onclick="loadSelectedDataset('osp_balltoss')" style="background: white; border: 1px solid #fde68a; border-radius: 6px; padding: 4px 10px; font-size: 0.8rem; cursor: pointer; font-weight: 600; color: #92400e;">🎾 Pilota de Cautxú</button>
+                        <button type="button" onclick="loadSelectedDataset('pingpong_tt3d')" style="background: white; border: 1px solid #fde68a; border-radius: 6px; padding: 4px 10px; font-size: 0.8rem; cursor: pointer; font-weight: 600; color: #92400e;">🏓 Pilota de Ping-Pong</button>
+                        <button type="button" onclick="loadSelectedDataset('badminton_tracker')" style="background: white; border: 1px solid #fde68a; border-radius: 6px; padding: 4px 10px; font-size: 0.8rem; cursor: pointer; font-weight: 600; color: #92400e;">🏸 Volant de Bàdminton</button>
+                    </div>
                     <div id="dataset-provenance-box-phase3" style="margin-top: 8px; padding: 6px 10px; background: white; border: 1px solid #fde68a; border-radius: 6px; font-size: 0.8rem; color: #78350f; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
                         <span id="dataset-provenance-text-phase3">🏛️ <b>Font científica:</b> Open Source Physics (Douglas Brown, Cabrillo College).</span>
                         <a id="dataset-provenance-link-phase3" href="https://github.com/OpenSourcePhysics/tracker/raw/master/examples/BallToss.trz" target="_blank" rel="noopener noreferrer" style="font-weight: 700; color: #b45309; text-decoration: underline;">🔗 Baixar paquet original .TRZ (OSP/GitHub)</a>
@@ -1763,6 +1769,38 @@ print(f"5) Vector paramètric r(t):       r(t) = (x(t), y(t))")</textarea>
                     🚀 Pas 3.3: Superació del Límit Analític: Model Dinàmic Real de Rayleigh (Euler 2D i SciPy Curve_fit)
                 </div>
 
+                <!-- Selector de Dades Experimentals per al Model v^2 al Pas 3.3 -->
+                <div class="tracker-card" style="border-color: #ddd6fe; background: #faf5ff; margin-bottom: 14px; padding: 12px 16px; box-shadow: none;">
+                    <div class="tracker-title" style="color: #6d28d9; font-size: 0.92rem;">📹 Tria el Mòbil Experimental per a Avaluar el Model \(v^2\) de Rayleigh:</div>
+                    <div style="font-size: 0.82rem; color: #5b21b6; margin-bottom: 6px;">
+                        Podeu carregar qualsevol dels 3 experiments reals per comprovar com respon el model dinàmic de Rayleigh en 2D enfront del model analític:
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                        <select id="select-dataset-tracker-phase3-3" class="select-box" style="flex: 1.5; min-width: 240px; padding: 7px 10px; font-weight: 600; border-color: #8b5cf6;" onchange="changeExperimentalDatasetFromPhase3_3()">
+                            <option value="osp_balltoss" selected>🎾 1. Pilota de Cautxú (Fricció Baixa - Cànon Galileu)</option>
+                            <option value="pingpong_tt3d">🏓 2. Pilota de Ping-Pong (Fricció Mitjana - Bona per al Model 3.1 i Rayleigh)</option>
+                            <option value="badminton_tracker">🏸 3. Volant de Bàdminton (Fricció Aerodinàmica Molt Alta - Col·lapse de 3.1 vs Èxit de Rayleigh)</option>
+                        </select>
+                        <button class="btn-tracker" style="flex: 1; min-width: 150px; background: #7c3aed;" onclick="loadSelectedDataset()">📥 Carregar Dades</button>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: #6d28d9; align-self: center;">Accés ràpid:</span>
+                        <button type="button" onclick="loadSelectedDataset('osp_balltoss')" style="background: white; border: 1px solid #c4b5fd; border-radius: 6px; padding: 4px 10px; font-size: 0.8rem; cursor: pointer; font-weight: 600; color: #5b21b6;">🎾 Pilota de Cautxú</button>
+                        <button type="button" onclick="loadSelectedDataset('pingpong_tt3d')" style="background: white; border: 1px solid #c4b5fd; border-radius: 6px; padding: 4px 10px; font-size: 0.8rem; cursor: pointer; font-weight: 600; color: #5b21b6;">🏓 Pilota de Ping-Pong</button>
+                        <button type="button" onclick="loadSelectedDataset('badminton_tracker')" style="background: white; border: 1px solid #c4b5fd; border-radius: 6px; padding: 4px 10px; font-size: 0.8rem; cursor: pointer; font-weight: 600; color: #5b21b6;">🏸 Volant de Bàdminton</button>
+                    </div>
+                </div>
+
+                <!-- Guia didàctica comparativa dels 3 mòbils -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; font-size: 0.82rem; color: #334155; line-height: 1.5;">
+                    <span style="font-weight: 700; color: #1e293b;">💡 Didàctica comparativa dels 3 cossos amb el model \(v^2\):</span>
+                    <ul style="margin: 4px 0 0 16px; padding: 0;">
+                        <li><b>🎾 Pilota de Cautxú:</b> Alta massa relativa (\(m=200\text{ g}\)) i velocitat moderada. El fregament aerodinàmic és mínim; el model de Galileu, l'analític 3.1 i el model \(v^2\) són pràcticament coincidents.</li>
+                        <li><b>🏓 Pilota de Ping-Pong:</b> Cos molt lleuger (\(m=2{,}7\text{ g}\)). El model analític 3.1 ja redueix substancialment l'error d'abast, i el model \(v^2\) de Rayleigh en 2D el clava amb exactitud mil·limètrica.</li>
+                        <li><b>🏸 Volant de Bàdminton:</b> Gran resistència cònica de les plomes i alta velocitat d'eixida (\(v_0 \approx 18\text{ m/s}\)). El model analític 3.1 fallava estrepitosament en la component vertical per manca de fre en \(Y\); en canvi, el model dinàmic de Rayleigh (\(v^2\) acoblat en 2D) reprodueix amb màxima fidelitat la frenada asimptòtica i la caiguda quasi vertical!</li>
+                    </ul>
+                </div>
+
                 <div class="fit-results-summary">
                     <div>
                         <div style="font-weight:700; font-size:0.88rem; color:#5b21b6; margin-bottom:6px;">
@@ -1770,6 +1808,13 @@ print(f"5) Vector paramètric r(t):       r(t) = (x(t), y(t))")</textarea>
                         </div>
                         <div style="font-size:0.84rem; color:#374151; margin-bottom:10px; line-height:1.4;">
                             Com que la resistència real de l'aire actua en els dos eixos acoblats i depén de \(v^2\), no té solució analítica senzilla. L'ordinador resol el sistema d'EDOs numèricament (Euler) i SciPy optimitza automàticament els paràmetres:
+                        </div>
+                        <div style="margin-bottom: 10px; background: white; border: 1px solid #ddd6fe; border-radius: 8px; padding: 8px 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <span style="font-size: 0.8rem; font-weight: 600; color: #5b21b6;">Ajust manual \(k_{\text{Rayleigh}}\):</span>
+                                <span id="val-drag-3-3" style="font-size: 0.82rem; font-weight: 700; color: #6d28d9;">0.040</span>
+                            </div>
+                            <input type="range" id="slider-drag-3-3" min="0" max="0.60" value="0.040" step="0.002" style="width: 100%;">
                         </div>
                         <button class="btn-fit" id="btn-run-fit" onclick="runCurveFitWasm()">
                             <span>🎯</span> Executar Ajust Òptim amb Curve_fit (SciPy WASM)
@@ -2369,14 +2414,19 @@ t,x,y,vx,vy
         function loadSelectedDataset(forcedKey = null) {
             let key = forcedKey;
             if (!key) {
+                const sel3_3 = document.getElementById('select-dataset-tracker-phase3-3');
                 const sel3 = document.getElementById('select-dataset-tracker-phase3');
                 const sel2 = document.getElementById('select-dataset-tracker');
-                if (currentPhase === 3 && sel3) {
+                if (currentPhase === 3 && sel3_3 && document.activeElement === sel3_3) {
+                    key = sel3_3.value;
+                } else if (currentPhase === 3 && sel3 && document.activeElement === sel3) {
+                    key = sel3.value;
+                } else if (sel3_3 && currentPhase === 3) {
+                    key = sel3_3.value;
+                } else if (sel3 && currentPhase === 3) {
                     key = sel3.value;
                 } else if (sel2) {
                     key = sel2.value;
-                } else if (sel3) {
-                    key = sel3.value;
                 } else {
                     key = 'osp_balltoss';
                 }
@@ -2388,21 +2438,35 @@ t,x,y,vx,vy
             datasetRevisionToken++;
             fittedResult = null; // Reiniciar l'ajust previ en carregar nou dataset
 
-            // Sincronitzar ambdós selectors desplegables
+            // Sincronitzar tots els selectors desplegables
             const sel2 = document.getElementById('select-dataset-tracker');
             const sel3 = document.getElementById('select-dataset-tracker-phase3');
+            const sel3_3 = document.getElementById('select-dataset-tracker-phase3-3');
             if (sel2 && sel2.value !== key) sel2.value = key;
             if (sel3 && sel3.value !== key) sel3.value = key;
+            if (sel3_3 && sel3_3.value !== key) sel3_3.value = key;
 
             // Adaptar dinàmicament el rang del slider de fregament k segons l'objecte
             const slider3 = document.getElementById('slider-drag-3');
-            if (slider3 && ds.bounds_fit && ds.bounds_fit[1]) {
+            const slider3_3 = document.getElementById('slider-drag-3-3');
+            if (ds.bounds_fit && ds.bounds_fit[1]) {
                 const maxK = ds.bounds_fit[1][1];
-                slider3.max = maxK;
-                slider3.step = (maxK / 100).toFixed(4);
-                slider3.value = ds.p0_fit ? ds.p0_fit[1] : 0.04;
-                const valDragSpan = document.getElementById('val-drag-3');
-                if (valDragSpan) valDragSpan.innerText = parseFloat(slider3.value).toFixed(3);
+                const defK = ds.p0_fit ? ds.p0_fit[1] : 0.04;
+                const stepK = (maxK / 100).toFixed(4);
+                if (slider3) {
+                    slider3.max = maxK;
+                    slider3.step = stepK;
+                    slider3.value = defK;
+                    const valDragSpan = document.getElementById('val-drag-3');
+                    if (valDragSpan) valDragSpan.innerText = parseFloat(slider3.value).toFixed(3);
+                }
+                if (slider3_3) {
+                    slider3_3.max = maxK;
+                    slider3_3.step = stepK;
+                    slider3_3.value = defK;
+                    const valDragSpan3 = document.getElementById('val-drag-3-3');
+                    if (valDragSpan3) valDragSpan3.innerText = parseFloat(slider3_3.value).toFixed(3);
+                }
             }
 
             const fitSummaryEl = document.getElementById('fit-summary-text');
@@ -2448,6 +2512,11 @@ t,x,y,vx,vy
         function changeExperimentalDatasetFromPhase3() {
             const sel3 = document.getElementById('select-dataset-tracker-phase3');
             if (sel3) loadSelectedDataset(sel3.value);
+        }
+
+        function changeExperimentalDatasetFromPhase3_3() {
+            const sel3_3 = document.getElementById('select-dataset-tracker-phase3-3');
+            if (sel3_3) loadSelectedDataset(sel3_3.value);
         }
 
         function loadSampleTrackerData() {
@@ -3920,7 +3989,10 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
 
             // 1. Gràfica Dinàmica del Model Analític Deduït a 3.1 (Pas 3.2)
             const kDrag = parseFloat(document.getElementById('slider-drag-3').value);
-            document.getElementById('val-drag-3').innerText = kDrag.toFixed(3);
+            const valDragSpan = document.getElementById('val-drag-3');
+            if (valDragSpan) valDragSpan.innerText = kDrag.toFixed(3);
+            const valDragSpan3 = document.getElementById('val-drag-3-3');
+            if (valDragSpan3) valDragSpan3.innerText = kDrag.toFixed(3);
 
             const sim = simulateAnalyticDrag(v0, alphaDeg, g, kDrag, y0, yFloor);
             document.getElementById('res-xmax-friction-3').innerText = sim.xMax.toFixed(2) + " m";
@@ -4029,7 +4101,7 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
             if (!pyodideInstance || !trackerData || trackerData.x.length === 0) return;
             const btn = document.getElementById('btn-run-fit');
             btn.disabled = true;
-            btn.innerHTML = "<span>⏳</span> SciPy Optimitzant...";
+            btn.innerHTML = "<span>⏳</span> SciPy Optimitzant Model Rayleigh (v²)...";
 
             try {
                 const ds = EXPERIMENTAL_DATASETS[currentDatasetKey] || EXPERIMENTAL_DATASETS['osp_balltoss'];
@@ -4058,35 +4130,63 @@ x_data = np.array(exp_x)
 y_data = np.array(exp_y)
 y0_val = float(fit_y0)
 y_floor_val = float(fit_yfloor)
+alpha_rad = float(${alphaRad})
+g = float(${g})
 
-def model_fit(x, v0_val, k_val):
-    return y0_val + x * np.tan(${alphaRad}) - (${g} * x**2) / (2 * v0_val**2 * np.cos(${alphaRad})**2) * (1.0 + k_val * x)
+def rayleigh_sim_fit(x_eval, v0_val, k_val):
+    vx = v0_val * np.cos(alpha_rad)
+    vy = v0_val * np.sin(alpha_rad)
+    dt = 0.003
+    xs = [0.0]
+    ys = [y0_val]
+    x, y = 0.0, y0_val
+    while len(xs) < 2500 and (vy > 0 or y >= y_floor_val - 0.2):
+        v = np.sqrt(vx**2 + vy**2)
+        ax = -k_val * v * vx
+        ay = -g - k_val * v * vy
+        x += vx * dt
+        y += vy * dt
+        vx += ax * dt
+        vy += ay * dt
+        xs.append(x)
+        ys.append(y)
+    return np.interp(x_eval, xs, ys)
 
 try:
     popt, pcov = curve_fit(
-        model_fit, x_data, y_data,
+        rayleigh_sim_fit, x_data, y_data,
         p0=list(fit_p0),
         bounds=(list(fit_bounds_low), list(fit_bounds_high)),
-        maxfev=6000
+        maxfev=3000
     )
     v0_opt = float(popt[0])
     k_opt = float(popt[1])
-    inc_v0 = float(np.sqrt(np.diag(pcov))[0]) if pcov is not None else 0.1
-    inc_k = float(np.sqrt(np.diag(pcov))[1]) if pcov is not None else 0.001
+    inc_v0 = float(np.sqrt(np.diag(pcov))[0]) if pcov is not None and np.isfinite(pcov[0,0]) else 0.05
+    inc_k = float(np.sqrt(np.diag(pcov))[1]) if pcov is not None and np.isfinite(pcov[1,1]) else 0.001
 except Exception as fe:
     v0_opt = float(fit_p0[0])
     k_opt = float(fit_p0[1])
     inc_v0 = 0.1
     inc_k = 0.001
 
-max_x_fit = float(np.max(x_data) * 1.25)
-x_dense = np.linspace(0, max_x_fit, 300)
-y_dense = model_fit(x_dense, v0_opt, k_opt)
-val = y_dense >= (y_floor_val - 0.05)
-x_fit_res = x_dense[val].tolist()
-y_fit_res = y_dense[val].tolist()
+vx = v0_opt * np.cos(alpha_rad)
+vy = v0_opt * np.sin(alpha_rad)
+dt = 0.002
+xs_res = [0.0]
+ys_res = [y0_val]
+x, y = 0.0, y0_val
+while len(xs_res) < 5000 and (vy > 0 or y >= y_floor_val):
+    v = np.sqrt(vx**2 + vy**2)
+    ax = -k_opt * v * vx
+    ay = -g - k_opt * v * vy
+    x += vx * dt
+    y += vy * dt
+    vx += ax * dt
+    vy += ay * dt
+    xs_res.append(x)
+    ys_res.append(y)
 
-v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
+v0_opt, k_opt, inc_v0, inc_k, xs_res, ys_res
 `;
                 const fitRes = pyodideInstance.runPython(fitPyCode);
                 const v0Opt = fitRes.get(0);
@@ -4105,9 +4205,16 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
                 };
 
                 const slider3 = document.getElementById('slider-drag-3');
+                const slider3_3 = document.getElementById('slider-drag-3-3');
                 if (slider3) {
                     slider3.value = kOpt.toFixed(3);
-                    updatePhase3Plots();
+                    const valSpan = document.getElementById('val-drag-3');
+                    if (valSpan) valSpan.innerText = kOpt.toFixed(3);
+                }
+                if (slider3_3) {
+                    slider3_3.value = kOpt.toFixed(3);
+                    const valSpan3 = document.getElementById('val-drag-3-3');
+                    if (valSpan3) valSpan3.innerText = kOpt.toFixed(3);
                 }
 
                 const xExpMax = trackerData.x[trackerData.x.length - 1];
@@ -4115,15 +4222,14 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
                 const errResidual = Math.abs((xFitMax - xExpMax) / xExpMax) * 100;
 
                 document.getElementById('fit-summary-text').innerHTML = `
-                    • Dataset analitzat: <b>${ds.name}</b> (y₀ = ${y0.toFixed(2)} m)<br>
-                    • Velocitat real d'eixida: <b>v_0 = ${v0Opt.toFixed(2)} ± ${incV0.toFixed(2)} m/s</b><br>
-                    • Coeficient de fricció òptim: <b>k_drag = ${kOpt.toFixed(4)} ± ${incK.toFixed(4)}</b><br>
-                    • Discrepància residual minimitzada: <b style="color:var(--success); font-size:1.05rem;">${errResidual.toFixed(1)}%</b> (Ajust mil·limètric!)
+                    • Mòbil analitzat: <b>${ds.name}</b> (y₀ = ${y0.toFixed(2)} m)<br>
+                    • Velocitat real d'eixida: <b>v₀ = ${v0Opt.toFixed(2)} ± ${incV0.toFixed(2)} m/s</b><br>
+                    • Coeficient de Rayleigh (v²): <b>k_Rayleigh = ${kOpt.toFixed(4)} ± ${incK.toFixed(4)}</b><br>
+                    • Discrepància residual d'abast: <b style="color:var(--success); font-size:1.05rem;">${errResidual.toFixed(1)}%</b> (Ajust òptim en 2D!)
                 `;
 
                 const fitEqDiv = document.getElementById('fit-dynamic-eq');
-                const y0Prefix = y0 > 0 ? `${y0.toFixed(2)} + ` : "";
-                fitEqDiv.innerHTML = `\\[ y(x) = ${y0Prefix}x \\tan(${alphaDeg}^\\circ) - \\frac{9.81 x^2}{2 \\cdot (${v0Opt.toFixed(1)})^2 \\cos^2(${alphaDeg}^\\circ)} \\cdot (1 + ${kOpt.toFixed(4)} x) \\]`;
+                fitEqDiv.innerHTML = `\\[ \\sum \\vec{F} = m \\vec{g} - c |\\vec{v}| \\vec{v} \\implies \\begin{cases} \\frac{dv_x}{dt} = -${kOpt.toFixed(4)} \\cdot \\sqrt{v_x^2 + v_y^2} \\cdot v_x \\\\[6pt] \\frac{dv_y}{dt} = -9.81 - ${kOpt.toFixed(4)} \\cdot \\sqrt{v_x^2 + v_y^2} \\cdot v_y \\end{cases} \\quad (v_0 = ${v0Opt.toFixed(2)}\\text{ m/s}) \\]`;
                 if (window.MathJax && MathJax.typesetPromise) {
                     MathJax.typesetPromise([fitEqDiv]);
                 }
@@ -4238,7 +4344,33 @@ v0_opt, k_opt, inc_v0, inc_k, x_fit_res, y_fit_res
 
         document.getElementById('slider-alpha-1').addEventListener('input', updatePhase1Plot);
         document.getElementById('slider-v0-1').addEventListener('input', updatePhase1Plot);
-        document.getElementById('slider-drag-3').addEventListener('input', updatePhase3Plots);
+        
+        const sDrag3 = document.getElementById('slider-drag-3');
+        const sDrag3_3 = document.getElementById('slider-drag-3-3');
+        if (sDrag3) {
+            sDrag3.addEventListener('input', () => {
+                fittedResult = null;
+                if (sDrag3_3) {
+                    sDrag3_3.value = sDrag3.value;
+                    const val3_3 = document.getElementById('val-drag-3-3');
+                    if (val3_3) val3_3.innerText = parseFloat(sDrag3.value).toFixed(3);
+                }
+                updatePhase3Plots();
+            });
+        }
+        if (sDrag3_3) {
+            sDrag3_3.addEventListener('input', () => {
+                fittedResult = null;
+                if (sDrag3) {
+                    sDrag3.value = sDrag3_3.value;
+                    const val3 = document.getElementById('val-drag-3');
+                    if (val3) val3.innerText = parseFloat(sDrag3_3.value).toFixed(3);
+                }
+                const val3_3 = document.getElementById('val-drag-3-3');
+                if (val3_3) val3_3.innerText = parseFloat(sDrag3_3.value).toFixed(3);
+                updatePhase3Plots();
+            });
+        }
 
         window.addEventListener('DOMContentLoaded', () => {
             // Restaurar número d'equip si s'havia seleccionat prèviament
