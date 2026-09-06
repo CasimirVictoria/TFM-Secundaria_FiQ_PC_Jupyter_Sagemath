@@ -3614,6 +3614,8 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
             };
 
             Plotly.react('plot-phase-1', traces, layout, { responsive: true, displayModeBar: false });
+        }
+
         function simulateAnalyticDrag(v0, alphaDeg, g, kDrag, y0 = 0.0, yFloor = 0.0) {
             const alphaRad = (alphaDeg * Math.PI) / 180.0;
             const v0x = v0 * Math.cos(alphaRad);
