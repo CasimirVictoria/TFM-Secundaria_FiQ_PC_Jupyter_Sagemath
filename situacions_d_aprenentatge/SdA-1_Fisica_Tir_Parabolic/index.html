@@ -1426,7 +1426,7 @@ y_trajectoria = y_t.subs(sol_t)</textarea>
 
                 <div>
                     <div style="font-weight:600; font-size:0.9rem; margin-bottom:6px; color:#1e293b; text-align:center;">
-                        Gràfica 1: Model teòric ideal (Galileu)
+                        Gràfica 1: Trajectòria calculada
                     </div>
                     <div id="plot-phase-1" class="plot-box" style="height: 400px;"></div>
                 </div>
@@ -3593,8 +3593,7 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
                 },
                 plot_bgcolor: '#ffffff',
                 paper_bgcolor: '#ffffff',
-                showlegend: true,
-                legend: { x: 0.02, y: 0.98, bgcolor: 'rgba(255,255,255,0.85)', bordercolor: '#e2e8f0', borderwidth: 1 }
+                showlegend: false
             };
 
             Plotly.react('plot-phase-1', traces, layout, { responsive: true, displayModeBar: false });
