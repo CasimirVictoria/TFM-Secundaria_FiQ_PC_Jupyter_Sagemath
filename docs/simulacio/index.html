@@ -1460,10 +1460,16 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                             </div>
                         </div>
 
-                        <div class="formula-box">
-                            <div style="font-weight: 600; margin-bottom: 2px;" id="conflict-discrepancy-title">🔍 Diagnòstic del Model de Galileu:</div>
-                            <div style="font-size:0.82rem; color:#334155;" id="conflict-discrepancy-desc">
-                                Compareu el comportament entre la <b>Pilota de Cautxú</b> i el <b>Volant de Bàdminton</b> al selector superior!
+                        <!-- Desplegable d'Avaluació i Diagnòstic del Model -->
+                        <div class="formula-box" style="padding: 0; overflow: hidden; border-radius: 8px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; cursor: pointer; user-select: none; background: #eff6ff;" onclick="toggleAvaluacioModel()">
+                                <div style="font-weight: 700; font-size: 0.86rem; color: #1e40af;" id="conflict-discrepancy-title">🔍 Diagnòstic del Model de Galileu:</div>
+                                <span id="avaluacio-model-icon" style="font-size: 0.8rem; color: #2563eb; font-weight: 600;">👁️ Desplegar</span>
+                            </div>
+                            <div id="avaluacio-model-content" style="display: none; padding: 10px 12px; background: white; border-top: 1px solid var(--border); font-size: 0.82rem; color: #334155;" id="conflict-discrepancy-desc-container">
+                                <div id="conflict-discrepancy-desc">
+                                    Compareu el comportament entre els diferents mòbils al selector superior!
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -3306,6 +3312,18 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
             }
         }
 
+        function toggleAvaluacioModel() {
+            const content = document.getElementById('avaluacio-model-content');
+            const icon = document.getElementById('avaluacio-model-icon');
+            if (!content) return;
+            const isHidden = (content.style.display === 'none' || content.style.display === '');
+            content.style.display = isHidden ? 'block' : 'none';
+            if (icon) icon.innerText = isHidden ? '🔼 Amagar' : '👁️ Desplegar';
+            if (isHidden && window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise([content]).catch(() => {});
+            }
+        }
+
         function togglePlotTrajectoria() {
             const wrapper = document.getElementById('plot-code-wrapper');
             const btnToggle = document.getElementById('btn-toggle-plot-code');
@@ -3699,7 +3717,7 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
                 const y0Txt = y0 > 0 ? `, y_0 = ${y0.toFixed(2)}\\text{ m}` : '';
                 const errVal = Math.abs((xMaxIdeal - xExpMax) / xExpMax) * 100;
                 if (errVal < 6.0) {
-                    conflictIntroEl.innerHTML = `Condicions inicials: (\\(v_0 = ${v0.toFixed(2)}\\text{ m/s},\\ \\alpha = ${alphaDeg.toFixed(1)}^\\circ${y0Txt}\\)). <b>En aquest experiment de laboratori, el model de Galileu encerta l'abast amb gran precisió: ${xMaxIdeal.toFixed(2)} m previstos vs ${xExpMax.toFixed(2)} m mesurats (error sols del ${errVal.toFixed(1)}%).</b> Compareu-lo amb el Volant de Bàdminton per veure quan deixa de funcionar!`;
+                    conflictIntroEl.innerHTML = `Condicions inicials: (\\(v_0 = ${v0.toFixed(2)}\\text{ m/s},\\ \\alpha = ${alphaDeg.toFixed(1)}^\\circ${y0Txt}\\)). <b>En aquest experiment de laboratori, el model de Galileu encerta l'abast amb gran precisió: ${xMaxIdeal.toFixed(2)} m previstos vs ${xExpMax.toFixed(2)} m mesurats (error sols del ${errVal.toFixed(1)}%).</b>`;
                 } else {
                     conflictIntroEl.innerHTML = `Condicions inicials: (\\(v_0 = ${v0.toFixed(2)}\\text{ m/s},\\ \\alpha = ${alphaDeg.toFixed(1)}^\\circ${y0Txt}\\)). <b>Aquí es produeix un desacord radical: el model ideal de Galileu preveu ${xMaxIdeal.toFixed(2)} m, però la mesura real amb Tracker s'atura als ${xExpMax.toFixed(2)} m (discrepància del ${errVal.toFixed(1)}%)!</b>`;
                 }
@@ -3737,7 +3755,7 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
                         titleCard.style.color = "var(--success)";
                     }
                     if (descEl) {
-                        descEl.innerHTML = `El model ideal de Galileu reprodueix fidelment la trajectòria real (${xMaxIdeal.toFixed(2)} m previstos vs ${xExpMax.toFixed(2)} m reals, diferència de només ${diffDist > 0 ? '+' : ''}${diffDist} m). <b>Proveu ara el «Volant de Bàdminton» per observar el contrast!</b>`;
+                        descEl.innerHTML = `El model ideal de Galileu reprodueix fidelment la trajectòria real (${xMaxIdeal.toFixed(2)} m previstos vs ${xExpMax.toFixed(2)} m reals, diferència de només ${diffDist > 0 ? '+' : ''}${diffDist} m).`;
                     }
                 } else if (errRel < 25.0) {
                     if (errCard) {
