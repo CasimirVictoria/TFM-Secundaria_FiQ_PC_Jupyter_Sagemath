@@ -1140,22 +1140,39 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
 </head>
 <body>
     <div class="container">
-        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-left: 4px solid #2563eb; border-radius: 8px; padding: 10px 16px; margin-bottom: 18px; font-size: 0.86rem; color: #1e40af; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-            <div>
-                <span style="font-weight: 700; background: #dbeafe; padding: 2px 8px; border-radius: 4px; margin-right: 8px;">🧪 PROTOTIP DIDÀCTIC EXPERIMENTAL</span>
-                <span>Recurs Educatiu Obert (REA) · SdA-1 per a Física de 1r de Batxillerat (LOMLOE) · TFM Universitat de València</span>
-            </div>
-            <div style="font-size: 0.82rem;">
-                <a href="../index.html" style="color: #2563eb; text-decoration: underline; font-weight: 600;">← Tornar a la Memòria del TFM</a>
-            </div>
-        </div>
-
         <header>
+            <!-- Fila 1: Títol principal i botó de retorn al TFM -->
             <div class="header-top-row">
                 <div>
-                    <h1>⚡ Modelització Computacional i Dinàmica de Newton</h1>
+                    <h1>⚡ Tir parabòlic</h1>
                 </div>
-                <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                <div>
+                    <a href="../index.html" style="color: #2563eb; text-decoration: none; font-weight: 600; font-size: 0.85rem; background: #eff6ff; border: 1px solid #bfdbfe; padding: 6px 14px; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease;">
+                        <span>←</span> Tornar a la Memòria del TFM
+                    </a>
+                </div>
+            </div>
+
+            <!-- Fila 2: 3 passos del stepper, Equip i Entorn de programació llest -->
+            <div class="header-nav-row" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+                <nav class="phase-stepper-nav" aria-label="Navegació per fases de la situació d'aprenentatge" style="margin: 0; flex: 1 1 auto; justify-content: flex-start;">
+                    <button class="step-btn active" id="step-btn-1" onclick="switchPhase(1)">
+                        <span class="step-num" id="step-num-1">1</span>
+                        <span class="step-label">Model ideal</span>
+                    </button>
+                    <div class="step-connector" id="step-conn-1"></div>
+                    <button class="step-btn" id="step-btn-2" onclick="switchPhase(2)">
+                        <span class="step-num" id="step-num-2">2</span>
+                        <span class="step-label">Contrast amb dades reals</span>
+                    </button>
+                    <div class="step-connector" id="step-conn-2"></div>
+                    <button class="step-btn" id="step-btn-3" onclick="switchPhase(3)">
+                        <span class="step-num" id="step-num-3">3</span>
+                        <span class="step-label">Model més realista</span>
+                    </button>
+                </nav>
+
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
                     <div class="team-selector-card" title="Identificador de l'equip per al registre de l'informe">
                         <span style="font-weight: 700; font-size: 0.82rem; color: #1e293b;">👥 Equip:</span>
                         <select id="team-number-select" class="team-select" onchange="onTeamSelectChange(this.value)">
@@ -1180,24 +1197,6 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
                     </div>
                 </div>
             </div>
-
-            <!-- NAVEGACIÓ PER FASES / STEPPER DIDÀCTIC INTEGRAT -->
-            <nav class="phase-stepper-nav" aria-label="Navegació per fases de la situació d'aprenentatge">
-                <button class="step-btn active" id="step-btn-1" onclick="switchPhase(1)">
-                    <span class="step-num" id="step-num-1">1</span>
-                    <span class="step-label">Model ideal</span>
-                </button>
-                <div class="step-connector" id="step-conn-1"></div>
-                <button class="step-btn" id="step-btn-2" onclick="switchPhase(2)">
-                    <span class="step-num" id="step-num-2">2</span>
-                    <span class="step-label">Contrast amb dades reals</span>
-                </button>
-                <div class="step-connector" id="step-conn-2"></div>
-                <button class="step-btn" id="step-btn-3" onclick="switchPhase(3)">
-                    <span class="step-num" id="step-num-3">3</span>
-                    <span class="step-label">Model més realista</span>
-                </button>
-            </nav>
         </header>
 
         <!-- ==================================================================== -->
@@ -1209,7 +1208,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
             </div>
             <div style="font-size: 0.93rem; color: #334155; margin-bottom: 16px; background: #f8fafc; border-left: 4px solid var(--primary); padding: 12px 18px; border-radius: 0 8px 8px 0; display: flex; flex-direction: column; gap: 8px;">
                 <div style="line-height: 1.5;">
-                    <b>Model dinàmic fonamental (2a Llei de Newton):</b>
+                    <b>Segona llei de Newton:</b>
                     <span style="color: #64748b; margin-left: 6px;">L'única força que actua sobre el projectil és el pes (\(\vec{F}_g = m\vec{g}\)):</span>
                 </div>
                 <div style="font-size: 1.12rem; font-weight: 600; color: var(--primary); text-align: center; padding: 4px 0;">
@@ -1304,7 +1303,10 @@ y_t = v_0 * sin(alpha) * t - 1/2 * g * t^2
 sol_t, = solve(x == x_t, t)
 
 # 3. Substituïm directament t en funció de x a y(t)
-y_trajectoria = y_t.subs(sol_t)</textarea>
+y_trajectoria = y_t.subs(sol_t)
+
+# 4. Grafiquem la trajectòria substituint paràmetres (x de 0 a 50 m)
+plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textarea>
                 </div>
 
                 <div class="theory-card">
@@ -1319,48 +1321,6 @@ y_trajectoria = y_t.subs(sol_t)</textarea>
                             Carregant model analític...
                         </div>
                         <div id="console-output" style="display:none;"></div>
-                    </div>
-
-                    <!-- NOTA DIDÀCTICA / MEMÒRIA TFM (Fase 1 - USE):
-                         Objectiu Pedagògic: Observeu el vincle directe: si el codi és correcte, es renderitza la fórmula analítica en LaTeX; si hi ha alguna errada, rebreu una pista formativa de depuració per a guiar l'equip.
-                    -->
-                    <div class="theory-step" id="card-plot-trajectoria" style="background:#ffffff; border:1px solid var(--border); border-radius:8px; padding:12px 14px; margin-top:12px; box-shadow:0 1px 3px rgba(0,0,0,0.05); transition:all 0.2s ease;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="togglePlotTrajectoria()">
-                            <div class="theory-step-num" style="margin-bottom:0; color:var(--primary-dark); font-weight:700; display:flex; align-items:center; gap:8px;">
-                                <span style="font-size:1.15rem;">📈</span> Dibuixem la gràfica de la trajectòria
-                            </div>
-                            <button class="btn-code-toggle" id="btn-toggle-plot-code" title="Mostra o amaga el codi per a graficar" style="pointer-events:none;">
-                                <span>💻</span> Codi
-                            </button>
-                        </div>
-                        
-                        <div id="plot-code-wrapper" style="margin-top:10px; display:none;">
-                            <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
-                                Funció SageMath per a representar la gràfica de l'equació obtinguda:
-                            </div>
-                            <div style="position:relative;">
-                                <textarea id="python-editor-plot" style="width:100%; height:46px; font-family:'Fira Code', 'Consolas', monospace; font-size:0.83rem; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; background:#f8fafc; color:#0f172a; resize:none; box-sizing:border-box;">plot(y_trajectoria.subs(v_0=10, alpha=pi/4, g=9.8), (x, 0, 10))</textarea>
-                            </div>
-                            <div style="display:flex; justify-content:flex-end; margin-top:8px;">
-                                <button class="btn-exec" id="btn-run-plot" onclick="executePlotCode()" style="padding:5px 14px; font-size:0.82rem;">
-                                    <span>▶</span> Executa el gràfic
-                                </button>
-                            </div>
-                        </div>
-
-                        <div id="plot-canvas-container" style="margin-top:12px; display:none;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                                <span style="font-size:0.8rem; font-weight:600; color:var(--text-muted);" id="plot-math-caption">
-                                    Gràfic de la trajectòria obtinguda
-                                </span>
-                                <span style="font-size:0.72rem; background:#e0f2fe; color:#0369a1; padding:2px 6px; border-radius:4px; font-weight:600;">
-                                    plot() SageMath
-                                </span>
-                            </div>
-                            <div style="height:210px; width:100%; position:relative;">
-                                <div id="canvas-static-plot" style="height:100%; width:100%;"></div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -3208,7 +3168,7 @@ for _k, _v in _sagemath_builtins.items():
 `);
 
                 statusDot.classList.add('ready');
-                statusText.innerText = "Entorn de programació Actiu i Llest";
+                statusText.innerText = "Entorn de programació llest";
                 const btnRun = document.getElementById('btn-run');
                 if (btnRun) btnRun.disabled = false;
 
@@ -3229,6 +3189,7 @@ for _k, _v in _sagemath_builtins.items():
         }
 
         let phase1RevisionToken = 0;
+        let customPlotDataP1 = null;
 
         async function executeUserCode() {
             if (!pyodideInstance) return;
@@ -3297,19 +3258,23 @@ if 'y_trajectoria' in globals():
                 }
 
                 phase1RevisionToken++;
-                updatePhase1Plot();
-                if (trackerData) {
-                    updatePhase2Plots();
-                }
-
                 try {
                     const plotCheckStr = pyodideInstance.runPython(`
 import json
 json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_data is not None else "null"
 `);
                     const pData = JSON.parse(plotCheckStr);
-                    if (pData) renderStaticPlot(pData);
-                } catch (e) {}
+                    if (pData && pData.points && pData.points.length > 0) {
+                        customPlotDataP1 = pData;
+                    }
+                } catch (e) {
+                    console.warn("Avís llegint plot data de Pyodide:", e);
+                }
+
+                updatePhase1Plot();
+                if (trackerData) {
+                    updatePhase2Plots();
+                }
             } catch (err) {
                 if (titleDiv) titleDiv.innerText = "🛠️ Assistència de Depuració (DUA)";
                 if (capSpan) capSpan.style.display = "none";
@@ -3551,14 +3516,23 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
             // Marc de referència estable i didàctic per a percebre clarament l'evolució de la paràbola en variar v0 i alpha
             const minY = ys.length ? Math.min(...ys, 0.0) : 0.0;
             const yBottom = minY < -1.0 ? Math.floor(minY * 1.1) : -1.0;
-            const xLimit = Math.max(60, Math.ceil((displayXMax + 5) / 20) * 20);
+            
+            // Si l'alumne ha especificat un rang custom a plot(..., (x, xmin, xmax)), respectem el seu xmax
+            let xLimit = Math.max(60, Math.ceil((displayXMax + 5) / 20) * 20);
+            let xMinLimit = -2;
+            if (customPlotDataP1 && customPlotDataP1.xmax !== undefined) {
+                xLimit = Math.max(customPlotDataP1.xmax * 1.05, 10);
+                if (customPlotDataP1.xmin !== undefined && customPlotDataP1.xmin < 0) {
+                    xMinLimit = customPlotDataP1.xmin * 1.05;
+                }
+            }
             const yLimit = Math.max(25, Math.ceil((displayYMax + 3) / 10) * 10);
             const layout = {
                 margin: { l: 50, r: 20, t: 20, b: 40 },
                 uirevision: 'phase1_axes',
                 xaxis: { 
                     title: '<b>x (m)</b>', 
-                    range: [-2, xLimit], 
+                    range: [xMinLimit, xLimit], 
                     autorange: false, 
                     gridcolor: '#f1f5f9',
                     zerolinecolor: '#cbd5e1'
