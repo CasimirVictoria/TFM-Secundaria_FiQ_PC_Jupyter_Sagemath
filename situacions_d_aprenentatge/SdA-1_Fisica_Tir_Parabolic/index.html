@@ -1441,35 +1441,35 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
 
             <!-- Contingut revelat NOMÉS després de carregar les dades de Tracker -->
             <div id="phase2-content" style="display: none; margin-top: 20px;">
-                <!-- 1. GRÀFICA 2: EL CONFLICTE PUR (Sense fricció, no interactiva) -->
+                <!-- 1. GRÀFICA 2: CONTRAST EMPÍRIC (Model ideal vs Dades de Tracker) -->
                 <div class="two-cols-layout">
                     <div class="controls-panel">
                         <div class="metric-cards">
                             <div class="metric-card">
                                 <div class="metric-title" id="lbl-xmax-ideal-2">Abast Previst Ideal</div>
-                                <div class="metric-value" id="res-xmax-ideal-2" style="color: var(--primary);">46.38 m</div>
+                                <div class="metric-value" id="res-xmax-ideal-2" style="color: var(--primary);">0.86 m</div>
                             </div>
                             <div class="metric-card">
                                 <div class="metric-title" id="lbl-xreal-2">Abast Mesurat Real</div>
-                                <div class="metric-value" id="res-xreal-2" style="color: var(--tracker);">23.93 m</div>
+                                <div class="metric-value" id="res-xreal-2" style="color: var(--tracker);">0.84 m</div>
                             </div>
                             <div class="metric-card" style="grid-column: span 2;">
-                                <div class="metric-title">Discrepància Inicial del Model Ideal</div>
-                                <div class="metric-value" id="res-error-2" style="color: var(--danger); font-size: 1.15rem;">93.8% (Error enorme!)</div>
+                                <div class="metric-title" id="lbl-error-title-2">Avaluació del Model Ideal</div>
+                                <div class="metric-value" id="res-error-2" style="color: var(--success); font-size: 1.15rem;">3.2% (Ajust excel·lent!)</div>
                             </div>
                         </div>
 
                         <div class="formula-box">
-                            <div style="font-weight: 600; margin-bottom: 2px; color: var(--danger);">⚠️ Discrepància Experimental Detectada:</div>
+                            <div style="font-weight: 600; margin-bottom: 2px;" id="conflict-discrepancy-title">🔍 Diagnòstic del Model de Galileu:</div>
                             <div style="font-size:0.82rem; color:#334155;" id="conflict-discrepancy-desc">
-                                El model de Galileu preveu un abast superior al mesurat a la realitat!
+                                Compareu el comportament entre la <b>Pilota de Cautxú</b> i el <b>Volant de Bàdminton</b> al selector superior!
                             </div>
                         </div>
                     </div>
 
                     <div>
                         <div style="font-weight:600; font-size:0.9rem; margin-bottom:6px; color:#1e293b; text-align:center;">
-                            Gràfica 2: El Conflicte Inicial (Model Ideal de Galileu vs Punts Reals de Tracker)
+                            Gràfica 2: Contrast Empíric (Model Ideal de Galileu vs Dades Reals de Tracker)
                         </div>
                         <div id="plot-phase-2-conflict" class="plot-box"></div>
                     </div>
@@ -1485,7 +1485,7 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                     </div>
 
                     <div id="debate-conflict-intro" style="font-size:0.92rem; line-height:1.5; margin: 6px 0 12px 0;">
-                        Amb les mateixes condicions inicials de llançament (\(v_0, \alpha, y_0\)), <b>la fórmula ideal de Galileu preveu un abast superior al de la trajectòria real mesurada amb Tracker!</b>
+                        Observeu la diferència segons el mòbil: <b>amb la pilota de cautxú de laboratori l'ajust és gairebé perfecte (error del ~3%), mentre que amb el volant de bàdminton la paràbola ideal preveu 29 m i el volant cau als 4,5 m (error > 500%)!</b>
                     </div>
 
                     <div style="background:#fef2f2; border:1px dashed #f87171; border-radius:8px; padding:8px 12px; font-size:0.84rem; color:#991b1b; font-weight:600; margin-bottom:12px;">
@@ -1495,10 +1495,10 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                     <!-- PREGUNTA 1 -->
                     <div class="debate-step-card" id="debate-card-1">
                         <div class="debate-step-header">
-                            <span>❓ Pregunta 1:</span> Falla la ciència? No se suposa que la física és la millor eina que tenim per descriure la realitat? Com s'explica aquest abisme entre la fórmula ideal i la mesura experimental real?
+                            <span>❓ Pregunta 1:</span> Falla la ciència? Si proveu la pilota de cautxú de laboratori, el model de Galileu encerta gairebé al mil·límetre (error &lt; 4%). En canvi, amb el volant de bàdminton preveu quasi 30 m i a penes arriba a 4,5 m! Com s'explica que la mateixa llei física funcione tan bé en un cas i fracasse estrepitosament en l'altre?
                         </div>
                         <div id="debate-input-container-1">
-                            <textarea id="debate-ans-1" class="debate-textarea" placeholder="Debateu en equip: Per què una llei científica vàlida no encerta el llançament real?"></textarea>
+                            <textarea id="debate-ans-1" class="debate-textarea" placeholder="Debateu en equip: Per què una llei científica vàlida funciona perfectament en un experiment de laboratori i no encerta en absolut el tir del bàdminton?"></textarea>
                             <button class="btn-debate-send" onclick="submitDebateAnswer(1)">
                                 <span>📤</span> Enviar Resposta a la Pregunta 1
                             </button>
@@ -1510,13 +1510,13 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                     <div class="debate-step-card" id="debate-card-2" style="display:none;">
                         <div style="background:#eff6ff; border-left:4px solid #3b82f6; padding:10px 14px; border-radius:0 8px 8px 0; margin-bottom:12px; font-size:0.86rem; color:#1e3a8a; line-height:1.5;">
                             💡 <b>Reflexió Epistemològica Docent:</b><br>
-                            <i>La ciència no falla!</i> El que passa és que la ciència no descriu la realitat de forma màgica o absoluta, sinó mitjançant <b>models teòrics basats en hipòtesis simplificadores</b>. Si les condicions del món real no coincideixen amb les hipòtesis de partida, el model predictiu es desvia.
+                            <i>La ciència no divideix els models entre «vertaders» o «falsos» de manera absoluta!</i> Tot model físic es construeix sobre <b>hipòtesis simplificadores</b> i té un <b>domini de validesa limitat</b>. Quan les condicions reals s'allunyen de les hipòtesis de partida, el model comença a desviar-se.
                         </div>
                         <div class="debate-step-header">
-                            <span>❓ Pregunta 2:</span> Quina hipòtesi simplificadora fonamental hem assumit en el model de Galileu que no es compleix a l'atmosfera de la Terra?
+                            <span>❓ Pregunta 2:</span> Quines propietats del mòbil (massa, mida, forma geomètrica) o del moviment (velocitat) fan que la hipòtesi de «menysprear el fregament de l'aire» siga vàlida per a la pilota de laboratori però completament inacceptable per al volant de bàdminton?
                         </div>
                         <div id="debate-input-container-2">
-                            <textarea id="debate-ans-2" class="debate-textarea" placeholder="Què hem ignorat a les equacions de la Fase 1 que sí que està present a l'atmosfera de la Terra?"></textarea>
+                            <textarea id="debate-ans-2" class="debate-textarea" placeholder="Analitzeu les diferències físiques entre la pilota de cautxú i el volant: quins factors fan que l'aire siga decisiu en un cas i negligible en l'altre?"></textarea>
                             <button class="btn-debate-send" onclick="submitDebateAnswer(2)">
                                 <span>📤</span> Enviar Resposta a la Pregunta 2
                             </button>
@@ -1527,12 +1527,11 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                     <!-- PREGUNTA 3 (Oculta d'inici) -->
                     <div class="debate-step-card" id="debate-card-3" style="display:none;">
                         <div style="background:#f0fdf4; border-left:4px solid #16a34a; padding:12px 14px; border-radius:0 8px 8px 0; margin-bottom:12px; font-size:0.86rem; color:#14532d; line-height:1.55;">
-                            🪐 <b>El Triomf de Newton al Buit de l'Espai vs l'Atmosfera Terrestre:</b><br>
-                            Les equacions pures de Newton i Galileu (sense fregament) <b>són increïblement exactes quan hi ha buit!</b> Descriuen amb una precisió mil·limètrica (error &lt; 0.001%) l'òrbita de la Lluna al voltant de la Terra, la trajectòria dels planetes al voltant del Sol o les sondes enviades a Mart. A més, a la Lluna, una ploma i un martell cauen alhora (missió Apol·lo 15, 1971).<br>
-                            <b>La diferència fonamental:</b> A la Terra vivim submergits en un «oceà d'aire» dens (\(\rho_{\text{aire}} \approx 1.2\text{ kg/m}^3\)), de manera que el fregament frena dràsticament la pilota.
+                            🪐 <b>El Domini de Validesa del Model Ideal vs l'Atmosfera Terrestre:</b><br>
+                            Les equacions pures de Galileu i Newton (sense fregament) <b>són exactes al buit!</b> Descriuen amb màxima precisió (error &lt; 0.001%) l'òrbita dels satèl·lits o la caiguda simultània d'una ploma i un martell a la Lluna (Apol·lo 15, 1971). A la Terra, per a cossos densos i lents (com la pilota de cautxú), el fregament representa una fracció mínima de la força total; però per a mòbils lleugers i ràpids (com el volant de bàdminton), la resistència de l'aire supera fins i tot el propi pes del cos!
                         </div>
                         <div class="debate-step-header">
-                            <span>❓ Pregunta 3:</span> Com introduiríeu matemàticament el fregament de l'aire per escriure correctament l'equació de Newton a la Terra?
+                            <span>❓ Pregunta 3:</span> Com hauríem de modificar la Segona Llei de Newton (\(\sum \vec{F} = m\vec{a}\)) per a mòbils com el volant de bàdminton on el fregament és decisiu? De quines variables hauria de dependre aquesta força de resistència \(\vec{F}_{\text{freg}}\)?
                         </div>
 
                         <button type="button" class="btn-debate-hint" id="btn-hint-3" onclick="toggleDebateHint(3)">
@@ -1941,33 +1940,33 @@ Estat Codi: Executat correctament`;
 
                 fullReport = `=====================================================
 SdA FÍSICA 1r BATXILLERAT · INFORME DE LABORATORI
-FASE 2: CONTRAST EXPERIMENTAL I CONFLICTE COGNITIU
+FASE 2: CONTRAST EXPERIMENTAL I DOMINI DE VALIDESA
 =====================================================
 EQUIP DE TREBALL: ${team}
 DATA I HORA: ${now}
 
 1. EXPERIMENT I VÍDEO-ANÀLISI (Physics Tracker):
 - Conjunt experimental analitzat: ${dsName}
-- Conflicte detectat: Les dades reals queden per davall de la paràbola de Galileu i vx decau en el temps.
+- Contrast empíric: S'evidencia la diferència entre mòbils on el model ideal de Galileu és aplicable (laboratori, baix fregament) i mòbils amb gran desviació (bàdminton, aerodinàmica decisiva).
 
 2. CONCLUSIONS DEL DEBAT COOPERATIU DE L'EQUIP:
-[Pregunta 1 · Direcció i sentit de la força]:
+[Pregunta 1 · Diferència de comportament entre mòbils i validesa del model]:
 «${ans1}»
 
-[Pregunta 2 · Dependència amb la velocitat]:
+[Pregunta 2 · Propietats del mòbil i límits de la hipòtesi sense fregament]:
 «${ans2}»
 
-[Pregunta 3 · Proposta de nova Segona Llei de Newton]:
+[Pregunta 3 · Proposta d'ampliació de la Segona Llei de Newton]:
 «${ans3}»
 =====================================================`;
 
                 compactQr = `[SdA FiQ · FASE 2] ${team}
 Data: ${now}
 Dataset: ${currentDatasetKey || "Tracker"}
-Conflicte: Trajectoria real < Parabola ideal
-P1 (Sentit): ${ans1.substring(0, 60)}
-P2 (Velocitat): ${ans2.substring(0, 60)}
-P3 (Fregament): ${ans3.substring(0, 60)}`;
+Contrast: Valid laboratori vs desviacio badminton
+P1 (Validesa): ${ans1.substring(0, 60)}
+P2 (Propietats): ${ans2.substring(0, 60)}
+P3 (Nova Llei): ${ans3.substring(0, 60)}`;
 
             } else if (phaseNum === 3) {
                 const kVal = document.getElementById('slider-drag-3') ? document.getElementById('slider-drag-3').value : "0.040";
@@ -3697,7 +3696,12 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
             if (conflictIntroEl && trackerData && trackerData.x.length > 0) {
                 const xExpMax = trackerData.x[trackerData.x.length - 1];
                 const y0Txt = y0 > 0 ? `, y_0 = ${y0.toFixed(2)}\\text{ m}` : '';
-                conflictIntroEl.innerHTML = `Amb les mateixes condicions inicials (\\(v_0 = ${v0.toFixed(2)}\\text{ m/s},\\ \\alpha = ${alphaDeg.toFixed(1)}^\\circ${y0Txt}\\)), <b>el model ideal de Galileu preveu un abast de ${xMaxIdeal.toFixed(2)} m, però la mesura real amb Tracker s'atura als ${xExpMax.toFixed(2)} m!</b>`;
+                const errVal = Math.abs((xMaxIdeal - xExpMax) / xExpMax) * 100;
+                if (errVal < 6.0) {
+                    conflictIntroEl.innerHTML = `Condicions inicials: (\\(v_0 = ${v0.toFixed(2)}\\text{ m/s},\\ \\alpha = ${alphaDeg.toFixed(1)}^\\circ${y0Txt}\\)). <b>En aquest experiment de laboratori, el model de Galileu encerta l'abast amb gran precisió: ${xMaxIdeal.toFixed(2)} m previstos vs ${xExpMax.toFixed(2)} m mesurats (error sols del ${errVal.toFixed(1)}%).</b> Compareu-lo amb el Volant de Bàdminton per veure quan deixa de funcionar!`;
+                } else {
+                    conflictIntroEl.innerHTML = `Condicions inicials: (\\(v_0 = ${v0.toFixed(2)}\\text{ m/s},\\ \\alpha = ${alphaDeg.toFixed(1)}^\\circ${y0Txt}\\)). <b>Aquí es produeix un desacord radical: el model ideal de Galileu preveu ${xMaxIdeal.toFixed(2)} m, però la mesura real amb Tracker s'atura als ${xExpMax.toFixed(2)} m (discrepància del ${errVal.toFixed(1)}%)!</b>`;
+                }
                 if (window.MathJax && MathJax.typesetPromise) {
                     MathJax.typesetPromise([conflictIntroEl]);
                 }
@@ -3717,12 +3721,47 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
                 const xExpMax = trackerData.x[trackerData.x.length - 1];
                 document.getElementById('res-xreal-2').innerText = xExpMax.toFixed(2) + " m";
                 const errRel = Math.abs((xMaxIdeal - xExpMax) / xExpMax) * 100;
-                document.getElementById('res-error-2').innerText = `${errRel.toFixed(1)}% (Discrepància!)`;
-
+                const errCard = document.getElementById('res-error-2');
+                const titleCard = document.getElementById('conflict-discrepancy-title');
                 const descEl = document.getElementById('conflict-discrepancy-desc');
-                if (descEl) {
-                    const diffDist = (xMaxIdeal - xExpMax).toFixed(2);
-                    descEl.innerHTML = `El model de Galileu preveu un abast de <b>${xMaxIdeal.toFixed(2)} m</b> (${diffDist > 0 ? '+' : ''}${diffDist} m respecte a la realitat mesurada)!`;
+                const diffDist = (xMaxIdeal - xExpMax).toFixed(2);
+
+                if (errRel < 6.0) {
+                    if (errCard) {
+                        errCard.innerText = `${errRel.toFixed(1)}% (Ajust excel·lent!)`;
+                        errCard.style.color = "var(--success)";
+                    }
+                    if (titleCard) {
+                        titleCard.innerText = "✅ Ajust Experimental Excel·lent (Laboratori):";
+                        titleCard.style.color = "var(--success)";
+                    }
+                    if (descEl) {
+                        descEl.innerHTML = `El model ideal de Galileu reprodueix fidelment la trajectòria real (${xMaxIdeal.toFixed(2)} m previstos vs ${xExpMax.toFixed(2)} m reals, diferència de només ${diffDist > 0 ? '+' : ''}${diffDist} m). <b>Proveu ara el «Volant de Bàdminton» per observar el contrast!</b>`;
+                    }
+                } else if (errRel < 25.0) {
+                    if (errCard) {
+                        errCard.innerText = `${errRel.toFixed(1)}% (Desviació moderada)`;
+                        errCard.style.color = "#d97706";
+                    }
+                    if (titleCard) {
+                        titleCard.innerText = "⚠️ Desviació Observable per Resistència de l'Aire:";
+                        titleCard.style.color = "#d97706";
+                    }
+                    if (descEl) {
+                        descEl.innerHTML = `La pilota s'escurça lleugerament (${diffDist > 0 ? '+' : ''}${diffDist} m respecte al model ideal). L'aire comença a frenar la trajectòria.`;
+                    }
+                } else {
+                    if (errCard) {
+                        errCard.innerText = `${errRel.toFixed(1)}% (Col·lapse del model ideal!)`;
+                        errCard.style.color = "var(--danger)";
+                    }
+                    if (titleCard) {
+                        titleCard.innerText = "🚨 Col·lapse del Model de Galileu:";
+                        titleCard.style.color = "var(--danger)";
+                    }
+                    if (descEl) {
+                        descEl.innerHTML = `El model ideal sobreestima l'abast en <b>${diffDist} metres</b>! En cossos amb gran aerodinàmica i velocitat alta, ignorar l'aire fa el model inviable.`;
+                    }
                 }
 
                 tracesConflict.push({
