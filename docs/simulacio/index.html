@@ -1651,7 +1651,7 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                 </div>
 
                 <div style="background:#fffbeb; border:1px solid #fef3c7; border-left:4px solid #f59e0b; border-radius:6px; padding:10px 14px; font-size:0.82rem; color:#92400e; line-height:1.45;">
-                    <b>💡 Com superem la barrera matemàtica amb SageMath:</b> A 1r de Batxillerat encara no s'ha aprés a integrar a mà a Matemàtiques (és un contingut de 2n de Batxillerat). No obstant això, conceptualment en física, <i>integrar</i> només significa <b>acumular canvis al llarg del temps</b> (la clàssica àrea sota la corba d'un gràfic). És justament ací on <b>SageMath actua com a bastida cognitiva</b>: l'ordinador assumeix la càrrega tècnica d'acumulació (\(a_x \xrightarrow{\int} v_x(t) \xrightarrow{\int} x(t)\)) i ens proporciona la nova trajectòria paramètrica \(\vec{r}(t)\) sense que la manca d'eines de càlcul manual siga un obstacle!
+                    <b>💡 Identitat formal amb el MRUA que ja coneixen (\(\frac{1}{2} a_x t^2\)):</b> En considerar \(a_x = -k_{\text{drag}} \cdot v_{0x}\) constant, el moviment horitzontal esdevé un senzill MRUA: \(x(t) = v_{0x} t + \frac{1}{2} a_x t^2 = v_{0x} t - \frac{1}{2} (k_{\text{drag}} v_{0x}) t^2\). El terme és <b>formalment idèntic</b> al terme vertical \(+\frac{1}{2} a_y t^2 = -\frac{1}{2} g t^2\) que l'alumnat ja utilitza des de 4t d'ESO! Encara que a 1r de Batxillerat no saben integrar a mà, <b>SageMath actua com a bastida cognitiva</b>: l'ordinador fa l'acumulació (\(a_x \xrightarrow{\int} v_x(t) \xrightarrow{\int} x(t)\)) i fa visible a l'estudiant d'on sorgeix el factor \(\frac{1}{2}\) que sempre havien memoritzat dogmàticament.
                 </div>
             </div>
 
@@ -1728,7 +1728,7 @@ print(f"5) Vector paramètric r(t):       r(t) = (x(t), y(t))")</textarea>
                         <div class="theory-step" style="background:#f1f5f9;">
                             <div class="theory-step-num" style="color:#475569;">💡 Objectiu Pedagògic (Fase 3 - CREATE / Refinament)</div>
                             <span style="font-size:0.82rem; color:#334155; line-height:1.4;">
-                                Partim de la <b>Segona Llei de Newton</b>: introduïm una força de frenada horitzontal (\(F_x = -k \cdot v_x \implies a_x &lt; 0\)). Mitjançant dues integrals successives com a <b>bastida computacional en SageMath</b> (\(a_x \xrightarrow{\int} v_x(t) \xrightarrow{\int} x(t)\)), obtenim el vector de posició paramètric \(\vec{r}(t) = (x(t), y(t))\) que models com GeoGebra, Tracker o SageMath empren per traçar la trajectòria amb resistència de l'aire d'una manera neta i elegant.
+                                Partim de la <b>Segona Llei de Newton</b>: introduïm una força de frenada horitzontal (\(F_x = -m \cdot k_{\text{drag}} \cdot v_{0x} \implies a_x = -k_{\text{drag}} \cdot v_{0x}\)). Com que \(a_x\) és constant, el moviment horitzontal té exactament la mateixa estructura formal del MRUA conegut (\(x(t) = v_{0x} t + \frac{1}{2} a_x t^2\)). Mitjançant dues integrals successives amb <b>SageMath com a bastida computacional</b> (\(a_x \xrightarrow{\int} v_x(t) \xrightarrow{\int} x(t)\)), l'alumnat obté el vector paramètric \(\vec{r}(t) = (x(t), y(t))\) i descobreix d'on brolla formalment el factor \(\frac{1}{2}\) sense dependre de la memorització mecànica.
                             </span>
                         </div>
                     </div>
