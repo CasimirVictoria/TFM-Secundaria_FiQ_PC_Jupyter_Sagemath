@@ -1689,14 +1689,16 @@ a_x = -k_drag * v_0x
 # 4. PRIMERA INTEGRAL: Acceleració -> Velocitat horitzontal v_x(t)
 # Com que a_x = dv_x/dt, deduïm v_x(t) integrant l'acceleració:
 v_x = v_0x + integral(a_x, tau, 0, t)
+v_y = v_0y - integral(g, tau, 0, t)
 
 # 5. SEGONA INTEGRAL: Velocitat -> Posició horitzontal x(t)
 # Com que v_x = dx/dt, deduïm x(t) integrant la velocitat:
 v_x_tau = v_x.subs(t, tau)
 x_t = integral(v_x_tau, tau, 0, t)
 
-# 6. Moviment vertical sota la gravetat (MRUA clàssic):
-y_t = v_0y * t - (1/2) * g * t^2
+# 6. Moviment vertical sota la gravetat (recuperem el y(t) "memoritzat"):
+v_y_tau = v_y.subs(t, tau)
+y_t = integral(v_y_tau, tau, 0, t)
 
 # 7. Trajectòria paramètrica r(t) = (x(t), y(t)):
 # En física computacional (Tracker, GeoGebra, SageMath), no cal aïllar t!
@@ -1705,10 +1707,11 @@ r_t = (x_t, y_t)
 
 print("✅ Model dinàmic de Newton deduït amb èxit!")
 print(f"1) Acceleració a_x:              {a_x}")
-print(f"2) Velocitat v_x(t) (1a integ.): {v_x}")
-print(f"3) Posició horitzontal x(t):     {x_t}")
-print(f"4) Posició vertical y(t):        {y_t}")
-print(f"5) Vector paramètric r(t):       r(t) = (x(t), y(t))")</textarea>
+print(f"2) Velocitat horitzontal v_x(t): {v_x}")
+print(f"3) Velocitat vertical v_y(t):   {v_y}")
+print(f"4) Posició horitzontal x(t):     {x_t}")
+print(f"5) Posició vertical y(t):        {y_t}  <-- Recuperem el y(t) memoritzat!")
+print(f"6) Vector paramètric r(t):       r(t) = (x(t), y(t))")</textarea>
                     </div>
 
                     <div class="theory-card">
@@ -2859,6 +2862,9 @@ if 'a_x' in globals():
 if 'v_x' in globals():
     _vx_val = globals()['v_x']
     _export_dict['latex_vx'] = sp.latex(_vx_val.rhs if hasattr(_vx_val, 'rhs') else _vx_val)
+if 'v_y' in globals():
+    _vy_val = globals()['v_y']
+    _export_dict['latex_vy'] = sp.latex(_vy_val.rhs if hasattr(_vy_val, 'rhs') else _vy_val)
 if 'x_t' in globals():
     _xt_val = globals()['x_t']
     _export_dict['latex_xt'] = sp.latex(_xt_val.rhs if hasattr(_xt_val, 'rhs') else _xt_val)
@@ -2882,6 +2888,7 @@ json.dumps(_export_dict)
 
                 const axFromPy = latexDict['latex_ax'] || '- k_{drag} v_{0} \\cos(\\alpha)';
                 const vxFromPy = latexDict['latex_vx'] || 'v_{0}\\cos(\\alpha) - k_{drag} v_{0}\\cos(\\alpha) t';
+                const vyFromPy = latexDict['latex_vy'] || 'v_{0}\\sin(\\alpha) - g t';
                 const xtFromPy = latexDict['latex_xt'] || 'v_{0}\\cos(\\alpha) t - \\frac{1}{2} k_{drag} v_{0}\\cos(\\alpha) t^2';
                 const ytFromPy = latexDict['latex_yt'] || 'v_{0}\\sin(\\alpha) t - \\frac{1}{2} g t^2';
 
@@ -2900,10 +2907,13 @@ json.dumps(_export_dict)
                                 <b>1. 2a Llei de Newton en l'eix X (Frenada):</b>\\[ a_x = \\frac{F_{\\text{freg}, x}}{m} = ${axFromPy} \\]
                             </div>
                             <div style="margin-bottom:8px;">
-                                <b>2. 1a Integral (Acceleració \\(\\to\\) Velocitat \\(v_x(t)\\)):</b>\\[ v_x(t) = v_{0x} + \\int_0^t a_x \\, d\\tau = ${vxFromPy} \\]
+                                <b>2. 1a Integral (Acceleracions \\(\\to\\) Velocitats \\(v_x(t)\\) i \\(v_y(t)\\)):</b>\\[ \\begin{cases} v_x(t) = v_{0x} + \\int_0^t a_x \\, d\\tau = ${vxFromPy} \\\\[6pt] v_y(t) = v_{0y} - \\int_0^t g \\, d\\tau = ${vyFromPy} \\end{cases} \\]
                             </div>
                             <div style="margin-bottom:8px;">
-                                <b>3. 2a Integral (Velocitat \\(\\to\\) Posició horitzontal \\(x(t)\\)):</b>\\[ x(t) = \\int_0^t v_x(\\tau) \\, d\\tau = ${xtFromPy} \\]
+                                <b>3. 2a Integral (Velocitats \\(\\to\\) Posicions \\(x(t)\\) i \\(y(t)\\)):</b>\\[ \\begin{cases} x(t) = \\int_0^t v_x(\\tau) \\, d\\tau = ${xtFromPy} \\\\[6pt] y(t) = \\int_0^t v_y(\\tau) \\, d\\tau = ${ytFromPy} \\end{cases} \\]
+                                <div style="font-size:0.8rem; color:#15803d; margin-top:4px; font-weight:600;">
+                                    ✨ Fixeu-vos com recuperem en \\(y(t)\\) exactament l'equació del MRUA vertical "memoritzada" des de 4t d'ESO (\\(v_{0y} t - \\frac{1}{2} g t^2\\))!
+                                </div>
                             </div>
                             <div>
                                 <b>4. Trajectòria en forma paramètrica \\(\\vec{r}(t) = (x(t), y(t))\\):</b>\\[ \\vec{r}(t) = \\begin{pmatrix} x(t) \\\\[4pt] y(t) \\end{pmatrix} = \\begin{pmatrix} ${xtFromPy} \\\\[6pt] ${ytFromPy} \\end{pmatrix} \\]
