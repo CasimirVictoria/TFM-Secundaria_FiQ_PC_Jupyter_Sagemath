@@ -67,14 +67,19 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
         }
 
         header {
-            margin-bottom: 24px;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 0px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .header-top-row {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 16px;
         }
 
         .badge-header {
@@ -801,24 +806,18 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
             margin-top: 10px;
         }
 
-        /* ==================================================================== */
-        /* NAVEGACIÓ PER FASES / STEPPER DIDÀCTIC (MODALITAT DIAPOSITIVA)       */
-        /* ==================================================================== */
         .phase-stepper-nav {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #ffffff;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 8px 18px;
-            margin-bottom: 22px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 6px 14px;
+            margin-top: 4px;
+            margin-bottom: 0px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
             gap: 12px;
-            position: sticky;
-            top: 10px;
-            z-index: 100;
-            backdrop-filter: blur(8px);
         }
 
         .step-btn {
@@ -1152,55 +1151,55 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
         </div>
 
         <header>
-            <div>
-                <span class="badge-header">Seqüència Didàctica 3 Fases • 100% WebAssembly (GitHub Pages)</span>
-                <h1>⚡ Modelització Computacional i Dinàmica de Newton</h1>
-            </div>
-            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-                <div class="team-selector-card" title="Identificador de l'equip per al registre de l'informe">
-                    <span style="font-weight: 700; font-size: 0.82rem; color: #1e293b;">👥 Equip:</span>
-                    <select id="team-number-select" class="team-select" onchange="onTeamSelectChange(this.value)">
-                        <option value="">-- Tria Equip --</option>
-                        <option value="Equip 1">Equip 1</option>
-                        <option value="Equip 2">Equip 2</option>
-                        <option value="Equip 3">Equip 3</option>
-                        <option value="Equip 4">Equip 4</option>
-                        <option value="Equip 5">Equip 5</option>
-                        <option value="Equip 6">Equip 6</option>
-                        <option value="Equip 7">Equip 7</option>
-                        <option value="Equip 8">Equip 8</option>
-                        <option value="Equip 9">Equip 9</option>
-                        <option value="Equip 10">Equip 10</option>
-                        <option value="Equip 11">Equip 11</option>
-                        <option value="Equip 12">Equip 12</option>
-                    </select>
+            <div class="header-top-row">
+                <div>
+                    <span class="badge-header">Seqüència Didàctica 3 Fases • 100% WebAssembly (GitHub Pages)</span>
+                    <h1>⚡ Modelització Computacional i Dinàmica de Newton</h1>
                 </div>
-                <div class="wasm-status-card" id="wasm-status">
-                    <span class="status-dot" id="status-dot"></span>
-                    <span id="status-text">Carregant entorn de programació...</span>
+                <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                    <div class="team-selector-card" title="Identificador de l'equip per al registre de l'informe">
+                        <span style="font-weight: 700; font-size: 0.82rem; color: #1e293b;">👥 Equip:</span>
+                        <select id="team-number-select" class="team-select" onchange="onTeamSelectChange(this.value)">
+                            <option value="">-- Tria Equip --</option>
+                            <option value="Equip 1">Equip 1</option>
+                            <option value="Equip 2">Equip 2</option>
+                            <option value="Equip 3">Equip 3</option>
+                            <option value="Equip 4">Equip 4</option>
+                            <option value="Equip 5">Equip 5</option>
+                            <option value="Equip 6">Equip 6</option>
+                            <option value="Equip 7">Equip 7</option>
+                            <option value="Equip 8">Equip 8</option>
+                            <option value="Equip 9">Equip 9</option>
+                            <option value="Equip 10">Equip 10</option>
+                            <option value="Equip 11">Equip 11</option>
+                            <option value="Equip 12">Equip 12</option>
+                        </select>
+                    </div>
+                    <div class="wasm-status-card" id="wasm-status">
+                        <span class="status-dot" id="status-dot"></span>
+                        <span id="status-text">Carregant entorn de programació...</span>
+                    </div>
                 </div>
             </div>
-        </header>
 
-        <!-- ==================================================================== -->
-        <!-- NAVEGACIÓ PER FASES / STEPPER DIDÀCTIC (MODALITAT DIAPOSITIVA)       -->
-        <!-- ==================================================================== -->
-        <nav class="phase-stepper-nav" aria-label="Navegació per fases de la situació d'aprenentatge">
-            <button class="step-btn active" id="step-btn-1" onclick="switchPhase(1)">
-                <span class="step-num" id="step-num-1">1</span>
-                <span class="step-label">Model ideal</span>
-            </button>
-            <div class="step-connector" id="step-conn-1"></div>
-            <button class="step-btn" id="step-btn-2" onclick="switchPhase(2)">
-                <span class="step-num" id="step-num-2">2</span>
-                <span class="step-label">Contrast amb dades reals</span>
-            </button>
-            <div class="step-connector" id="step-conn-2"></div>
-            <button class="step-btn" id="step-btn-3" onclick="switchPhase(3)">
-                <span class="step-num" id="step-num-3">3</span>
-                <span class="step-label">Model més realista</span>
-            </button>
-        </nav>
+            <!-- NAVEGACIÓ PER FASES / STEPPER DIDÀCTIC INTEGRAT -->
+            <nav class="phase-stepper-nav" aria-label="Navegació per fases de la situació d'aprenentatge">
+                <button class="step-btn active" id="step-btn-1" onclick="switchPhase(1)">
+                    <span class="step-num" id="step-num-1">1</span>
+                    <span class="step-label">Model ideal</span>
+                </button>
+                <div class="step-connector" id="step-conn-1"></div>
+                <button class="step-btn" id="step-btn-2" onclick="switchPhase(2)">
+                    <span class="step-num" id="step-num-2">2</span>
+                    <span class="step-label">Contrast amb dades reals</span>
+                </button>
+                <div class="step-connector" id="step-conn-2"></div>
+                <button class="step-btn" id="step-btn-3" onclick="switchPhase(3)">
+                    <span class="step-num" id="step-num-3">3</span>
+                    <span class="step-label">Model més realista</span>
+                </button>
+            </nav>
+        </header>
 
         <!-- ==================================================================== -->
         <!-- FASE 1: DEDUCCIÓ SIMBÒLICA I EXPLORACIÓ TEÒRICA                       -->
