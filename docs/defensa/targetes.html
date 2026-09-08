@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Targetes de Defensa · TFM Casimiro Victoria</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --accent: #38bdf8;
+            --accent-green: #4ade80;
+            --accent-amber: #fbbf24;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 16px;
+            padding-bottom: 90px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--card-border);
+        }
+        h1 {
+            font-size: 1.25rem;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .meta-summary {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 8px;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        /* Targeta */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            display: none; /* Controlat per navegació */
+            animation: fadeIn 0.2s ease-in-out;
+        }
+        .card.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .card-num {
+            background: var(--accent);
+            color: #0f172a;
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 3px 9px;
+            border-radius: 20px;
+        }
+        .card-time {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-amber);
+            background: rgba(251, 191, 36, 0.1);
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        .card-cue {
+            background: rgba(56, 189, 248, 0.1);
+            border-left: 3px solid var(--accent);
+            padding: 8px 10px;
+            border-radius: 0 6px 6px 0;
+            margin-bottom: 14px;
+            font-size: 0.8rem;
+            color: #bae6fd;
+        }
+        .card-cue strong {
+            color: #ffffff;
+        }
+        .card-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+            font-weight: 400;
+        }
+        .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Barra de navegació inferior fixa */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #090d16;
+            border-top: 1px solid var(--card-border);
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+            z-index: 100;
+        }
+        .nav-btn {
+            background: var(--card-bg);
+            color: var(--text);
+            border: 1px solid var(--card-border);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-btn:active {
+            background: var(--card-border);
+        }
+        .nav-indicator {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .playbook-card {
+            background: #1a2333;
+            border: 1px dashed var(--accent-amber);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🎯 Targetes de Defensa TFM</h1>
+    <div class="subtitle">Casimiro Victoria Castillo · UV 2026</div>
+    <div class="meta-summary">
+        <span>⏱️ Total: 10 minuts</span>
+        <span>📑 12 Diapositives</span>
+        <span>🛡️ Blindat EDR</span>
+    </div>
+</header>
+
+<!-- TARGETA 1 -->
+<div class="card active" id="card-1">
+    <div class="card-header">
+        <span class="card-num">DIAPO 1</span>
+        <span class="card-time">⏱️ 0:00 - 0:25 (25 s)</span>
+    </div>
+    <div class="card-title">Portada: Abast i Marc Metodològic</div>
+    <div class="card-cue">
+        <strong>Pista visual:</strong> Títol gran, subratlla "Proposta d'Innovació Didàctica"
+    </div>
+    <div class="card-text">
+        "Bona vesprada. Abans de res, vull situar l'abast metodològic d'aquest treball: és una <span class="highlight">Proposta d'Innovació Didàctica</span> concebuda des del marc de la <span class="highlight">Investigació Basada en el Disseny Educatiu (EDR)</span>. El TFM culmina la seua <span class="highlight">Fase 1</span> —anàlisi del problema, disseny instruccional i desenvolupament de prototips d'aula—, i les preguntes sobre càrrega cognitiva i motivació queden formulades com a <span class="highlight">hipòtesis de disseny</span> per a la futura implementació empírica als centres. Partint d'aquesta delimitació, vegem el diagnòstic del problema…"
+    </div>
+</div>
+
+<!-- TARGETA 2 -->
+<div class="card" id="card-2">
+    <div class="card-header">
+        <span class="card-num">DIAPO 2</span>
+        <span class="card-time">⏱️ 0:25 - 1:05 (40 s)</span>
+    </div>
+    <div class="card-title">1. Context i Diagnòstic del Problema</div>
+    <div class="card-cue">
+        <strong>Pista visual:</strong> Desafecció STEM, fórmules de memòria, Pràcticum
+    </div>
+    <div class="card-text">
+        "Es parteix d'un diagnòstic àmpliament contrastat per la recerca en didàctica de les ciències, especialment pels treballs del departament de la nostra universitat: la <span class="highlight">desafecció progressiva cap a la Física</span> i les carreres STEM.<br><br>
+        L'alumnat de Secundària i Batxillerat manifesta sovint que la Física es redueix a un <span class="highlight">exercici repetitiu de llapis i paper</span>: aplicar fórmules apreses de memòria i aïllar incògnites algebraiques sense entendre el comportament de la natura. Això mateix <span class="highlight">vaig poder constatar directament</span> durant l'estada de Pràcticum a les aules de Batxillerat."
+    </div>
+</div>
+
+<!-- TARGETA 3 -->
+<div class="card" id="card-3">
+    <div class="card-header">
+        <span class="card-num">DIAPO 3</span>
+        <span class="card-time">⏱️ 1:05 - 1:45 (40 s)</span>
+    </div>
+    <div class="card-title">2. De la Caixa Negra a la Caixa Blanca</div>
+    <div class="card-cue">
+        <strong>Pista visual:</strong> Caixa Negra (prémer botons) vs Caixa Blanca (auditar codi)
+    </div>
+    <div class="card-text">
+        "Com donem resposta a aquesta situació? Aquesta proposta consisteix a introduir el pensament computacional com una <span class="highlight">eina epistèmica per a construir ciència</span>, i no pas com una simple novetat tecnològica.<br><br>
+        Superem la 'caixa negra' dels simuladors tancats on l'alumnat és un simple consumidor passiu que prem botons, i apostem per la <span class="highlight">'caixa blanca' mitjançant eines de codi obert</span>: l'estudiant pot auditar el codi, modificar les forces i entendre el model. Això produeix un <span class="highlight">alliberament cognitiu</span> real: en descarregar la fatiga del càlcul mecànic a l'ordinador, l'esforç se centra en allò que és autènticament físic."
+    </div>
+</div>
+
+<!-- TARGETA 4 -->
+<div class="card" id="card-4">
+    <div class="card-header">
+        <span class="card-num">DIAPO 4</span>
+        <span class="card-time">⏱️ 1:45 - 2:45 (1 min)</span>
+    </div>
+    <div class="card-title">3. Marc Teòric i Bastida Pedagògica</div>
+    <div class="card-cue">
+        <strong>Pista visual:</strong> Taula Use-Modify-Create (Herron 1, 2, 3), Codi Esquelet
+    </div>
+    <div class="card-text">
+        "Com s'organitza pedagògicament aquesta integració a l'aula? Per a evitar el que la literatura anomena la <span class="highlight">'utopia cognitiva'</span> —demanar a estudiants sense base que programen des del buit—, s'adopta de manera rigorosa la bastida <span class="highlight">Use-Modify-Create</span> de Grover i Pea, enllaçada amb els nivells d'indagació d'Herron i el cicle de modelització d'Hestenes.<br><br>
+        L'alumnat parteix sempre d'un <span class="highlight">Codi Esquelet</span> dissenyat pel professor: primer <strong>usa</strong> i explora, després <strong>modifica</strong> paràmetres físics i condicions de contorn, i finalment <strong>crea</strong> narratives i gràfics de contrast."
+    </div>
+</div>
+
+<!-- TARGETA 5 -->
+<div class="card" id="card-5">
+    <div class="card-header">
+        <span class="card-num">DIAPO 5</span>
+        <span class="card-time">⏱️ 2:45 - 3:55 (1 min 10 s)</span>
+    </div>
+    <div class="card-title">4. Disseny de la SdA: «Més enllà del buit»</div>
+    <div class="card-cue">
+        <strong>Pista visual:</strong> Decret 108/2022, Blocs D i E, Conflicte Galileu vs Tracker
+    </div>
+    <div class="card-text">
+        "Aquesta proposta es concreta en el disseny complet d'una Situació d'Aprenentatge titulada 'Més enllà del buit', <span class="highlight">alineada amb el Decret 108/2022</span> del currículum valencià. Articula els sabers bàsics dels blocs <span class="highlight">D de Cinemàtica</span> i <span class="highlight">E d'Estàtica i dinàmica</span> a través del bloc A de Treball científic, mobilitzant les sis Competències Específiques.<br><br>
+        L'eix vertebrador és un <span class="highlight">conflicte cognitiu genuí</span>: s'enfronta el model ideal de Galileu en el buit amb les dades experimentals que els mateixos alumnes enregistren al pati mitjançant <strong>Physics Tracker</strong>. A partir de la discrepància evident, l'alumnat sent la necessitat de reconstruir el model."
+    </div>
+</div>
+
+<!-- TARGETA 6 -->
+<div class="card" id="card-6">
+    <div class="card-header">
+        <span class="card-num">DIAPO 6</span>
+        <span class="card-time">⏱️ 3:55 - 4:40 (45 s)</span>
+    </div>
+    <div class="card-title">5. Nucli Físic: Fases 1 i 2 (Ideal vs Empíric)</div>
+    <div class="card-cue">
+        <strong>Pista visual:</strong> Newton vectorial buit, Cautxú 3% vs Bàdminton &gt;500%
+    </div>
+    <div class="card-text">
+        "Vegem què aprèn de Física l'alumnat activitat per activitat:<br><br>
+        A la <strong>Fase 1</strong>, formalitzen la <span class="highlight">segona llei de Newton vectorialment</span>. L'ordinador fa la substitució algebraica d'aïllar el temps per obtindre l'equació de la trajectòria y(x), però l'alumnat ha de definir les condicions inicials.<br><br>
+        A la <strong>Fase 2</strong>, arriba una lliçó epistemològica clau: <span class="highlight">cap model és absolutament cert o fals; tots tenen un rang de validesa</span>. La pilota de cautxú s'ajusta a Galileu amb un <strong>3%</strong> d'error, però en el volant de bàdminton la discrepància supera el <strong>500%</strong>, evidenciant la necessitat d'un nou model."
+    </div>
+</div>
+
+<!-- TARGETA 7 -->
+<div class="card" id="card-7">
+    <div class="card-header">
+        <span class="card-num">DIAPO 7</span>
+        <span class="card-time">⏱️ 4:40 - 5:25 (45 s)</span>
+    </div>
+    <div class="card-title">6. Nucli Físic: Fase 3 i Gràfica de Síntesi</div>
+    <div class="card-cue">
+        <strong>Pista visual:</strong> Grafica2.png: Blau (Galileu), Lila (Frenada X), Verd (Rayleigh)
+    </div>
+    <div class="card-text">
+        "A la <strong>Fase 3</strong> reconstruïm la dinàmica. Per a fer-ho matemàticament viable a Batxillerat, plantegem una aproximació analítica accessible amb <span class="highlight">frenada en l'eix X</span>.<br><br>
+        Això ens permet treballar un aprenentatge clau: <span class="highlight">distingir la trajectòria espacial y(x) de les temporals y(t)</span>. Com que en Y només actua la gravetat, el sostre màxim i el temps són idèntics al buit, però com que el mòbil s'esgota en X, la corba es fa molt més vertical fins a caure en picat quan vx arriba a zero.<br><br>
+        Finalment, el <span class="highlight">model dinàmic de Rayleigh</span> s'introdueix de forma <strong>qualitativa</strong>: mostra com la ciència construeix models refinats que responen a situacions límit, veient com la corba verda calca les dades reals del bàdminton."
+    </div>
+</div>
+
+<!-- TARGETA 8 -->
+<div class="card" id="card-8">
+    <div class="card-header">
+        <span class="card-num">DIAPO 8</span>
+        <span class="card-time">⏱️ 5:25 - 6:25 (1 min)</span>
+    </div>
+    <div class="card-title">7. Viabilitat Cognitiva a Batxillerat</div>
+    <div class="card-cue">
+        <strong>Pista visual:</strong> Grafica3.png amb ajust k=0.470 i error 0.6% de ping-pong
+    </div>
+    <div class="card-text">
+        "Un aspecte fonamental en les decisions de disseny ha sigut garantir la <span class="highlight">viabilitat cognitiva</span> de la proposta a 1r de Batxillerat.<br><br>
+        Per a evitar sobrecàrregues innecessàries, la bondat del model s'avalua de forma molt directa: <span class="highlight">visualment a través de les gràfiques</span> de contrast i <span class="highlight">numèricament mitjançant l'error relatiu de l'abast</span>.<br><br>
+        D'aquesta manera, l'alumnat connecta amb el contingut curricular del 'Sentit de la mesura' (Bloc A) amb una eina intuïtiva, rigorosa i perfectament adaptada a la seua etapa."
+    </div>
+</div>
+
+<!-- TARGETA 9 -->
+<div class="card" id="card-9">
+    <div class="card-header">
+        <span class="card-num">DIAPO 9</span>
+        <span class="card-time">⏱️ 6:25 - 7:25 (1 min)</span>
+    </div>
+    <div class="card-title">8. Inclusió DUA i Treball Cooperatiu</div>
+    <div class="card-cue">
+        <strong>Pista visual:</strong> "Mans fora del teclat" (Pujolàs), DUA registre múltiple
+    </div>
+    <div class="card-text">
+        "Com evitem que el treball computacional derive en l'aïllament davant de la pantalla o en el monopoli de qui en sap més? S'aplica el programa cooperatiu formal <span class="highlight">'Cooperar per a aprendre' de Pere Pujolàs</span>.<br><br>
+        En particular, adaptem la dinàmica 'Llapissos al centre' a <span class="highlight">'Mans fora del teclat'</span>: fins que l'equip no consensua verbalment quin és el balanç de forces o la condició inicial, ningú toca el teclat.<br><br>
+        Això assegura que la decisió física siga col·lectiva i desplega els principis del <span class="highlight">Disseny Universal per a l'Aprenentatge (DUA)</span>, integrant text explicatiu, formalisme matemàtic i dades empíriques."
+    </div>
+</div>
+
+<!-- TARGETA 10 -->
+<div class="card" id="card-10">
+    <div class="card-header">
+        <span class="card-num">DIAPO 10</span>
+        <span class="card-time">⏱️ 7:25 - 8:25 (1 min)</span>
+    </div>
+    <div class="card-title">9. Dimensió Socioemocional de l'Error</div>
+    <div class="card-cue">
+        <strong>Pista visual:</strong> Grafica4.png centrada amb Targeta de Depuració en valencià
+    </div>
+    <div class="card-text">
+        "L'aprenentatge de les ciències té una <span class="highlight">dimensió afectiva</span> indiscutible. Quan un alumne novell programa i rep un missatge en vermell en anglès com 'SyntaxError', sovint es bloqueja i abandona.<br><br>
+        Inspirant-nos en la recerca de Charles i Gwilliam a la Universitat de Liverpool, s'ha programat un mòdul de suport emocional en valencià integrat al nucli de Jupyter. Quan es produeix un error, el sistema ofereix una <span class="highlight">targeta didàctica que tradueix l'error a pistes amables</span>.<br><br>
+        Aquest suport ha demostrat <span class="highlight">reduir l'ansietat en un 55% i la frustració en un 73%</span>, transformant l'error d'un element punitiu en una oportunitat metacognitiva."
+    </div>
+</div>
+
+<!-- TARGETA 11 -->
+<div class="card" id="card-11">
+    <div class="card-header">
+        <span class="card-num">DIAPO 11</span>
+        <span class="card-time">⏱️ 8:25 - 9:15 (50 s)</span>
+    </div>
+    <div class="card-title">10. Avaluació Formativa: La Física al Centre</div>
+    <div class="card-cue">
+        <strong>Pista visual:</strong> 50% Assaig Físic, 25% Comunicació, 25% Cooperatiu
+    </div>
+    <div class="card-text">
+        "Pel que fa a l'avaluació, vull subratllar amb total claredat que <span class="highlight">l'objecte d'avaluació és la Física, mai la destresa informàtica per si mateixa</span>. La programació només és el vehicle que fa visible el raonament científic.<br><br>
+        Per això, l'assaig computacional avalua si han comprés les <span class="highlight">lleis de Newton</span>, si saben identificar les forces i si entenen els límits dels models. I la defensa oral avalua l'argumentació científica davant de dades reals.<br><br>
+        Metodològicament, i seguint el marc de <span class="highlight">Neus Sanmartí</span>, aclarim que són eines d'aula per a regular l'aprenentatge diari amb rúbriques de la LOMLOE, i no pas tests psicomètrics d'impacte en recerca."
+    </div>
+</div>
+
+<!-- TARGETA 12 -->
+<div class="card" id="card-12">
+    <div class="card-header">
+        <span class="card-num">DIAPO 12</span>
+        <span class="card-time">⏱️ 9:15 - 10:05 (50 s)</span>
+    </div>
+    <div class="card-title">11. Conclusions, Limitacions i Prospectiva</div>
+    <div class="card-cue">
+        <strong>Pista visual:</strong> Consecució Objectius, EDR Fase 1, REA GitHub CC0
+    </div>
+    <div class="card-text">
+        "Per concloure, assumim amb absoluta honestedat científica l'abast d'aquest treball. Com a proposta de la Modalitat A emmarcada en l'EDR, el projecte compleix plenament la seua <span class="highlight">Fase 1: el disseny instruccional i el desenvolupament de prototips teòricament fonamentats</span>.<br><br>
+        L'avaluació empírica de l'impacte real sobre la càrrega cognitiva i la motivació requerirà la implementació en una mostra de centres públics, la qual cosa constitueix formalment el <span class="highlight">segon bucle d'investigació</span> i la línia de prospectiva natural.<br><br>
+        Tots els materials estan publicats en obert a GitHub com a <span class="highlight">REA en domini públic (CC0)</span>. Moltes gràcies, quede a la disposició dels membres del tribunal."
+    </div>
+</div>
+
+<!-- TARGETA BONUS: PLAYBOOK DE RÈPLIQUES -->
+<div class="card playbook-card" id="card-13">
+    <div class="card-header">
+        <span class="card-num" style="background: var(--accent-amber);">DEFENSA</span>
+        <span class="card-time">🛡️ PLAYBOOK DE PREGUNTES</span>
+    </div>
+    <div class="card-title">Respostes Ràpides (30 segons)</div>
+    <div class="card-text" style="font-size: 0.95rem;">
+        <p><strong>1. Per què no hi ha dades a l'aula?</strong><br>
+        "Perquè el treball s'emmarca en la Fase 1 d'EDR (McKenney & Reeves): disseny instruccional i prototips. Les preguntes d'impacte són hipòtesis de disseny per al 2n bucle."</p><br>
+        <p><strong>2. Python és massa difícil a 1r de Batxillerat?</strong><br>
+        "S'aplica Use-Modify-Create (Grover & Pea). Mai pantalla en blanc: codi esquelet pautat. Alliberem càlcul mecànic per centrar-nos en la Física."</p><br>
+        <p><strong>3. I si un alumne acapara el teclat?</strong><br>
+        "Tècnica 'Mans fora del teclat' de Pere Pujolàs (CA/AC). Fins que no hi ha consens verbal sobre el balanç físic, ningú tecleja."</p><br>
+        <p><strong>4. Rayleigh no és universitari?</strong><br>
+        "És exclusivament qualitatiu (CE6 LOMLOE: límits de validesa). No fan integrals manuals; veuen com la ciència refina el model."</p><br>
+        <p><strong>5. S'avalua la programació?</strong><br>
+        "No. L'avaluació és 100% de conceptes físics i raonament científic (Sanmartí / Decret 108/2022). El codi només és el vehicle."</p>
+    </div>
+</div>
+
+<!-- NAVEGACIÓ INFERIOR -->
+<div class="nav-bar">
+    <button class="nav-btn" id="prevBtn" onclick="changeCard(-1)">⬅️ Anterior</button>
+    <div class="nav-indicator" id="indicator">1 / 13</div>
+    <button class="nav-btn" id="nextBtn" onclick="changeCard(1)" style="background: var(--accent); color: #0f172a;">Següent ➡️</button>
+</div>
+
+<script>
+    let currentCard = 1;
+    const totalCards = 13;
+
+    function showCard(n) {
+        document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+        const card = document.getElementById('card-' + n);
+        if (card) {
+            card.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        document.getElementById('indicator').textContent = n + ' / ' + totalCards;
+        document.getElementById('prevBtn').style.opacity = (n === 1) ? '0.4' : '1';
+        document.getElementById('nextBtn').textContent = (n === totalCards) ? 'Inici 🔄' : 'Següent ➡️';
+    }
+
+    function changeCard(dir) {
+        currentCard += dir;
+        if (currentCard > totalCards) currentCard = 1;
+        if (currentCard < 1) currentCard = totalCards;
+        showCard(currentCard);
+    }
+
+    // Suport de gestos tàctils (swipe esquerra/dreta)
+    let touchstartX = 0;
+    let touchendX = 0;
+
+    document.addEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenX;
+    });
+
+    document.addEventListener('touchend', e => {
+        touchendX = e.changedTouches[0].screenX;
+        if (touchendX < touchstartX - 60) changeCard(1);  // Swipe esquerra -> següent
+        if (touchendX > touchstartX + 60) changeCard(-1); // Swipe dreta -> anterior
+    });
+</script>
+
+</body>
+</html>

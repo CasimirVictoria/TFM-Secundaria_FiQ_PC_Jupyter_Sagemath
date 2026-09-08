@@ -30,3 +30,4 @@ _book/
 *.html
 !docs/**
 !situacions_d_aprenentatge/**
+!defensa/**
