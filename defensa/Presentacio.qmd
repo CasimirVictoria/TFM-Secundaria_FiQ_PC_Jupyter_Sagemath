@@ -140,7 +140,7 @@ L'eix vertebrador és la generació d'un conflicte cognitiu genuí: s'enfronta e
 ::: {.column width="50%"}
 #### Fase 2: MODIFY / Contrast
 * **Concepte:** Límits de validesa dels models científics (CE6).
-* **Tracker:** Importació de dades reals `.csv` amb `pandas`.
+* **Tracker:** Importació de dades reals.
 * **Discrepància empírica contrastada:**
   * Pilota de cautxú: error $\approx 3\%$ (model vàlid).
   * Volant de bàdminton: error $> 500\%$ (**col·lapse absolut del model ideal**).
