@@ -1601,58 +1601,71 @@ plot(y_trajectoria.subs(v_0=22.0, alpha=55*pi/180, g=9.81), (x, 0, 50))</textare
                 <span>🎯 Elaboració d'un model més realista</span>
             </div>
 
-            <!-- PAS 3.0: FONAMENTACIÓ FÍSICA I ELECCIÓ DEL MODEL DE FREGAMENT -->
-            <div id="section-pas-3-0" style="margin-bottom:24px; background:white; border:1px solid #ddd6fe; border-radius:12px; padding:18px;">
-                <div style="font-weight:700; color:#5b21b6; font-size:1.02rem; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
-                    <span>🧭</span> <span>Pas 3.0: Fonamentació Física: Introducció del Fregament i Elecció del Model (Eix \(X\))</span>
-                </div>
+            <!-- PAS 3.0: FONAMENTACIÓ FÍSICA I ELECCIÓ DEL MODEL DE FREGAMENT (DESPLEGABLE EXCLUSIU PROFESSORAT) -->
+            <details id="section-pas-3-0" style="margin-bottom:24px; background:#faf5ff; border:2px dashed #c4b5fd; border-radius:12px; padding:0; overflow:hidden; transition:all 0.3s ease;">
+                <summary style="font-weight:700; color:#5b21b6; font-size:0.98rem; padding:14px 18px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; background:#f5f3ff; user-select:none;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span>🧭</span>
+                        <span><b>Pas 3.0: Fonamentació Física i Elecció del Model (Eix \(X\))</b></span>
+                        <span style="background:#7c3aed; color:white; font-size:0.72rem; font-weight:700; padding:2px 8px; border-radius:12px; text-transform:uppercase; letter-spacing:0.5px;">
+                            🔒 Només Professorat
+                        </span>
+                    </div>
+                    <span style="font-size:0.8rem; color:#7c3aed; font-weight:600;">(Fes clic per desplegar la justificació docent ▼)</span>
+                </summary>
 
-                <div style="font-size:0.88rem; color:#334155; line-height:1.55; margin-bottom:14px;">
-                    A la <b>Fase 2</b> hem comprovat empíricament que el model parabòlic de Galileu sobreestima l'abast horitzontal (amb desviacions que van des de l'1% en una bola de cautxú pesant fins a més del 20% en la pilota de ping-pong i més del 500% en el volant de bàdminton). La causa física és que el model ideal omet completament la <b>resistència de l'aire (\(\vec{F}_{\text{freg}}\))</b>. Per construir un model més realista i científicament fidel, cal introduir aquesta força, però triant una formulació matemàticament tractable a 1r de Batxillerat.
-                </div>
+                <div style="padding:18px; background:white; border-top:1px solid #ddd6fe;">
+                    <div style="background:#fffbeb; border:1px solid #fef3c7; border-left:4px solid #f59e0b; border-radius:6px; padding:8px 12px; font-size:0.8rem; color:#92400e; margin-bottom:12px; line-height:1.4;">
+                        <b>ℹ️ Nota Didàctica per al Docent:</b> Aquest apartat conté la fonamentació teòrica de la decisió de disseny didàctic. A l'aula, l'alumnat pot passar directament al <b>Pas 3.1</b> on treballa amb el quadern de SageMath.
+                    </div>
 
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-bottom:14px;">
-                    <!-- Targeta 1: El Repte del Fregament Real -->
-                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px;">
-                        <div style="font-weight:700; font-size:0.86rem; color:#1e293b; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
-                            <span>⚠️</span> <span>El dilema físic: Resistència real en 2D (\(v^2\))</span>
+                    <div style="font-size:0.88rem; color:#334155; line-height:1.55; margin-bottom:14px;">
+                        A la <b>Fase 2</b> hem comprovat empíricament que el model parabòlic de Galileu sobreestima l'abast horitzontal (amb desviacions que van des de l'1% en una bola de cautxú pesant fins a més del 20% en la pilota de ping-pong i més del 500% en el volant de bàdminton). La causa física és que el model ideal omet completament la <b>resistència de l'aire (\(\vec{F}_{\text{freg}}\))</b>. Per construir un model més realista i científicament fidel, cal introduir aquesta força, però triant una formulació matemàticament tractable a 1r de Batxillerat.
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-bottom:14px;">
+                        <!-- Targeta 1: El Repte del Fregament Real -->
+                        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px;">
+                            <div style="font-weight:700; font-size:0.86rem; color:#1e293b; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                                <span>⚠️</span> <span>El dilema físic: Resistència real en 2D (\(v^2\))</span>
+                            </div>
+                            <div style="font-size:0.82rem; color:#475569; line-height:1.45;">
+                                En la realitat aerodinàmica, la força de fregament actua en oposició directa al vector velocitat instantània (\(\vec{F}_{\text{freg}} = -\frac{1}{2} C_d \rho A |\vec{v}|\vec{v}\)). Com que \(|\vec{v}| = \sqrt{v_x^2 + v_y^2}\), les components horitzontal i vertical queden fortament acoblades en un sistema d'equacions diferencials no lineals que <b>no té solució analítica exacta</b> amb funcions elementals (és impossible resoldre'l amb llapis i paper a 1r de Batxillerat).
+                            </div>
                         </div>
-                        <div style="font-size:0.82rem; color:#475569; line-height:1.45;">
-                            En la realitat aerodinàmica, la força de fregament actua en oposició directa al vector velocitat instantània (\(\vec{F}_{\text{freg}} = -\frac{1}{2} C_d \rho A |\vec{v}|\vec{v}\)). Com que \(|\vec{v}| = \sqrt{v_x^2 + v_y^2}\), les components horitzontal i vertical queden fortament acoblades en un sistema d'equacions diferencials no lineals que <b>no té solució analítica exacta</b> amb funcions elementals (és impossible resoldre'l amb llapis i paper a 1r de Batxillerat).
+
+                        <!-- Targeta 2: La Hipòtesi del Model Escollit -->
+                        <div style="background:#faf5ff; border:1px solid #ddd6fe; border-radius:10px; padding:14px;">
+                            <div style="font-weight:700; font-size:0.86rem; color:#6d28d9; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                                <span>💡</span> <span>La nostra hipòtesi: Frenada predominant en l'eix \(X\)</span>
+                            </div>
+                            <div style="font-size:0.82rem; color:#475569; line-height:1.45;">
+                                Seguint el mètode científic d'<b>aproximació de primer ordre</b>, identifiquem que l'efecte més visible i decisiu per corregir la discrepància d'abast és la <b>frenada aerodinàmica en l'eix \(X\)</b>. Suposem una desacceleració horitzontal d'oposició proporcional a la velocitat d'avanç (\(a_x = -k_{\text{drag}} \cdot v_{0x}\)), mentre que en l'eix vertical (\(Y\)) mantenim l'acció dominant del camp gravitatori terrestre (\(a_y = -g\)).
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Targeta 2: La Hipòtesi del Model Escollit -->
-                    <div style="background:#faf5ff; border:1px solid #ddd6fe; border-radius:10px; padding:14px;">
-                        <div style="font-weight:700; font-size:0.86rem; color:#6d28d9; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
-                            <span>💡</span> <span>La nostra hipòtesi: Frenada predominant en l'eix \(X\)</span>
+                    <!-- Caixa de Formalització Dinàmica -->
+                    <div style="background:#f5f3ff; border:1px solid #c4b5fd; border-radius:10px; padding:14px; margin-bottom:12px;">
+                        <div style="font-weight:700; font-size:0.88rem; color:#5b21b6; margin-bottom:8px; text-align:center;">
+                            📐 Sistema Dinàmic Proposat (Base per a la Deducció del Pas 3.1):
                         </div>
-                        <div style="font-size:0.82rem; color:#475569; line-height:1.45;">
-                            Seguint el mètode científic d'<b>aproximació de primer ordre</b>, identifiquem que l'efecte més visible i decisiu per corregir la discrepància d'abast és la <b>frenada aerodinàmica en l'eix \(X\)</b>. Suposem una desacceleració horitzontal d'oposició proporcional a la velocitat d'avanç (\(a_x = -k_{\text{drag}} \cdot v_{0x}\)), mentre que en l'eix vertical (\(Y\)) mantenim l'acció dominant del camp gravitatori terrestre (\(a_y = -g\)).
+                        <div style="font-size:0.95rem; text-align:center; color:#1e1b4b; overflow-x:auto;">
+                            \[ \begin{cases} 
+                            \sum F_x = -m \cdot k_{\text{drag}} \cdot v_{0x} \implies a_x(t) = \dfrac{F_x}{m} = -k_{\text{drag}} \cdot v_{0x} & \text{(Frenada aerodinàmica oposada a l'avanç)} \\[10pt]
+                            \sum F_y = -m \cdot g \implies a_y(t) = \dfrac{F_y}{m} = -g & \text{(Moviment vertical sota acceleració gravitatòria)}
+                            \end{cases} \]
+                        </div>
+                        <div style="font-size:0.8rem; color:#6b21a8; margin-top:8px; line-height:1.4; text-align:center;">
+                            On \(k_{\text{drag}}\) (\(\text{s}^{-1}\)) és el paràmetre de fricció efectiva que ajustarem empíricament segons el mòbil.
                         </div>
                     </div>
-                </div>
 
-                <!-- Caixa de Formalització Dinàmica -->
-                <div style="background:#f5f3ff; border:1px solid #c4b5fd; border-radius:10px; padding:14px; margin-bottom:12px;">
-                    <div style="font-weight:700; font-size:0.88rem; color:#5b21b6; margin-bottom:8px; text-align:center;">
-                        📐 Sistema Dinàmic Proposat (Base per a la Deducció del Pas 3.1):
-                    </div>
-                    <div style="font-size:0.95rem; text-align:center; color:#1e1b4b; overflow-x:auto;">
-                        \[ \begin{cases} 
-                        \sum F_x = -m \cdot k_{\text{drag}} \cdot v_{0x} \implies a_x(t) = \dfrac{F_x}{m} = -k_{\text{drag}} \cdot v_{0x} & \text{(Frenada aerodinàmica oposada a l'avanç)} \\[10pt]
-                        \sum F_y = -m \cdot g \implies a_y(t) = \dfrac{F_y}{m} = -g & \text{(Moviment vertical sota acceleració gravitatòria)}
-                        \end{cases} \]
-                    </div>
-                    <div style="font-size:0.8rem; color:#6b21a8; margin-top:8px; line-height:1.4; text-align:center;">
-                        On \(k_{\text{drag}}\) (\(\text{s}^{-1}\)) és el paràmetre de fricció efectiva que ajustarem empíricament segons el mòbil.
+                    <div style="background:#fffbeb; border:1px solid #fef3c7; border-left:4px solid #f59e0b; border-radius:6px; padding:10px 14px; font-size:0.82rem; color:#92400e; line-height:1.45;">
+                        <b>💡 Identitat formal amb el MRUA que ja coneixen (\(\frac{1}{2} a_x t^2\)):</b> En considerar \(a_x = -k_{\text{drag}} \cdot v_{0x}\) constant, el moviment horitzontal esdevé un senzill MRUA: \(x(t) = v_{0x} t + \frac{1}{2} a_x t^2 = v_{0x} t - \frac{1}{2} (k_{\text{drag}} v_{0x}) t^2\). El terme és <b>formalment idèntic</b> al terme vertical \(+\frac{1}{2} a_y t^2 = -\frac{1}{2} g t^2\) que l'alumnat ja utilitza des de 4t d'ESO! Encara que a 1r de Batxillerat no saben integrar a mà, <b>SageMath actua com a bastida cognitiva</b>: l'ordinador fa l'acumulació (\(a_x \xrightarrow{\int} v_x(t) \xrightarrow{\int} x(t)\)) i fa visible a l'estudiant d'on sorgeix el factor \(\frac{1}{2}\) que sempre havien memoritzat dogmàticament.
                     </div>
                 </div>
-
-                <div style="background:#fffbeb; border:1px solid #fef3c7; border-left:4px solid #f59e0b; border-radius:6px; padding:10px 14px; font-size:0.82rem; color:#92400e; line-height:1.45;">
-                    <b>💡 Identitat formal amb el MRUA que ja coneixen (\(\frac{1}{2} a_x t^2\)):</b> En considerar \(a_x = -k_{\text{drag}} \cdot v_{0x}\) constant, el moviment horitzontal esdevé un senzill MRUA: \(x(t) = v_{0x} t + \frac{1}{2} a_x t^2 = v_{0x} t - \frac{1}{2} (k_{\text{drag}} v_{0x}) t^2\). El terme és <b>formalment idèntic</b> al terme vertical \(+\frac{1}{2} a_y t^2 = -\frac{1}{2} g t^2\) que l'alumnat ja utilitza des de 4t d'ESO! Encara que a 1r de Batxillerat no saben integrar a mà, <b>SageMath actua com a bastida cognitiva</b>: l'ordinador fa l'acumulació (\(a_x \xrightarrow{\int} v_x(t) \xrightarrow{\int} x(t)\)) i fa visible a l'estudiant d'on sorgeix el factor \(\frac{1}{2}\) que sempre havien memoritzat dogmàticament.
-                </div>
-            </div>
+            </details>
 
             <!-- PAS 3.1: MODIFICACIÓ COMPUTACIONAL DEL MODEL DINÀMIC (SageMath) - MATEIXA ESTRUCTURA QUE FASE 1 -->
             <div style="margin-bottom:24px; background:white; border:1px solid #e2e8f0; border-radius:12px; padding:18px;">
@@ -1787,9 +1800,9 @@ r_t = (x_t, y_t)</textarea>
                         </div>
 
                         <div class="formula-box">
-                            <div style="font-weight:600; margin-bottom:2px; color:var(--primary);">💡 Conclusió Didàctica (Refinament de 1r Ordre):</div>
+                            <div style="font-weight:600; margin-bottom:2px; color:var(--primary);">💡 Conclusió Didàctica (Refinament de 1r Ordre i Límits):</div>
                             <div style="font-size:0.8rem; color:#334155; line-height:1.4;">
-                                En incorporar la força de resistència horitzontal deduïda a 3.1, l'abast s'escurça i s'apropa a la realitat empírica. No obstant això, com que només hem considerat frenada en \(X\), el temps de caiguda és idèntic al del buit.
+                                En incorporar només frenada horitzontal (\(a_x = -k_{\text{drag}} v_{0x}\)), l'altura màxima vertical \(y_{\max}\) és <b>idèntica a la del buit de Galileu</b> perquè en \(Y\) només actua la gravetat. Tanmateix, com que el mòbil s'esgota ràpidament en \(X\), la trajectòria \(y(x)\) es fa molt més vertical i escarpada. Quan la velocitat horitzontal arriba a zero (\(v_x = 0\)), l'avanç s'atura i cau verticalment, posant de manifest per què cal el <b>Pas 3.3</b> per modelar la frenada aerodinàmica real en tots dos eixos.
                             </div>
                         </div>
                     </div>
@@ -1813,7 +1826,7 @@ r_t = (x_t, y_t)</textarea>
             <!-- PAS 3.3: SUPERACIÓ DEL LÍMIT ANALÍTIC: MODEL DINÀMIC DE RAYLEIGH (Euler 2D) -->
             <div id="section-pas-3-3" style="margin-bottom:24px; background:white; border:1px solid #ddd6fe; border-radius:12px; padding:18px;">
                 <div style="font-weight:700; color:#5b21b6; font-size:1.02rem; margin-bottom:8px;">
-                    🚀 Pas 3.3: Finestra d'Ampliació Científica: Model Dinàmic Real de Rayleigh (Euler 2D i SciPy Curve_fit)
+                    🚀 Pas 3.3: Finestra d'Ampliació Científica: Model Dinàmic de Rayleigh
                 </div>
 
                 <!-- Avís d'Abast Curricular: Fora de l'abast del curs (Demostració de Millora Contínua) -->
@@ -1899,12 +1912,12 @@ r_t = (x_t, y_t)</textarea>
 
                 <div>
                     <div style="font-weight:600; font-size:0.9rem; margin-bottom:6px; color:#5b21b6; text-align:center;">
-                        Gràfica de Síntesi: Contrast de Tots els Models (Ideal Galileu vs Analític 3.1 vs Rayleigh Real vs Tracker)
+                        Gràfica de Síntesi: Contrast de Tots els Models (Ideal Galileu/ Analític 3.1/ Rayleigh vs Dades experimentals)
                     </div>
                     <div id="plot-phase-3" class="plot-box" style="height: 420px;"></div>
 
                     <div class="dynamic-eq-box" style="border-color:#ddd6fe; background:#faf5ff;">
-                        <div class="dynamic-eq-title" style="color:#6d28d9;">📐 Equacions Diferencials Reals de Newton-Rayleigh (Mètode d'Euler / Simulació Numèrica):</div>
+                        <div class="dynamic-eq-title" style="color:#6d28d9;">📐 Equacions del Model Dinàmic de Newton-Rayleigh (Mètode d'Euler / Simulació Numèrica):</div>
                         <div class="dynamic-eq-math" id="fit-dynamic-eq">
                             \[ \sum \vec{F} = m \vec{g} - c |\vec{v}| \vec{v} \implies \begin{cases} \frac{dv_x}{dt} = -k_{\text{drag}} \cdot \sqrt{v_x^2 + v_y^2} \cdot v_x \\[6pt] \frac{dv_y}{dt} = -g - k_{\text{drag}} \cdot \sqrt{v_x^2 + v_y^2} \cdot v_y \end{cases} \]
                         </div>
@@ -3848,9 +3861,20 @@ json.dumps(_last_plot_data) if '_last_plot_data' in globals() and _last_plot_dat
             const xs = [];
             const ys = [];
             const steps = 150;
+            
+            // Temps en què la velocitat horitzontal s'anul·la (vx = v0x * (1 - kDrag * t) = 0)
+            const tStopX = (kDrag > 0) ? (1.0 / kDrag) : Infinity;
+            const xStopMax = (kDrag > 0) ? (0.5 * v0x / kDrag) : Infinity;
+
             for (let i = 0; i <= steps; i++) {
                 const t = (i / steps) * tLanding;
-                const x = Math.max(0, v0x * t - 0.5 * kDrag * v0x * Math.pow(t, 2));
+                let x;
+                if (t <= tStopX) {
+                    x = Math.max(0, v0x * t - 0.5 * kDrag * v0x * Math.pow(t, 2));
+                } else {
+                    // Un cop la velocitat horitzontal és zero, el cos no retrocedeix cap arrere com un bumerang: cau verticalment
+                    x = xStopMax;
+                }
                 const y = Math.max(floor, y0 + v0y * t - 0.5 * g * Math.pow(t, 2));
                 xs.push(x);
                 ys.push(y);
