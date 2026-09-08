@@ -279,7 +279,7 @@ Inspirant-nos en la recerca de Charles i Gwilliam a la Universitat de Liverpool,
 ::: {.column width="55%"}
 #### Naturalesa dels Instruments (LOMLOE)
 * **La Física és l'únic fi; el codi és el mitjà:** No s'avalua la sintaxi de programació, sinó la capacitat de l'alumnat per a mobilitzar models físics.
-* **Aclariment metodològic:** Instruments d'**avaluació formativa i reguladora d'aula** (Sanmartí) per a guiar l'aprenentatge, no bateries psicomètriques d'impacte en recerca.
+* **Aclariment metodològic:** Instruments d'**avaluació formativa i reguladora d'aula** per a guiar l'aprenentatge, no bateries psicomètriques d'impacte en recerca.
 * **Rúbrica Analítica Oficial:** 4 nivells d'assoliment vinculats directament als criteris d'avaluació de les Competències Específiques de Física i Química (CE1-CE6, Decret 108/2022).
 :::
 :::
@@ -288,7 +288,7 @@ Inspirant-nos en la recerca de Charles i Gwilliam a la Universitat de Liverpool,
 **Temps: 8:00 - 8:50 (50 segons)**
 "Pel que fa a l'avaluació, vull subratllar amb total claredat que l'objecte d'avaluació és la Física, mai la destresa informàtica per si mateixa. La programació només és el vehicle que fa visible el raonament científic de l'alumnat.
 Per això, l'assaig computacional avalua si han comprés les lleis de Newton, si saben identificar les forces rellevants i si entenen els límits de validesa d'un model. Així mateix, la defensa oral avalua la seua capacitat d'argumentació científica davant de les dades del món real.
-Metodològicament, i seguint el marc d'avaluació formadora de Neus Sanmartí, aclarim que aquests instruments són eines d'aula per a regular l'aprenentatge diari i qualificar segons els criteris del Decret 108/2022, i no pas tests psicomètrics de mesura d'impacte científic."
+Metodològicament, aclarim que aquests instruments són eines d'aula per a regular l'aprenentatge diari i qualificar segons els criteris del Decret 108/2022, i no pas tests psicomètrics de mesura d'impacte científic."
 :::
 
 ---
