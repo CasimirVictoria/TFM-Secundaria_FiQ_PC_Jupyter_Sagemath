@@ -12,9 +12,6 @@ book:
   repo-url: https://github.com/CasimirVictoria/TFM-Secundaria_FiQ_PC_Jupyter_Sagemath
   navbar:
     right:
-      - text: "📊 Presentació de la Defensa"
-        href: defensa/Presentacio.html
-        target: _blank
       - text: "🧪 Prototip Simulador SdA"
         href: simulacio/index.html
         target: _blank

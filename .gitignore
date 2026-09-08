@@ -5,6 +5,7 @@ __pycache__/
 _archive/
 _docs_dev/
 Proves/
+defensa/
 PDFs/
 Memoria/
 
@@ -30,4 +31,3 @@ _book/
 *.html
 !docs/**
 !situacions_d_aprenentatge/**
-!defensa/**
