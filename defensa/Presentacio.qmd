@@ -80,7 +80,7 @@ Això produeix un alliberament cognitiu real: en descarregar la fatiga del càlc
 
 | Fase UMC | Nivell Herron | Acció de l'Alumnat a l'Aula |
 | :--- | :--- | :--- |
-| **USE** | Nivell 1 | Executa simulacions interactives (`@interact`) dissenyades pel docent. |
+| **USE** | Nivell 1 | Executa simulacions interactives dissenyades pel docent. |
 | **MODIFY** | Nivell 2 | Modifica paràmetres físics i equacions sobre **Codi Esquelet (*Skeleton Code*)**. |
 | **CREATE** | Nivell 3 | Construeix un assaig computacional de contrast teòric-empíric. |
 
