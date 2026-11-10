@@ -1,0 +1,32 @@
+LLICÈNCIA DE LES SITUACIONS D'APRENENTATGE (SdA) I SIMULACIONS DIDÀCTIQUES
+================================================================================
+Copyright (c) 2026 Casimiro Victoria Castillo
+Universitat de València (UV) - Màster en Professorat de Secundària
+
+Aquest recurs didàctic interactiu, el seu codi font (WebAssembly, Pyodide, Python,
+HTML, CSS, JS) i el seu disseny instruccional es distribueixen sota la llicència:
+
+    Creative Commons Reconeixement-NoComercial-CompartirIgual 4.0 Internacional
+    (CC BY-NC-SA 4.0)
+
+Podeu consultar els termes complets de la llicència a:
+https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca
+o al fitxer LICENSE a l'arrel d'aquest repositori.
+
+En virtut d'aquesta llicència:
+* Reconeixement (BY): Cal citar l'autoria original (Casimiro Victoria Castillo, TFM UV).
+* No Comercial (NC): No es permet cap ús comercial ni amb ànim de lucre d'aquests
+  materials sense el permís exprés i per escrit de l'autor.
+* Compartir Igual (SA): Si altereu, transformeu o creeu una obra derivada, només
+  podeu distribuir l'obra resultant sota aquesta mateixa llicència.
+
+================================================================================
+EXEMPCIÓ DE GARANTIES I RESPONSABILITAT (AS-IS)
+================================================================================
+Aquest recurs s'ofereix «TAL QUAL» («AS-IS») i «SEGONS DISPONIBILITAT» («AS-AVAILABLE»),
+sense cap garantia expressa o implícita de cap mena.
+
+L'autor no es fa responsable en cap cas de possibles pèrdues de dades (com ara
+esborranys o informes escolars temporals no descarregats), mal ús de les aplicacions,
+errors numèrics o aturades dels entorns d'execució en els dispositius dels usuaris,
+ni de cap dany o perjudici derivat de la utilització docent o particular d'aquests materials.

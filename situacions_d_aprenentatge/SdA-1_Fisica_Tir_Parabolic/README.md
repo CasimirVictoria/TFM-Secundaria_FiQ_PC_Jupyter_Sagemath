@@ -25,3 +25,8 @@ Superar el model clàssic del «buit ideal» de Galileu ($k=0$) mitjançant la f
 4. **Sessió 4 (MODIFY / Herron 2):** El Conflicte Cognitiu: contrast del tir ideal de Galileu enfront de les dades reals de *Tracker*. Activació del model dinàmic de fricció aerodinàmica.
 5. **Sessió 5 (CREATE / Herron 3):** Anàlisi de residuals, estimació de l'error relatiu percentual de l'abast i discussió de casos límit.
 6. **Sessió 6 (CREATE / Herron 3):** Comunicació científica, coavaluació cooperativa (Programa CA/AC) i reflexió metacognitiva.
+
+---
+
+## 📄 Llicència i Exempció de Responsabilitat
+Aquest entorn de simulació didàctica i els seus materials s'ofereixen sota la llicència **[Creative Commons CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca)** (© 2026 Casimiro Victoria Castillo). Es distribueix «tal qual» (*AS-IS*), sense garanties de cap tipus ni responsabilitat derivada del seu ús o de possibles pèrdues de dades.

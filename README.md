@@ -5,7 +5,7 @@
 > **Universitat de València (UV)** — Convocatòria de Setembre 2026  
 > **Autor:** Casimiro Victoria Castillo  
 > **Tutora:** Dra. Paula Tuzón Marco  
-> **Llicència:** Domini Públic / Codi Obert ([CC0 1.0](LICENSE))
+> **Llicència:** Memòria del TFM en Accés Obert | Simulacions didàctiques ([CC BY-NC-SA 4.0](LICENSE)) © 2026 Casimiro Victoria Castillo
 
 ---
 
@@ -61,9 +61,20 @@ La proposta aborda un problema diagnòstic àmpliament documentat en la recerca 
 │   ├── Pensament-...pdf         PDF oficial per a descàrrega directa
 │   └── simulacio/               Aplicació web de la SdA
 │
-├── LICENSE                      Llicència pública Creative Commons (CC0 1.0)
+├── LICENSE                      Règim de llicències (CC BY-NC-SA 4.0 i exempció de responsabilitat)
 └── README.md                    Descripció del repositori
 ```
+
+---
+
+## 📄 Política de Llicències i Exempció de Responsabilitat
+
+* **Memòria escrita del TFM (`memoria/`):** Disponible en accés obert per a consulta acadèmica i docent.
+* **Simulacions interactives i Situacions d'Aprenentatge (`situacions_d_aprenentatge/` i `docs/simulacio/`):** Distribuïdes sota llicència **[Creative Commons Reconeixement-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)](LICENSE)** © 2026 Casimiro Victoria Castillo.
+  * *Reconeixement (BY):* Cal citar l'autor original del projecte.
+  * *No Comercial (NC):* No es permet cap explotació o ús comercial sense permís exprés.
+  * *Compartir Igual (SA):* Les obres derivades s'han de compartir sota aquesta mateixa llicència.
+* **Exempció de garanties i responsabilitat (AS-IS):** Els simuladors i el codi es distribueixen «tal com són», sense garanties de cap tipus. L'autor no es fa responsable de pèrdues de dades d'usuaris, mal ús del programari o incidències derivades de la seua utilització a l'aula o en dispositius personals. Consulteu el document [LICENSE](LICENSE) per al text legal complet.
 
 ---
 
